@@ -11,7 +11,7 @@ namespace ImGui
     // All positions are in screen coordinates (0,0=top-left, 1 pixel per unit). Primitives are always added to the list and not culled (culling is done at render time and at a higher-level by ImGui:: functions).
     // Note that this only gives you access to rendering polygons. If your intent is to create custom widgets and the publicly exposed functions/data aren't sufficient, you can add code in imgui_user.inl
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct ImDrawList
+    public unsafe struct DrawList
     {
         // This is what you have to render
         // ImVector<ImDrawCmd> CmdBuffer;          // Commands. Typically 1 command = 1 gpu draw call.

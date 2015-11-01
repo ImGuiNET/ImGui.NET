@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace ImGui
 {
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct ImDrawVert
+    public unsafe struct DrawVert
     {
         public ImVec2 pos;
         public ImVec2 uv;

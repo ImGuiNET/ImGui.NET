@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 namespace ImGui
 {
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct ImFontConfig
+    public unsafe struct FontConfig
     {
         /// <summary>
         /// TTF data

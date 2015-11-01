@@ -10,6 +10,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Align.cs" />
     <Compile Include="ColorTarget.cs" />
     <Compile Include="MouseCursorKind.cs" />
     <Compile Include="SelectableFlags.cs" />
@@ -17,18 +18,17 @@
     <Compile Include="WindowFlags.cs" />
     <Compile Include="ColorEditMode.cs" />
     <Compile Include="GuiKey.cs" />
-    <Compile Include="ImDrawCmd.cs" />
-    <Compile Include="ImDrawData.cs" />
-    <Compile Include="ImDrawList.cs" />
-    <Compile Include="ImDrawVert.cs" />
-    <Compile Include="ImFont.cs" />
-    <Compile Include="ImFontAtlas.cs" />
-    <Compile Include="ImFontConfig.cs" />
+    <Compile Include="DrawCmd.cs" />
+    <Compile Include="DrawData.cs" />
+    <Compile Include="DrawList.cs" />
+    <Compile Include="DrawVert.cs" />
+    <Compile Include="Font.cs" />
+    <Compile Include="FontAtlas.cs" />
+    <Compile Include="FontConfig.cs" />
     <Compile Include="ImGui.cs" />
-    <Compile Include="ImGuiIO.cs" />
-    <Compile Include="ImGuiStorage.cs" />
-    <Compile Include="ImGuiStyle.cs" />
-    <Compile Include="ImGuiTextEditCallbackData.cs" />
+    <Compile Include="IO.cs" />
+    <Compile Include="Storage.cs" />
+    <Compile Include="Style.cs" />
     <Compile Include="ImVector.cs" />
     <Compile Include="InputTextFlags.cs" />
     <Compile Include="ImGuiNative.cs" />

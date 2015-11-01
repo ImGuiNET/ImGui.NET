@@ -1,8 +1,3 @@
-using OpenTK;
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-
 namespace ImGui
 {
     public class Program

@@ -17,7 +17,7 @@ namespace ImGui
 
         public static unsafe void LoadDefaultFont()
         {
-            ImGuiIO* ioPtr = ImGuiNative.igGetIO();
+            IO* ioPtr = ImGuiNative.igGetIO();
             ImGuiNative.ImFontAtlas_AddFontDefault(ioPtr->FontAtlas);
         }
 

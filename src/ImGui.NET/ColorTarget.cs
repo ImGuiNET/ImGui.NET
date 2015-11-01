@@ -54,5 +54,6 @@
         /// darken entire screen when a modal window is active
         /// </summary>
         ModalWindowDarkening,
+        Count,
     };
 }

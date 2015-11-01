@@ -38,7 +38,7 @@ namespace ImGui
             _nativeWindow.KeyUp += OnKeyUp;
             _nativeWindow.KeyPress += OnKeyPress;
 
-            ImGuiIO* io = ImGuiNative.igGetIO();
+            IO* io = ImGuiNative.igGetIO();
             ImGuiNative.ImFontAtlas_AddFontDefault(io->FontAtlas);
 
             SetOpenTKKeyMappings(io);
@@ -59,7 +59,7 @@ namespace ImGui
             ImGuiNative.ImGuiIO_AddInputCharacter(e.KeyChar);
         }
 
-        private static unsafe void SetOpenTKKeyMappings(ImGuiIO* io)
+        private static unsafe void SetOpenTKKeyMappings(IO* io)
         {
             io->KeyMap[(int)GuiKey.Tab] = (int)Key.Tab;
             io->KeyMap[(int)GuiKey.LeftArrow] = (int)Key.Left;
@@ -96,7 +96,7 @@ namespace ImGui
             UpdateModifiers(e, ptr);
         }
 
-        private static unsafe void UpdateModifiers(KeyboardKeyEventArgs e, ImGuiIO* ptr)
+        private static unsafe void UpdateModifiers(KeyboardKeyEventArgs e, IO* ptr)
         {
             ptr->KeyAlt = e.Alt ? (byte)1 : (byte)0;
             ptr->KeyCtrl = e.Control ? (byte)1 : (byte)0;
@@ -105,7 +105,7 @@ namespace ImGui
 
         private unsafe void CreateDeviceObjects()
         {
-            ImGuiIO* io = ImGuiNative.igGetIO();
+            IO* io = ImGuiNative.igGetIO();
 
             // Build texture atlas
             byte* pixels;
@@ -139,7 +139,7 @@ namespace ImGui
 
         private unsafe void RenderFrame()
         {
-            ImGuiIO* io = ImGuiNative.igGetIO();
+            IO* io = ImGuiNative.igGetIO();
             io->DisplaySize = new System.Numerics.Vector2(_nativeWindow.Width, _nativeWindow.Height);
             io->DisplayFramebufferScale = new System.Numerics.Vector2(1, 1);
             io->DeltaTime = (1f / 60f);
@@ -152,7 +152,7 @@ namespace ImGui
 
             ImGuiNative.igRender();
 
-            ImDrawData* data = ImGuiNative.igGetDrawData();
+            DrawData* data = ImGuiNative.igGetDrawData();
             RenderImDrawData(data);
         }
 
@@ -179,8 +179,8 @@ namespace ImGui
             ImGuiNative.igText("World!");
             ImGuiNative.igText("From ImGui.NET. ...Did that work?");
             var pos = ImGuiNative.igGetIO()->MousePos;
-            var leftPressed = ImGuiNative.igGetIO()->MouseDown[0] == 1;
-            ImGuiNative.igText("Current mouse position: " + pos + ". Pressed=" + leftPressed);
+            //bool leftPressed = ImGuiNative.igGetIO()->MouseDown[0];
+            //ImGuiNative.igText("Current mouse position: " + pos + ". Pressed=" + leftPressed);
 
             if (ImGuiNative.igButton("Press me!", new System.Numerics.Vector2(120, 30)))
             {
@@ -227,7 +227,7 @@ namespace ImGui
             return 0;
         }
 
-        private unsafe void UpdateImGuiInput(ImGuiIO* io)
+        private unsafe void UpdateImGuiInput(IO* io)
         {
             MouseState cursorState = OpenTK.Input.Mouse.GetCursorState();
             MouseState mouseState = Mouse.GetState();
@@ -252,7 +252,7 @@ namespace ImGui
             io->MouseWheel = delta;
         }
 
-        private unsafe void RenderImDrawData(ImDrawData* draw_data)
+        private unsafe void RenderImDrawData(DrawData* draw_data)
         {
             // Rendering
             int display_w, display_h;
@@ -283,7 +283,7 @@ namespace ImGui
             GL.UseProgram(0);
 
             // Handle cases of screen coordinates != from framebuffer coordinates (e.g. retina displays)
-            ImGuiIO* io = ImGuiNative.igGetIO();
+            IO* io = ImGuiNative.igGetIO();
             float fb_height = io->DisplaySize.Y * io->DisplayFramebufferScale.Y;
 
             // Can implement the below in C#.
@@ -303,24 +303,24 @@ namespace ImGui
 
             for (int n = 0; n < draw_data->CmdListsCount; n++)
             {
-                ImDrawList* cmd_list = draw_data->CmdLists[n];
+                DrawList* cmd_list = draw_data->CmdLists[n];
                 byte* vtx_buffer = (byte*)cmd_list->VtxBuffer.Data;
                 ushort* idx_buffer = (ushort*)cmd_list->IdxBuffer.Data;
 
-                ImDrawVert vert0 = *((ImDrawVert*)vtx_buffer);
-                ImDrawVert vert1 = *(((ImDrawVert*)vtx_buffer) + 1);
-                ImDrawVert vert2 = *(((ImDrawVert*)vtx_buffer) + 2);
+                DrawVert vert0 = *((DrawVert*)vtx_buffer);
+                DrawVert vert1 = *(((DrawVert*)vtx_buffer) + 1);
+                DrawVert vert2 = *(((DrawVert*)vtx_buffer) + 2);
 
                 //glVertexPointer(2, GL_FLOAT, sizeof(ImDrawVert), (void*)(vtx_buffer + OFFSETOF("pos")));
-                GL.VertexPointer(2, VertexPointerType.Float, sizeof(ImDrawVert), new IntPtr(vtx_buffer + ImDrawVert.PosOffset));
+                GL.VertexPointer(2, VertexPointerType.Float, sizeof(DrawVert), new IntPtr(vtx_buffer + DrawVert.PosOffset));
                 //glTexCoordPointer(2, GL_FLOAT, sizeof(ImDrawVert), (void*)(vtx_buffer + OFFSETOF("uv")));
-                GL.TexCoordPointer(2, TexCoordPointerType.Float, sizeof(ImDrawVert), new IntPtr(vtx_buffer + ImDrawVert.UVOffset));
+                GL.TexCoordPointer(2, TexCoordPointerType.Float, sizeof(DrawVert), new IntPtr(vtx_buffer + DrawVert.UVOffset));
                 //glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(ImDrawVert), (void*)(vtx_buffer + OFFSETOF("col")));
-                GL.ColorPointer(4, ColorPointerType.UnsignedByte, sizeof(ImDrawVert), new IntPtr(vtx_buffer + ImDrawVert.ColOffset));
+                GL.ColorPointer(4, ColorPointerType.UnsignedByte, sizeof(DrawVert), new IntPtr(vtx_buffer + DrawVert.ColOffset));
 
                 for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
                 {
-                    ImDrawCmd* pcmd = &(((ImDrawCmd*)cmd_list->CmdBuffer.Data)[cmd_i]);
+                    DrawCmd* pcmd = &(((DrawCmd*)cmd_list->CmdBuffer.Data)[cmd_i]);
                     if (pcmd->UserCallback != IntPtr.Zero)
                     {
                         throw new NotImplementedException();

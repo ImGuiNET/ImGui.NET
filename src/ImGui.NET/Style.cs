@@ -1,17 +1,16 @@
-﻿using ImGuiAlign = System.Int32;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Numerics;
 
 namespace ImGui
 {
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct ImGuiStyle
+    public unsafe struct Style
     {
         public float Alpha;                      // Global alpha applies to everything in ImGui
         public Vector2 WindowPadding;              // Padding within a window
         public Vector2 WindowMinSize;              // Minimum window size
         public float WindowRounding;             // Radius of window corners rounding. Set to 0.0f to have rectangular windows
-        public ImGuiAlign WindowTitleAlign;           // Alignment for title bar text
+        public Align WindowTitleAlign;           // Alignment for title bar text
         public float ChildWindowRounding;        // Radius of child window corners rounding. Set to 0.0f to have rectangular windows
         public Vector2 FramePadding;               // Padding within a framed rectangle (used by most widgets)
         public float FrameRounding;              // Radius of frame corners rounding. Set to 0.0f to have rectangular frame (used by most widgets).
@@ -30,11 +29,6 @@ namespace ImGui
         public byte AntiAliasedLines;           // Enable anti-aliasing on lines/borders. Disable if you are really tight on CPU/GPU.
         public byte AntiAliasedShapes;          // Enable anti-aliasing on filled shapes (rounded rectangles, circles, etc.)
         public float CurveTessellationTol;       // Tessellation tolerance. Decrease for highly tessellated curves (higher quality, more polygons), increase to reduce quality.
-        //fixed ImVec4 Colors[Constants.ImGuiCol.ImGuiCol_COUNT];
-        public fixed float Colors[Constants.ImGuiCol.ImGuiCol_COUNT * 4];
-
-        /*
-        IMGUI_API ImGuiStyle();
-        */
+        public fixed float Colors[(int)ColorTarget.Count * 4];
     };
 }

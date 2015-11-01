@@ -10,14 +10,15 @@ namespace ImGui
     public static unsafe class ImGuiNative
     {
         private const string cimguiLib = "cimgui";
-        [DllImport(cimguiLib)]
-        public static extern ImGuiIO* igGetIO();
 
         [DllImport(cimguiLib)]
-        public static extern ImGuiStyle* igGetStyle();
+        public static extern IO* igGetIO(); /* { return (IO*)igGetIO_Raw().ToPointer(); } */
 
         [DllImport(cimguiLib)]
-        public static extern ImDrawData* igGetDrawData();
+        public static extern Style* igGetStyle();
+
+        [DllImport(cimguiLib)]
+        public static extern DrawData* igGetDrawData();
 
         [DllImport(cimguiLib)]
         public static extern void igNewFrame();
@@ -28,7 +29,7 @@ namespace ImGui
         [DllImport(cimguiLib)]
         public static extern void igShowUserGuide();
         [DllImport(cimguiLib)]
-        public static extern void igShowStyleEditor(ref ImGuiStyle @ref);
+        public static extern void igShowStyleEditor(ref Style @ref);
         [DllImport(cimguiLib)]
         public static extern void igShowTestWindow(ref bool opened);
         [DllImport(cimguiLib)]
@@ -60,9 +61,9 @@ namespace ImGui
         [DllImport(cimguiLib)]
         public static extern float igGetWindowContentRegionWidth();
         [DllImport(cimguiLib)]
-        public static extern ImDrawList* igGetWindowDrawList();
+        public static extern DrawList* igGetWindowDrawList();
         [DllImport(cimguiLib)]
-        public static extern ImFont* igGetWindowFont();
+        public static extern Font* igGetWindowFont();
         [DllImport(cimguiLib)]
         public static extern float igGetWindowFontSize();
         [DllImport(cimguiLib)]
@@ -137,7 +138,7 @@ namespace ImGui
 
         // Parameters stacks (shared)
         [DllImport(cimguiLib)]
-        public static extern void igPushFont(ImFont* font);
+        public static extern void igPushFont(Font* font);
         [DllImport(cimguiLib)]
         public static extern void igPopFont();
         [DllImport(cimguiLib)]
@@ -641,34 +642,34 @@ namespace ImGui
 
 
         [DllImport(cimguiLib)]
-        public static extern void ImFontAtlas_GetTexDataAsRGBA32(ImFontAtlas* atlas, byte** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
+        public static extern void ImFontAtlas_GetTexDataAsRGBA32(FontAtlas* atlas, byte** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
 
         [DllImport(cimguiLib)]
-        public static extern void ImFontAtlas_GetTexDataAsAlpha8(ImFontAtlas* atlas, byte** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
+        public static extern void ImFontAtlas_GetTexDataAsAlpha8(FontAtlas* atlas, byte** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
 
         [DllImport(cimguiLib)]
-        public static extern void ImFontAtlas_SetTexID(ImFontAtlas* atlas, void* tex);
+        public static extern void ImFontAtlas_SetTexID(FontAtlas* atlas, void* tex);
 
         [DllImport(cimguiLib)]
-        public static extern ImFont* ImFontAtlas_AddFont(ImFontAtlas* atlas, ref ImFontConfig font_cfg);
+        public static extern Font* ImFontAtlas_AddFont(FontAtlas* atlas, ref FontConfig font_cfg);
 
         [DllImport(cimguiLib)]
-        public static extern ImFont* ImFontAtlas_AddFontDefault(ImFontAtlas* atlas, IntPtr font_cfg);
-        public static ImFont* ImFontAtlas_AddFontDefault(ImFontAtlas* atlas) { return ImFontAtlas_AddFontDefault(atlas, IntPtr.Zero); }
+        public static extern Font* ImFontAtlas_AddFontDefault(FontAtlas* atlas, IntPtr font_cfg);
+        public static Font* ImFontAtlas_AddFontDefault(FontAtlas* atlas) { return ImFontAtlas_AddFontDefault(atlas, IntPtr.Zero); }
 
         [DllImport(cimguiLib)]
-        public static extern ImFont* ImFontAtlas_AddFontFromFileTTF(ImFontAtlas* atlas, string filename, float size_pixels, IntPtr font_cfg, char* glyph_ranges);
+        public static extern Font* ImFontAtlas_AddFontFromFileTTF(FontAtlas* atlas, string filename, float size_pixels, IntPtr font_cfg, char* glyph_ranges);
         [DllImport(cimguiLib)]
-        public static extern ImFont* ImFontAtlas_AddFontFromMemoryTTF(ImFontAtlas* atlas, void* ttf_data, int ttf_size, float size_pixels, IntPtr font_cfg, char* glyph_ranges);
+        public static extern Font* ImFontAtlas_AddFontFromMemoryTTF(FontAtlas* atlas, void* ttf_data, int ttf_size, float size_pixels, IntPtr font_cfg, char* glyph_ranges);
         [DllImport(cimguiLib)]
-        public static extern ImFont* ImFontAtlas_AddFontFromMemoryCompressedTTF(ImFontAtlas* atlas, void* compressed_ttf_data, int compressed_ttf_size, float size_pixels, ImFontConfig* font_cfg, char* glyph_ranges);
+        public static extern Font* ImFontAtlas_AddFontFromMemoryCompressedTTF(FontAtlas* atlas, void* compressed_ttf_data, int compressed_ttf_size, float size_pixels, FontConfig* font_cfg, char* glyph_ranges);
         [DllImport(cimguiLib)]
-        public static extern ImFont* ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(ImFontAtlas* atlas, string compressed_ttf_data_base85, float size_pixels, ImFontConfig* font_cfg, char* glyph_ranges);
+        public static extern Font* ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(FontAtlas* atlas, string compressed_ttf_data_base85, float size_pixels, FontConfig* font_cfg, char* glyph_ranges);
 
         [DllImport(cimguiLib)]
-        public static extern void ImFontAtlas_ClearTexData(ImFontAtlas* atlas);
+        public static extern void ImFontAtlas_ClearTexData(FontAtlas* atlas);
         [DllImport(cimguiLib)]
-        public static extern void ImFontAtlas_Clear(ImFontAtlas* atlas);
+        public static extern void ImFontAtlas_Clear(FontAtlas* atlas);
 
 
         [DllImport(cimguiLib)]
@@ -677,19 +678,19 @@ namespace ImGui
         public static extern void ImGuiIO_AddInputCharactersUTF8(string utf8_chars);
 
         [DllImport(cimguiLib)]
-        public static extern int ImDrawList_GetVertexBufferSize(ImDrawList* list);
+        public static extern int ImDrawList_GetVertexBufferSize(DrawList* list);
         [DllImport(cimguiLib)]
-        public static extern ImDrawVert* ImDrawList_GetVertexPtr(ImDrawList* list, int n);
+        public static extern DrawVert* ImDrawList_GetVertexPtr(DrawList* list, int n);
         [DllImport(cimguiLib)]
-        public static extern int ImDrawList_GetIndexBufferSize(ImDrawList* list);
+        public static extern int ImDrawList_GetIndexBufferSize(DrawList* list);
         [DllImport(cimguiLib)]
-        public static extern ushort* ImDrawList_GetIndexPtr(ImDrawList* list, int n);
+        public static extern ushort* ImDrawList_GetIndexPtr(DrawList* list, int n);
         [DllImport(cimguiLib)]
-        public static extern int ImDrawList_GetCmdSize(ImDrawList* list);
+        public static extern int ImDrawList_GetCmdSize(DrawList* list);
         [DllImport(cimguiLib)]
-        public static extern ImDrawCmd* ImDrawList_GetCmdPtr(ImDrawList* list, int n);
+        public static extern DrawCmd* ImDrawList_GetCmdPtr(DrawList* list, int n);
         [DllImport(cimguiLib)]
-        public static extern void ImDrawData_DeIndexAllBuffers(ImDrawData* drawData);
+        public static extern void ImDrawData_DeIndexAllBuffers(DrawData* drawData);
     }
 
     [StructLayout(LayoutKind.Sequential)]

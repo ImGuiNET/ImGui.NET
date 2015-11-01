@@ -1,7 +1,6 @@
-﻿using ImWchar = System.UInt16;
-using ImVec2 = System.Numerics.Vector2;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System;
+using System.Numerics;
 
 namespace ImGui
 {
@@ -14,7 +13,7 @@ namespace ImGui
     //  4. Call SetTexID(my_tex_id); and pass the pointer/identifier to your texture. This value will be passed back to you during rendering to identify the texture.
     //  5. Call ClearTexData() to free textures memory on the heap.
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct ImFontAtlas
+    public unsafe struct FontAtlas
     {
         /*
         public ImFont* AddFont(ImFontConfig* font_cfg) { }
@@ -54,7 +53,7 @@ namespace ImGui
         public IntPtr TexWidth;           // Texture width calculated during Build().
         public IntPtr TexHeight;          // Texture height calculated during Build().
         public IntPtr TexDesiredWidth;    // Texture width desired by user before Build(). Must be a power-of-two. If have many glyphs your graphics API have texture size restrictions you may want to increase texture width to decrease height.
-        public ImVec2 TexUvWhitePixel;    // Texture coordinates to a white pixel (part of the TexExtraData block)
+        public Vector2 TexUvWhitePixel;    // Texture coordinates to a white pixel (part of the TexExtraData block)
 
         /// <summary>
         /// (ImVector(ImFont*)

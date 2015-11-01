@@ -7,7 +7,7 @@ namespace ImGui
     // Font runtime data and rendering
     // ImFontAtlas automatically loads a default embedded font for you when you call GetTexDataAsAlpha8() or GetTexDataAsRGBA32().
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct ImFont
+    public unsafe struct Font
     {
         // Members: Settings
         public float FontSize;           // <user set>      // Height of characters, set during loading (don't change after loading)
