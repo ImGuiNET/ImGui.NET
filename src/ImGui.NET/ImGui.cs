@@ -1,5 +1,4 @@
-﻿using System;
-using System.Numerics;
+﻿using System.Numerics;
 
 namespace ImGui
 {
@@ -36,6 +35,25 @@ namespace ImGui
             return ImGuiNative.igButton(message, size);
         }
 
-
+        /// <summary>
+        /// Helper to scale the ClipRect field of each ImDrawCmd.
+        /// Use if your final output buffer is at a different scale than ImGui expects,
+        /// or if there is a difference between your window resolution and framebuffer resolution.
+        /// </summary>
+        /// <param name="drawData">Pointer to the DrawData to scale.</param>
+        /// <param name="scale">The scale to apply.</param>
+        public static unsafe void ScaleClipRects(DrawData* drawData, Vector2 scale)
+        {
+            for (int i = 0; i < drawData->CmdListsCount; i++)
+            {
+                DrawList* cmd_list = drawData->CmdLists[i];
+                for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
+                {
+                    DrawCmd* drawCmdList = (DrawCmd*)cmd_list->CmdBuffer.Data;
+                    DrawCmd* cmd = &drawCmdList[cmd_i];
+                    cmd->ClipRect = new Vector4(cmd->ClipRect.X * scale.X, cmd->ClipRect.Y * scale.Y, cmd->ClipRect.Z * scale.X, cmd->ClipRect.W * scale.Y);
+                }
+            }
+        }
     }
 }

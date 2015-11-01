@@ -160,7 +160,6 @@ namespace ImGui
         /// ImGui itself mostly only uses left button (BeginPopupContext** are using right button).
         /// Others buttons allows us to track if the mouse is being used by your application + available to user as a convenience via IsMouse** API.
         /// </summary>
-        [MarshalAs(UnmanagedType.I1)]
         public fixed byte MouseDown[5];
         /// <summary>
         /// Mouse wheel: 1 unit scrolls about 5 lines text.

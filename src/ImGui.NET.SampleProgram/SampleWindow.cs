@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading;
 using ImDrawIdx = System.UInt16;
 
 namespace ImGui
@@ -22,6 +23,8 @@ namespace ImGui
         private float _sliderVal;
         private System.Numerics.Vector4 _buttonColor = new System.Numerics.Vector4(55f / 255f, 155f / 255f, 1f, 1f);
         private bool _mainWindowOpened;
+        private static double s_desiredFrameLength = 1f / 60.0f;
+        private DateTime _previousFrameStartTime;
 
         public unsafe SampleWindow()
         {
@@ -30,7 +33,7 @@ namespace ImGui
             GraphicsContextFlags flags = GraphicsContextFlags.Default;
             _graphicsContext = new GraphicsContext(GraphicsMode.Default, _nativeWindow.WindowInfo, 3, 0, flags);
             _graphicsContext.MakeCurrent(_nativeWindow.WindowInfo);
-            ((IGraphicsContextInternal)_graphicsContext).LoadAll(); // wtf is this?
+            _graphicsContext.LoadAll(); // wtf is this?
             GL.ClearColor(Color.Black);
             _nativeWindow.Visible = true;
 
@@ -132,8 +135,23 @@ namespace ImGui
         {
             while (_nativeWindow.Visible)
             {
+                _previousFrameStartTime = DateTime.UtcNow;
+
                 RenderFrame();
                 _nativeWindow.ProcessEvents();
+
+                DateTime afterFrameTime = DateTime.UtcNow;
+                double elapsed = (afterFrameTime - _previousFrameStartTime).TotalSeconds;
+                double sleepTime = s_desiredFrameLength - elapsed;
+                if (sleepTime > 0.0)
+                {
+                    DateTime finishTime = afterFrameTime + TimeSpan.FromSeconds(sleepTime);
+                    while (DateTime.UtcNow < finishTime)
+                    {
+                        Thread.Sleep(0);
+                    }
+                    Thread.Sleep((int)(sleepTime * 1000));
+                }
             }
         }
 
@@ -179,8 +197,8 @@ namespace ImGui
             ImGuiNative.igText("World!");
             ImGuiNative.igText("From ImGui.NET. ...Did that work?");
             var pos = ImGuiNative.igGetIO()->MousePos;
-            //bool leftPressed = ImGuiNative.igGetIO()->MouseDown[0];
-            //ImGuiNative.igText("Current mouse position: " + pos + ". Pressed=" + leftPressed);
+            bool leftPressed = ImGuiNative.igGetIO()->MouseDown[0] == 1;
+            ImGuiNative.igText("Current mouse position: " + pos + ". Pressed=" + leftPressed);
 
             if (ImGuiNative.igButton("Press me!", new System.Numerics.Vector2(120, 30)))
             {
@@ -229,7 +247,7 @@ namespace ImGui
 
         private unsafe void UpdateImGuiInput(IO* io)
         {
-            MouseState cursorState = OpenTK.Input.Mouse.GetCursorState();
+            MouseState cursorState = Mouse.GetCursorState();
             MouseState mouseState = Mouse.GetState();
 
             if (_nativeWindow.Bounds.Contains(cursorState.X, cursorState.Y))
@@ -279,15 +297,12 @@ namespace ImGui
             GL.EnableClientState(ArrayCap.ColorArray);
             GL.Enable(EnableCap.Texture2D);
 
-            //glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context
             GL.UseProgram(0);
 
             // Handle cases of screen coordinates != from framebuffer coordinates (e.g. retina displays)
             IO* io = ImGuiNative.igGetIO();
             float fb_height = io->DisplaySize.Y * io->DisplayFramebufferScale.Y;
-
-            // Can implement the below in C#.
-            //draw_data->ScaleClipRects(io.DisplayFramebufferScale);
+            ImGui.ScaleClipRects(draw_data, io->DisplayFramebufferScale);
 
             // Setup orthographic projection matrix
             GL.MatrixMode(MatrixMode.Projection);
@@ -299,7 +314,6 @@ namespace ImGui
             GL.LoadIdentity();
 
             // Render command lists
-            // #define OFFSETOF(TYPE, ELEMENT) ((size_t)&(((TYPE *)0)->ELEMENT))
 
             for (int n = 0; n < draw_data->CmdListsCount; n++)
             {
@@ -311,11 +325,8 @@ namespace ImGui
                 DrawVert vert1 = *(((DrawVert*)vtx_buffer) + 1);
                 DrawVert vert2 = *(((DrawVert*)vtx_buffer) + 2);
 
-                //glVertexPointer(2, GL_FLOAT, sizeof(ImDrawVert), (void*)(vtx_buffer + OFFSETOF("pos")));
                 GL.VertexPointer(2, VertexPointerType.Float, sizeof(DrawVert), new IntPtr(vtx_buffer + DrawVert.PosOffset));
-                //glTexCoordPointer(2, GL_FLOAT, sizeof(ImDrawVert), (void*)(vtx_buffer + OFFSETOF("uv")));
                 GL.TexCoordPointer(2, TexCoordPointerType.Float, sizeof(DrawVert), new IntPtr(vtx_buffer + DrawVert.UVOffset));
-                //glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(ImDrawVert), (void*)(vtx_buffer + OFFSETOF("col")));
                 GL.ColorPointer(4, ColorPointerType.UnsignedByte, sizeof(DrawVert), new IntPtr(vtx_buffer + DrawVert.ColOffset));
 
                 for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
@@ -324,19 +335,15 @@ namespace ImGui
                     if (pcmd->UserCallback != IntPtr.Zero)
                     {
                         throw new NotImplementedException();
-                        //pcmd->UserCallback(cmd_list, pcmd);
                     }
                     else
                     {
-                        //glBindTexture(GL_TEXTURE_2D, (GLuint)(intptr_t)pcmd->TextureId);
                         GL.BindTexture(TextureTarget.Texture2D, pcmd->TextureId.ToInt32());
-                        //glScissor((int)pcmd->ClipRect.x, (int)(fb_height - pcmd->ClipRect.w), (int)(pcmd->ClipRect.z - pcmd->ClipRect.x), (int)(pcmd->ClipRect.w - pcmd->ClipRect.y));
                         GL.Scissor(
                             (int)pcmd->ClipRect.X,
                             (int)(fb_height - pcmd->ClipRect.W),
                             (int)(pcmd->ClipRect.Z - pcmd->ClipRect.X),
                             (int)(pcmd->ClipRect.W - pcmd->ClipRect.Y));
-                        //glDrawElements(GL_TRIANGLES, (GLsizei)pcmd->ElemCount, GL_UNSIGNED_SHORT, idx_buffer);
                         ushort[] indices = new ushort[pcmd->ElemCount];
                         for (int i = 0; i < indices.Length; i++) { indices[i] = idx_buffer[i]; }
                         GL.DrawElements(PrimitiveType.Triangles, (int)pcmd->ElemCount, DrawElementsType.UnsignedShort, new IntPtr(idx_buffer));
@@ -344,7 +351,6 @@ namespace ImGui
                     idx_buffer += pcmd->ElemCount;
                 }
             }
-            // #undef OFFSETOF
 
             // Restore modified state
             GL.DisableClientState(ArrayCap.ColorArray);
