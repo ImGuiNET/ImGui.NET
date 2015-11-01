@@ -1,0 +1,10 @@
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <!-- Import portable targets -->
+    <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+    <Import Project="$(MSBuildThisFileDirectory)\coreconsole.targets" />
+    <Import Project="$(MSBuildThisFileDirectory)\vsdebug.targets" />
+    <!-- Override this. -->
+    <PropertyGroup>
+       <NuGetTargetMoniker>DNXCore,Version=v5.0</NuGetTargetMoniker>
+    </PropertyGroup>
+</Project>
