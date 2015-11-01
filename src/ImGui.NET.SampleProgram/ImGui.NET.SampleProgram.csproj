@@ -8,6 +8,8 @@
     <RootNamespace>ImGui</RootNamespace>
     <AssemblyName>SampleGUIProgram</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- To shut VS up -->
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
