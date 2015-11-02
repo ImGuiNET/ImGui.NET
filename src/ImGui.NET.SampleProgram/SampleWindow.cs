@@ -3,11 +3,12 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System;
-using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
-using ImDrawIdx = System.UInt16;
+
+#if NETFRAMEWORK
+using System.Drawing;
+#endif
 
 namespace ImGui
 {
