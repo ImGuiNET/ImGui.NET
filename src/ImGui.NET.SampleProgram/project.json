@@ -2,13 +2,14 @@
   "dependencies": {
     "Microsoft.NETCore.Console": "1.0.0-beta-23430",
     "System.Console": "4.0.0-beta-23430",
+    "System.Reflection.Metadata": "1.1.1-beta-23430",
     "System.Threading.Thread": "4.0.0-beta-23430"
   },
   "runtimes": {
-    "win10-x64": { },
-    "ubuntu.14.04-x64": { }
+    "win10-x64": {},
+    "ubuntu.14.04-x64": {}
   },
   "frameworks": {
-    "dnxcore50": { }
+    "dnxcore50": {}
   }
 }
