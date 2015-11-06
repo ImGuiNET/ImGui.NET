@@ -31,16 +31,6 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igShowStyleEditor(ref Style @ref);
 
-        public static void igBegin(string v, ref object _mainWindowOpened, WindowFlags windowFlags)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static void igBeginChildFrame(uint _leftFrameId, Vector2 vector2)
-        {
-            throw new NotImplementedException();
-        }
-
         [DllImport(cimguiLib)]
         public static extern void igShowTestWindow(ref bool opened);
         [DllImport(cimguiLib)]
@@ -63,11 +53,6 @@ namespace ImGuiNET
         public static extern void igGetContentRegionMax(out Vector2 @out);
         [DllImport(cimguiLib)]
         public static extern void igGetContentRegionAvail(out Vector2 @out);
-
-        public static void igSliderFloat(string v1, ref object _sliderVal, float v2, float v3, string v4, int v5)
-        {
-            throw new NotImplementedException();
-        }
 
         [DllImport(cimguiLib)]
         public static extern float igGetContentRegionAvailWidth();
@@ -416,19 +401,10 @@ namespace ImGuiNET
         public static extern bool igTreeNode(string str_label_id);
 
         [DllImport(cimguiLib)]
-        //public static extern bool igTreeNodeStr(string str_id, string fmt, ...);
         public static extern bool igTreeNodeStr(string str_id, string fmt);
 
         [DllImport(cimguiLib)]
-        //public static extern bool igTreeNodePtr(void* ptr_id, string fmt, ...);
         public static extern bool igTreeNodePtr(void* ptr_id, string fmt);
-
-        /*
-        [DllImport(LibName)]
-        public static extern bool igTreeNodeStrV(string str_id, string fmt, va_list args);
-        [DllImport(LibName)]
-        public static extern bool igTreeNodePtrV(void* ptr_id, string fmt, va_list args);
-        */
 
         [DllImport(cimguiLib)]
         public static extern void igTreePushStr(string str_id);
@@ -443,7 +419,7 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern bool igSelectable(string label, bool selected, SelectableFlags flags, Vector2 size);
         [DllImport(cimguiLib)]
-        public static extern bool igSelectableEx(string label, bool* p_selected, SelectableFlags flags, Vector2 size);
+        public static extern bool igSelectableEx(string label, ref bool p_selected, SelectableFlags flags, Vector2 size);
         [DllImport(cimguiLib)]
         public static extern bool igListBox(string label, int* current_item, char** items, int items_count, int height_in_items);
 
@@ -473,14 +449,7 @@ namespace ImGuiNET
 
         // Tooltip
         [DllImport(cimguiLib)]
-        //public static extern void igSetTooltip(string fmt, ...);
         public static extern void igSetTooltip(string fmt);
-
-        /*
-        [DllImport(LibName)]
-        public static extern void igSetTooltipV(string fmt, va_list args);
-        */
-
         [DllImport(cimguiLib)]
         public static extern void igBeginTooltip();
         [DllImport(cimguiLib)]
@@ -569,11 +538,11 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern bool igIsAnyItemActive();
         [DllImport(cimguiLib)]
-        public static extern void igGetItemRectMin(Vector2* pOut);
+        public static extern void igGetItemRectMin(out Vector2 pOut);
         [DllImport(cimguiLib)]
-        public static extern void igGetItemRectMax(Vector2* pOut);
+        public static extern void igGetItemRectMax(out Vector2 pOut);
         [DllImport(cimguiLib)]
-        public static extern void igGetItemRectSize(Vector2* pOut);
+        public static extern void igGetItemRectSize(out Vector2 pOut);
         [DllImport(cimguiLib)]
         public static extern bool igIsWindowHovered();
         [DllImport(cimguiLib)]
@@ -593,9 +562,9 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern string igGetStyleColName(ColorTarget idx);
         [DllImport(cimguiLib)]
-        public static extern void igCalcItemRectClosestPoint(Vector2* pOut, Vector2 pos, bool on_edge, float outward);
+        public static extern void igCalcItemRectClosestPoint(out Vector2 pOut, Vector2 pos, bool on_edge, float outward);
         [DllImport(cimguiLib)]
-        public static extern void igCalcTextSize(Vector2* pOut, string text, string text_end, bool hide_text_after_double_hash, float wrap_width);
+        public static extern void igCalcTextSize(out Vector2 pOut, char* text, char* text_end, bool hide_text_after_double_hash, float wrap_width);
         [DllImport(cimguiLib)]
         public static extern void igCalcListClipping(int items_count, float items_height, int* out_items_display_start, int* out_items_display_end);
 

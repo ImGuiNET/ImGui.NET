@@ -1,7 +1,6 @@
 ﻿{
   "dependencies": {
-    "Microsoft.NETCore.Console": "1.0.0-beta-23413",
-    "System.Console": "4.0.0-beta-23427"
+    "Microsoft.NETCore.Console": "1.0.0-beta-23504"
   },
   "runtimes": {
     "win10-x64": { },
