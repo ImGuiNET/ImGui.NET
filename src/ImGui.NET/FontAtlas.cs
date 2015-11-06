@@ -2,7 +2,7 @@
 using System;
 using System.Numerics;
 
-namespace ImGui
+namespace ImGuiNET
 {
     // Load and rasterize multiple TTF fonts into a same texture.
     // Sharing a texture for multiple fonts allows us to reduce the number of draw calls during rendering.

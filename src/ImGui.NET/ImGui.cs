@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace ImGui
+namespace ImGuiNET
 {
     public static class ImGui
     {

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace ImGui
+namespace ImGuiNET
 {
     // All draw data to render an ImGui frame
     [StructLayout(LayoutKind.Sequential)]

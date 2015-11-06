@@ -1,4 +1,4 @@
-﻿namespace ImGui
+﻿namespace ImGuiNET
 {
     /// <summary>
     /// Enumeration for GetMouseCursor()

@@ -2,7 +2,7 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 
-namespace ImGui
+namespace ImGuiNET
 {
     /// <summary>
     /// Typically, 1 command = 1 gpu draw call (unless command is a callback)

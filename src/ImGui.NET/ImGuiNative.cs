@@ -2,7 +2,7 @@
 using System.Numerics;
 using System;
 
-namespace ImGui
+namespace ImGuiNET
 {
     /// <summary>
     /// Contains all of the exported functions from the native (c)imGui module.
@@ -30,6 +30,17 @@ namespace ImGui
         public static extern void igShowUserGuide();
         [DllImport(cimguiLib)]
         public static extern void igShowStyleEditor(ref Style @ref);
+
+        public static void igBegin(string v, ref object _mainWindowOpened, WindowFlags windowFlags)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void igBeginChildFrame(uint _leftFrameId, Vector2 vector2)
+        {
+            throw new NotImplementedException();
+        }
+
         [DllImport(cimguiLib)]
         public static extern void igShowTestWindow(ref bool opened);
         [DllImport(cimguiLib)]
@@ -52,6 +63,12 @@ namespace ImGui
         public static extern void igGetContentRegionMax(out Vector2 @out);
         [DllImport(cimguiLib)]
         public static extern void igGetContentRegionAvail(out Vector2 @out);
+
+        public static void igSliderFloat(string v1, ref object _sliderVal, float v2, float v3, string v4, int v5)
+        {
+            throw new NotImplementedException();
+        }
+
         [DllImport(cimguiLib)]
         public static extern float igGetContentRegionAvailWidth();
         [DllImport(cimguiLib)]
@@ -494,8 +511,23 @@ namespace ImGui
         public static extern void igOpenPopup(string str_id);
         [DllImport(cimguiLib)]
         public static extern bool igBeginPopup(string str_id);
-        [DllImport(cimguiLib)]
-        public static extern bool igBeginPopupModal(string name, ref bool p_opened, WindowFlags extra_flags);
+        [DllImport(cimguiLib, CharSet=CharSet.Ansi)]
+        public static extern bool igBeginPopupModal(string name, byte* p_opened, WindowFlags extra_flags);
+
+        public static bool igBeginPopupModal(string name, WindowFlags extra_flags)
+        {
+            return igBeginPopupModal(name, null, extra_flags);
+        }
+
+        public static bool igBeginPopupModal(string name, ref bool p_opened, WindowFlags extra_flags)
+        {
+            byte value = p_opened ? (byte)1 : (byte)0;
+            bool result = igBeginPopupModal(name, &value, extra_flags);
+
+            p_opened = value == 1 ? true : false;
+            return result;
+        }
+
         [DllImport(cimguiLib)]
         public static extern bool igBeginPopupContextItem(string str_id, int mouse_button);
         [DllImport(cimguiLib)]
