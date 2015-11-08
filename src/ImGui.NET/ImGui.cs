@@ -121,9 +121,22 @@ namespace ImGuiNET
             ImGuiNative.igBeginMenuBar();
         }
 
+        public static void CloseCurrentPopup()
+        {
+            ImGuiNative.igCloseCurrentPopup();
+        }
+
         public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, WindowFlags flags)
         {
             return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, 1f, flags);
+        }
+
+        public static unsafe bool Checkbox(string label, ref bool value)
+        {
+            bool localVal = value;
+            bool result = ImGuiNative.igCheckbox(label, &localVal);
+            value = localVal;
+            return result;
         }
 
         public static void EndMenuBar()

@@ -265,7 +265,7 @@ namespace ImGuiNET
         public static extern void igTextWrapped(string fmt);
 
         [DllImport(cimguiLib)]
-        public static extern void igTextUnformatted(string text, string text_end);
+        public static extern void igTextUnformatted(byte* text, byte* text_end);
 
         [DllImport(cimguiLib)]
         public static extern void igLabelText(string label, string fmt);
@@ -480,7 +480,7 @@ namespace ImGuiNET
         public static extern void igOpenPopup(string str_id);
         [DllImport(cimguiLib)]
         public static extern bool igBeginPopup(string str_id);
-        [DllImport(cimguiLib, CharSet=CharSet.Ansi)]
+        [DllImport(cimguiLib, CharSet = CharSet.Ansi)]
         public static extern bool igBeginPopupModal(string name, byte* p_opened, WindowFlags extra_flags);
 
         public static bool igBeginPopupModal(string name, WindowFlags extra_flags)
