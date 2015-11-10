@@ -1,4 +1,4 @@
-﻿namespace ImGui
+﻿namespace ImGuiNET
 {
     /// <summary>
     /// User fill ImGuiIO.KeyMap[] array with indices into the ImGuiIO.KeysDown[512] array

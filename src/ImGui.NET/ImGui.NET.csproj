@@ -5,7 +5,7 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <ProjectGuid>{2665014F-0FEC-4268-8F77-7B029921AB09}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>ImGui</RootNamespace>
+    <RootNamespace>ImGuiNET</RootNamespace>
     <AssemblyName>ImGui.NET</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -15,6 +15,7 @@
     <Compile Include="MouseCursorKind.cs" />
     <Compile Include="SelectableFlags.cs" />
     <Compile Include="StyleVar.cs" />
+    <Compile Include="TextInputBuffer.cs" />
     <Compile Include="WindowFlags.cs" />
     <Compile Include="ColorEditMode.cs" />
     <Compile Include="GuiKey.cs" />
@@ -79,6 +80,9 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
     <None Include="project.json" />

@@ -1,4 +1,4 @@
-﻿namespace ImGui
+﻿namespace ImGuiNET
 {
     public enum Align
     {

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace ImGui
+namespace ImGuiNET
 {
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct ImVector

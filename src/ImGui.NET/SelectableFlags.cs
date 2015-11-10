@@ -1,4 +1,4 @@
-﻿namespace ImGui
+﻿namespace ImGuiNET
 {
     /// <summary>
     /// Flags for ImGui::Selectable()

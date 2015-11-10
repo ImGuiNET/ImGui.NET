@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Numerics;
 
-namespace ImGui
+namespace ImGuiNET
 {
     /// <summary>
     /// Font runtime data and rendering.
