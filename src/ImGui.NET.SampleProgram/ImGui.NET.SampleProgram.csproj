@@ -5,10 +5,9 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <ProjectGuid>{AE9BC745-284F-42F3-8236-C43F00000000}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ImGui</RootNamespace>
+    <RootNamespace>ImGuiNET</RootNamespace>
     <AssemblyName>SampleGUIProgram</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <!-- To shut VS up -->
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
@@ -25,7 +24,9 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="$(DepsDir)OpenTK\OpenTK.dll" />
+    <Reference Include="$(DepsDir)OpenTK\OpenTK.dll">
+      <Private>True</Private>
+    </Reference>
     <ProjectReference Include="../ImGui.NET/ImGui.NET.csproj">
       <Name>ImGUI.NET</Name>
     </ProjectReference>

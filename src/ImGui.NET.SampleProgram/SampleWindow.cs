@@ -10,7 +10,7 @@ using System.Threading;
 using System.Drawing;
 #endif
 
-namespace ImGui
+namespace ImGuiNET
 {
     public class SampleWindow
     {

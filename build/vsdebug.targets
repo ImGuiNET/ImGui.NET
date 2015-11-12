@@ -1,7 +1,8 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <!-- Set up the debug target for portable executables -->
-  <PropertyGroup Condition="'$(OutputType)'=='Exe'">
+  <!-- Set up the debug target for CoreCLR executables -->
+  <PropertyGroup Condition="'$(TargetFrameworkIdentifier)' == 'None'
+                            And '$(OutputType)'=='Exe'">
     <StartWorkingDirectory Condition="'$(StartWorkingDirectory)' == ''">$(OutDir)</StartWorkingDirectory>
     <StartAction Condition="'$(StartAction)' == ''">Program</StartAction>
     <StartProgram Condition="'$(StartProgram)' == ''">$(TargetPath)</StartProgram>

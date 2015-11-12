@@ -6,8 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
     <ProjectGuid>{47EF850E-D555-49E7-814B-68372123CB25}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ImGui.NET.SampleProgram.Net46</RootNamespace>
-    <AssemblyName>ImGui.NET.SampleProgram.Net46</AssemblyName>
+    <RootNamespace>ImGuiNET</RootNamespace>
+    <AssemblyName>SampleGUIProgram</AssemblyName>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -50,5 +51,5 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
 </Project>
