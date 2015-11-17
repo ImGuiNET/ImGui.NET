@@ -4,7 +4,8 @@ namespace ImGuiNET
     {
         public static unsafe void Main(string[] args)
         {
-            new SampleWindow().RunWindowLoop();
+            var window = new SampleWindow();            
+            window.RunWindowLoop();
         }
     }
 }

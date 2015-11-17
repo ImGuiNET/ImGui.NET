@@ -30,11 +30,10 @@ namespace ImGuiNET
         public unsafe SampleWindow()
         {
             _nativeWindow = new NativeWindow(960, 540, "ImGui.NET", GameWindowFlags.Default, OpenTK.Graphics.GraphicsMode.Default, DisplayDevice.Default);
-            _nativeWindow.WindowBorder = WindowBorder.Resizable;
             GraphicsContextFlags flags = GraphicsContextFlags.Default;
             _graphicsContext = new GraphicsContext(GraphicsMode.Default, _nativeWindow.WindowInfo, 3, 0, flags);
             _graphicsContext.MakeCurrent(_nativeWindow.WindowInfo);
-            _graphicsContext.LoadAll(); // wtf is this?
+            ((IGraphicsContextInternal)_graphicsContext).LoadAll(); // wtf is this?
             GL.ClearColor(Color.Black);
             _nativeWindow.Visible = true;
 
@@ -42,10 +41,9 @@ namespace ImGuiNET
             _nativeWindow.KeyUp += OnKeyUp;
             _nativeWindow.KeyPress += OnKeyPress;
 
-            IO* io = ImGuiNative.igGetIO();
-            ImGuiNative.ImFontAtlas_AddFontDefault(io->FontAtlas);
+            ImGui.LoadDefaultFont();
 
-            SetOpenTKKeyMappings(io);
+            SetOpenTKKeyMappings();
 
             _textInputBufferLength = 1024;
             _textInputBuffer = Marshal.AllocHGlobal(_textInputBufferLength);
@@ -60,85 +58,94 @@ namespace ImGuiNET
 
         private void OnKeyPress(object sender, KeyPressEventArgs e)
         {
-            ImGuiNative.ImGuiIO_AddInputCharacter(e.KeyChar);
+            ImGui.AddInputCharacter(e.KeyChar);
         }
 
-        private static unsafe void SetOpenTKKeyMappings(IO* io)
+        private static unsafe void SetOpenTKKeyMappings()
         {
-            io->KeyMap[(int)GuiKey.Tab] = (int)Key.Tab;
-            io->KeyMap[(int)GuiKey.LeftArrow] = (int)Key.Left;
-            io->KeyMap[(int)GuiKey.RightArrow] = (int)Key.Right;
-            io->KeyMap[(int)GuiKey.UpArrow] = (int)Key.Up;
-            io->KeyMap[(int)GuiKey.DownArrow] = (int)Key.Down;
-            io->KeyMap[(int)GuiKey.PageUp] = (int)Key.PageUp;
-            io->KeyMap[(int)GuiKey.PageDown] = (int)Key.PageDown;
-            io->KeyMap[(int)GuiKey.Home] = (int)Key.Home;
-            io->KeyMap[(int)GuiKey.End] = (int)Key.End;
-            io->KeyMap[(int)GuiKey.Delete] = (int)Key.Delete;
-            io->KeyMap[(int)GuiKey.Backspace] = (int)Key.BackSpace;
-            io->KeyMap[(int)GuiKey.Enter] = (int)Key.Enter;
-            io->KeyMap[(int)GuiKey.Escape] = (int)Key.Escape;
-            io->KeyMap[(int)GuiKey.A] = (int)Key.A;
-            io->KeyMap[(int)GuiKey.C] = (int)Key.C;
-            io->KeyMap[(int)GuiKey.V] = (int)Key.V;
-            io->KeyMap[(int)GuiKey.X] = (int)Key.X;
-            io->KeyMap[(int)GuiKey.Y] = (int)Key.Y;
-            io->KeyMap[(int)GuiKey.Z] = (int)Key.Z;
+            IO io = ImGui.GetIO();
+            io.KeyMap[GuiKey.Tab] = (int)Key.Tab;
+            io.KeyMap[GuiKey.LeftArrow] = (int)Key.Left;
+            io.KeyMap[GuiKey.RightArrow] = (int)Key.Right;
+            io.KeyMap[GuiKey.UpArrow] = (int)Key.Up;
+            io.KeyMap[GuiKey.DownArrow] = (int)Key.Down;
+            io.KeyMap[GuiKey.PageUp] = (int)Key.PageUp;
+            io.KeyMap[GuiKey.PageDown] = (int)Key.PageDown;
+            io.KeyMap[GuiKey.Home] = (int)Key.Home;
+            io.KeyMap[GuiKey.End] = (int)Key.End;
+            io.KeyMap[GuiKey.Delete] = (int)Key.Delete;
+            io.KeyMap[GuiKey.Backspace] = (int)Key.BackSpace;
+            io.KeyMap[GuiKey.Enter] = (int)Key.Enter;
+            io.KeyMap[GuiKey.Escape] = (int)Key.Escape;
+            io.KeyMap[GuiKey.A] = (int)Key.A;
+            io.KeyMap[GuiKey.C] = (int)Key.C;
+            io.KeyMap[GuiKey.V] = (int)Key.V;
+            io.KeyMap[GuiKey.X] = (int)Key.X;
+            io.KeyMap[GuiKey.Y] = (int)Key.Y;
+            io.KeyMap[GuiKey.Z] = (int)Key.Z;
         }
 
         private unsafe void OnKeyDown(object sender, KeyboardKeyEventArgs e)
         {
-            var ptr = ImGuiNative.igGetIO();
-            ptr->KeysDown[(int)e.Key] = 1;
-            UpdateModifiers(e, ptr);
+            ImGui.GetIO().KeysDown[(int)e.Key] = true;
+            UpdateModifiers(e);
         }
 
         private unsafe void OnKeyUp(object sender, KeyboardKeyEventArgs e)
         {
-            var ptr = ImGuiNative.igGetIO();
-            ptr->KeysDown[(int)e.Key] = 0;
-            UpdateModifiers(e, ptr);
+            ImGui.GetIO().KeysDown[(int)e.Key] = false;
+            UpdateModifiers(e);
         }
 
-        private static unsafe void UpdateModifiers(KeyboardKeyEventArgs e, IO* ptr)
+        private static unsafe void UpdateModifiers(KeyboardKeyEventArgs e)
         {
-            ptr->KeyAlt = e.Alt ? (byte)1 : (byte)0;
-            ptr->KeyCtrl = e.Control ? (byte)1 : (byte)0;
-            ptr->KeyShift = e.Shift ? (byte)1 : (byte)0;
+            IO io = ImGui.GetIO();
+            io.AltPressed = e.Alt;
+            io.CtrlPressed = e.Control;
+            io.ShiftPressed = e.Shift;
         }
 
         private unsafe void CreateDeviceObjects()
         {
-            IO* io = ImGuiNative.igGetIO();
+            IO io = ImGui.GetIO();
 
             // Build texture atlas
-            byte* pixels;
-            int width, height;
-            ImGuiNative.ImFontAtlas_GetTexDataAsAlpha8(io->FontAtlas, &pixels, &width, &height, null);
+            Alpha8TexData texData = io.FontAtlas.GetTexDataAsAlpha8();
 
             // Create OpenGL texture
             s_fontTexture = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2D, s_fontTexture);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Alpha, width, height, 0, PixelFormat.Alpha, PixelType.UnsignedByte, new IntPtr(pixels));
+            GL.TexImage2D(
+                TextureTarget.Texture2D,
+                0,
+                PixelInternalFormat.Alpha,
+                texData.Width,
+                texData.Height,
+                0,
+                PixelFormat.Alpha,
+                PixelType.UnsignedByte,
+                new IntPtr(texData.Pixels));
 
             // Store the texture identifier in the ImFontAtlas substructure.
-            io->FontAtlas->TexID = new IntPtr(s_fontTexture).ToPointer();
+            io.FontAtlas.SetTexID(s_fontTexture);
 
             // Cleanup (don't clear the input data if you want to append new fonts later)
             //io.Fonts->ClearInputData();
-            ImGuiNative.ImFontAtlas_ClearTexData(io->FontAtlas);
+            io.FontAtlas.ClearTexData();
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
         public void RunWindowLoop()
         {
+            _nativeWindow.Visible = true;
             while (_nativeWindow.Visible)
             {
                 _previousFrameStartTime = DateTime.UtcNow;
 
                 RenderFrame();
+
                 _nativeWindow.ProcessEvents();
 
                 DateTime afterFrameTime = DateTime.UtcNow;
@@ -151,79 +158,78 @@ namespace ImGuiNET
                     {
                         Thread.Sleep(0);
                     }
-                    Thread.Sleep((int)(sleepTime * 1000));
                 }
             }
         }
 
         private unsafe void RenderFrame()
         {
-            IO* io = ImGuiNative.igGetIO();
-            io->DisplaySize = new System.Numerics.Vector2(_nativeWindow.Width, _nativeWindow.Height);
-            io->DisplayFramebufferScale = new System.Numerics.Vector2(1, 1);
-            io->DeltaTime = (1f / 60f);
+            IO io = ImGui.GetIO();
+            io.DisplaySize = new System.Numerics.Vector2(_nativeWindow.Width, _nativeWindow.Height);
+            io.DisplayFramebufferScale = new System.Numerics.Vector2(1, 1);
+            io.DeltaTime = (1f / 60f);
 
             UpdateImGuiInput(io);
 
-            ImGuiNative.igNewFrame();
+            ImGui.NewFrame();
 
-            SubmitImGuiStiff();
+            SubmitImGuiStuff();
 
-            ImGuiNative.igRender();
+            ImGui.Render();
 
-            DrawData* data = ImGuiNative.igGetDrawData();
+            DrawData* data = ImGui.GetDrawData();
             RenderImDrawData(data);
         }
 
-        private unsafe void SubmitImGuiStiff()
+        private unsafe void SubmitImGuiStuff()
         {
-            ImGuiNative.igGetStyle()->WindowRounding = 0;
+            ImGui.GetStyle().WindowRounding = 0;
 
-            ImGuiNative.igSetNextWindowSize(new System.Numerics.Vector2(_nativeWindow.Width - 10, _nativeWindow.Height - 20), SetCondition.Always);
-            ImGuiNative.igSetNextWindowPosCenter(SetCondition.Always);
-            ImGuiNative.igBegin("ImGUI.NET Sample Program", ref _mainWindowOpened, WindowFlags.NoResize | WindowFlags.NoTitleBar | WindowFlags.NoMove);
+            ImGui.SetNextWindowSize(new System.Numerics.Vector2(_nativeWindow.Width - 10, _nativeWindow.Height - 20), SetCondition.Always);
+            ImGui.SetNextWindowPosCenter(SetCondition.Always);
+            ImGui.BeginWindow("ImGUI.NET Sample Program", ref _mainWindowOpened, WindowFlags.NoResize | WindowFlags.NoTitleBar | WindowFlags.NoMove);
 
-            ImGuiNative.igBeginMainMenuBar();
-            if (ImGuiNative.igBeginMenu("Help"))
+            ImGui.BeginMainMenuBar();
+            if (ImGui.BeginMenu("Help"))
             {
-                if (ImGuiNative.igMenuItem("About", "Ctrl-Alt-A", false, true))
+                if (ImGui.MenuItem("About", "Ctrl-Alt-A", false, true))
                 {
 
                 }
-                ImGuiNative.igEndMenu();
+                ImGui.EndMenu();
             }
-            ImGuiNative.igEndMainMenuBar();
+            ImGui.EndMainMenuBar();
 
-            ImGuiNative.igText("Hello,");
-            ImGuiNative.igText("World!");
-            ImGuiNative.igText("From ImGui.NET. ...Did that work?");
-            var pos = ImGuiNative.igGetIO()->MousePos;
-            bool leftPressed = ImGuiNative.igGetIO()->MouseDown[0] == 1;
-            ImGuiNative.igText("Current mouse position: " + pos + ". Pressed=" + leftPressed);
+            ImGui.Text("Hello,");
+            ImGui.Text("World!");
+            ImGui.Text("From ImGui.NET. ...Did that work?");
+            var pos = ImGui.GetIO().MousePosition;
+            bool leftPressed = ImGui.GetIO().MouseDown[0];
+            ImGui.Text("Current mouse position: " + pos + ". Pressed=" + leftPressed);
 
-            if (ImGuiNative.igButton("Press me!", new System.Numerics.Vector2(120, 30)))
+            if (ImGui.Button("Press me!", new System.Numerics.Vector2(120, 30)))
             {
                 _pressCount += 1;
             }
 
-            ImGuiNative.igTextColored(new System.Numerics.Vector4(0, 1, 1, 1), $"Button pressed {_pressCount} times.");
+            ImGui.TextColored(new System.Numerics.Vector4(0, 1, 1, 1), $"Button pressed {_pressCount} times.");
 
-            ImGuiNative.igInputTextMultiline("Input some numbers:",
+            ImGui.InputTextMultiline("Input some numbers:",
                 _textInputBuffer, (uint)_textInputBufferLength,
                 new System.Numerics.Vector2(360, 240),
                 InputTextFlags.CharsDecimal,
-                OnTextEdited, null);
+                OnTextEdited);
 
-            ImGuiNative.igSliderFloat("SlidableValue", ref _sliderVal, -50f, 100f, $"{_sliderVal.ToString("##0.00")}", 1);
+            ImGui.SliderFloat("SlidableValue", ref _sliderVal, -50f, 100f, $"{_sliderVal.ToString("##0.00")}", 1.0f);
 
-            if (ImGuiNative.igTreeNode("First Item"))
+            if (ImGui.TreeNode("First Item"))
             {
-                ImGuiNative.igText("Word!");
-                ImGuiNative.igTreePop();
+                ImGui.Text("Word!");
+                ImGui.TreePop();
             }
-            if (ImGuiNative.igTreeNode("Second Item"))
+            if (ImGui.TreeNode("Second Item"))
             {
-                ImGuiNative.igColorButton(_buttonColor, false, true);
+                ImGui.ColorButton(_buttonColor, false, true);
                 if (ImGui.Button("Push me to change color", new System.Numerics.Vector2(120, 30)))
                 {
                     _buttonColor = new System.Numerics.Vector4(_buttonColor.Y + .25f, _buttonColor.Z, _buttonColor.X, _buttonColor.W);
@@ -233,20 +239,24 @@ namespace ImGuiNET
                     }
                 }
 
-                ImGuiNative.igTreePop();
+                ImGui.TreePop();
             }
 
-            ImGuiNative.igEnd();
+            ImGui.EndWindow();
+
+            if (ImGui.GetIO().AltPressed && ImGui.GetIO().KeysDown[(int)Key.F4])
+            {
+                _nativeWindow.Close();
+            }
         }
 
         private unsafe int OnTextEdited(TextEditCallbackData* data)
         {
             char currentEventChar = (char)data->EventChar;
-            Console.WriteLine("Event char: " + currentEventChar);
             return 0;
         }
 
-        private unsafe void UpdateImGuiInput(IO* io)
+        private unsafe void UpdateImGuiInput(IO io)
         {
             MouseState cursorState = Mouse.GetCursorState();
             MouseState mouseState = Mouse.GetState();
@@ -254,21 +264,21 @@ namespace ImGuiNET
             if (_nativeWindow.Bounds.Contains(cursorState.X, cursorState.Y))
             {
                 Point windowPoint = _nativeWindow.PointToClient(new Point(cursorState.X, cursorState.Y));
-                io->MousePos = new System.Numerics.Vector2(windowPoint.X, windowPoint.Y);
+                io.MousePosition = new System.Numerics.Vector2(windowPoint.X, windowPoint.Y);
             }
             else
             {
-                io->MousePos = new System.Numerics.Vector2(-1f, -1f);
+                io.MousePosition = new System.Numerics.Vector2(-1f, -1f);
             }
 
-            io->MouseDown[0] = (mouseState.LeftButton == ButtonState.Pressed) ? (byte)255 : (byte)0; // Left
-            io->MouseDown[1] = (mouseState.RightButton == ButtonState.Pressed) ? (byte)255 : (byte)0; // Right
-            io->MouseDown[2] = (mouseState.MiddleButton == ButtonState.Pressed) ? (byte)255 : (byte)0; // Middle
+            io.MouseDown[0] = mouseState.LeftButton == ButtonState.Pressed;
+            io.MouseDown[1] = mouseState.RightButton == ButtonState.Pressed;
+            io.MouseDown[2] = mouseState.MiddleButton == ButtonState.Pressed;
 
             float newWheelPos = mouseState.WheelPrecise;
             float delta = newWheelPos - _wheelPosition;
             _wheelPosition = newWheelPos;
-            io->MouseWheel = delta;
+            io.MouseWheel = delta;
         }
 
         private unsafe void RenderImDrawData(DrawData* draw_data)
@@ -301,15 +311,15 @@ namespace ImGuiNET
             GL.UseProgram(0);
 
             // Handle cases of screen coordinates != from framebuffer coordinates (e.g. retina displays)
-            IO* io = ImGuiNative.igGetIO();
-            float fb_height = io->DisplaySize.Y * io->DisplayFramebufferScale.Y;
-            ImGui.ScaleClipRects(draw_data, io->DisplayFramebufferScale);
+            IO io = ImGui.GetIO();
+            float fb_height = io.DisplaySize.Y * io.DisplayFramebufferScale.Y;
+            ImGui.ScaleClipRects(draw_data, io.DisplayFramebufferScale);
 
             // Setup orthographic projection matrix
             GL.MatrixMode(MatrixMode.Projection);
             GL.PushMatrix();
             GL.LoadIdentity();
-            GL.Ortho(0.0f, io->DisplaySize.X, io->DisplaySize.Y, 0.0f, -1.0f, 1.0f);
+            GL.Ortho(0.0f, io.DisplaySize.X, io.DisplaySize.Y, 0.0f, -1.0f, 1.0f);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.PushMatrix();
             GL.LoadIdentity();

@@ -12,7 +12,7 @@ namespace ImGuiNET
         private const string cimguiLib = "cimgui";
 
         [DllImport(cimguiLib)]
-        public static extern IO* igGetIO(); /* { return (IO*)igGetIO_Raw().ToPointer(); } */
+        public static extern NativeIO* igGetIO(); /* { return (IO*)igGetIO_Raw().ToPointer(); } */
 
         [DllImport(cimguiLib)]
         public static extern Style* igGetStyle();

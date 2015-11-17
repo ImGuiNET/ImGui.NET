@@ -13,6 +13,7 @@
     <Compile Include="Align.cs" />
     <Compile Include="ColorTarget.cs" />
     <Compile Include="MouseCursorKind.cs" />
+    <Compile Include="NativeIO.cs" />
     <Compile Include="SelectableFlags.cs" />
     <Compile Include="StyleVar.cs" />
     <Compile Include="TextInputBuffer.cs" />
@@ -86,6 +87,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
   </ItemGroup>
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
 </Project>

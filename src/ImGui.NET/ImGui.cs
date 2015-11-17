@@ -16,9 +16,20 @@ namespace ImGuiNET
             ImGuiNative.igRender();
         }
 
+        private static unsafe readonly IO s_io = new IO(ImGuiNative.igGetIO());
+
+        public static unsafe IO GetIO() => s_io;
+
+        private static unsafe readonly StyleWrapped s_style = new StyleWrapped(ImGuiNative.igGetStyle());
+
+        public static unsafe StyleWrapped GetStyle()
+        {
+            return s_style;
+        }
+
         public static unsafe void LoadDefaultFont()
         {
-            IO* ioPtr = ImGuiNative.igGetIO();
+            NativeIO* ioPtr = ImGuiNative.igGetIO();
             ImGuiNative.ImFontAtlas_AddFontDefault(ioPtr->FontAtlas);
         }
 
@@ -55,6 +66,11 @@ namespace ImGuiNET
         public static void SetNextWindowPosCenter(SetCondition condition)
         {
             ImGuiNative.igSetNextWindowPosCenter(condition);
+        }
+
+        public static void AddInputCharacter(char keyChar)
+        {
+            ImGuiNative.ImGuiIO_AddInputCharacter(keyChar);
         }
 
         /// <summary>
@@ -109,6 +125,11 @@ namespace ImGuiNET
         public static bool BeginWindow(string windowTitle, ref bool opened, float backgroundAlpha, WindowFlags flags)
         {
             return ImGuiNative.igBegin2(windowTitle, ref opened, new Vector2(), backgroundAlpha, flags);
+        }
+
+        public static bool BeginMenu(string label)
+        {
+            return ImGuiNative.igBeginMenu(label, true);
         }
 
         public static bool BeginMenu(string label, bool enabled)
@@ -189,6 +210,16 @@ namespace ImGuiNET
             ImGuiNative.igPushStyleColor(target, color);
         }
 
+        public static unsafe void InputTextMultiline(string label, IntPtr textBuffer, uint bufferSize, Vector2 size, InputTextFlags flags, TextEditCallback callback)
+        {
+            ImGuiNative.igInputTextMultiline(label, textBuffer, bufferSize, size, flags, callback, null);
+        }
+
+        public static unsafe DrawData* GetDrawData()
+        {
+            return ImGuiNative.igGetDrawData();
+        }
+
         public static unsafe void InputTextMultiline(string label, IntPtr textBuffer, uint bufferSize, Vector2 size, InputTextFlags flags, TextEditCallback callback, IntPtr userData)
         {
             ImGuiNative.igInputTextMultiline(label, textBuffer, bufferSize, size, flags, callback, userData.ToPointer());
@@ -234,6 +265,16 @@ namespace ImGuiNET
             return Selectable(label, isSelected, SelectableFlags.Default);
         }
 
+        public static void BeginMainMenuBar()
+        {
+            ImGuiNative.igBeginMainMenuBar();
+        }
+
+        public static void EndMainMenuBar()
+        {
+            ImGuiNative.igEndMainMenuBar();
+        }
+
         public static bool Selectable(string label, bool isSelected, SelectableFlags flags)
         {
             return Selectable(label, isSelected, flags, new Vector2());
@@ -252,6 +293,16 @@ namespace ImGuiNET
             byte* textEnd = textStart + text.Length;
             ImGuiNative.igCalcTextSize(out result, (char*)textStart, (char*)textEnd, false, wrapWidth);
             return result;
+        }
+
+        public static void SliderFloat(string sliderLabel, ref float value, float min, float max, string displayText, float power)
+        {
+            ImGuiNative.igSliderFloat(sliderLabel, ref value, min, max, displayText, power);
+        }
+
+        public static void TextColored(Vector4 colorRGBA, string text)
+        {
+            ImGuiNative.igTextColored(colorRGBA, text);
         }
 
         public static void SameLine()
@@ -294,6 +345,22 @@ namespace ImGuiNET
             Vector2 result;
             ImGuiNative.igGetItemRectSize(out result);
             return result;
+        }
+    }
+
+    public unsafe class StyleWrapped
+    {
+        private readonly Style* _stylePtr;
+
+        public StyleWrapped(Style* style)
+        {
+            _stylePtr = style;
+        }
+
+        public float WindowRounding
+        {
+            get { return _stylePtr->WindowRounding; }
+            set { _stylePtr->WindowRounding = value; }
         }
     }
 }

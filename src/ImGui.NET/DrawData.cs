@@ -2,14 +2,25 @@
 
 namespace ImGuiNET
 {
-    // All draw data to render an ImGui frame
+    /// <summary>
+    /// All draw data to render an ImGui frame
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct DrawData
     {
-        public byte Valid;                  // Only valid after Render() is called and before the next NewFrame() is called.
+        /// <summary>
+        /// Only valid after Render() is called and before the next NewFrame() is called.
+        /// </summary>
+        public byte Valid;
         public DrawList** CmdLists;
         public int CmdListsCount;
-        public int TotalVtxCount;          // For convenience, sum of all cmd_lists vtx_buffer.Size
-        public int TotalIdxCount;          // For convenience, sum of all cmd_lists idx_buffer.Size
+        /// <summary>
+        /// For convenience, sum of all cmd_lists vtx_buffer.Size
+        /// </summary>
+        public int TotalVtxCount;
+        /// <summary>
+        /// For convenience, sum of all cmd_lists idx_buffer.Size
+        /// </summary>
+        public int TotalIdxCount;
     };
 }
