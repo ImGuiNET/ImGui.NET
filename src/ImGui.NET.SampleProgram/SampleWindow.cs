@@ -207,7 +207,7 @@ namespace ImGuiNET
             bool leftPressed = ImGui.GetIO().MouseDown[0];
             ImGui.Text("Current mouse position: " + pos + ". Pressed=" + leftPressed);
 
-            if (ImGui.Button("Press me!", new System.Numerics.Vector2(120, 30)))
+            if (ImGui.Button("Increment the counter."))
             {
                 _pressCount += 1;
             }
@@ -240,6 +240,44 @@ namespace ImGuiNET
                 }
 
                 ImGui.TreePop();
+            }
+
+            if (ImGui.Button("Press me!", new System.Numerics.Vector2(100, 30)))
+            {
+                ImGuiNative.igOpenPopup("SmallButtonPopup");
+            }
+
+            if (ImGui.BeginPopup("SmallButtonPopup"))
+            {
+                ImGui.Text("Here's a popup menu.");
+                ImGui.Text("With two lines.");
+
+                ImGui.EndPopup();
+            }
+
+            if (ImGui.Button("Open Modal window"))
+            {
+                ImGui.OpenPopup("ModalPopup");
+            }
+            if (ImGui.BeginPopupModal("ModalPopup"))
+            {
+                ImGui.Text("You can't press on anything else right now.");
+                ImGui.Text("You are stuck here.");
+                if (ImGui.Button("OK", new System.Numerics.Vector2(0, 0))) { }
+                ImGui.SameLine();
+                ImGui.Dummy(100f, 0f);
+                ImGui.SameLine();
+                if (ImGui.Button("Please go away", new System.Numerics.Vector2(0, 0))) { ImGui.CloseCurrentPopup(); }
+
+                ImGui.EndPopup();
+            }
+
+            ImGui.Text("I have a context menu.");
+            if (ImGui.BeginPopupContextItem("ItemContextMenu"))
+            {
+                if (ImGui.Selectable("How's this for a great menu?")) { }
+                ImGui.Selectable("Just click somewhere to get rid of me.");
+                ImGui.EndPopup();
             }
 
             ImGui.EndWindow();

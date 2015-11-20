@@ -53,6 +53,11 @@ namespace ImGuiNET
             ImGuiNative.igTextColored(color, message);
         }
 
+        public static bool Button(string message)
+        {
+            return ImGuiNative.igButton(message, Vector2.Zero);
+        }
+
         public static bool Button(string message, Vector2 size)
         {
             return ImGuiNative.igButton(message, size);
@@ -260,6 +265,11 @@ namespace ImGuiNET
             ImGuiNative.igEndChild();
         }
 
+        public static bool Selectable(string label)
+        {
+            return Selectable(label, false);
+        }
+
         public static bool Selectable(string label, bool isSelected)
         {
             return Selectable(label, isSelected, SelectableFlags.Default);
@@ -270,9 +280,24 @@ namespace ImGuiNET
             ImGuiNative.igBeginMainMenuBar();
         }
 
+        public static bool BeginPopup(string id)
+        {
+            return ImGuiNative.igBeginPopup(id);
+        }
+
         public static void EndMainMenuBar()
         {
             ImGuiNative.igEndMainMenuBar();
+        }
+
+        public static bool SmallButton(string label)
+        {
+            return ImGuiNative.igSmallButton(label);
+        }
+
+        public static bool BeginPopupModal(string name)
+        {
+            return ImGuiNative.igBeginPopupModal(name, WindowFlags.Default);
         }
 
         public static bool Selectable(string label, bool isSelected, SelectableFlags flags)
@@ -293,6 +318,41 @@ namespace ImGuiNET
             byte* textEnd = textStart + text.Length;
             ImGuiNative.igCalcTextSize(out result, (char*)textStart, (char*)textEnd, false, wrapWidth);
             return result;
+        }
+
+        public static bool BeginPopupContextItem(string id)
+        {
+            return BeginPopupContextItem(id, 1);
+        }
+
+        public static bool BeginPopupContextItem(string id, int mouseButton)
+        {
+            return ImGuiNative.igBeginPopupContextItem(id, mouseButton);
+        }
+
+        public static unsafe void Dummy(float width, float height)
+        {
+            Dummy(new Vector2(width, height));
+        }
+
+        public static void EndPopup()
+        {
+            ImGuiNative.igEndPopup();
+        }
+
+        public static unsafe void Dummy(Vector2 size)
+        {
+            ImGuiNative.igDummy(&size);
+        }
+
+        public static void Spacing()
+        {
+            ImGuiNative.igSpacing();
+        }
+
+        public static void OpenPopup(string id)
+        {
+            ImGuiNative.igOpenPopup(id);
         }
 
         public static void SliderFloat(string sliderLabel, ref float value, float min, float max, string displayText, float power)

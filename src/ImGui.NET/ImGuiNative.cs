@@ -38,14 +38,18 @@ namespace ImGuiNET
 
         // Window
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBegin(string name, ref bool p_opened, WindowFlags flags);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBegin2(string name, ref bool p_opened, Vector2 size_on_first_use, float bg_alpha, WindowFlags flags);
         [DllImport(cimguiLib)]
         public static extern void igEnd();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginChild(string str_id, Vector2 size, bool border, WindowFlags extra_flags);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginChildEx(uint id, Vector2 size, bool border, WindowFlags extra_flags);
         [DllImport(cimguiLib)]
         public static extern void igEndChild();
@@ -79,6 +83,7 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern float igGetWindowHeight();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsWindowCollapsed();
 
         [DllImport(cimguiLib)]
@@ -276,37 +281,52 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igBulletText(string fmt);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igButton(string label, Vector2 size);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igSmallButton(string label);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igInvisibleButton(string str_id, Vector2 size);
         [DllImport(cimguiLib)]
         public static extern void igImage(IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1, Vector4 tint_col, Vector4 border_col);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igImageButton(IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1, int frame_padding, Vector4 bg_col, Vector4 tint_col);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igCollapsingHeader(string label, string str_id, bool display_frame, bool default_open);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igCheckbox(string label, bool* v);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igCheckboxFlags(string label, UIntPtr* flags, uint flags_value);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igRadioButtonBool(string label, bool active);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igRadioButton(string label, int* v, int v_button);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igCombo(string label, ref int current_item, char** items, int items_count, int height_in_items);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igCombo2(string label, ref int current_item, string items_separated_by_zeros, int height_in_items);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igCombo3(string label, ref int current_item, ItemSelectedCallback items_getter, IntPtr data, int items_count, int height_in_items);
 
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igColorButton(Vector4 col, bool small_height, bool outline_border);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igColorEdit3(string label, Vector3 col);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igColorEdit4(string label, Vector4 col, bool show_alpha);
         [DllImport(cimguiLib)]
         public static extern void igColorEditMode(ColorEditMode mode);
@@ -327,83 +347,118 @@ namespace ImGuiNET
 
         // Widgets: Sliders (tip: ctrl+click on a slider to input text)
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igSliderFloat(string label, float* v, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igSliderFloat(string label, ref float v, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igSliderFloat2(string label, Vector2 v, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igSliderFloat3(string label, Vector3 v, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igSliderFloat4(string label, Vector4 v, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igSliderAngle(string label, float* v_rad, float v_degrees_min, float v_degrees_max);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igSliderInt(string label, int* v, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igSliderInt2(string label, Int2 v, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igSliderInt3(string label, Int3 v, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igSliderInt4(string label, Int4 v, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igVSliderFloat(string label, Vector2 size, float* v, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igVSliderInt(string label, Vector2 size, int* v, int v_min, int v_max, string display_format);
 
         // Widgets: Drags (tip: ctrl+click on a drag box to input text)
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igDragFloat(string label, float* v, float v_speed, float v_min, float v_max, string display_format, float power);     // If v_max >= v_max we have no bound
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igDragFloat2(string label, Vector2 v, float v_speed, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igDragFloat3(string label, Vector3 v, float v_speed, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igDragFloat4(string label, Vector4 v, float v_speed, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igDragFloatRange2(string label, float* v_current_min, float* v_current_max, float v_speed = 1.0f, float v_min = 0.0f, float v_max = 0.0f, string display_format = "%.3f", string display_format_max = null, float power = 1.0f);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igDragInt(string label, int* v, float v_speed, int v_min, int v_max, string display_format);                                       // If v_max >= v_max we have no bound
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igDragInt2(string label, Int2 v, float v_speed, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igDragInt3(string label, Int3 v, float v_speed, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igDragInt4(string label, Int4 v, float v_speed, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igDragIntRange2(string label, int* v_current_min, int* v_current_max, float v_speed = 1.0f, int v_min = 0, int v_max = 0, string display_format = "%.0f", string display_format_max = null);
 
 
         // Widgets: Input
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igInputText(string label, IntPtr buffer, uint buf_size, InputTextFlags flags, TextEditCallback callback, void* user_data);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igInputTextMultiline(string label, IntPtr buffer, uint buf_size, Vector2 size, InputTextFlags flags, TextEditCallback callback, void* user_data);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igInputFloat(string label, float* v, float step, float step_fast, int decimal_precision, InputTextFlags extra_flags);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igInputFloat2(string label, Vector2 v, int decimal_precision, InputTextFlags extra_flags);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igInputFloat3(string label, Vector3 v, int decimal_precision, InputTextFlags extra_flags);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igInputFloat4(string label, Vector4 v, int decimal_precision, InputTextFlags extra_flags);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igInputInt(string label, int* v, int step, int step_fast, InputTextFlags extra_flags);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igInputInt2(string label, Int2 v, InputTextFlags extra_flags);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igInputInt3(string label, Int3 v, InputTextFlags extra_flags);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igInputInt4(string label, Int4 v, InputTextFlags extra_flags);
 
         // Widgets: Trees
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igTreeNode(string str_label_id);
 
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igTreeNodeStr(string str_id, string fmt);
 
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igTreeNodePtr(void* ptr_id, string fmt);
 
         [DllImport(cimguiLib)]
@@ -417,18 +472,24 @@ namespace ImGuiNET
 
         // Widgets: Selectable / Lists
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igSelectable(string label, bool selected, SelectableFlags flags, Vector2 size);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igSelectableEx(string label, ref bool p_selected, SelectableFlags flags, Vector2 size);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igListBox(string label, int* current_item, char** items, int items_count, int height_in_items);
 
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igListBox2(string label, ref int currentItem, ItemSelectedCallback items_getter, IntPtr data, int items_count, int height_in_items);
 
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igListBoxHeader(string label, Vector2 size);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igListBoxHeader2(string label, int items_count, int height_in_items);
         [DllImport(cimguiLib)]
         public static extern void igListBoxFooter();
@@ -457,30 +518,38 @@ namespace ImGuiNET
 
         // Widgets: Menus
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginMainMenuBar();
         [DllImport(cimguiLib)]
         public static extern void igEndMainMenuBar();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginMenuBar();
         [DllImport(cimguiLib)]
         public static extern void igEndMenuBar();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginMenu(string label);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginMenu(string label, bool enabled);
         [DllImport(cimguiLib)]
         public static extern void igEndMenu();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igMenuItem(string label, string shortcut, bool selected, bool enabled);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igMenuItemPtr(string label, string shortcut, bool* p_selected, bool enabled);
 
         // Popup
         [DllImport(cimguiLib)]
         public static extern void igOpenPopup(string str_id);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginPopup(string str_id);
-        [DllImport(cimguiLib, CharSet = CharSet.Ansi)]
+        [DllImport(cimguiLib)]
+        [return:MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginPopupModal(string name, byte* p_opened, WindowFlags extra_flags);
 
         public static bool igBeginPopupModal(string name, WindowFlags extra_flags)
@@ -498,10 +567,13 @@ namespace ImGuiNET
         }
 
         [DllImport(cimguiLib)]
+        [return:MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginPopupContextItem(string str_id, int mouse_button);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginPopupContextWindow(bool also_over_items, string str_id, int mouse_button);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginPopupContextVoid(string str_id, int mouse_button);
         [DllImport(cimguiLib)]
         public static extern void igEndPopup();
@@ -526,16 +598,22 @@ namespace ImGuiNET
 
         // Utilities
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsItemHovered();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsItemHoveredRect();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsItemActive();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsItemVisible();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsAnyItemHovered();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsAnyItemActive();
         [DllImport(cimguiLib)]
         public static extern void igGetItemRectMin(out Vector2 pOut);
@@ -544,16 +622,22 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igGetItemRectSize(out Vector2 pOut);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsWindowHovered();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsWindowFocused();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsRootWindowFocused();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsRootWindowOrAnyChildFocused();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsRectVisible(Vector2 item_size);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsPosHoveringAnyWindow(Vector2 pos);
         [DllImport(cimguiLib)]
         public static extern float igGetTime();
@@ -569,6 +653,7 @@ namespace ImGuiNET
         public static extern void igCalcListClipping(int items_count, float items_height, int* out_items_display_start, int* out_items_display_end);
 
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginChildFrame(uint id, Vector2 size, WindowFlags extra_flags);
         [DllImport(cimguiLib)]
         public static extern void igEndChildFrame();
@@ -583,26 +668,37 @@ namespace ImGuiNET
         public static extern void igColorConvertHSVtoRGB(float h, float s, float v, float* out_r, float* out_g, float* out_b);
 
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsKeyDown(int key_index);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsKeyPressed(int key_index, bool repeat);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsKeyReleased(int key_index);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseDown(int button);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseClicked(int button, bool repeat);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseDoubleClicked(int button);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseReleased(int button);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseHoveringWindow();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseHoveringAnyWindow();
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseHoveringRect(Vector2 pos_min, Vector2 pos_max, bool clip);
         [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseDragging(int button, float lock_threshold);
         [DllImport(cimguiLib)]
         public static extern void igGetMousePos(Vector2* pOut);
