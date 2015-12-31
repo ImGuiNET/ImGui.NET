@@ -173,14 +173,24 @@ namespace ImGuiNET
             _atlasPtr = atlasPtr;
         }
 
-        public Alpha8TexData GetTexDataAsAlpha8()
+        public FontTextureData GetTexDataAsAlpha8()
         {
             byte* pixels;
             int width, height;
             int bytesPerPixel;
             ImGuiNative.ImFontAtlas_GetTexDataAsAlpha8(_atlasPtr, &pixels, &width, &height, &bytesPerPixel);
 
-            return new Alpha8TexData(pixels, width, height, bytesPerPixel);
+            return new FontTextureData(pixels, width, height, bytesPerPixel);
+        }
+
+        public FontTextureData GetTexDataAsRGBA32()
+        {
+            byte* pixels;
+            int width, height;
+            int bytesPerPixel;
+            ImGuiNative.ImFontAtlas_GetTexDataAsRGBA32(_atlasPtr, &pixels, &width, &height, &bytesPerPixel);
+
+            return new FontTextureData(pixels, width, height, bytesPerPixel);
         }
 
         public void SetTexID(int textureID)
@@ -199,14 +209,14 @@ namespace ImGuiNET
         }
     }
 
-    public unsafe struct Alpha8TexData
+    public unsafe struct FontTextureData
     {
         public readonly byte* Pixels;
         public readonly int Width;
         public readonly int Height;
         public readonly int BytesPerPixel;
 
-        public Alpha8TexData(byte* pixels, int width, int height, int bytesPerPixel)
+        public FontTextureData(byte* pixels, int width, int height, int bytesPerPixel)
         {
             Pixels = pixels;
             Width = width;

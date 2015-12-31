@@ -26,10 +26,15 @@ namespace ImGuiNET
         private bool _mainWindowOpened;
         private static double s_desiredFrameLength = 1f / 60.0f;
         private DateTime _previousFrameStartTime;
+        private float _scaleFactor;
+        private System.Numerics.Vector3 _positionValue = new System.Numerics.Vector3(500);
 
         public unsafe SampleWindow()
         {
-            _nativeWindow = new NativeWindow(960, 540, "ImGui.NET", GameWindowFlags.Default, OpenTK.Graphics.GraphicsMode.Default, DisplayDevice.Default);
+            int desiredWidth = 960, desiredHeight = 540;
+            _nativeWindow = new NativeWindow(desiredWidth, desiredHeight, "ImGui.NET", GameWindowFlags.Default, OpenTK.Graphics.GraphicsMode.Default, DisplayDevice.Default);
+            _scaleFactor = _nativeWindow.Width / desiredWidth;
+
             GraphicsContextFlags flags = GraphicsContextFlags.Default;
             _graphicsContext = new GraphicsContext(GraphicsMode.Default, _nativeWindow.WindowInfo, 3, 0, flags);
             _graphicsContext.MakeCurrent(_nativeWindow.WindowInfo);
@@ -110,7 +115,7 @@ namespace ImGuiNET
             IO io = ImGui.GetIO();
 
             // Build texture atlas
-            Alpha8TexData texData = io.FontAtlas.GetTexDataAsAlpha8();
+            FontTextureData texData = io.FontAtlas.GetTexDataAsAlpha8();
 
             // Create OpenGL texture
             s_fontTexture = GL.GenTexture();
@@ -166,7 +171,7 @@ namespace ImGuiNET
         {
             IO io = ImGui.GetIO();
             io.DisplaySize = new System.Numerics.Vector2(_nativeWindow.Width, _nativeWindow.Height);
-            io.DisplayFramebufferScale = new System.Numerics.Vector2(1, 1);
+            io.DisplayFramebufferScale = new System.Numerics.Vector2(_scaleFactor);
             io.DeltaTime = (1f / 60f);
 
             UpdateImGuiInput(io);
@@ -214,13 +219,14 @@ namespace ImGuiNET
 
             ImGui.TextColored(new System.Numerics.Vector4(0, 1, 1, 1), $"Button pressed {_pressCount} times.");
 
-            ImGui.InputTextMultiline("Input some numbers:",
+            ImGui.InputTextMultiline("Input some text:",
                 _textInputBuffer, (uint)_textInputBufferLength,
                 new System.Numerics.Vector2(360, 240),
-                InputTextFlags.CharsDecimal,
+                InputTextFlags.Default,
                 OnTextEdited);
 
             ImGui.SliderFloat("SlidableValue", ref _sliderVal, -50f, 100f, $"{_sliderVal.ToString("##0.00")}", 1.0f);
+            ImGui.DragVector3("Vector3", ref _positionValue, -100, 100);
 
             if (ImGui.TreeNode("First Item"))
             {
@@ -302,7 +308,7 @@ namespace ImGuiNET
             if (_nativeWindow.Bounds.Contains(cursorState.X, cursorState.Y))
             {
                 Point windowPoint = _nativeWindow.PointToClient(new Point(cursorState.X, cursorState.Y));
-                io.MousePosition = new System.Numerics.Vector2(windowPoint.X, windowPoint.Y);
+                io.MousePosition = new System.Numerics.Vector2(windowPoint.X / io.DisplayFramebufferScale.X, windowPoint.Y / io.DisplayFramebufferScale.Y);
             }
             else
             {
@@ -350,14 +356,19 @@ namespace ImGuiNET
 
             // Handle cases of screen coordinates != from framebuffer coordinates (e.g. retina displays)
             IO io = ImGui.GetIO();
-            float fb_height = io.DisplaySize.Y * io.DisplayFramebufferScale.Y;
             ImGui.ScaleClipRects(draw_data, io.DisplayFramebufferScale);
 
             // Setup orthographic projection matrix
             GL.MatrixMode(MatrixMode.Projection);
             GL.PushMatrix();
             GL.LoadIdentity();
-            GL.Ortho(0.0f, io.DisplaySize.X, io.DisplaySize.Y, 0.0f, -1.0f, 1.0f);
+            GL.Ortho(
+                0.0f,
+                io.DisplaySize.X / io.DisplayFramebufferScale.X,
+                io.DisplaySize.Y / io.DisplayFramebufferScale.Y,
+                0.0f,
+                -1.0f,
+                1.0f);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.PushMatrix();
             GL.LoadIdentity();
@@ -390,7 +401,7 @@ namespace ImGuiNET
                         GL.BindTexture(TextureTarget.Texture2D, pcmd->TextureId.ToInt32());
                         GL.Scissor(
                             (int)pcmd->ClipRect.X,
-                            (int)(fb_height - pcmd->ClipRect.W),
+                            (int)(io.DisplaySize.Y - pcmd->ClipRect.W),
                             (int)(pcmd->ClipRect.Z - pcmd->ClipRect.X),
                             (int)(pcmd->ClipRect.W - pcmd->ClipRect.Y));
                         ushort[] indices = new ushort[pcmd->ElemCount];

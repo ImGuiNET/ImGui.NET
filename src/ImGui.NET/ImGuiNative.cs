@@ -386,16 +386,16 @@ namespace ImGuiNET
         // Widgets: Drags (tip: ctrl+click on a drag box to input text)
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igDragFloat(string label, float* v, float v_speed, float v_min, float v_max, string display_format, float power);     // If v_max >= v_max we have no bound
+        public static extern bool igDragFloat(string label, ref float v, float v_speed, float v_min, float v_max, string display_format, float power);     // If v_max >= v_max we have no bound
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igDragFloat2(string label, Vector2 v, float v_speed, float v_min, float v_max, string display_format, float power);
+        public static extern bool igDragFloat2(string label, ref Vector2 v, float v_speed, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igDragFloat3(string label, Vector3 v, float v_speed, float v_min, float v_max, string display_format, float power);
+        public static extern bool igDragFloat3(string label, ref Vector3 v, float v_speed, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igDragFloat4(string label, Vector4 v, float v_speed, float v_min, float v_max, string display_format, float power);
+        public static extern bool igDragFloat4(string label, ref Vector4 v, float v_speed, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igDragFloatRange2(string label, float* v_current_min, float* v_current_max, float v_speed = 1.0f, float v_min = 0.0f, float v_max = 0.0f, string display_format = "%.3f", string display_format_max = null, float power = 1.0f);
