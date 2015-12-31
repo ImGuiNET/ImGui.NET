@@ -299,7 +299,7 @@ namespace ImGuiNET
         public static extern bool igCollapsingHeader(string label, string str_id, bool display_frame, bool default_open);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igCheckbox(string label, bool* v);
+        public static extern bool igCheckbox(string label, ref bool v);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igCheckboxFlags(string label, UIntPtr* flags, uint flags_value);

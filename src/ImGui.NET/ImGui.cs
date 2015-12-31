@@ -38,6 +38,146 @@ namespace ImGuiNET
             ImGuiNative.igText(message);
         }
 
+        public static void TextColored(Vector4 colorRGBA, string text)
+        {
+            ImGuiNative.igTextColored(colorRGBA, text);
+        }
+
+        public static void TextDisabled(string text)
+        {
+            ImGuiNative.igTextDisabled(text);
+        }
+
+        public static void TextWrapped(string text)
+        {
+            ImGuiNative.igTextWrapped(text);
+        }
+
+        public static void LabelText(string label, string text)
+        {
+            ImGuiNative.igLabelText(label, text);
+        }
+
+        public static void Bullet()
+        {
+            ImGuiNative.igBullet();
+        }
+
+        public static void BulletText(string text)
+        {
+            ImGuiNative.igBulletText(text);
+        }
+
+        public static bool InvisibleButton(string id) => InvisibleButton(id, Vector2.Zero);
+
+        public static bool InvisibleButton(string id, Vector2 size)
+        {
+            return ImGuiNative.igInvisibleButton(id, size);
+        }
+
+        public static void Image(IntPtr userTextureID, Vector2 size, Vector2 uv0, Vector2 uv1, Vector4 tintColor, Vector4 borderColor)
+        {
+            ImGuiNative.igImage(userTextureID, size, uv0, uv1, tintColor, borderColor);
+        }
+
+        public static bool ImageButton(
+            IntPtr userTextureID,
+            Vector2 size,
+            Vector2 uv0,
+            Vector2 uv1,
+            int framePadding,
+            Vector4 backgroundColor,
+            Vector4 tintColor)
+        {
+            return ImGuiNative.igImageButton(userTextureID, size, uv0, uv1, framePadding, backgroundColor, tintColor);
+        }
+
+        public static bool CollapsingHeader(string label, string id, bool displayFrame, bool defaultOpen)
+        {
+            return ImGuiNative.igCollapsingHeader(label, id, displayFrame, defaultOpen);
+        }
+
+        public static bool Checkbox(string label, ref bool value)
+        {
+            return ImGuiNative.igCheckbox(label, ref value);
+        }
+
+        public static bool RadioButtonBool(string label, bool active)
+        {
+            return ImGuiNative.igRadioButtonBool(label, active);
+        }
+
+        public unsafe static bool Combo(string label, ref int current_item, string[] items)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool ColorButton(Vector4 color, bool smallHeight, bool outlineBorder)
+        {
+            return ImGuiNative.igColorButton(color, smallHeight, outlineBorder);
+        }
+
+        public static bool ColorEdit3(string label, float r, float g, float b) => ColorEdit3(label, new Vector3(r, g, b));
+        public static bool ColorEdit3(string label, Vector3 color)
+        {
+            return ImGuiNative.igColorEdit3(label, color);
+        }
+
+        public static bool ColorEdit4(string label, float r, float g, float b, float a, bool showAlpha)
+            => ColorEdit4(label, new Vector4(r, g, b, a), showAlpha);
+
+        public static bool ColorEdit4(string label, Vector4 color, bool showAlpha)
+        {
+            return ImGuiNative.igColorEdit4(label, color, showAlpha);
+        }
+
+        public static void ColorEditMode(ColorEditMode mode)
+        {
+            ImGuiNative.igColorEditMode(mode);
+        }
+
+        public unsafe static void PlotLines(
+            string label,
+            float[] values,
+            int valuesOffset,
+            string overlayText,
+            float scaleMin,
+            float scaleMax,
+            Vector2 graphSize,
+            int stride)
+        {
+            fixed (float* valuesBasePtr = values)
+            {
+                ImGuiNative.igPlotLines(
+                    label,
+                    valuesBasePtr,
+                    values.Length,
+                    valuesOffset,
+                    overlayText,
+                    scaleMin,
+                    scaleMax,
+                    graphSize,
+                    stride);
+            }
+        }
+
+        public unsafe static void PlotHistogram(string label, float[] values, int valuesOffset, string overlayText, float scaleMin, float scaleMax, Vector2 graphSize, int stride)
+        {
+            fixed (float* valuesBasePtr = values)
+            {
+                ImGuiNative.igPlotHistogram(
+                    label,
+                    valuesBasePtr,
+                    values.Length,
+                    valuesOffset,
+                    overlayText,
+                    scaleMin,
+                    scaleMax,
+                    graphSize,
+                    stride);
+            }
+        }
+
         public static void PushId(string id)
         {
             ImGuiNative.igPushIdStr(id);
@@ -104,10 +244,6 @@ namespace ImGuiNET
             return ImGuiNative.igGetWindowHeight();
         }
 
-        public static bool ColorButton(Vector4 color, bool smallHeight, bool outlineBorder)
-        {
-            return ImGuiNative.igColorButton(color, smallHeight, outlineBorder);
-        }
 
         public static float GetWindowWidth()
         {
@@ -155,14 +291,6 @@ namespace ImGuiNET
         public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, WindowFlags flags)
         {
             return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, 1f, flags);
-        }
-
-        public static unsafe bool Checkbox(string label, ref bool value)
-        {
-            bool localVal = value;
-            bool result = ImGuiNative.igCheckbox(label, &localVal);
-            value = localVal;
-            return result;
         }
 
         public static void EndMenuBar()
@@ -378,11 +506,6 @@ namespace ImGuiNET
         public static void DragVector4(string label, ref Vector4 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
         {
             ImGuiNative.igDragFloat4(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
-        }
-
-        public static void TextColored(Vector4 colorRGBA, string text)
-        {
-            ImGuiNative.igTextColored(colorRGBA, text);
         }
 
         public static void SameLine()
