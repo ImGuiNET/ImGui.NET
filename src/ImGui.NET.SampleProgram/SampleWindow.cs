@@ -217,7 +217,7 @@ namespace ImGuiNET
                 _pressCount += 1;
             }
 
-            ImGui.TextColored(new System.Numerics.Vector4(0, 1, 1, 1), $"Button pressed {_pressCount} times.");
+            ImGui.Text($"Button pressed {_pressCount} times.", new System.Numerics.Vector4(0, 1, 1, 1));
 
             ImGui.InputTextMultiline("Input some text:",
                 _textInputBuffer, (uint)_textInputBufferLength,

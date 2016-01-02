@@ -12,10 +12,12 @@
   <ItemGroup>
     <Compile Include="Align.cs" />
     <Compile Include="ColorTarget.cs" />
+    <Compile Include="IntStructs.cs" />
     <Compile Include="MouseCursorKind.cs" />
     <Compile Include="NativeIO.cs" />
     <Compile Include="SelectableFlags.cs" />
     <Compile Include="StyleVar.cs" />
+    <Compile Include="Style.cs" />
     <Compile Include="TextInputBuffer.cs" />
     <Compile Include="WindowFlags.cs" />
     <Compile Include="ColorEditMode.cs" />
@@ -30,7 +32,7 @@
     <Compile Include="ImGui.cs" />
     <Compile Include="IO.cs" />
     <Compile Include="Storage.cs" />
-    <Compile Include="Style.cs" />
+    <Compile Include="NativeStyle.cs" />
     <Compile Include="ImVector.cs" />
     <Compile Include="InputTextFlags.cs" />
     <Compile Include="ImGuiNative.cs" />

@@ -19,60 +19,100 @@ namespace ImGuiNET
 
         public NativeIO* GetNativePointer() => _nativePtr;
 
-        public float DeltaTime
-        {
-            get { return _nativePtr->DeltaTime; }
-            set { _nativePtr->DeltaTime = value; }
-        }
-
-        public Vector2 DisplayFramebufferScale
-        {
-            get { return _nativePtr->DisplayFramebufferScale; }
-            set { _nativePtr->DisplayFramebufferScale = value; }
-        }
-
+        /// <summary>
+        /// Display size, in pixels. For clamping windows positions.
+        /// Default value: [unset]
+        /// </summary>
         public Vector2 DisplaySize
         {
             get { return _nativePtr->DisplaySize; }
             set { _nativePtr->DisplaySize = value; }
         }
 
+        /// <summary>
+        /// Time elapsed since last frame, in seconds.
+        /// Default value: 1.0f / 10.0f.
+        /// </summary>
+        public float DeltaTime
+        {
+            get { return _nativePtr->DeltaTime; }
+            set { _nativePtr->DeltaTime = value; }
+        }
+
+        /// <summary>
+        /// For retina display or other situations where window coordinates are different from framebuffer coordinates.
+        /// User storage only, presently not used by ImGui.
+        /// Default value: (1.0f, 1.0f).
+        /// </summary>
+        public Vector2 DisplayFramebufferScale
+        {
+            get { return _nativePtr->DisplayFramebufferScale; }
+            set { _nativePtr->DisplayFramebufferScale = value; }
+        }
+
+        /// <summary>
+        /// Mouse position, in pixels (set to -1,-1 if no mouse / on another screen, etc.).
+        /// </summary>
         public Vector2 MousePosition
         {
             get { return _nativePtr->MousePos; }
             set { _nativePtr->MousePos = value; }
         }
 
+        /// <summary>
+        /// Mouse wheel: 1 unit scrolls about 5 lines text.
+        /// </summary>
         public float MouseWheel
         {
             get { return _nativePtr->MouseWheel; }
             set { _nativePtr->MouseWheel = value; }
         }
 
+        /// <summary>
+        /// Mouse buttons: left, right, middle + extras.
+        /// ImGui itself mostly only uses left button (BeginPopupContext** are using right button).
+        /// Others buttons allows us to track if the mouse is being used by your application + available to user as a convenience via IsMouse** API.
+        /// </summary>
         public MouseDownStates MouseDown { get; }
 
+        /// <summary>
+        /// Map of indices into the KeysDown[512] entries array.
+        /// Default values: [unset]
+        /// </summary>
         public KeyMap KeyMap { get; }
 
+        /// <summary>
+        /// Keyboard keys that are pressed (in whatever storage order you naturally have access to keyboard data)
+        /// </summary>
         public KeyDownStates KeysDown { get; }
 
         public FontAtlasWrapped FontAtlas { get; }
 
-        public bool AltPressed
-        {
-            get { return _nativePtr->KeyAlt == 1; }
-            set { _nativePtr->KeyAlt = value ? (byte)1 : (byte)0; }
-        }
-
+        /// <summary>
+        /// Keyboard modifier pressed: Control.
+        /// </summary>
         public bool CtrlPressed
         {
             get { return _nativePtr->KeyCtrl == 1; }
             set { _nativePtr->KeyCtrl = value ? (byte)1 : (byte)0; }
         }
 
+        /// <summary>
+        /// Keyboard modifier pressed: Shift
+        /// </summary>
         public bool ShiftPressed
         {
             get { return _nativePtr->KeyShift == 1; }
             set { _nativePtr->KeyShift = value ? (byte)1 : (byte)0; }
+        }
+
+        /// <summary>
+        /// Keyboard modifier pressed: Alt
+        /// </summary>
+        public bool AltPressed
+        {
+            get { return _nativePtr->KeyAlt == 1; }
+            set { _nativePtr->KeyAlt = value ? (byte)1 : (byte)0; }
         }
     }
 

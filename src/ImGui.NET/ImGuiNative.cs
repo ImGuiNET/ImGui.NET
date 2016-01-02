@@ -12,10 +12,10 @@ namespace ImGuiNET
         private const string cimguiLib = "cimgui";
 
         [DllImport(cimguiLib)]
-        public static extern NativeIO* igGetIO(); /* { return (IO*)igGetIO_Raw().ToPointer(); } */
+        public static extern NativeIO* igGetIO();
 
         [DllImport(cimguiLib)]
-        public static extern Style* igGetStyle();
+        public static extern NativeStyle* igGetStyle();
 
         [DllImport(cimguiLib)]
         public static extern DrawData* igGetDrawData();
@@ -29,7 +29,7 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igShowUserGuide();
         [DllImport(cimguiLib)]
-        public static extern void igShowStyleEditor(ref Style @ref);
+        public static extern void igShowStyleEditor(ref NativeStyle @ref);
 
         [DllImport(cimguiLib)]
         public static extern void igShowTestWindow(ref bool opened);
@@ -53,19 +53,21 @@ namespace ImGuiNET
         public static extern bool igBeginChildEx(uint id, Vector2 size, bool border, WindowFlags extra_flags);
         [DllImport(cimguiLib)]
         public static extern void igEndChild();
+
         [DllImport(cimguiLib)]
         public static extern void igGetContentRegionMax(out Vector2 @out);
         [DllImport(cimguiLib)]
         public static extern void igGetContentRegionAvail(out Vector2 @out);
-
         [DllImport(cimguiLib)]
         public static extern float igGetContentRegionAvailWidth();
+
         [DllImport(cimguiLib)]
         public static extern void igGetWindowContentRegionMin(out Vector2 @out);
         [DllImport(cimguiLib)]
         public static extern void igGetWindowContentRegionMax(out Vector2 @out);
         [DllImport(cimguiLib)]
         public static extern float igGetWindowContentRegionWidth();
+
         [DllImport(cimguiLib)]
         public static extern DrawList* igGetWindowDrawList();
         [DllImport(cimguiLib)]
@@ -354,28 +356,28 @@ namespace ImGuiNET
         public static extern bool igSliderFloat(string label, ref float v, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igSliderFloat2(string label, Vector2 v, float v_min, float v_max, string display_format, float power);
+        public static extern bool igSliderFloat2(string label, ref Vector2 v, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igSliderFloat3(string label, Vector3 v, float v_min, float v_max, string display_format, float power);
+        public static extern bool igSliderFloat3(string label, ref Vector3 v, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igSliderFloat4(string label, Vector4 v, float v_min, float v_max, string display_format, float power);
+        public static extern bool igSliderFloat4(string label, ref Vector4 v, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igSliderAngle(string label, float* v_rad, float v_degrees_min, float v_degrees_max);
+        public static extern bool igSliderAngle(string label, ref float v_rad, float v_degrees_min, float v_degrees_max);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igSliderInt(string label, int* v, int v_min, int v_max, string display_format);
+        public static extern bool igSliderInt(string label, ref int v, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igSliderInt2(string label, Int2 v, int v_min, int v_max, string display_format);
+        public static extern bool igSliderInt2(string label, ref Int2 v, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igSliderInt3(string label, Int3 v, int v_min, int v_max, string display_format);
+        public static extern bool igSliderInt3(string label, ref Int3 v, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igSliderInt4(string label, Int4 v, int v_min, int v_max, string display_format);
+        public static extern bool igSliderInt4(string label, ref Int4 v, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igVSliderFloat(string label, Vector2 size, float* v, float v_min, float v_max, string display_format, float power);
@@ -398,22 +400,22 @@ namespace ImGuiNET
         public static extern bool igDragFloat4(string label, ref Vector4 v, float v_speed, float v_min, float v_max, string display_format, float power);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igDragFloatRange2(string label, float* v_current_min, float* v_current_max, float v_speed = 1.0f, float v_min = 0.0f, float v_max = 0.0f, string display_format = "%.3f", string display_format_max = null, float power = 1.0f);
+        public static extern bool igDragFloatRange2(string label, ref float v_current_min, ref float v_current_max, float v_speed = 1.0f, float v_min = 0.0f, float v_max = 0.0f, string display_format = "%.3f", string display_format_max = null, float power = 1.0f);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igDragInt(string label, int* v, float v_speed, int v_min, int v_max, string display_format);                                       // If v_max >= v_max we have no bound
+        public static extern bool igDragInt(string label, ref int v, float v_speed, int v_min, int v_max, string display_format);                                       // If v_max >= v_max we have no bound
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igDragInt2(string label, Int2 v, float v_speed, int v_min, int v_max, string display_format);
+        public static extern bool igDragInt2(string label, ref Int2 v, float v_speed, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igDragInt3(string label, Int3 v, float v_speed, int v_min, int v_max, string display_format);
+        public static extern bool igDragInt3(string label, ref Int3 v, float v_speed, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igDragInt4(string label, Int4 v, float v_speed, int v_min, int v_max, string display_format);
+        public static extern bool igDragInt4(string label, ref Int4 v, float v_speed, int v_min, int v_max, string display_format);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igDragIntRange2(string label, int* v_current_min, int* v_current_max, float v_speed = 1.0f, int v_min = 0, int v_max = 0, string display_format = "%.0f", string display_format_max = null);
+        public static extern bool igDragIntRange2(string label, ref int v_current_min, ref int v_current_max, float v_speed = 1.0f, int v_min = 0, int v_max = 0, string display_format = "%.0f", string display_format_max = null);
 
 
         // Widgets: Input
@@ -549,7 +551,7 @@ namespace ImGuiNET
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginPopup(string str_id);
         [DllImport(cimguiLib)]
-        [return:MarshalAs(UnmanagedType.I1)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginPopupModal(string name, byte* p_opened, WindowFlags extra_flags);
 
         public static bool igBeginPopupModal(string name, WindowFlags extra_flags)
@@ -567,7 +569,7 @@ namespace ImGuiNET
         }
 
         [DllImport(cimguiLib)]
-        [return:MarshalAs(UnmanagedType.I1)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginPopupContextItem(string str_id, int mouse_button);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
@@ -788,24 +790,6 @@ namespace ImGuiNET
         public static extern DrawCmd* ImDrawList_GetCmdPtr(DrawList* list, int n);
         [DllImport(cimguiLib)]
         public static extern void ImDrawData_DeIndexAllBuffers(DrawData* drawData);
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct Int2
-    {
-        public readonly int X, Y;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct Int3
-    {
-        public readonly int X, Y, Z;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct Int4
-    {
-        public readonly int X, Y, Z, W;
     }
 
     public delegate bool ItemSelectedCallback(IntPtr data, int index, string out_text);

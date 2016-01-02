@@ -16,13 +16,18 @@ namespace ImGuiNET
             ImGuiNative.igRender();
         }
 
+        public static void Shutdown()
+        {
+            ImGuiNative.igShutdown();
+        }
+
         private static unsafe readonly IO s_io = new IO(ImGuiNative.igGetIO());
 
         public static unsafe IO GetIO() => s_io;
 
-        private static unsafe readonly StyleWrapped s_style = new StyleWrapped(ImGuiNative.igGetStyle());
+        private static unsafe readonly Style s_style = new Style(ImGuiNative.igGetStyle());
 
-        public static unsafe StyleWrapped GetStyle()
+        public static unsafe Style GetStyle()
         {
             return s_style;
         }
@@ -33,14 +38,44 @@ namespace ImGuiNET
             ImGuiNative.ImFontAtlas_AddFontDefault(ioPtr->FontAtlas);
         }
 
+        public static void PushID(string id)
+        {
+            ImGuiNative.igPushIdStr(id);
+        }
+
+        public static void PushID(int id)
+        {
+            ImGuiNative.igPushIdInt(id);
+        }
+
+        public static void PushIDRange(string idBegin, string idEnd)
+        {
+            ImGuiNative.igPushIdStrRange(idBegin, idEnd);
+        }
+
+        public static void PopID()
+        {
+            ImGuiNative.igPopId();
+        }
+
+        public static uint GetID(string id)
+        {
+            return ImGuiNative.igGetIdStr(id);
+        }
+
+        public static uint GetID(string idBegin, string idEnd)
+        {
+            return ImGuiNative.igGetIdStrRange(idBegin, idEnd);
+        }
+
         public static void Text(string message)
         {
             ImGuiNative.igText(message);
         }
 
-        public static void TextColored(Vector4 colorRGBA, string text)
+        public static void Text(string message, Vector4 color)
         {
-            ImGuiNative.igTextColored(colorRGBA, text);
+            ImGuiNative.igTextColored(color, message);
         }
 
         public static void TextDisabled(string text)
@@ -178,19 +213,124 @@ namespace ImGuiNET
             }
         }
 
-        public static void PushId(string id)
+        public static bool SliderFloat(string sliderLabel, ref float value, float min, float max, string displayText, float power)
         {
-            ImGuiNative.igPushIdStr(id);
+            return ImGuiNative.igSliderFloat(sliderLabel, ref value, min, max, displayText, power);
         }
 
-        public static void PopId()
+        public static bool SliderVector2(string label, ref Vector2 value, float min, float max, string displayText, float power)
         {
-            ImGuiNative.igPopId();
+            return ImGuiNative.igSliderFloat2(label, ref value, min, max, displayText, power);
         }
 
-        public static void Text(string message, Vector4 color)
+        public static bool SliderVector3(string label, ref Vector3 value, float min, float max, string displayText, float power)
         {
-            ImGuiNative.igTextColored(color, message);
+            return ImGuiNative.igSliderFloat3(label, ref value, min, max, displayText, power);
+        }
+
+        public static bool SliderVector4(string label, ref Vector4 value, float min, float max, string displayText, float power)
+        {
+            return ImGuiNative.igSliderFloat4(label, ref value, min, max, displayText, power);
+        }
+
+        public static bool SliderAngle(string label, ref float radians, float minDegrees, float maxDegrees)
+        {
+            return ImGuiNative.igSliderAngle(label, ref radians, minDegrees, maxDegrees);
+        }
+
+        public static bool SliderInt(string sliderLabel, ref int value, int min, int max, string displayText)
+        {
+            return ImGuiNative.igSliderInt(sliderLabel, ref value, min, max, displayText);
+        }
+
+        public static bool SliderInt2(string label, ref Int2 value, int min, int max, string displayText)
+        {
+            return ImGuiNative.igSliderInt2(label, ref value, min, max, displayText);
+        }
+
+        public static bool SliderInt3(string label, ref Int3 value, int min, int max, string displayText)
+        {
+            return ImGuiNative.igSliderInt3(label, ref value, min, max, displayText);
+        }
+
+        public static bool SliderInt4(string label, ref Int4 value, int min, int max, string displayText)
+        {
+            return ImGuiNative.igSliderInt4(label, ref value, min, max, displayText);
+        }
+
+        public static void DragFloat(string label, ref float value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
+        {
+            ImGuiNative.igDragFloat(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
+        }
+
+        public static void DragVector2(string label, ref Vector2 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
+        {
+            ImGuiNative.igDragFloat2(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
+        }
+
+        public static void DragVector3(string label, ref Vector3 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
+        {
+            ImGuiNative.igDragFloat3(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
+        }
+
+        public static void DragVector4(string label, ref Vector4 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
+        {
+            ImGuiNative.igDragFloat4(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
+        }
+
+        public static bool DragFloatRange2(
+            string label,
+            ref float currentMinValue,
+            ref float currentMaxValue,
+            float speed = 1.0f,
+            float minValueLimit = 0.0f,
+            float maxValueLimit = 0.0f,
+            string displayFormat = "%.3f",
+            string displayFormatMax = null,
+            float power = 1.0f)
+        {
+            return ImGuiNative.igDragFloatRange2(label, ref currentMinValue, ref currentMaxValue, speed, minValueLimit, maxValueLimit, displayFormat, displayFormatMax, power);
+        }
+
+        public static bool DragInt(string label, ref int value, float speed, int minValue, int maxValue, string displayText)
+        {
+            return ImGuiNative.igDragInt(label, ref value, speed, minValue, maxValue, displayText);
+        }
+
+        public static bool DragInt2(string label, ref Int2 value, float speed, int minValue, int maxValue, string displayText)
+        {
+            return ImGuiNative.igDragInt2(label, ref value, speed, minValue, maxValue, displayText);
+        }
+
+        public static bool DragInt3(string label, ref Int3 value, float speed, int minValue, int maxValue, string displayText)
+        {
+            return ImGuiNative.igDragInt3(label, ref value, speed, minValue, maxValue, displayText);
+        }
+
+        public static bool DragInt4(string label, ref Int4 value, float speed, int minValue, int maxValue, string displayText)
+        {
+            return ImGuiNative.igDragInt4(label, ref value, speed, minValue, maxValue, displayText);
+        }
+
+        public static bool DragIntRange2(
+            string label,
+            ref int currentMinValue,
+            ref int currentMaxValue,
+            float speed = 1.0f,
+            int minLimit = 0,
+            int maxLimit = 0,
+            string displayFormat = "%.0f",
+            string displayFormatMax = null)
+        {
+            return ImGuiNative.igDragIntRange2(
+                label,
+                ref currentMinValue,
+                ref currentMaxValue,
+                speed,
+                minLimit,
+                maxLimit,
+                displayFormat,
+                displayFormatMax);
         }
 
         public static bool Button(string message)
@@ -393,6 +533,44 @@ namespace ImGuiNET
             ImGuiNative.igEndChild();
         }
 
+        public static Vector2 GetContentRegionMax()
+        {
+            Vector2 value;
+            ImGuiNative.igGetContentRegionMax(out value);
+            return value;
+        }
+
+        public static Vector2 GetContentRegionAvailable()
+        {
+            Vector2 value;
+            ImGuiNative.igGetContentRegionAvail(out value);
+            return value;
+        }
+
+        public static float GetContentRegionAvailableWidth()
+        {
+            return ImGuiNative.igGetContentRegionAvailWidth();
+        }
+
+        public static Vector2 GetWindowContentRegionMin()
+        {
+            Vector2 value;
+            ImGuiNative.igGetWindowContentRegionMin(out value);
+            return value;
+        }
+
+        public static Vector2 GetWindowContentRegionMax()
+        {
+            Vector2 value;
+            ImGuiNative.igGetWindowContentRegionMax(out value);
+            return value;
+        }
+
+        public static float GetWindowContentRegionWidth()
+        {
+            return ImGuiNative.igGetWindowContentRegionWidth();
+        }
+
         public static bool Selectable(string label)
         {
             return Selectable(label, false);
@@ -483,31 +661,6 @@ namespace ImGuiNET
             ImGuiNative.igOpenPopup(id);
         }
 
-        public static void SliderFloat(string sliderLabel, ref float value, float min, float max, string displayText, float power)
-        {
-            ImGuiNative.igSliderFloat(sliderLabel, ref value, min, max, displayText, power);
-        }
-
-        public static void DragFloat(string label, ref float value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
-        {
-            ImGuiNative.igDragFloat(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
-        }
-
-        public static void DragVector2(string label, ref Vector2 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
-        {
-            ImGuiNative.igDragFloat2(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
-        }
-
-        public static void DragVector3(string label, ref Vector3 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
-        {
-            ImGuiNative.igDragFloat3(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
-        }
-
-        public static void DragVector4(string label, ref Vector4 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
-        {
-            ImGuiNative.igDragFloat4(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
-        }
-
         public static void SameLine()
         {
             ImGuiNative.igSameLine(0, 0);
@@ -548,22 +701,6 @@ namespace ImGuiNET
             Vector2 result;
             ImGuiNative.igGetItemRectSize(out result);
             return result;
-        }
-    }
-
-    public unsafe class StyleWrapped
-    {
-        private readonly Style* _stylePtr;
-
-        public StyleWrapped(Style* style)
-        {
-            _stylePtr = style;
-        }
-
-        public float WindowRounding
-        {
-            get { return _stylePtr->WindowRounding; }
-            set { _stylePtr->WindowRounding = value; }
         }
     }
 }
