@@ -703,11 +703,11 @@ namespace ImGuiNET
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseDragging(int button, float lock_threshold);
         [DllImport(cimguiLib)]
-        public static extern void igGetMousePos(Vector2* pOut);
+        public static extern void igGetMousePos(out Vector2 pOut);
         [DllImport(cimguiLib)]
-        public static extern void igGetMousePosOnOpeningCurrentPopup(Vector2* pOut);
+        public static extern void igGetMousePosOnOpeningCurrentPopup(out Vector2 pOut);
         [DllImport(cimguiLib)]
-        public static extern void igGetMouseDragDelta(Vector2* pOut, int button, float lock_threshold);
+        public static extern void igGetMouseDragDelta(out Vector2 pOut, int button, float lock_threshold);
         [DllImport(cimguiLib)]
         public static extern void igResetMouseDragDelta(int button);
         [DllImport(cimguiLib)]

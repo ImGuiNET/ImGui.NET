@@ -518,6 +518,99 @@ namespace ImGuiNET
             ImGuiNative.igEndChildFrame();
         }
 
+        public static bool IsKeyDown(int keyIndex)
+        {
+            return ImGuiNative.igIsKeyDown(keyIndex);
+        }
+
+        public static bool IsKeyPressed(int keyIndex, bool repeat)
+        {
+            return ImGuiNative.igIsKeyPressed(keyIndex, repeat);
+        }
+
+        public static bool IsKeyReleased(int keyIndex)
+        {
+            return ImGuiNative.igIsKeyReleased(keyIndex);
+        }
+
+        public static bool IsMouseDown(int button)
+        {
+            return ImGuiNative.igIsMouseDown(button);
+        }
+
+        public static bool IsMouseClicked(int button, bool repeat)
+        {
+            return ImGuiNative.igIsMouseClicked(button, repeat);
+        }
+
+        public static bool IsMouseDoubleClicked(int button)
+        {
+            return ImGuiNative.igIsMouseDoubleClicked(button);
+        }
+
+        public static bool IsMouseReleased(int button)
+        {
+            return ImGuiNative.igIsMouseReleased(button);
+        }
+
+        public static bool IsMouseHoveringWindow()
+        {
+            return ImGuiNative.igIsMouseHoveringWindow();
+        }
+
+        public static bool IsMouseHoveringAnyWindow()
+        {
+            return ImGuiNative.igIsMouseHoveringAnyWindow();
+        }
+
+        public static bool IsMouseHoveringRect(Vector2 minPosition, Vector2 maxPosition, bool clip)
+        {
+            return IsMouseHoveringRect(minPosition, maxPosition, clip);
+        }
+
+        public static bool IsMouseDragging(int button, float lockThreshold)
+        {
+            return ImGuiNative.igIsMouseDragging(button, lockThreshold);
+        }
+
+        public static Vector2 GetMousePos()
+        {
+            Vector2 retVal;
+            ImGuiNative.igGetMousePos(out retVal);
+            return retVal;
+        }
+
+        public static Vector2 GetMousePosOnOpeningCurrentPopup()
+        {
+            Vector2 retVal;
+            ImGuiNative.igGetMousePosOnOpeningCurrentPopup(out retVal);
+            return retVal;
+        }
+
+        public static Vector2 GetMouseDragDelta(int button, float lockThreshold)
+        {
+            Vector2 retVal;
+            ImGuiNative.igGetMouseDragDelta(out retVal, button, lockThreshold);
+            return retVal;
+        }
+
+        public static void ResetMouseDragDelta(int button)
+        {
+            ImGuiNative.igResetMouseDragDelta(button);
+        }
+
+        public static MouseCursorKind MouseCursor
+        {
+            get
+            {
+                return ImGuiNative.igGetMouseCursor();
+            }
+            set
+            {
+                ImGuiNative.igSetMouseCursor(value);
+            }
+        }
+
         public static bool BeginChild(string id, Vector2 size, bool border, WindowFlags flags)
         {
             return ImGuiNative.igBeginChild(id, size, border, flags);
