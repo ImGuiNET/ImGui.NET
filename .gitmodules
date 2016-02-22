@@ -1,0 +1,3 @@
+[submodule "corebuild"]
+	path = corebuild
+	url = git@github.com:mellinoe/corebuild
