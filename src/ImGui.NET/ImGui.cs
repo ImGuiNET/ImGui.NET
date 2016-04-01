@@ -137,6 +137,14 @@ namespace ImGuiNET
             return ImGuiNative.igCheckbox(label, ref value);
         }
 
+        public static unsafe bool RadioButton(string label, ref int target, int buttonValue)
+        {
+            int targetCopy = target;
+            bool result = ImGuiNative.igRadioButton(label, &targetCopy, buttonValue);
+            target = targetCopy;
+            return result;
+        }
+
         public static bool RadioButtonBool(string label, bool active)
         {
             return ImGuiNative.igRadioButtonBool(label, active);
@@ -346,6 +354,11 @@ namespace ImGuiNET
         public static void SetNextWindowSize(Vector2 size, SetCondition condition)
         {
             ImGuiNative.igSetNextWindowSize(size, condition);
+        }
+
+        public static void SetNextWindowPos(Vector2 position, SetCondition condition)
+        {
+            ImGuiNative.igSetNextWindowPos(position, condition);
         }
 
         public static void SetNextWindowPosCenter(SetCondition condition)
