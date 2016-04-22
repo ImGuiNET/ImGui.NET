@@ -63,6 +63,7 @@ namespace ImGuiNET
 
         private void OnKeyPress(object sender, KeyPressEventArgs e)
         {
+            Console.Write("Char typed: " + e.KeyChar);
             ImGui.AddInputCharacter(e.KeyChar);
         }
 

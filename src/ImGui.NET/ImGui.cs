@@ -53,6 +53,11 @@ namespace ImGuiNET
             ImGuiNative.igPushIdStrRange(idBegin, idEnd);
         }
 
+        public static void PushItemWidth(float width)
+        {
+            ImGuiNative.igPushItemWidth(width);
+        }
+
         public static void PopID()
         {
             ImGuiNative.igPopId();
@@ -266,24 +271,24 @@ namespace ImGuiNET
             return ImGuiNative.igSliderInt4(label, ref value, min, max, displayText);
         }
 
-        public static void DragFloat(string label, ref float value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
+        public static bool DragFloat(string label, ref float value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
         {
-            ImGuiNative.igDragFloat(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
+            return ImGuiNative.igDragFloat(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
         }
 
-        public static void DragVector2(string label, ref Vector2 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
+        public static bool DragVector2(string label, ref Vector2 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
         {
-            ImGuiNative.igDragFloat2(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
+            return ImGuiNative.igDragFloat2(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
         }
 
-        public static void DragVector3(string label, ref Vector3 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
+        public static bool DragVector3(string label, ref Vector3 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
         {
-            ImGuiNative.igDragFloat3(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
+            return ImGuiNative.igDragFloat3(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
         }
 
-        public static void DragVector4(string label, ref Vector4 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
+        public static bool DragVector4(string label, ref Vector4 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
         {
-            ImGuiNative.igDragFloat4(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
+            return ImGuiNative.igDragFloat4(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
         }
 
         public static bool DragFloatRange2(
@@ -496,6 +501,22 @@ namespace ImGuiNET
             ImGuiNative.igPushStyleColor(target, color);
         }
 
+        public static void PopStyleColor()
+        {
+            PopStyleColor(1);
+        }
+
+        public static void PopStyleColor(int numStyles)
+        {
+            ImGuiNative.igPopStyleColor(numStyles);
+        }
+
+        public static void PushStyleVar(StyleVar var, float value) => ImGuiNative.igPushStyleVar(var, value);
+        public static void PushStyleVar(StyleVar var, Vector2 value) => ImGuiNative.igPushStyleVarVec(var, value);
+
+        public static void PopStyleVar() => ImGuiNative.igPopStyleVar(1);
+        public static void PopStyleVar(int count) => ImGuiNative.igPopStyleVar(count);
+
         public static unsafe void InputTextMultiline(string label, IntPtr textBuffer, uint bufferSize, Vector2 size, InputTextFlags flags, TextEditCallback callback)
         {
             ImGuiNative.igInputTextMultiline(label, textBuffer, bufferSize, size, flags, callback, null);
@@ -509,16 +530,6 @@ namespace ImGuiNET
         public static unsafe void InputTextMultiline(string label, IntPtr textBuffer, uint bufferSize, Vector2 size, InputTextFlags flags, TextEditCallback callback, IntPtr userData)
         {
             ImGuiNative.igInputTextMultiline(label, textBuffer, bufferSize, size, flags, callback, userData.ToPointer());
-        }
-
-        public static void PopStyleColor()
-        {
-            PopStyleColor(1);
-        }
-
-        public static void PopStyleColor(int numStyles)
-        {
-            ImGuiNative.igPopStyleColor(numStyles);
         }
 
         public static bool BeginChildFrame(uint id, Vector2 size, WindowFlags flags)
@@ -687,9 +698,9 @@ namespace ImGuiNET
             return Selectable(label, isSelected, SelectableFlags.Default);
         }
 
-        public static void BeginMainMenuBar()
+        public static bool BeginMainMenuBar()
         {
-            ImGuiNative.igBeginMainMenuBar();
+            return ImGuiNative.igBeginMainMenuBar();
         }
 
         public static bool BeginPopup(string id)
