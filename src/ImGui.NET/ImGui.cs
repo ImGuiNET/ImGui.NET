@@ -58,6 +58,11 @@ namespace ImGuiNET
             ImGuiNative.igPushItemWidth(width);
         }
 
+        public static void PopItemWidth()
+        {
+            ImGuiNative.igPopItemWidth();
+        }
+
         public static void PopID()
         {
             ImGuiNative.igPopId();
