@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ImGui.NET", "D:\OSS\imgui.net\src\ImGui.NET\ImGui.NET.xproj", "{96D9B05A-94DA-426D-AE09-DC5346F834CB}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ImGui.NET.SampleProgram", "D:\OSS\imgui.net\src\ImGui.NET.SampleProgram\ImGui.NET.SampleProgram.xproj", "{8C3965D6-CC79-450B-BA6F-7B5F57B90AA7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96D9B05A-94DA-426D-AE09-DC5346F834CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96D9B05A-94DA-426D-AE09-DC5346F834CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96D9B05A-94DA-426D-AE09-DC5346F834CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96D9B05A-94DA-426D-AE09-DC5346F834CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C3965D6-CC79-450B-BA6F-7B5F57B90AA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C3965D6-CC79-450B-BA6F-7B5F57B90AA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C3965D6-CC79-450B-BA6F-7B5F57B90AA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C3965D6-CC79-450B-BA6F-7B5F57B90AA7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
