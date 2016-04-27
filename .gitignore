@@ -248,3 +248,6 @@ Temporary Items
 Session.vim
 .netrwhist
 *~
+
+# VS Code junk
+.vscode
