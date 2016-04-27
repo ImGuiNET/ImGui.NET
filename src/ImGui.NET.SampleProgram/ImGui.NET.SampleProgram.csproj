@@ -32,11 +32,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\deps\cimgui\x64\cimgui.dll">
+    <Content Include="..\..\deps\cimgui\win7-x64\cimgui.dll">
       <Link>cimgui.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\deps\cimgui\x64\cimgui.pdb">
+    <Content Include="..\..\deps\cimgui\win7-x64\cimgui.pdb">
       <Link>cimgui.pdb</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
