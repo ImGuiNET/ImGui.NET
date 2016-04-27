@@ -1,16 +1,32 @@
 ﻿{
-    "dependencies": {
-        "Microsoft.NETCore.Console": "1.0.0-beta-23504",
-        "System.Console": "4.0.0-beta-23504",
-        "System.Reflection.Metadata": "1.1.1-beta-23504",
-        "System.Threading.Thread": "4.0.0-beta-23504"
+  "compilationOptions": {
+    "allowUnsafe": true,
+    "emitEntryPoint": true
+  },
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0-rc2-3002520"
     },
-    "runtimes": {
-        "win10-x64": { },
-        "ubuntu.14.04-x64": { },
-        "osx.10.10-x64": { }
-    },
-    "frameworks": {
-        "dnxcore50": { }
+    "ImGui.NET": { "target": "project" },
+    "OpenTK.NETCore":  "1.1.2287.6424",
+    "Microsoft.NETCore.ConsoleHost": "1.0.0-rc3-24019-00",
+    "Microsoft.NETCore.Runtime": "1.0.2-rc3-24019-00",
+    "System.ComponentModel": "4.0.1-rc3-24019-00",
+    "System.Threading.Thread": "4.0.0-rc3-24019-00",
+    "System.Reflection.TypeExtensions": "4.1.0-rc3-24019-00",
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": "dnxcore50"
     }
+  },
+  "runtimes": {
+    "win7-x64": { },
+    "ubuntu.14.04-x64": { },
+  },
+  "content": [
+    "cimgui.dll",
+    "cimgui.so"
+  ]
 }
