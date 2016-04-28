@@ -788,7 +788,6 @@ namespace ImGuiNET
             ImGuiNative.igNextColumn();
         }
 
-
         public static int GetColumnIndex()
         {
             return ImGuiNative.igGetColumnIndex();
@@ -813,7 +812,6 @@ namespace ImGuiNET
         {
             return ImGuiNative.igGetColumnsCount();
         }
-
 
         public static void OpenPopup(string id)
         {
@@ -860,7 +858,7 @@ namespace ImGuiNET
             return ImGuiNative.igIsAnyItemActive();
         }
 
-        public static void ShowTooltip(string text)
+        public static void SetTooltip(string text)
         {
             ImGuiNative.igSetTooltip(text);
         }
@@ -868,6 +866,11 @@ namespace ImGuiNET
         public static void SetNextTreeNodeOpened(bool opened)
         {
             ImGuiNative.igSetNextTreeNodeOpened(opened, SetCondition.Always);
+        }
+
+        public static void SetNextTreeNodeOpened(bool opened, SetCondition setCondition)
+        {
+            ImGuiNative.igSetNextTreeNodeOpened(opened, setCondition);
         }
 
         public static bool TreeNode(string label)
