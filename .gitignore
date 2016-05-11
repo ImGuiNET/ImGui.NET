@@ -251,3 +251,6 @@ Session.vim
 
 # VS Code junk
 .vscode
+
+# MSVC Stuff
+*.VC.db
