@@ -778,6 +778,43 @@ namespace ImGuiNET
             ImGuiNative.igSpacing();
         }
 
+        public static void Columns(int count, string id, bool border)
+        {
+            ImGuiNative.igColumns(count, id, border);
+        }
+
+        public static void NextColumn()
+        {
+            ImGuiNative.igNextColumn();
+        }
+
+
+        public static int GetColumnIndex()
+        {
+            return ImGuiNative.igGetColumnIndex();
+        }
+
+        public static float GetColumnOffset(int columnIndex)
+        {
+            return ImGuiNative.igGetColumnOffset(columnIndex);
+        }
+
+        public static void SetColumnOffset(int columnIndex, float offsetX)
+        {
+            ImGuiNative.igSetColumnOffset(columnIndex, offsetX);
+        }
+
+        public static float GetColumnWidth(int columnIndex)
+        {
+            return ImGuiNative.igGetColumnWidth(columnIndex);
+        }
+
+        public static int GetColumnsCount()
+        {
+            return ImGuiNative.igGetColumnsCount();
+        }
+
+
         public static void OpenPopup(string id)
         {
             ImGuiNative.igOpenPopup(id);
@@ -796,6 +833,31 @@ namespace ImGuiNET
         public static bool IsLastItemHovered()
         {
             return ImGuiNative.igIsItemHovered();
+        }
+
+        public static bool IsLastItemHoveredRect()
+        {
+            return ImGuiNative.igIsItemHoveredRect();
+        }
+
+        public static bool IsLastItemActive()
+        {
+            return ImGuiNative.igIsItemActive();
+        }
+   
+        public static bool IsLastItemVisible()
+        {
+            return ImGuiNative.igIsItemVisible();
+        }
+
+        public static bool IsAnyItemHovered()
+        {
+            return ImGuiNative.igIsAnyItemHovered();
+        }
+
+        public static bool IsAnyItemActive()
+        {
+            return ImGuiNative.igIsAnyItemActive();
         }
 
         public static void ShowTooltip(string text)
