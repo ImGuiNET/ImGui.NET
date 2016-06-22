@@ -8,6 +8,7 @@
     <RootNamespace>ImGuiNET</RootNamespace>
     <AssemblyName>ImGui.NET</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NuGetTargetMoniker>.NETStandard,Version=v1.1</NuGetTargetMoniker>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Align.cs" />
