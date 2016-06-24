@@ -34,10 +34,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\deps\cimgui\win7-x64\cimgui.dll">
+    <Content Include="..\..\deps\cimgui\win7-x64\cimgui.dll" Condition="'$(OSTarget)' == 'Windows'">
       <Link>cimgui.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
+    <Content Include="..\..\deps\cimgui\ubuntu14.04-x64\cimgui.so" Condition="'$(OSTarget)' == 'Ubuntu'">
+      <Link>cimgui.so</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+   </ItemGroup>
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
 </Project>

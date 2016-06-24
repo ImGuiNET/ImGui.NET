@@ -41,6 +41,7 @@ namespace ImGuiNET
             ((IGraphicsContextInternal)_graphicsContext).LoadAll(); // wtf is this?
             GL.ClearColor(Color.Black);
             _nativeWindow.Visible = true;
+            _nativeWindow.X = _nativeWindow.X; // Work around OpenTK bug (?) on Ubuntu.
 
             _nativeWindow.KeyDown += OnKeyDown;
             _nativeWindow.KeyUp += OnKeyUp;
