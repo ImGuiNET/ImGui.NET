@@ -34,7 +34,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\deps\cimgui\win7-x64\cimgui.dll" Condition="'$(OSTarget)' == 'Windows'">
+    <Content Include="..\..\deps\cimgui\win7-x64\cimgui.dll" Condition="'$(OSTarget)' == 'Windows_NT'">
       <Link>cimgui.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
