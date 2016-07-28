@@ -88,6 +88,12 @@ namespace ImGuiNET
 
         public FontAtlasWrapped FontAtlas { get; }
 
+        public bool FontAllowUserScaling
+        {
+            get { return _nativePtr->FontAllowUserScaling != 0; }
+            set { _nativePtr->FontAllowUserScaling = value ? (byte)1 : (byte)0; }
+        }
+
         /// <summary>
         /// Keyboard modifier pressed: Control.
         /// </summary>
