@@ -69,7 +69,7 @@ namespace ImGuiNET
         public float KeyRepeatRate;
         /// <summary>
         /// Store your own data for retrieval by callbacks.
-        /// Default value; IntPtr.Zero.
+        /// Default value: IntPtr.Zero.
         /// </summary>
         public IntPtr UserData;
 

@@ -21,29 +21,46 @@ namespace ImGuiNET
 
         public void Resize(int newSize)
         {
-            ClearBuffer();
+            FreeNativeBuffer();
             CreateBuffer(newSize);
         }
 
-        private void CreateBuffer(int size)
+        private unsafe void CreateBuffer(int size)
         {
             Buffer = Marshal.AllocHGlobal(size);
-            Length = Length;
+            Length = (uint)size;
+            ClearData();
         }
 
-        private void ClearBuffer()
+        public unsafe void ClearData()
         {
-            Marshal.FreeHGlobal(Buffer);
-            Buffer = IntPtr.Zero;
-            Length = 0;
+            byte* ptr = (byte*)Buffer.ToPointer();
+            for (int i = 0; i < Length; i++)
+            {
+                ptr[i] = 0;
+            }
         }
 
         public void Dispose()
         {
             if (Buffer != IntPtr.Zero)
             {
-                ClearBuffer();
+                FreeNativeBuffer();
             }
         }
+
+        private void FreeNativeBuffer()
+        {
+            Marshal.FreeHGlobal(Buffer);
+            Buffer = IntPtr.Zero;
+            Length = 0;
+        }
+
+        public string GetString()
+        {
+            return Marshal.PtrToStringAnsi(Buffer);
+        }
+
+        public override string ToString() => GetString();
     }
 }
