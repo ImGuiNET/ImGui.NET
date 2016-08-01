@@ -170,18 +170,57 @@ namespace ImGuiNET
             return ImGuiNative.igColorButton(color, smallHeight, outlineBorder);
         }
 
-        public static bool ColorEdit3(string label, float r, float g, float b) => ColorEdit3(label, new Vector3(r, g, b));
-        public static bool ColorEdit3(string label, Vector3 color)
+        public static unsafe bool ColorEdit3(string label, ref float r, ref float g, ref float b, bool showAlpha)
         {
-            return ImGuiNative.igColorEdit3(label, color);
+            Vector3 localColor = new Vector3(r, g, b);
+            bool result = ImGuiNative.igColorEdit3(label, &localColor);
+            if (result)
+            {
+                r = localColor.X;
+                g = localColor.Y;
+                b = localColor.Z;
+            }
+
+            return result;
         }
 
-        public static bool ColorEdit4(string label, float r, float g, float b, float a, bool showAlpha)
-            => ColorEdit4(label, new Vector4(r, g, b, a), showAlpha);
-
-        public static bool ColorEdit4(string label, Vector4 color, bool showAlpha)
+        public static unsafe bool ColorEdit3(string label, ref Vector3 color, bool showAlpha)
         {
-            return ImGuiNative.igColorEdit4(label, color, showAlpha);
+            Vector3 localColor = color;
+            bool result = ImGuiNative.igColorEdit3(label, &localColor);
+            if (result)
+            {
+                color = localColor;
+            }
+
+            return result;
+        }
+
+        public static unsafe bool ColorEdit4(string label, ref float r, ref float g, ref float b, ref float a, bool showAlpha)
+        {
+            Vector4 localColor = new Vector4(r, g, b, a);
+            bool result = ImGuiNative.igColorEdit4(label, &localColor, showAlpha);
+            if (result)
+            {
+                r = localColor.X;
+                g = localColor.Y;
+                b = localColor.Z;
+                a = localColor.W;
+            }
+
+            return result;
+        }
+
+        public static unsafe bool ColorEdit4(string label, ref Vector4 color, bool showAlpha)
+        {
+            Vector4 localColor = color;
+            bool result = ImGuiNative.igColorEdit4(label, &localColor, showAlpha);
+            if (result)
+            {
+                color = localColor;
+            }
+
+            return result;
         }
 
         public static void ColorEditMode(ColorEditMode mode)

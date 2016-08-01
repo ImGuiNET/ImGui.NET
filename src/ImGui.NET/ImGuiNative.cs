@@ -326,10 +326,10 @@ namespace ImGuiNET
         public static extern bool igColorButton(Vector4 col, bool small_height, bool outline_border);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igColorEdit3(string label, Vector3 col);
+        public static extern bool igColorEdit3(string label, Vector3* col);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igColorEdit4(string label, Vector4 col, bool show_alpha);
+        public static extern bool igColorEdit4(string label, Vector4* col, bool show_alpha);
         [DllImport(cimguiLib)]
         public static extern void igColorEditMode(ColorEditMode mode);
         [DllImport(cimguiLib)]
