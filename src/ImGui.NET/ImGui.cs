@@ -515,6 +515,8 @@ namespace ImGuiNET
             ImGuiNative.igSeparator();
         }
 
+        public static bool MenuItem(string label) => MenuItem(label, string.Empty);
+
         public static bool MenuItem(string label, string shortcut)
         {
             return MenuItem(label, shortcut, false, true);
