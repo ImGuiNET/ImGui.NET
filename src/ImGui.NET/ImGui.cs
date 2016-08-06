@@ -162,7 +162,12 @@ namespace ImGuiNET
 
         public unsafe static bool Combo(string label, ref int current_item, string[] items)
         {
-            throw new NotImplementedException();
+            return ImGuiNative.igCombo(label, ref current_item, items, items.Length, 5);
+        }
+
+        public unsafe static bool Combo(string label, ref int current_item, string[] items, int heightInItems)
+        {
+            return ImGuiNative.igCombo(label, ref current_item, items, items.Length, heightInItems);
         }
 
         public static bool ColorButton(Vector4 color, bool smallHeight, bool outlineBorder)

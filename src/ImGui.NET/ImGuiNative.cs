@@ -313,7 +313,7 @@ namespace ImGuiNET
         public static extern bool igRadioButton(string label, int* v, int v_button);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igCombo(string label, ref int current_item, char** items, int items_count, int height_in_items);
+        public static extern bool igCombo(string label, ref int current_item, string[] items, int items_count, int height_in_items);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igCombo2(string label, ref int current_item, string items_separated_by_zeros, int height_in_items);
