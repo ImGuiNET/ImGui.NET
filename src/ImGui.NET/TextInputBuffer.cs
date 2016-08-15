@@ -56,11 +56,20 @@ namespace ImGuiNET
             Length = 0;
         }
 
-        public string GetString()
+        public string StringValue
         {
-            return Marshal.PtrToStringAnsi(Buffer);
+            get
+            {
+                return Marshal.PtrToStringAnsi(Buffer);
+            }
+            set
+            {
+                FreeNativeBuffer();
+                Buffer = Marshal.StringToHGlobalAnsi(value);
+                Length = (uint)value.Length;
+            }
         }
 
-        public override string ToString() => GetString();
+        public override string ToString() => StringValue;
     }
 }
