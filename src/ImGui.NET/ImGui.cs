@@ -774,6 +774,21 @@ namespace ImGuiNET
             return ImGuiNative.igBeginPopupModal(name, WindowFlags.Default);
         }
 
+        public static bool BeginPopupModal(string name, WindowFlags extraFlags)
+        {
+            return ImGuiNative.igBeginPopupModal(name, extraFlags);
+        }
+
+        public static bool BeginPopupModal(string name, ref bool opened)
+        {
+            return ImGuiNative.igBeginPopupModal(name, ref opened, WindowFlags.Default);
+        }
+
+        public static bool BeginPopupModal(string name, ref bool opened, WindowFlags extraFlags)
+        {
+            return ImGuiNative.igBeginPopupModal(name, ref opened, extraFlags);
+        }
+
         public static bool Selectable(string label, bool isSelected, SelectableFlags flags)
         {
             return Selectable(label, isSelected, flags, new Vector2());
@@ -782,6 +797,16 @@ namespace ImGuiNET
         public static bool Selectable(string label, bool isSelected, SelectableFlags flags, Vector2 size)
         {
             return ImGuiNative.igSelectable(label, isSelected, flags, size);
+        }
+
+        public static bool SelectableEx(string label, ref bool isSelected)
+        {
+            return ImGuiNative.igSelectableEx(label, ref isSelected, SelectableFlags.Default, new Vector2());
+        }
+
+        public static bool SelectableEx(string label, ref bool isSelected, SelectableFlags flags, Vector2 size)
+        {
+            return ImGuiNative.igSelectableEx(label, ref isSelected, flags, size);
         }
 
         public static unsafe Vector2 GetTextSize(string text, float wrapWidth = Int32.MaxValue)
