@@ -520,11 +520,24 @@ namespace ImGuiNET
             ImGuiNative.igSeparator();
         }
 
-        public static bool MenuItem(string label) => MenuItem(label, string.Empty);
+        public static bool MenuItem(string label)
+        {
+            return MenuItem(label, string.Empty, false, true);
+        }
 
         public static bool MenuItem(string label, string shortcut)
         {
             return MenuItem(label, shortcut, false, true);
+        }
+
+        public static bool MenuItem(string label, bool enabled)
+        {
+            return MenuItem(label, string.Empty, false, enabled);
+        }
+
+        public static bool MenuItem(string label, string shortcut, bool selected, bool enabled)
+        {
+            return ImGuiNative.igMenuItem(label, shortcut, selected, enabled);
         }
 
         public static unsafe bool InputText(string label, IntPtr textBuffer, uint bufferSize, InputTextFlags flags, TextEditCallback textEditCallback)
@@ -535,11 +548,6 @@ namespace ImGuiNET
         public static unsafe bool InputText(string label, IntPtr textBuffer, uint bufferSize, InputTextFlags flags, TextEditCallback textEditCallback, IntPtr userData)
         {
             return ImGuiNative.igInputText(label, textBuffer, bufferSize, flags, textEditCallback, userData.ToPointer());
-        }
-
-        public static bool MenuItem(string label, string shortcut, bool selected, bool enabled)
-        {
-            return ImGuiNative.igMenuItem(label, shortcut, selected, enabled);
         }
 
         public static void EndWindow()
