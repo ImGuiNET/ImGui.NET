@@ -1,15 +1,39 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace ImGuiNET
 {
     public class TextInputBuffer : IDisposable
     {
+        private uint _length;
+
         public IntPtr Buffer { get; private set; }
-        public uint Length { get; private set; }
+
+        public uint Length
+        {
+            get
+            {
+                return _length;
+            }
+            set
+            {
+                if (value > int.MaxValue)
+                {
+                    throw new ArgumentOutOfRangeException("Length cannot be greater that Int32.MaxValue.");
+                }
+
+                Resize((int)value);
+            }
+        }
 
         public TextInputBuffer(int length)
         {
+            if (length < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(length));
+            }
+
             CreateBuffer(length);
         }
 
@@ -19,10 +43,13 @@ namespace ImGuiNET
             Length = (uint)initialText.Length;
         }
 
-        public void Resize(int newSize)
+        private unsafe void Resize(int newSize)
         {
-            FreeNativeBuffer();
-            CreateBuffer(newSize);
+            IntPtr newBuffer = Marshal.AllocHGlobal(newSize);
+            Unsafe.CopyBlock(newBuffer.ToPointer(), Buffer.ToPointer(), Length);
+            Marshal.FreeHGlobal(Buffer);
+            Buffer = newBuffer;
+            _length = (uint)newSize;
         }
 
         private unsafe void CreateBuffer(int size)
@@ -53,7 +80,7 @@ namespace ImGuiNET
         {
             Marshal.FreeHGlobal(Buffer);
             Buffer = IntPtr.Zero;
-            Length = 0;
+            _length = 0;
         }
 
         public string StringValue
@@ -64,9 +91,22 @@ namespace ImGuiNET
             }
             set
             {
-                FreeNativeBuffer();
-                Buffer = Marshal.StringToHGlobalAnsi(value);
-                Length = (uint)value.Length;
+                if (value.Length > Length) // Doesn't fit into current buffer
+                {
+                    FreeNativeBuffer();
+                    Buffer = Marshal.StringToHGlobalAnsi(value);
+                    _length = (uint)value.Length;
+                }
+                else // Fits in current buffer, just copy data in.
+                {
+                    IntPtr tempNativeString = Marshal.StringToHGlobalAnsi(value);
+                    uint bytesToCopy = (uint)Math.Min(Length, value.Length);
+                    unsafe
+                    {
+                        Unsafe.CopyBlock(Buffer.ToPointer(), tempNativeString.ToPointer(), bytesToCopy);
+                    }
+                    Marshal.FreeHGlobal(tempNativeString);
+                }
             }
         }
 

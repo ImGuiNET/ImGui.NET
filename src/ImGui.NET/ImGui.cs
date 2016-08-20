@@ -962,11 +962,30 @@ namespace ImGuiNET
             ImGuiNative.igTreePop();
         }
 
-        public static Vector2 GetLastItemRect()
+        public static Vector2 GetLastItemRectSize()
         {
             Vector2 result;
             ImGuiNative.igGetItemRectSize(out result);
             return result;
+        }
+
+        public static Vector2 GetLastItemRectMin()
+        {
+            Vector2 result;
+            ImGuiNative.igGetItemRectMin(out result);
+            return result;
+        }
+
+        public static Vector2 GetLastItemRectMax()
+        {
+            Vector2 result;
+            ImGuiNative.igGetItemRectMax(out result);
+            return result;
+        }
+
+        public static void SetWindowFontScale(float scale)
+        {
+            ImGuiNative.igSetWindowFontScale(scale);
         }
     }
 }
