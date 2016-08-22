@@ -104,6 +104,9 @@ namespace ImGuiNET
                     unsafe
                     {
                         Unsafe.CopyBlock(Buffer.ToPointer(), tempNativeString.ToPointer(), bytesToCopy);
+                        byte* endOfData = (byte*)Buffer.ToPointer() + bytesToCopy;
+                        uint bytesToClear = _length - bytesToCopy;
+                        Unsafe.InitBlock(endOfData, 0, bytesToClear);
                     }
                     Marshal.FreeHGlobal(tempNativeString);
                 }
