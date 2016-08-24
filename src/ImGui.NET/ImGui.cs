@@ -987,5 +987,15 @@ namespace ImGuiNET
         {
             ImGuiNative.igSetWindowFontScale(scale);
         }
+
+        public static void SetScrollHere()
+        {
+            ImGuiNative.igSetScrollHere();
+        }
+
+        public static void SetScrollHere(float centerYRatio)
+        {
+            ImGuiNative.igSetScrollHere(centerYRatio);
+        }
     }
 }
