@@ -13,7 +13,7 @@ namespace ImGuiNET
     //  4. Call SetTexID(my_tex_id); and pass the pointer/identifier to your texture. This value will be passed back to you during rendering to identify the texture.
     //  5. Call ClearTexData() to free textures memory on the heap.
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct FontAtlas
+    public unsafe struct NativeFontAtlas
     {
         // Members
         // (Access texture data via GetTexData*() calls which will setup a default font for you.)

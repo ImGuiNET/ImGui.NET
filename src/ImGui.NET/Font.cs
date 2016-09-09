@@ -4,12 +4,22 @@ using System.Numerics;
 
 namespace ImGuiNET
 {
+    public unsafe class Font
+    {
+        public Font(NativeFont* nativePtr)
+        {
+            NativeFont = nativePtr;
+        }
+
+        public NativeFont* NativeFont { get; }
+    }
+
     /// <summary>
     /// Font runtime data and rendering.
     /// ImFontAtlas automatically loads a default embedded font for you when you call GetTexDataAsAlpha8() or GetTexDataAsRGBA32().
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct Font
+    public unsafe struct NativeFont
     {
         // Members: Settings
 

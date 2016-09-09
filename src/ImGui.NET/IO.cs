@@ -14,7 +14,7 @@ namespace ImGuiNET
             MouseDown = new MouseDownStates(nativePtr);
             KeyMap = new KeyMap(_nativePtr);
             KeysDown = new KeyDownStates(_nativePtr);
-            FontAtlas = new FontAtlasWrapped(_nativePtr->FontAtlas);
+            FontAtlas = new FontAtlas(_nativePtr->FontAtlas);
         }
 
         public NativeIO* GetNativePointer() => _nativePtr;
@@ -86,7 +86,7 @@ namespace ImGuiNET
         /// </summary>
         public KeyDownStates KeysDown { get; }
 
-        public FontAtlasWrapped FontAtlas { get; }
+        public FontAtlas FontAtlas { get; }
 
         public bool FontAllowUserScaling
         {
@@ -210,11 +210,11 @@ namespace ImGuiNET
         }
     }
 
-    public unsafe class FontAtlasWrapped
+    public unsafe class FontAtlas
     {
-        private readonly FontAtlas* _atlasPtr;
+        private readonly NativeFontAtlas* _atlasPtr;
 
-        public FontAtlasWrapped(FontAtlas* atlasPtr)
+        public FontAtlas(NativeFontAtlas* atlasPtr)
         {
             _atlasPtr = atlasPtr;
         }
@@ -252,6 +252,24 @@ namespace ImGuiNET
         public void ClearTexData()
         {
             ImGuiNative.ImFontAtlas_ClearTexData(_atlasPtr);
+        }
+
+        public Font AddDefaultFont()
+        {
+            NativeFont* nativeFontPtr = ImGuiNative.ImFontAtlas_AddFontDefault(_atlasPtr);
+            return new Font(nativeFontPtr);
+        }
+
+        public Font AddFontFromFileTTF(string fileName, float pixelSize)
+        {
+            NativeFont* nativeFontPtr = ImGuiNative.ImFontAtlas_AddFontFromFileTTF(_atlasPtr, fileName, pixelSize, IntPtr.Zero, null);
+            return new Font(nativeFontPtr);
+        }
+
+        public Font AddFontFromMemoryTTF(IntPtr ttfData, int ttfDataSize, float pixelSize)
+        {
+            NativeFont* nativeFontPtr = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF(_atlasPtr, ttfData.ToPointer(), ttfDataSize, pixelSize, IntPtr.Zero, null);
+            return new Font(nativeFontPtr);
         }
     }
 

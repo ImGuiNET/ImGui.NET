@@ -77,7 +77,7 @@ namespace ImGuiNET
         /// Load and assemble one or more fonts into a single tightly packed texture. Output to Fonts array.
         /// Default value: [auto]
         /// </summary>
-        public FontAtlas* FontAtlas;
+        public NativeFontAtlas* FontAtlas;
         /// <summary>
         /// Global scale all fonts.
         /// Default value: 1.0f.

@@ -47,7 +47,7 @@ namespace ImGuiNET
             _nativeWindow.KeyUp += OnKeyUp;
             _nativeWindow.KeyPress += OnKeyPress;
 
-            ImGui.LoadDefaultFont();
+            ImGui.GetIO().FontAtlas.AddDefaultFont();
 
             SetOpenTKKeyMappings();
 

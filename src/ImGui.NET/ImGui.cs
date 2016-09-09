@@ -32,12 +32,6 @@ namespace ImGuiNET
             return s_style;
         }
 
-        public static unsafe void LoadDefaultFont()
-        {
-            NativeIO* ioPtr = ImGuiNative.igGetIO();
-            ImGuiNative.ImFontAtlas_AddFontDefault(ioPtr->FontAtlas);
-        }
-
         public static void PushID(string id)
         {
             ImGuiNative.igPushIdStr(id);
@@ -996,6 +990,26 @@ namespace ImGuiNET
         public static void SetScrollHere(float centerYRatio)
         {
             ImGuiNative.igSetScrollHere(centerYRatio);
+        }
+
+        public static unsafe void PushFont(Font font)
+        {
+            ImGuiNative.igPushFont(font.NativeFont);
+        }
+
+        public static void PopFont()
+        {
+            ImGuiNative.igPopFont();
+        }
+
+        public static void SetKeyboardFocusHere()
+        {
+            ImGuiNative.igSetKeyboardFocusHere(0);
+        }
+
+        public static void SetKeyboardFocusHere(int offset)
+        {
+            ImGuiNative.igSetKeyboardFocusHere(offset);
         }
     }
 }

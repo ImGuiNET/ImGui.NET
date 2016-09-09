@@ -71,7 +71,7 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern DrawList* igGetWindowDrawList();
         [DllImport(cimguiLib)]
-        public static extern Font* igGetWindowFont();
+        public static extern NativeFont* igGetWindowFont();
         [DllImport(cimguiLib)]
         public static extern float igGetWindowFontSize();
         [DllImport(cimguiLib)]
@@ -147,7 +147,7 @@ namespace ImGuiNET
 
         // Parameters stacks (shared)
         [DllImport(cimguiLib)]
-        public static extern void igPushFont(Font* font);
+        public static extern void igPushFont(NativeFont* font);
         [DllImport(cimguiLib)]
         public static extern void igPopFont();
         [DllImport(cimguiLib)]
@@ -645,6 +645,12 @@ namespace ImGuiNET
         public static extern float igGetTime();
         [DllImport(cimguiLib)]
         public static extern int igGetFrameCount();
+
+        internal static void igPushFont(object nativeFont)
+        {
+            throw new NotImplementedException();
+        }
+
         [DllImport(cimguiLib)]
         public static extern string igGetStyleColName(ColorTarget idx);
         [DllImport(cimguiLib)]
@@ -741,34 +747,34 @@ namespace ImGuiNET
 
 
         [DllImport(cimguiLib)]
-        public static extern void ImFontAtlas_GetTexDataAsRGBA32(FontAtlas* atlas, byte** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
+        public static extern void ImFontAtlas_GetTexDataAsRGBA32(NativeFontAtlas* atlas, byte** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
 
         [DllImport(cimguiLib)]
-        public static extern void ImFontAtlas_GetTexDataAsAlpha8(FontAtlas* atlas, byte** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
+        public static extern void ImFontAtlas_GetTexDataAsAlpha8(NativeFontAtlas* atlas, byte** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
 
         [DllImport(cimguiLib)]
-        public static extern void ImFontAtlas_SetTexID(FontAtlas* atlas, void* tex);
+        public static extern void ImFontAtlas_SetTexID(NativeFontAtlas* atlas, void* tex);
 
         [DllImport(cimguiLib)]
-        public static extern Font* ImFontAtlas_AddFont(FontAtlas* atlas, ref FontConfig font_cfg);
+        public static extern NativeFont* ImFontAtlas_AddFont(NativeFontAtlas* atlas, ref FontConfig font_cfg);
 
         [DllImport(cimguiLib)]
-        public static extern Font* ImFontAtlas_AddFontDefault(FontAtlas* atlas, IntPtr font_cfg);
-        public static Font* ImFontAtlas_AddFontDefault(FontAtlas* atlas) { return ImFontAtlas_AddFontDefault(atlas, IntPtr.Zero); }
+        public static extern NativeFont* ImFontAtlas_AddFontDefault(NativeFontAtlas* atlas, IntPtr font_cfg);
+        public static NativeFont* ImFontAtlas_AddFontDefault(NativeFontAtlas* atlas) { return ImFontAtlas_AddFontDefault(atlas, IntPtr.Zero); }
 
         [DllImport(cimguiLib)]
-        public static extern Font* ImFontAtlas_AddFontFromFileTTF(FontAtlas* atlas, string filename, float size_pixels, IntPtr font_cfg, char* glyph_ranges);
+        public static extern NativeFont* ImFontAtlas_AddFontFromFileTTF(NativeFontAtlas* atlas, string filename, float size_pixels, IntPtr font_cfg, char* glyph_ranges);
         [DllImport(cimguiLib)]
-        public static extern Font* ImFontAtlas_AddFontFromMemoryTTF(FontAtlas* atlas, void* ttf_data, int ttf_size, float size_pixels, IntPtr font_cfg, char* glyph_ranges);
+        public static extern NativeFont* ImFontAtlas_AddFontFromMemoryTTF(NativeFontAtlas* atlas, void* ttf_data, int ttf_size, float size_pixels, IntPtr font_cfg, char* glyph_ranges);
         [DllImport(cimguiLib)]
-        public static extern Font* ImFontAtlas_AddFontFromMemoryCompressedTTF(FontAtlas* atlas, void* compressed_ttf_data, int compressed_ttf_size, float size_pixels, FontConfig* font_cfg, char* glyph_ranges);
+        public static extern NativeFont* ImFontAtlas_AddFontFromMemoryCompressedTTF(NativeFontAtlas* atlas, void* compressed_ttf_data, int compressed_ttf_size, float size_pixels, FontConfig* font_cfg, char* glyph_ranges);
         [DllImport(cimguiLib)]
-        public static extern Font* ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(FontAtlas* atlas, string compressed_ttf_data_base85, float size_pixels, FontConfig* font_cfg, char* glyph_ranges);
+        public static extern NativeFont* ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(NativeFontAtlas* atlas, string compressed_ttf_data_base85, float size_pixels, FontConfig* font_cfg, char* glyph_ranges);
 
         [DllImport(cimguiLib)]
-        public static extern void ImFontAtlas_ClearTexData(FontAtlas* atlas);
+        public static extern void ImFontAtlas_ClearTexData(NativeFontAtlas* atlas);
         [DllImport(cimguiLib)]
-        public static extern void ImFontAtlas_Clear(FontAtlas* atlas);
+        public static extern void ImFontAtlas_Clear(NativeFontAtlas* atlas);
 
 
         [DllImport(cimguiLib)]
