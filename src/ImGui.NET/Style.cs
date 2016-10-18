@@ -223,13 +223,19 @@ namespace ImGuiNET
         /// </summary>
         /// <param name="target">The type of UI element.</param>
         /// <returns>The element's color as currently configured.</returns>
-        public float GetColor(ColorTarget target) => _stylePtr->Colors[(int)target];
+        public Vector4 GetColor(ColorTarget target) => *(Vector4*)&_stylePtr->Colors[(int)target * 4];
 
         /// <summary>
         /// Sets the style color for a particular UI element type.
         /// </summary>
         /// <param name="target">The type of UI element.</param>
         /// <param name="value">The new color.</param>
-        public void SetColor(ColorTarget target, float value) => _stylePtr->Colors[(int)target] = value;
+        public void SetColor(ColorTarget target, Vector4 value)
+        {
+            _stylePtr->Colors[(int)target * 4 + 0] = value.X;
+            _stylePtr->Colors[(int)target * 4 + 1] = value.Y;
+            _stylePtr->Colors[(int)target * 4 + 2] = value.Z;
+            _stylePtr->Colors[(int)target * 4 + 3] = value.W;
+        }
     }
 }
