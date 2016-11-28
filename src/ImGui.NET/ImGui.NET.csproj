@@ -1,50 +1,41 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.props))\dir.props" />
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
+  
   <PropertyGroup>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
-    <ProjectGuid>{2665014F-0FEC-4268-8F77-7B029921AB09}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>ImGuiNET</RootNamespace>
-    <AssemblyName>ImGui.NET</AssemblyName>
+    <Description>A .NET wrapper for the dear ImGui library.</Description>
+    <VersionPrefix>0.1.5</VersionPrefix>
+    <Authors>Eric Mellino</Authors>
+    <TargetFramework>netstandard1.1</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <NuGetTargetMoniker>.NETStandard,Version=v1.1</NuGetTargetMoniker>
+    <DebugType>portable</DebugType>
+    <AssemblyName>ImGui.NET</AssemblyName>
+    <PackageTags>ImGui ImGui.NET Immediate Mode GUI</PackageTags>
+    <PackageProjectUrl>https://github.com/mellinoe/imgui.net</PackageProjectUrl>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="Align.cs" />
-    <Compile Include="ColorTarget.cs" />
-    <Compile Include="IntStructs.cs" />
-    <Compile Include="MouseCursorKind.cs" />
-    <Compile Include="NativeIO.cs" />
-    <Compile Include="SelectableFlags.cs" />
-    <Compile Include="StyleVar.cs" />
-    <Compile Include="Style.cs" />
-    <Compile Include="TextInputBuffer.cs" />
-    <Compile Include="WindowFlags.cs" />
-    <Compile Include="ColorEditMode.cs" />
-    <Compile Include="GuiKey.cs" />
-    <Compile Include="DrawCmd.cs" />
-    <Compile Include="DrawData.cs" />
-    <Compile Include="DrawList.cs" />
-    <Compile Include="DrawVert.cs" />
-    <Compile Include="Font.cs" />
-    <Compile Include="FontAtlas.cs" />
-    <Compile Include="FontConfig.cs" />
-    <Compile Include="ImGui.cs" />
-    <Compile Include="IO.cs" />
-    <Compile Include="Storage.cs" />
-    <Compile Include="NativeStyle.cs" />
-    <Compile Include="ImVector.cs" />
-    <Compile Include="InputTextFlags.cs" />
-    <Compile Include="ImGuiNative.cs" />
-    <Compile Include="SetCondition.cs" />
-    <Compile Include="TextEditCallback.cs" />
-    <Compile Include="TextEditCallbackData.cs" />
+    <Compile Include="**\*.cs" />
   </ItemGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
+
   <ItemGroup>
-    <None Include="project.json" />
+    <PackageReference Include="Microsoft.NET.Sdk">
+      <Version>1.0.0-alpha-20161104-2</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.Numerics.Vectors">
+      <Version>4.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
+      <Version>4.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime.Extensions">
+      <Version>4.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime.InteropServices">
+      <Version>4.1.0</Version>
+    </PackageReference>
   </ItemGroup>
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), dir.targets))\dir.targets" />
+
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
