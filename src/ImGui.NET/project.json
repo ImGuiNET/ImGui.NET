@@ -24,8 +24,9 @@
     "netstandard1.1": {}
   },
   "packInclude": {
+    "runtimes/osx.10.10-x64/native/": "../../deps/cimgui/osx.10.10-x64/cimgui.dylib",
     "runtimes/win7-x64/native/": "../../deps/cimgui/win7-x64/cimgui.dll",
-    "runtimes/ubuntu.14.04-x64/native/": "../../deps/cimgui/ubuntu14.04-x64/cimgui.so",
-    "runtimes/ubuntu.15.04-x64/native/": "../../deps/cimgui/ubuntu14.04-x64/cimgui.so"
+    "runtimes/ubuntu.14.04-x64/native/": "../../deps/cimgui/ubuntu.14.04-x64/cimgui.so",
+    "runtimes/ubuntu.15.04-x64/native/": "../../deps/cimgui/ubuntu.14.04-x64/cimgui.so"
   }
 }
