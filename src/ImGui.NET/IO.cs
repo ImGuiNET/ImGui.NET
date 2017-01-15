@@ -249,6 +249,11 @@ namespace ImGuiNET
             ImGuiNative.ImFontAtlas_SetTexID(_atlasPtr, textureID.ToPointer());
         }
 
+        public void Clear()
+        {
+            ImGuiNative.ImFontAtlas_Clear(_atlasPtr);
+        }
+
         public void ClearTexData()
         {
             ImGuiNative.ImFontAtlas_ClearTexData(_atlasPtr);
@@ -271,6 +276,13 @@ namespace ImGuiNET
             NativeFont* nativeFontPtr = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF(_atlasPtr, ttfData.ToPointer(), ttfDataSize, pixelSize, IntPtr.Zero, null);
             return new Font(nativeFontPtr);
         }
+
+        public Font AddFontFromMemoryTTF(IntPtr ttfData, int ttfDataSize, float pixelSize, IntPtr fontConfig)
+        {
+            NativeFont* nativeFontPtr = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF(_atlasPtr, ttfData.ToPointer(), ttfDataSize, pixelSize, fontConfig, null);
+            return new Font(nativeFontPtr);
+        }
+
     }
 
     public unsafe struct FontTextureData
