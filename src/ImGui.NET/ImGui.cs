@@ -600,7 +600,7 @@ namespace ImGuiNET
             return ImGuiNative.igIsKeyDown(keyIndex);
         }
 
-        public static bool IsKeyPressed(int keyIndex, bool repeat)
+        public static bool IsKeyPressed(int keyIndex, bool repeat = true)
         {
             return ImGuiNative.igIsKeyPressed(keyIndex, repeat);
         }
@@ -615,7 +615,7 @@ namespace ImGuiNET
             return ImGuiNative.igIsMouseDown(button);
         }
 
-        public static bool IsMouseClicked(int button, bool repeat)
+        public static bool IsMouseClicked(int button, bool repeat = false)
         {
             return ImGuiNative.igIsMouseClicked(button, repeat);
         }
@@ -896,7 +896,7 @@ namespace ImGuiNET
             ImGuiNative.igSameLine(0, 0);
         }
 
-        public static void SameLine(float localPositionX, float spacingW)
+        public static void SameLine(float localPositionX = 0, float spacingW = -1.0f)
         {
             ImGuiNative.igSameLine(localPositionX, spacingW);
         }
