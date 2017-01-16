@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace ImGuiNET
 {
@@ -90,6 +91,11 @@ namespace ImGuiNET
         public static void TextWrapped(string text)
         {
             ImGuiNative.igTextWrapped(text);
+        }
+
+        public static void TextUnformatted(string message)
+        {
+            ImGuiNative.igTextUnformatted(message, null);
         }
 
         public static void LabelText(string label, string text)
@@ -451,6 +457,18 @@ namespace ImGuiNET
             return ImGuiNative.igGetWindowWidth();
         }
 
+        public static Vector2 GetWindowSize()
+        {
+            Vector2 size;
+            ImGuiNative.igGetWindowSize(out size);
+            return size;
+        }
+
+        public static void SetWindowSize(Vector2 size, SetCondition cond)
+        {
+            ImGuiNative.igSetWindowSize(size, cond);
+        }
+
         public static bool BeginWindow(string windowTitle) => BeginWindow(windowTitle, WindowFlags.Default);
 
         public static bool BeginWindow(string windowTitle, WindowFlags flags)
@@ -532,6 +550,20 @@ namespace ImGuiNET
         public static bool MenuItem(string label, string shortcut, bool selected, bool enabled)
         {
             return ImGuiNative.igMenuItem(label, shortcut, selected, enabled);
+        }
+
+        public static unsafe bool InputText(string label, byte[] textBuffer, uint bufferSize, InputTextFlags flags, TextEditCallback textEditCallback)
+        {
+            return InputText(label, textBuffer, bufferSize, flags, textEditCallback, IntPtr.Zero);
+        }
+
+        public static unsafe bool InputText(string label, byte[] textBuffer, uint bufferSize, InputTextFlags flags, TextEditCallback textEditCallback, IntPtr userData)
+        {
+            Debug.Assert(bufferSize <= textBuffer.Length);
+            fixed (byte* ptrBuf = textBuffer)
+            {
+                return InputText(label, new IntPtr(ptrBuf), bufferSize, flags, textEditCallback, userData);
+            }
         }
 
         public static unsafe bool InputText(string label, IntPtr textBuffer, uint bufferSize, InputTextFlags flags, TextEditCallback textEditCallback)
@@ -686,6 +718,18 @@ namespace ImGuiNET
             {
                 ImGuiNative.igSetMouseCursor(value);
             }
+        }
+
+        public static Vector2 GetCursorStartPos()
+        {
+            Vector2 retVal;
+            ImGuiNative.igGetCursorStartPos(out retVal);
+            return retVal;
+        }
+
+        public static bool BeginChild(string id, bool border = false, WindowFlags flags = 0)
+        {
+            return BeginChild(id, new Vector2(0, 0), border, flags);
         }
 
         public static bool BeginChild(string id, Vector2 size, bool border, WindowFlags flags)
@@ -1011,5 +1055,10 @@ namespace ImGuiNET
         {
             ImGuiNative.igSetKeyboardFocusHere(offset);
         }
+        
+        public static void CalcListClipping(int itemsCount, float itemsHeight, ref int outItemsDisplayStart, ref int outItemsDisplayEnd)
+        {
+            ImGuiNative.igCalcListClipping(itemsCount, itemsHeight, ref outItemsDisplayStart, ref outItemsDisplayEnd);
+        }        
     }
 }
