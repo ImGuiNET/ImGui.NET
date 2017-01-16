@@ -59,5 +59,7 @@ namespace ImGuiNET
         /// Read-write.
         /// </summary>
         public int SelectionEnd;
+        
+        public bool HasSelection() { return SelectionStart != SelectionEnd; }
     }
 }
