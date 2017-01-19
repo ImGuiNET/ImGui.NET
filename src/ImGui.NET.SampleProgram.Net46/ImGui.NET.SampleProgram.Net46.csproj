@@ -20,6 +20,7 @@
   <ItemGroup>
     <Compile Include="..\ImGui.NET.SampleProgram\Program.cs" />
     <Compile Include="..\ImGui.NET.SampleProgram\SampleWindow.cs" />
+    <Compile Include="..\ImGui.NET.SampleProgram\MemoryEditor.cs" />    
   </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' " />
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' " />

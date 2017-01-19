@@ -29,6 +29,9 @@ namespace ImGuiNET
         private float _scaleFactor;
         private System.Numerics.Vector3 _positionValue = new System.Numerics.Vector3(500);
 
+        private MemoryEditor _memoryEditor = new MemoryEditor();
+        private byte[] _memoryEditorData;
+
         public unsafe SampleWindow()
         {
             int desiredWidth = 960, desiredHeight = 540;
@@ -57,6 +60,13 @@ namespace ImGuiNET
             for (int i = 0; i < 1024 / sizeof(long); i++)
             {
                 ptr[i] = 0;
+            }
+
+            _memoryEditorData = new byte[1024];
+            var rnd = new Random();
+            for (int i = 0; i < _memoryEditorData.Length; i++)
+            {
+                _memoryEditorData[i] = (byte) rnd.Next(255);
             }
 
             CreateDeviceObjects();
@@ -289,6 +299,8 @@ namespace ImGuiNET
             }
 
             ImGui.EndWindow();
+
+            _memoryEditor.Draw("Memory editor", _memoryEditorData, _memoryEditorData.Length);
 
             if (ImGui.GetIO().AltPressed && ImGui.GetIO().KeysDown[(int)Key.F4])
             {
