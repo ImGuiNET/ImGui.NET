@@ -93,9 +93,12 @@ namespace ImGuiNET
             ImGuiNative.igTextWrapped(text);
         }
 
-        public static void TextUnformatted(string message)
+        public static unsafe void TextUnformatted(string message)
         {
-            ImGuiNative.igTextUnformatted(message, null);
+            fixed (byte* bytes = System.Text.Encoding.UTF8.GetBytes(message))
+            {
+                ImGuiNative.igTextUnformatted(bytes, null);
+            }
         }
 
         public static void LabelText(string label, string text)
@@ -940,11 +943,6 @@ namespace ImGuiNET
         public static void OpenPopup(string id)
         {
             ImGuiNative.igOpenPopup(id);
-        }
-
-        public static void SameLine()
-        {
-            ImGuiNative.igSameLine(0, 0);
         }
 
         public static void SameLine(float localPositionX = 0, float spacingW = -1.0f)
