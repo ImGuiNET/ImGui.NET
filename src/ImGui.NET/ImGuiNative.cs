@@ -272,7 +272,7 @@ namespace ImGuiNET
         public static extern void igTextWrapped(string fmt);
 
         [DllImport(cimguiLib)]
-        public static extern void igTextUnformatted(string text, string text_end);
+        public static extern void igTextUnformatted(byte* text, byte* text_end);
 
         [DllImport(cimguiLib)]
         public static extern void igLabelText(string label, string fmt);
