@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace ImGuiNET
 {
@@ -90,6 +91,14 @@ namespace ImGuiNET
         public static void TextWrapped(string text)
         {
             ImGuiNative.igTextWrapped(text);
+        }
+
+        public static unsafe void TextUnformatted(string message)
+        {
+            fixed (byte* bytes = System.Text.Encoding.UTF8.GetBytes(message))
+            {
+                ImGuiNative.igTextUnformatted(bytes, null);
+            }
         }
 
         public static void LabelText(string label, string text)
@@ -451,6 +460,18 @@ namespace ImGuiNET
             return ImGuiNative.igGetWindowWidth();
         }
 
+        public static Vector2 GetWindowSize()
+        {
+            Vector2 size;
+            ImGuiNative.igGetWindowSize(out size);
+            return size;
+        }
+
+        public static void SetWindowSize(Vector2 size, SetCondition cond)
+        {
+            ImGuiNative.igSetWindowSize(size, cond);
+        }
+
         public static bool BeginWindow(string windowTitle) => BeginWindow(windowTitle, WindowFlags.Default);
 
         public static bool BeginWindow(string windowTitle, WindowFlags flags)
@@ -534,6 +555,20 @@ namespace ImGuiNET
             return ImGuiNative.igMenuItem(label, shortcut, selected, enabled);
         }
 
+        public static unsafe bool InputText(string label, byte[] textBuffer, uint bufferSize, InputTextFlags flags, TextEditCallback textEditCallback)
+        {
+            return InputText(label, textBuffer, bufferSize, flags, textEditCallback, IntPtr.Zero);
+        }
+
+        public static unsafe bool InputText(string label, byte[] textBuffer, uint bufferSize, InputTextFlags flags, TextEditCallback textEditCallback, IntPtr userData)
+        {
+            Debug.Assert(bufferSize <= textBuffer.Length);
+            fixed (byte* ptrBuf = textBuffer)
+            {
+                return InputText(label, new IntPtr(ptrBuf), bufferSize, flags, textEditCallback, userData);
+            }
+        }
+
         public static unsafe bool InputText(string label, IntPtr textBuffer, uint bufferSize, InputTextFlags flags, TextEditCallback textEditCallback)
         {
             return InputText(label, textBuffer, bufferSize, flags, textEditCallback, IntPtr.Zero);
@@ -600,7 +635,7 @@ namespace ImGuiNET
             return ImGuiNative.igIsKeyDown(keyIndex);
         }
 
-        public static bool IsKeyPressed(int keyIndex, bool repeat)
+        public static bool IsKeyPressed(int keyIndex, bool repeat = true)
         {
             return ImGuiNative.igIsKeyPressed(keyIndex, repeat);
         }
@@ -615,7 +650,7 @@ namespace ImGuiNET
             return ImGuiNative.igIsMouseDown(button);
         }
 
-        public static bool IsMouseClicked(int button, bool repeat)
+        public static bool IsMouseClicked(int button, bool repeat = false)
         {
             return ImGuiNative.igIsMouseClicked(button, repeat);
         }
@@ -686,6 +721,18 @@ namespace ImGuiNET
             {
                 ImGuiNative.igSetMouseCursor(value);
             }
+        }
+
+        public static Vector2 GetCursorStartPos()
+        {
+            Vector2 retVal;
+            ImGuiNative.igGetCursorStartPos(out retVal);
+            return retVal;
+        }
+
+        public static bool BeginChild(string id, bool border = false, WindowFlags flags = 0)
+        {
+            return BeginChild(id, new Vector2(0, 0), border, flags);
         }
 
         public static bool BeginChild(string id, Vector2 size, bool border, WindowFlags flags)
@@ -891,12 +938,7 @@ namespace ImGuiNET
             ImGuiNative.igOpenPopup(id);
         }
 
-        public static void SameLine()
-        {
-            ImGuiNative.igSameLine(0, 0);
-        }
-
-        public static void SameLine(float localPositionX, float spacingW)
+        public static void SameLine(float localPositionX = 0, float spacingW = -1.0f)
         {
             ImGuiNative.igSameLine(localPositionX, spacingW);
         }
@@ -1011,5 +1053,10 @@ namespace ImGuiNET
         {
             ImGuiNative.igSetKeyboardFocusHere(offset);
         }
+        
+        public static void CalcListClipping(int itemsCount, float itemsHeight, ref int outItemsDisplayStart, ref int outItemsDisplayEnd)
+        {
+            ImGuiNative.igCalcListClipping(itemsCount, itemsHeight, ref outItemsDisplayStart, ref outItemsDisplayEnd);
+        }        
     }
 }

@@ -225,7 +225,7 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igSetCursorPosY(float y);
         [DllImport(cimguiLib)]
-        public static extern void igGetCursorStartPos(Vector2* pOut);
+        public static extern void igGetCursorStartPos(out Vector2 pOut);
         [DllImport(cimguiLib)]
         public static extern void igGetCursorScreenPos(Vector2* pOut);
         [DllImport(cimguiLib)]
@@ -658,7 +658,7 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igCalcTextSize(out Vector2 pOut, char* text, char* text_end, bool hide_text_after_double_hash, float wrap_width);
         [DllImport(cimguiLib)]
-        public static extern void igCalcListClipping(int items_count, float items_height, int* out_items_display_start, int* out_items_display_end);
+        public static extern void igCalcListClipping(int items_count, float items_height, ref int out_items_display_start, ref int out_items_display_end);
 
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
