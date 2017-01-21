@@ -183,10 +183,6 @@ namespace ImGuiNET
 
         // Layout
         [DllImport(cimguiLib)]
-        public static extern void igBeginGroup();
-        [DllImport(cimguiLib)]
-        public static extern void igEndGroup();
-        [DllImport(cimguiLib)]
         public static extern void igSeparator();
         [DllImport(cimguiLib)]
         public static extern void igSameLine(float local_pos_x, float spacing_w);
@@ -195,23 +191,13 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igDummy(Vector2* size);
         [DllImport(cimguiLib)]
-        public static extern void igIndent();
+        public static extern void igIndent(float indent_w);
         [DllImport(cimguiLib)]
-        public static extern void igUnindent();
+        public static extern void igUnindent(float indent_w);
         [DllImport(cimguiLib)]
-        public static extern void igColumns(int count, string id, bool border);
+        public static extern void igBeginGroup();
         [DllImport(cimguiLib)]
-        public static extern void igNextColumn();
-        [DllImport(cimguiLib)]
-        public static extern int igGetColumnIndex();
-        [DllImport(cimguiLib)]
-        public static extern float igGetColumnOffset(int column_index);
-        [DllImport(cimguiLib)]
-        public static extern void igSetColumnOffset(int column_index, float offset_x);
-        [DllImport(cimguiLib)]
-        public static extern float igGetColumnWidth(int column_index);
-        [DllImport(cimguiLib)]
-        public static extern int igGetColumnsCount();
+        public static extern void igEndGroup();
         [DllImport(cimguiLib)]
         public static extern void igGetCursorPos(Vector2* pOut);
         [DllImport(cimguiLib)]
@@ -238,6 +224,23 @@ namespace ImGuiNET
         public static extern float igGetTextLineHeightWithSpacing();
         [DllImport(cimguiLib)]
         public static extern float igGetItemsLineHeightWithSpacing();
+
+        // Columns
+        [DllImport(cimguiLib)]
+        public static extern void igColumns(int count, string id, bool border);
+        [DllImport(cimguiLib)]
+        public static extern void igNextColumn();
+        [DllImport(cimguiLib)]
+        public static extern int igGetColumnIndex();
+        [DllImport(cimguiLib)]
+        public static extern float igGetColumnOffset(int column_index);
+        [DllImport(cimguiLib)]
+        public static extern void igSetColumnOffset(int column_index, float offset_x);
+        [DllImport(cimguiLib)]
+        public static extern float igGetColumnWidth(int column_index);
+        [DllImport(cimguiLib)]
+        public static extern int igGetColumnsCount();
+
 
         // ID scopes
         // If you are creating widgets in a loop you most likely want to push a unique identifier so ImGui can differentiate them
