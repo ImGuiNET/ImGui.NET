@@ -105,6 +105,12 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 DisplayVisibleMax;        // <unset> (0.0f,0.0f)  // If the values are the same, we defaults to Min=(0.0f) and Max=DisplaySize
 
+        public byte WordMovementUsesAltKey;   // = defined(__APPLE__) // OS X style: Text editing cursor movement using Alt instead of Ctrl
+        public byte ShortcutsUseSuperKey;     // = defined(__APPLE__) // OS X style: Shortcuts using Cmd/Super instead of Ctrl
+        public byte DoubleClickSelectsWord;   // = defined(__APPLE__) // OS X style: Double click selects by word instead of selecting whole text
+        public byte MultiSelectUsesSuperKey;  // = defined(__APPLE__) // OS X style: Multi-selection in lists uses Cmd/Super instead of Ctrl [unused yet]
+
+
         //------------------------------------------------------------------
         // User Functions
         //------------------------------------------------------------------
@@ -181,6 +187,7 @@ namespace ImGuiNET
         /// Keyboard modifier pressed: Alt
         /// </summary>
         public byte KeyAlt;
+        public byte KeySuper;
         /// <summary>
         /// Keyboard keys that are pressed (in whatever storage order you naturally have access to keyboard data)
         /// </summary>

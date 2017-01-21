@@ -140,9 +140,16 @@ namespace ImGuiNET
             return ImGuiNative.igImageButton(userTextureID, size, uv0, uv1, framePadding, backgroundColor, tintColor);
         }
 
+        //obsolete!
         public static bool CollapsingHeader(string label, string id, bool displayFrame, bool defaultOpen)
+        {   
+            int default_open_flags = 1 << 5;
+            return ImGuiNative.igCollapsingHeader(label, (defaultOpen ? default_open_flags : 0));
+        }
+
+        public static bool CollapsingHeader(string label, int flags)
         {
-            return ImGuiNative.igCollapsingHeader(label, id, displayFrame, defaultOpen);
+            return ImGuiNative.igCollapsingHeader(label, flags);
         }
 
         public static bool Checkbox(string label, ref bool value)

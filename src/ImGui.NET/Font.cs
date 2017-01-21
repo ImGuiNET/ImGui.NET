@@ -21,8 +21,16 @@ namespace ImGuiNET
     [StructLayout(LayoutKind.Sequential)]
     public unsafe struct NativeFont
     {
-        // Members: Settings
+        [StructLayout(LayoutKind.Sequential)]
+        public struct Glyph
+        {
+            public ushort Codepoint;
+            public float XAdvance;
+            public float X0, Y0, X1, Y1;
+            public float U0, V0, U1, V1;     // Texture coordinates
+        };
 
+        // Members: Hot ~62/78 bytes
         /// <summary>
         /// Height of characters, set during loading (don't change after loading).
         /// Default value: [user-set]
@@ -39,41 +47,21 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 DisplayOffset;
         /// <summary>
-        /// Replacement glyph if one isn't found. Only set via SetFallbackChar()
-        /// Default value: '?'
-        /// </summary>
-        public ushort FallbackChar;
-
-        /// <summary>
-        /// ImFontConfig*. Pointer within ImFontAtlas->ConfigData
-        /// </summary>
-        public IntPtr ConfigData;
-        public int ConfigDataCount;
-
-        // Members: Runtime data
-        [StructLayout(LayoutKind.Sequential)]
-        public struct Glyph
-        {
-            public ushort Codepoint;
-            public float XAdvance;
-            public float X0, Y0, X1, Y1;
-            public float U0, V0, U1, V1;     // Texture coordinates
-        };
-
-        /// <summary>
-        /// Ascent: distance from top to bottom of e.g. 'A' [0..FontSize]
-        /// </summary>
-        public float Ascent, Descent;
-
-        /// <summary>
-        /// ImFontAtlas*
-        /// </summary>
-        public IntPtr ContainerAtlas;     // What we has been loaded into
-
-        /// <summary>
         /// ImVector(Glyph)
         /// </summary>
         public ImVector Glyphs;
+
+        /// <summary>
+        /// Sparse. Glyphs->XAdvance directly indexable (more cache-friendly that reading from Glyphs,
+        /// for CalcTextSize functions which are often bottleneck in large UI).
+        /// </summary>
+        public ImVector IndexXAdvance;
+
+        /// <summary>
+        /// Sparse. Index glyphs by Unicode code-point.
+        /// </summary>
+        public ImVector IndexLookup;
+
         /// <summary>
         /// Equivalent to FindGlyph(FontFallbackChar)
         /// </summary>
@@ -81,13 +69,27 @@ namespace ImGuiNET
         public float FallbackXAdvance;
 
         /// <summary>
-        /// Sparse. Glyphs->XAdvance directly indexable (more cache-friendly that reading from Glyphs,
-        /// for CalcTextSize functions which are often bottleneck in large UI).
+        /// Replacement glyph if one isn't found. Only set via SetFallbackChar()
+        /// Default value: '?'
         /// </summary>
-        public ImVector IndexXAdvance;
+        public ushort FallbackChar;
+
+        // Members: Cold ~18/26 bytes
+        public int ConfigDataCount;
+
         /// <summary>
-        /// Sparse. Index glyphs by Unicode code-point.
+        /// ImFontConfig*. Pointer within ImFontAtlas->ConfigData
         /// </summary>
-        public ImVector IndexLookup;
+        public IntPtr ConfigData;
+
+        /// <summary>
+        /// ImFontAtlas*
+        /// </summary>
+        public IntPtr ContainerAtlas;     // What we has been loaded into
+
+        /// <summary>
+        /// Ascent: distance from top to bottom of e.g. 'A' [0..FontSize]
+        /// </summary>
+        public float Ascent, Descent;
     };
 }
