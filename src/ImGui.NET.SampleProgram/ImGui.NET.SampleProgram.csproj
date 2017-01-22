@@ -16,6 +16,7 @@
     <BaseNuGetRuntimeIdentifier Condition="'$(OSTarget)' == 'Windows_NT'">win7</BaseNuGetRuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="MemoryEditor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="SampleWindow.cs" />
   </ItemGroup>

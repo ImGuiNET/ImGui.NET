@@ -467,7 +467,7 @@ namespace ImGuiNET
             return size;
         }
 
-        public static void SetWindowSize(Vector2 size, SetCondition cond)
+        public static void SetWindowSize(Vector2 size, SetCondition cond = 0)
         {
             ImGuiNative.igSetWindowSize(size, cond);
         }
@@ -628,6 +628,13 @@ namespace ImGuiNET
         public static void EndChildFrame()
         {
             ImGuiNative.igEndChildFrame();
+        }
+
+        public static int GetKeyIndex(GuiKey key)
+        {
+            //TODO this got exported by later version of cimgui, call ImGuiNative after upgrading
+            IO io = GetIO();
+            return io.KeyMap[key];
         }
 
         public static bool IsKeyDown(int keyIndex)
