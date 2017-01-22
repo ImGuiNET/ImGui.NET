@@ -191,9 +191,9 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igDummy(Vector2* size);
         [DllImport(cimguiLib)]
-        public static extern void igIndent(float indent_w);
+        public static extern void igIndent(float indent_w = 0.0f);
         [DllImport(cimguiLib)]
-        public static extern void igUnindent(float indent_w);
+        public static extern void igUnindent(float indent_w = 0.0f);
         [DllImport(cimguiLib)]
         public static extern void igBeginGroup();
         [DllImport(cimguiLib)]
