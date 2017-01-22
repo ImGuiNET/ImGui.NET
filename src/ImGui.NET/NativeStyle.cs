@@ -51,10 +51,6 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 TouchExtraPadding;
         /// <summary>
-        /// Default alpha of window background, if not specified in ImGui::Begin().
-        /// </summary>
-        public float WindowFillAlphaDefault;
-        /// <summary>
         /// Horizontal indentation when e.g. entering a tree node
         /// </summary>
         public float IndentSpacing;

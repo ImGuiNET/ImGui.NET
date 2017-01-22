@@ -111,15 +111,6 @@ namespace ImGuiNET
         }
 
         /// <summary>
-        /// Default alpha of window background, if not specified in ImGui::Begin().
-        /// </summary>
-        public float WindowFillAlphaDefault
-        {
-            get { return _stylePtr->WindowFillAlphaDefault; }
-            set { _stylePtr->WindowFillAlphaDefault = value; }
-        }
-
-        /// <summary>
         /// Horizontal indentation when e.g. entering a tree node
         /// </summary>
         public float IndentSpacing

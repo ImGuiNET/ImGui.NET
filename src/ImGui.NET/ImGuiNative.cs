@@ -71,10 +71,6 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern DrawList* igGetWindowDrawList();
         [DllImport(cimguiLib)]
-        public static extern NativeFont* igGetWindowFont();
-        [DllImport(cimguiLib)]
-        public static extern float igGetWindowFontSize();
-        [DllImport(cimguiLib)]
         public static extern void igSetWindowFontScale(float scale);
         [DllImport(cimguiLib)]
         public static extern void igGetWindowPos(out Vector2 @out);
@@ -102,14 +98,14 @@ namespace ImGuiNET
         public static extern void igSetNextWindowCollapsed(bool collapsed, SetCondition cond);
         [DllImport(cimguiLib)]
         public static extern void igSetNextWindowFocus();
+        [DllImport(cimguiLib)] 
+        public static extern void igSetWindowPos(Vector2 pos, SetCondition cond);  //(not recommended)
         [DllImport(cimguiLib)]
-        public static extern void igSetWindowPos(Vector2 pos, SetCondition cond);
+        public static extern void igSetWindowSize(Vector2 size, SetCondition cond); //(not recommended)
         [DllImport(cimguiLib)]
-        public static extern void igSetWindowSize(Vector2 size, SetCondition cond);
+        public static extern void igSetWindowCollapsed(bool collapsed, SetCondition cond); //(not recommended)
         [DllImport(cimguiLib)]
-        public static extern void igSetWindowCollapsed(bool collapsed, SetCondition cond);
-        [DllImport(cimguiLib)]
-        public static extern void igSetWindowFocus();
+        public static extern void igSetWindowFocus(); //(not recommended)
         [DllImport(cimguiLib)]
         public static extern void igSetWindowPosByName(string name, Vector2 pos, SetCondition cond);
         [DllImport(cimguiLib)]
@@ -160,6 +156,10 @@ namespace ImGuiNET
         public static extern void igPushStyleVarVec(StyleVar idx, Vector2 val);
         [DllImport(cimguiLib)]
         public static extern void igPopStyleVar(int count);
+        [DllImport(cimguiLib)]
+        public static extern NativeFont* igGetFont();
+        [DllImport(cimguiLib)]
+        public static extern float igGetFontSize();
 
         // Parameters stacks (current window)
         [DllImport(cimguiLib)]
@@ -183,10 +183,6 @@ namespace ImGuiNET
 
         // Layout
         [DllImport(cimguiLib)]
-        public static extern void igBeginGroup();
-        [DllImport(cimguiLib)]
-        public static extern void igEndGroup();
-        [DllImport(cimguiLib)]
         public static extern void igSeparator();
         [DllImport(cimguiLib)]
         public static extern void igSameLine(float local_pos_x, float spacing_w);
@@ -195,23 +191,13 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igDummy(Vector2* size);
         [DllImport(cimguiLib)]
-        public static extern void igIndent();
+        public static extern void igIndent(float indent_w = 0.0f);
         [DllImport(cimguiLib)]
-        public static extern void igUnindent();
+        public static extern void igUnindent(float indent_w = 0.0f);
         [DllImport(cimguiLib)]
-        public static extern void igColumns(int count, string id, bool border);
+        public static extern void igBeginGroup();
         [DllImport(cimguiLib)]
-        public static extern void igNextColumn();
-        [DllImport(cimguiLib)]
-        public static extern int igGetColumnIndex();
-        [DllImport(cimguiLib)]
-        public static extern float igGetColumnOffset(int column_index);
-        [DllImport(cimguiLib)]
-        public static extern void igSetColumnOffset(int column_index, float offset_x);
-        [DllImport(cimguiLib)]
-        public static extern float igGetColumnWidth(int column_index);
-        [DllImport(cimguiLib)]
-        public static extern int igGetColumnsCount();
+        public static extern void igEndGroup();
         [DllImport(cimguiLib)]
         public static extern void igGetCursorPos(Vector2* pOut);
         [DllImport(cimguiLib)]
@@ -238,6 +224,23 @@ namespace ImGuiNET
         public static extern float igGetTextLineHeightWithSpacing();
         [DllImport(cimguiLib)]
         public static extern float igGetItemsLineHeightWithSpacing();
+
+        // Columns
+        [DllImport(cimguiLib)]
+        public static extern void igColumns(int count, string id, bool border);
+        [DllImport(cimguiLib)]
+        public static extern void igNextColumn();
+        [DllImport(cimguiLib)]
+        public static extern int igGetColumnIndex();
+        [DllImport(cimguiLib)]
+        public static extern float igGetColumnOffset(int column_index);
+        [DllImport(cimguiLib)]
+        public static extern void igSetColumnOffset(int column_index, float offset_x);
+        [DllImport(cimguiLib)]
+        public static extern float igGetColumnWidth(int column_index);
+        [DllImport(cimguiLib)]
+        public static extern int igGetColumnsCount();
+
 
         // ID scopes
         // If you are creating widgets in a loop you most likely want to push a unique identifier so ImGui can differentiate them
@@ -296,9 +299,6 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igImageButton(IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1, int frame_padding, Vector4 bg_col, Vector4 tint_col);
-        [DllImport(cimguiLib)]
-        [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igCollapsingHeader(string label, string str_id, bool display_frame, bool default_open);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igCheckbox(string label, ref bool v);
@@ -471,6 +471,12 @@ namespace ImGuiNET
         public static extern void igTreePop();
         [DllImport(cimguiLib)]
         public static extern void igSetNextTreeNodeOpened(bool opened, SetCondition cond);
+        [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool igCollapsingHeader(string label, TreeNodeFlags flags = 0);
+        [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool igCollapsingHeader(string label, ref bool p_open, TreeNodeFlags flags = 0);
 
         // Widgets: Selectable / Lists
         [DllImport(cimguiLib)]
@@ -645,12 +651,6 @@ namespace ImGuiNET
         public static extern float igGetTime();
         [DllImport(cimguiLib)]
         public static extern int igGetFrameCount();
-
-        internal static void igPushFont(object nativeFont)
-        {
-            throw new NotImplementedException();
-        }
-
         [DllImport(cimguiLib)]
         public static extern string igGetStyleColName(ColorTarget idx);
         [DllImport(cimguiLib)]
@@ -738,12 +738,12 @@ namespace ImGuiNET
         // public state access - if you want to share ImGui state between modules (e.g. DLL) or allocate it yourself
         [DllImport(cimguiLib)]
         public static extern string igGetVersion();
-        [DllImport(cimguiLib)]
-        public static extern void* igGetpublicState();
-        [DllImport(cimguiLib)]
-        public static extern uint igGetpublicStateSize();
-        [DllImport(cimguiLib)]
-        public static extern void igSetpublicState(void* state, bool construct);
+        /*
+        CIMGUI_API struct ImGuiContext*    igCreateContext(void* (*malloc_fn)(size_t), void (*free_fn)(void*));
+        CIMGUI_API void                    igDestroyContext(struct ImGuiContext* ctx);
+        CIMGUI_API struct ImGuiContext*    igGetCurrentContext();
+        CIMGUI_API void                    igSetCurrentContext(struct ImGuiContext* ctx);
+        */
 
 
         [DllImport(cimguiLib)]

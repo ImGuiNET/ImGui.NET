@@ -15,6 +15,7 @@
   <ItemGroup>
     <Compile Include="Align.cs" />
     <Compile Include="ColorTarget.cs" />
+    <Compile Include="TreeNodeFlags.cs" />
     <Compile Include="IntStructs.cs" />
     <Compile Include="MouseCursorKind.cs" />
     <Compile Include="NativeIO.cs" />

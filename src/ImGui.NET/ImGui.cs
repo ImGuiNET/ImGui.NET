@@ -140,9 +140,16 @@ namespace ImGuiNET
             return ImGuiNative.igImageButton(userTextureID, size, uv0, uv1, framePadding, backgroundColor, tintColor);
         }
 
+        //obsolete!
         public static bool CollapsingHeader(string label, string id, bool displayFrame, bool defaultOpen)
         {
-            return ImGuiNative.igCollapsingHeader(label, id, displayFrame, defaultOpen);
+            TreeNodeFlags default_open_flags = TreeNodeFlags.DefaultOpen;
+            return ImGuiNative.igCollapsingHeader(label, (defaultOpen ? default_open_flags : 0));
+        }
+
+        public static bool CollapsingHeader(string label, TreeNodeFlags flags)
+        {
+            return ImGuiNative.igCollapsingHeader(label, flags);
         }
 
         public static bool Checkbox(string label, ref bool value)

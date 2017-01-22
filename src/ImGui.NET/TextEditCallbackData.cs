@@ -39,6 +39,8 @@ namespace ImGuiNET
         /// Current text. Read-write (pointed data only). char* in native code.
         /// </summary>
         public IntPtr Buf;
+
+        public int BufTextLen;
         /// <summary>
         /// Read-only.
         /// </summary>
