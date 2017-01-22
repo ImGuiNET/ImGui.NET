@@ -142,12 +142,12 @@ namespace ImGuiNET
 
         //obsolete!
         public static bool CollapsingHeader(string label, string id, bool displayFrame, bool defaultOpen)
-        {   
-            int default_open_flags = 1 << 5;
+        {
+            TreeNodeFlags default_open_flags = TreeNodeFlags.DefaultOpen;
             return ImGuiNative.igCollapsingHeader(label, (defaultOpen ? default_open_flags : 0));
         }
 
-        public static bool CollapsingHeader(string label, int flags)
+        public static bool CollapsingHeader(string label, TreeNodeFlags flags)
         {
             return ImGuiNative.igCollapsingHeader(label, flags);
         }

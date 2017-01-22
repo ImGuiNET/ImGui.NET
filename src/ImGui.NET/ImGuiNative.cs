@@ -473,10 +473,10 @@ namespace ImGuiNET
         public static extern void igSetNextTreeNodeOpened(bool opened, SetCondition cond);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igCollapsingHeader(string label, int flags);  //ImGuiTreeNodeFlags
+        public static extern bool igCollapsingHeader(string label, TreeNodeFlags flags = 0);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igCollapsingHeader(string label, ref bool p_open, int flags);  //ImGuiTreeNodeFlags
+        public static extern bool igCollapsingHeader(string label, ref bool p_open, TreeNodeFlags flags = 0);
 
         // Widgets: Selectable / Lists
         [DllImport(cimguiLib)]
