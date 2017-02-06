@@ -507,9 +507,9 @@ namespace ImGuiNET
             return ImGuiNative.igBeginMenu(label, enabled);
         }
 
-        public static void BeginMenuBar()
+        public static bool BeginMenuBar()
         {
-            ImGuiNative.igBeginMenuBar();
+            return ImGuiNative.igBeginMenuBar();
         }
 
         public static void CloseCurrentPopup()
