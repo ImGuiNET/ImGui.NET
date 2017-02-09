@@ -69,7 +69,7 @@ namespace ImGuiNET
         public static extern float igGetWindowContentRegionWidth();
 
         [DllImport(cimguiLib)]
-        public static extern DrawList* igGetWindowDrawList();
+        public static extern NativeDrawList* igGetWindowDrawList();
         [DllImport(cimguiLib)]
         public static extern void igSetWindowFontScale(float scale);
         [DllImport(cimguiLib)]
@@ -783,20 +783,113 @@ namespace ImGuiNET
         public static extern void ImGuiIO_AddInputCharactersUTF8(string utf8_chars);
 
         [DllImport(cimguiLib)]
-        public static extern int ImDrawList_GetVertexBufferSize(DrawList* list);
+        public static extern int ImDrawList_GetVertexBufferSize(NativeDrawList* list);
         [DllImport(cimguiLib)]
-        public static extern DrawVert* ImDrawList_GetVertexPtr(DrawList* list, int n);
+        public static extern DrawVert* ImDrawList_GetVertexPtr(NativeDrawList* list, int n);
         [DllImport(cimguiLib)]
-        public static extern int ImDrawList_GetIndexBufferSize(DrawList* list);
+        public static extern int ImDrawList_GetIndexBufferSize(NativeDrawList* list);
         [DllImport(cimguiLib)]
-        public static extern ushort* ImDrawList_GetIndexPtr(DrawList* list, int n);
+        public static extern ushort* ImDrawList_GetIndexPtr(NativeDrawList* list, int n);
         [DllImport(cimguiLib)]
-        public static extern int ImDrawList_GetCmdSize(DrawList* list);
+        public static extern int ImDrawList_GetCmdSize(NativeDrawList* list);
         [DllImport(cimguiLib)]
-        public static extern DrawCmd* ImDrawList_GetCmdPtr(DrawList* list, int n);
+        public static extern DrawCmd* ImDrawList_GetCmdPtr(NativeDrawList* list, int n);
         [DllImport(cimguiLib)]
         public static extern void ImDrawData_DeIndexAllBuffers(DrawData* drawData);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_Clear(NativeDrawList* list);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_ClearFreeMemory(NativeDrawList* list);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PushClipRect(NativeDrawList* list, Vector2 clip_rect_min, Vector2 clip_rect_max, byte intersect_with_current_clip_rect);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PushClipRectFullScreen(NativeDrawList* list);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PopClipRect(NativeDrawList* list);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PushTextureID(NativeDrawList* list, void* texture_id);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PopTextureID(NativeDrawList* list);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddLine(NativeDrawList* list, Vector2 a, Vector2 b, uint col, float thickness);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddRect(NativeDrawList* list, Vector2 a, Vector2 b, uint col, float rounding, int rounding_corners, float thickness);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddRectFilled(NativeDrawList* list, Vector2 a, Vector2 b, uint col, float rounding, int rounding_corners);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddRectFilledMultiColor(NativeDrawList* list, Vector2 a, Vector2 b, uint col_upr_left, uint col_upr_right, uint col_bot_right, uint col_bot_left);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawLust_AddQuad(NativeDrawList* list, Vector2 a, Vector2 b, Vector2 c, Vector2 d, uint col, float thickness);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawLust_AddQuadFilled(NativeDrawList* list, Vector2 a, Vector2 b, Vector2 c, Vector2 d, uint col);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddTriangle(NativeDrawList* list, Vector2 a, Vector2 b, Vector2 c, uint col, float thickness);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddTriangleFilled(NativeDrawList* list, Vector2 a, Vector2 b, Vector2 c, uint col);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddCircle(NativeDrawList* list, Vector2 centre, float radius, uint col, int num_segments, float thickness);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddCircleFilled(NativeDrawList* list, Vector2 centre, float radius, uint col, int num_segments);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddText(NativeDrawList* list, Vector2 pos, uint col, char* text_begin, char* text_end);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddTextExt(NativeDrawList* list, NativeFont* font, float font_size, Vector2 pos, uint col, char* text_begin, char* text_end, float wrap_width, Vector4* cpu_fine_clip_rect);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddImage(NativeDrawList* list, void* user_texture_id, Vector2 a, Vector2 b, Vector2 uv0, Vector2 uv1, uint col);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddPolyline(NativeDrawList* list, Vector2* points, int num_points, uint col, byte closed, float thickness, byte anti_aliased);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddConvexPolyFilled(NativeDrawList* list, Vector2* points, int num_points, uint col, byte anti_aliased);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddBezierCurve(NativeDrawList* list, Vector2 pos0, Vector2 cp0, Vector2 cp1, Vector2 pos1, uint col, float thickness, int num_segments);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PathClear(NativeDrawList* list);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PathLineTo(NativeDrawList* list, Vector2 pos);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PathLineToMergeDuplicate(NativeDrawList* list, Vector2 pos);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PathFill(NativeDrawList* list, uint col);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PathStroke(NativeDrawList* list, uint col, byte closed, float thickness);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PathArcTo(NativeDrawList* list, Vector2 centre, float radius, float a_min, float a_max, int num_segments);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PathArcToFast(NativeDrawList* list, Vector2 centre, float radius, int a_min_of_12, int a_max_of_12);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PathBezierCurveTo(NativeDrawList* list, Vector2 p1, Vector2 p2, Vector2 p3, int num_segments);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PathRect(NativeDrawList* list, Vector2 rect_min, Vector2 rect_max, float rounding, int rounding_corners);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_ChannelsSplit(NativeDrawList* list, int channels_count);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_ChannelsMerge(NativeDrawList* list);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_ChannelsSetCurrent(NativeDrawList* list, int channel_index);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddCallback(NativeDrawList* list, ImDrawCallback callback, void* callback_data);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddDrawCmd(NativeDrawList* list);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PrimReserve(NativeDrawList* list, int idx_count, int vtx_count);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PrimRect(NativeDrawList* list, Vector2 a, Vector2 b, uint col);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PrimRectUV(NativeDrawList* list, Vector2 a, Vector2 b, Vector2 uv_a, Vector2 uv_b, uint col);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PrimQuadUV(NativeDrawList* list, Vector2 a, Vector2 b, Vector2 c, Vector2 d, Vector2 uv_a, Vector2 uv_b, Vector2 uv_c, Vector2 uv_d, uint col);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PrimVtx(NativeDrawList* list, Vector2 pos, Vector2 uv, uint col);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PrimWriteVtx(NativeDrawList* list, Vector2 pos, Vector2 uv, uint col);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_PrimWriteIdx(NativeDrawList* list, ushort idx);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_UpdateClipRect(NativeDrawList* list);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_UpdateTextureID(NativeDrawList* list);
     }
 
     public delegate bool ItemSelectedCallback(IntPtr data, int index, string out_text);
+    public unsafe delegate void ImDrawCallback(DrawList* parent_list, DrawCmd* cmd);
 }

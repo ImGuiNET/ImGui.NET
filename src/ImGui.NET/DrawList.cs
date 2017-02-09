@@ -1,8 +1,61 @@
 ﻿using System;
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace ImGuiNET
 {
+    public unsafe struct DrawList
+    {
+        private readonly NativeDrawList* _nativeDrawList;
+        public DrawList(NativeDrawList* nativeDrawList)
+        {
+            _nativeDrawList = nativeDrawList;
+        }
+
+        public static DrawList GetForCurrentWindow()
+        {
+            return new DrawList(ImGuiNative.igGetWindowDrawList());
+        }
+
+        public void AddLine(Vector2 a, Vector2 b, uint color, float thickness)
+        {
+            ImGuiNative.ImDrawList_AddLine(_nativeDrawList, a, b, color, thickness);
+        }
+
+        public void AddRect(Vector2 a, Vector2 b, uint color, float rounding, int rounding_corners, float thickness)
+        {
+            ImGuiNative.ImDrawList_AddRect(_nativeDrawList, a, b, color, rounding, rounding_corners, thickness);
+        }
+
+        public void AddRectFilled(Vector2 a, Vector2 b, uint color, float rounding, int rounding_corners = ~0)
+        {
+            ImGuiNative.ImDrawList_AddRectFilled(_nativeDrawList, a, b, color, rounding, rounding_corners);
+        }
+
+        public void AddRectFilledMultiColor(
+            Vector2 a,
+            Vector2 b,
+            uint colorUpperLeft,
+            uint colorUpperRight,
+            uint colorBottomRight,
+            uint colorBottomLeft)
+        {
+            ImGuiNative.ImDrawList_AddRectFilledMultiColor(
+                _nativeDrawList,
+                a,
+                b,
+                colorUpperLeft,
+                colorUpperRight,
+                colorBottomRight,
+                colorBottomLeft);
+        }
+
+        public void AddCircle(Vector2 center, float radius, uint color, int numSegments, float thickness)
+        {
+            ImGuiNative.ImDrawList_AddCircle(_nativeDrawList, center, radius, color, numSegments, thickness);
+        }
+    }
+
     /// <summary>
     /// Draw command list
     /// This is the low-level list of polygons that ImGui functions are filling. At the end of the frame, all command lists are passed to your ImGuiIO::RenderDrawListFn function for rendering.
@@ -12,7 +65,7 @@ namespace ImGuiNET
     /// All positions are in screen coordinates (0,0=top-left, 1 pixel per unit). Primitives are always added to the list and not culled (culling is done at render time and at a higher-level by ImGui:: functions).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct DrawList
+    public unsafe struct NativeDrawList
     {
         // This is what you have to render
 

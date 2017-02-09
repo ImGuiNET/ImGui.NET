@@ -147,6 +147,7 @@ namespace ImGuiNET
             return ImGuiNative.igCollapsingHeader(label, (defaultOpen ? default_open_flags : 0));
         }
 
+
         public static bool CollapsingHeader(string label, TreeNodeFlags flags)
         {
             return ImGuiNative.igCollapsingHeader(label, flags);
@@ -446,7 +447,7 @@ namespace ImGuiNET
         {
             for (int i = 0; i < drawData->CmdListsCount; i++)
             {
-                DrawList* cmd_list = drawData->CmdLists[i];
+                NativeDrawList* cmd_list = drawData->CmdLists[i];
                 for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
                 {
                     DrawCmd* drawCmdList = (DrawCmd*)cmd_list->CmdBuffer.Data;
@@ -473,6 +474,14 @@ namespace ImGuiNET
             ImGuiNative.igGetWindowSize(out size);
             return size;
         }
+
+        public static Vector2 GetWindowPosition()
+        {
+            Vector2 pos;
+            ImGuiNative.igGetWindowPos(out pos);
+            return pos;
+        }
+
 
         public static void SetWindowSize(Vector2 size, SetCondition cond = 0)
         {
@@ -689,6 +698,11 @@ namespace ImGuiNET
             return ImGuiNative.igIsMouseHoveringAnyWindow();
         }
 
+        public static bool IsWindowFocused()
+        {
+            return ImGuiNative.igIsWindowFocused();
+        }
+
         public static bool IsMouseHoveringRect(Vector2 minPosition, Vector2 maxPosition, bool clip)
         {
             return IsMouseHoveringRect(minPosition, maxPosition, clip);
@@ -741,6 +755,13 @@ namespace ImGuiNET
         {
             Vector2 retVal;
             ImGuiNative.igGetCursorStartPos(out retVal);
+            return retVal;
+        }
+
+        public static unsafe Vector2 GetCursorScreenPos()
+        {
+            Vector2 retVal;
+            ImGuiNative.igGetCursorScreenPos(&retVal);
             return retVal;
         }
 

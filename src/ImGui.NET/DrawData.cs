@@ -12,7 +12,7 @@ namespace ImGuiNET
         /// Only valid after Render() is called and before the next NewFrame() is called.
         /// </summary>
         public byte Valid;
-        public DrawList** CmdLists;
+        public NativeDrawList** CmdLists;
         public int CmdListsCount;
         /// <summary>
         /// For convenience, sum of all cmd_lists vtx_buffer.Size
