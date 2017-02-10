@@ -705,7 +705,7 @@ namespace ImGuiNET
 
         public static bool IsMouseHoveringRect(Vector2 minPosition, Vector2 maxPosition, bool clip)
         {
-            return IsMouseHoveringRect(minPosition, maxPosition, clip);
+            return ImGuiNative.igIsMouseHoveringRect(minPosition, maxPosition, clip);
         }
 
         public static bool IsMouseDragging(int button, float lockThreshold)
