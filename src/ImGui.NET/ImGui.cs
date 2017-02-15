@@ -992,14 +992,14 @@ namespace ImGuiNET
             ImGuiNative.igSetTooltip(text);
         }
 
-        public static void SetNextTreeNodeOpened(bool opened)
+        public static void SetNextTreeNodeOpen(bool opened)
         {
-            ImGuiNative.igSetNextTreeNodeOpened(opened, SetCondition.Always);
+            ImGuiNative.igSetNextTreeNodeOpen(opened, SetCondition.Always);
         }
 
-        public static void SetNextTreeNodeOpened(bool opened, SetCondition setCondition)
+        public static void SetNextTreeNodeOpen(bool opened, SetCondition setCondition)
         {
-            ImGuiNative.igSetNextTreeNodeOpened(opened, setCondition);
+            ImGuiNative.igSetNextTreeNodeOpen(opened, setCondition);
         }
 
         public static bool TreeNode(string label)
