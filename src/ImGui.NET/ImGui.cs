@@ -646,6 +646,25 @@ namespace ImGuiNET
             ImGuiNative.igEndChildFrame();
         }
 
+        public static unsafe void ColorConvertRGBToHSV(float r, float g, float b, out float h, out float s, out float v)
+        {
+            float h2, s2, v2;
+            ImGuiNative.igColorConvertRGBtoHSV(r, g, b, &h2, &s2, &v2);
+            h = h2;
+            s = s2;
+            v = v2;
+        }
+
+        public static unsafe void ColorConvertHSVToRGB(float h, float s, float v, out float r, out float g, out float b)
+        {
+            float r2, g2, b2;
+            ImGuiNative.igColorConvertHSVtoRGB(h, s, v, &r2, &g2, &b2);
+            r = r2;
+            g = g2;
+            b = b2;
+        }
+
+
         public static int GetKeyIndex(GuiKey key)
         {
             //TODO this got exported by later version of cimgui, call ImGuiNative after upgrading
@@ -763,6 +782,11 @@ namespace ImGuiNET
             Vector2 retVal;
             ImGuiNative.igGetCursorScreenPos(&retVal);
             return retVal;
+        }
+
+        public static void SetCursorScreenPos(Vector2 pos)
+        {
+            ImGuiNative.igSetCursorScreenPos(pos);
         }
 
         public static bool BeginChild(string id, bool border = false, WindowFlags flags = 0)
