@@ -13,7 +13,7 @@
     <PackageProjectUrl>https://github.com/mellinoe/imgui.net</PackageProjectUrl>
     <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <DocumentationFile>bin\Debug\ImGui.NET.xml</DocumentationFile>
+    <DocumentationFile Condition="'$(Configuration)' == 'Release'">bin\Release\ImGui.NET.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Diagnostics.Debug" Version="4.0.11" />
