@@ -421,6 +421,11 @@ namespace ImGuiNET
             ImGuiNative.igSetNextWindowSize(size, condition);
         }
 
+        public static void SetNextWindowFocus()
+        {
+            ImGuiNative.igSetNextWindowFocus();
+        }
+
         public static void SetNextWindowPos(Vector2 position, SetCondition condition)
         {
             ImGuiNative.igSetNextWindowPos(position, condition);
@@ -1000,6 +1005,16 @@ namespace ImGuiNET
         public static void SameLine(float localPositionX = 0, float spacingW = -1.0f)
         {
             ImGuiNative.igSameLine(localPositionX, spacingW);
+        }
+
+        public static void PushClipRect(Vector2 min, Vector2 max, bool intersectWithCurrentCliRect)
+        {
+            ImGuiNative.igPushClipRect(min, max, intersectWithCurrentCliRect ? (byte)1 : (byte)0);
+        }
+
+        public static void PopClipRect()
+        {
+            ImGuiNative.igPopClipRect();
         }
 
         public static bool IsLastItemHovered()

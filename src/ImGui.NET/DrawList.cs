@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Buffers;
 using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace ImGuiNET
 {
@@ -53,6 +55,37 @@ namespace ImGuiNET
         public void AddCircle(Vector2 center, float radius, uint color, int numSegments, float thickness)
         {
             ImGuiNative.ImDrawList_AddCircle(_nativeDrawList, center, radius, color, numSegments, thickness);
+        }
+
+        public unsafe void AddText(Vector2 position, string text, uint color)
+        {
+            int bytes = Encoding.UTF8.GetByteCount(text);
+            byte[] tempBytes = ArrayPool<byte>.Shared.Rent(bytes);
+            Encoding.UTF8.GetBytes(text, 0, text.Length, tempBytes, 0);
+            fixed (byte* bytePtr = &tempBytes[0])
+            {
+                ImGuiNative.ImDrawList_AddText(_nativeDrawList, position, color, bytePtr, bytePtr + bytes);
+            }
+        }
+
+        public void PushClipRect(Vector2 min, Vector2 max, bool intersectWithCurrentClipRect)
+        {
+            ImGuiNative.ImDrawList_PushClipRect(_nativeDrawList, min, max, intersectWithCurrentClipRect ? (byte)1 : (byte)0);
+        }
+
+        public void PushClipRectFullScreen()
+        {
+            ImGuiNative.ImDrawList_PushClipRectFullScreen(_nativeDrawList);
+        }
+
+        public void PopClipRect()
+        {
+            ImGuiNative.ImDrawList_PopClipRect(_nativeDrawList);
+        }
+
+        public void AddDrawCmd()
+        {
+            ImGuiNative.ImDrawList_AddDrawCmd(_nativeDrawList);
         }
     }
 

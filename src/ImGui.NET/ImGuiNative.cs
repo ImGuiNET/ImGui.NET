@@ -604,6 +604,12 @@ namespace ImGuiNET
         //public static extern void igLogText(string fmt, ...);
         public static extern void igLogText(string fmt);
 
+        // Clipping
+        [DllImport(cimguiLib)]
+        public static extern void igPushClipRect(Vector2 clip_rect_min,  Vector2 clip_rect_max, byte intersect_with_current_clip_rect);
+        [DllImport(cimguiLib)]
+        public static extern void igPopClipRect();
+
         // Utilities
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
@@ -831,9 +837,9 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_AddCircleFilled(NativeDrawList* list, Vector2 centre, float radius, uint col, int num_segments);
         [DllImport(cimguiLib)]
-        public static extern void ImDrawList_AddText(NativeDrawList* list, Vector2 pos, uint col, char* text_begin, char* text_end);
+        public static extern void ImDrawList_AddText(NativeDrawList* list, Vector2 pos, uint col, byte* text_begin, byte* text_end);
         [DllImport(cimguiLib)]
-        public static extern void ImDrawList_AddTextExt(NativeDrawList* list, NativeFont* font, float font_size, Vector2 pos, uint col, char* text_begin, char* text_end, float wrap_width, Vector4* cpu_fine_clip_rect);
+        public static extern void ImDrawList_AddTextExt(NativeDrawList* list, NativeFont* font, float font_size, Vector2 pos, uint col, byte* text_begin, byte* text_end, float wrap_width, Vector4* cpu_fine_clip_rect);
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_AddImage(NativeDrawList* list, void* user_texture_id, Vector2 a, Vector2 b, Vector2 uv0, Vector2 uv1, uint col);
         [DllImport(cimguiLib)]
