@@ -391,7 +391,7 @@ namespace ImGuiNET
 
             for (int n = 0; n < draw_data->CmdListsCount; n++)
             {
-                DrawList* cmd_list = draw_data->CmdLists[n];
+                NativeDrawList* cmd_list = draw_data->CmdLists[n];
                 byte* vtx_buffer = (byte*)cmd_list->VtxBuffer.Data;
                 ushort* idx_buffer = (ushort*)cmd_list->IdxBuffer.Data;
 

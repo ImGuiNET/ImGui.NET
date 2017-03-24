@@ -2,20 +2,14 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>portable</DebugType>
     <AssemblyName>ImGui.NET.SampleProgram</AssemblyName>
     <OutputType>Exe</OutputType>
-    <RuntimeIdentifiers>win7-x64;ubuntu.14.04-x64</RuntimeIdentifiers>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\deps\cimgui\win7-x64\cimgui.dll" Link="cimgui.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ImGui.NET\ImGui.NET.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="OpenTK.NETCore" Version="1.1.2364.6424" />
   </ItemGroup>
 </Project>
