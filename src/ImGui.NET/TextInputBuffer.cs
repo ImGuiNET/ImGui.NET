@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -91,6 +92,7 @@ namespace ImGuiNET
             }
             set
             {
+                Debug.Assert(value != null);
                 if (value.Length > Length) // Doesn't fit into current buffer
                 {
                     FreeNativeBuffer();

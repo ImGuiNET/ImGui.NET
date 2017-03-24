@@ -147,6 +147,7 @@ namespace ImGuiNET
             return ImGuiNative.igCollapsingHeader(label, (defaultOpen ? default_open_flags : 0));
         }
 
+
         public static bool CollapsingHeader(string label, TreeNodeFlags flags)
         {
             return ImGuiNative.igCollapsingHeader(label, flags);
@@ -420,6 +421,11 @@ namespace ImGuiNET
             ImGuiNative.igSetNextWindowSize(size, condition);
         }
 
+        public static void SetNextWindowFocus()
+        {
+            ImGuiNative.igSetNextWindowFocus();
+        }
+
         public static void SetNextWindowPos(Vector2 position, SetCondition condition)
         {
             ImGuiNative.igSetNextWindowPos(position, condition);
@@ -446,7 +452,7 @@ namespace ImGuiNET
         {
             for (int i = 0; i < drawData->CmdListsCount; i++)
             {
-                DrawList* cmd_list = drawData->CmdLists[i];
+                NativeDrawList* cmd_list = drawData->CmdLists[i];
                 for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
                 {
                     DrawCmd* drawCmdList = (DrawCmd*)cmd_list->CmdBuffer.Data;
@@ -473,6 +479,14 @@ namespace ImGuiNET
             ImGuiNative.igGetWindowSize(out size);
             return size;
         }
+
+        public static Vector2 GetWindowPosition()
+        {
+            Vector2 pos;
+            ImGuiNative.igGetWindowPos(out pos);
+            return pos;
+        }
+
 
         public static void SetWindowSize(Vector2 size, SetCondition cond = 0)
         {
@@ -507,9 +521,9 @@ namespace ImGuiNET
             return ImGuiNative.igBeginMenu(label, enabled);
         }
 
-        public static void BeginMenuBar()
+        public static bool BeginMenuBar()
         {
-            ImGuiNative.igBeginMenuBar();
+            return ImGuiNative.igBeginMenuBar();
         }
 
         public static void CloseCurrentPopup()
@@ -637,6 +651,25 @@ namespace ImGuiNET
             ImGuiNative.igEndChildFrame();
         }
 
+        public static unsafe void ColorConvertRGBToHSV(float r, float g, float b, out float h, out float s, out float v)
+        {
+            float h2, s2, v2;
+            ImGuiNative.igColorConvertRGBtoHSV(r, g, b, &h2, &s2, &v2);
+            h = h2;
+            s = s2;
+            v = v2;
+        }
+
+        public static unsafe void ColorConvertHSVToRGB(float h, float s, float v, out float r, out float g, out float b)
+        {
+            float r2, g2, b2;
+            ImGuiNative.igColorConvertHSVtoRGB(h, s, v, &r2, &g2, &b2);
+            r = r2;
+            g = g2;
+            b = b2;
+        }
+
+
         public static int GetKeyIndex(GuiKey key)
         {
             //TODO this got exported by later version of cimgui, call ImGuiNative after upgrading
@@ -689,9 +722,14 @@ namespace ImGuiNET
             return ImGuiNative.igIsMouseHoveringAnyWindow();
         }
 
+        public static bool IsWindowFocused()
+        {
+            return ImGuiNative.igIsWindowFocused();
+        }
+
         public static bool IsMouseHoveringRect(Vector2 minPosition, Vector2 maxPosition, bool clip)
         {
-            return IsMouseHoveringRect(minPosition, maxPosition, clip);
+            return ImGuiNative.igIsMouseHoveringRect(minPosition, maxPosition, clip);
         }
 
         public static bool IsMouseDragging(int button, float lockThreshold)
@@ -742,6 +780,18 @@ namespace ImGuiNET
             Vector2 retVal;
             ImGuiNative.igGetCursorStartPos(out retVal);
             return retVal;
+        }
+
+        public static unsafe Vector2 GetCursorScreenPos()
+        {
+            Vector2 retVal;
+            ImGuiNative.igGetCursorScreenPos(&retVal);
+            return retVal;
+        }
+
+        public static void SetCursorScreenPos(Vector2 pos)
+        {
+            ImGuiNative.igSetCursorScreenPos(pos);
         }
 
         public static bool BeginChild(string id, bool border = false, WindowFlags flags = 0)
@@ -955,6 +1005,16 @@ namespace ImGuiNET
         public static void SameLine(float localPositionX = 0, float spacingW = -1.0f)
         {
             ImGuiNative.igSameLine(localPositionX, spacingW);
+        }
+
+        public static void PushClipRect(Vector2 min, Vector2 max, bool intersectWithCurrentCliRect)
+        {
+            ImGuiNative.igPushClipRect(min, max, intersectWithCurrentCliRect ? (byte)1 : (byte)0);
+        }
+
+        public static void PopClipRect()
+        {
+            ImGuiNative.igPopClipRect();
         }
 
         public static bool IsLastItemHovered()
