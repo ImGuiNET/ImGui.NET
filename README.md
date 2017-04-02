@@ -2,7 +2,7 @@
 
 This is a wrapper for the immediate mode GUI library, ImGui (https://github.com/ocornut/imgui). This utilizes the C API, provided by the cimgui project (https://github.com/Extrawurst/cimgui). ImGui.NET lets you build graphical interfaces using a simple immediate-mode style. Included is a basic sample program that shows how to use the library, which renders the ImGui output using OpenGL via OpenTK.
 
-A [NuGet package](https://www.nuget.org/packages/ImGui.NET) is available at nuget.org
+[![NuGet](https://img.shields.io/nuget/v/ImGui.NET.svg)]()
 
 ![alt tag](http://i.imgur.com/02RGlsW.png)
 
