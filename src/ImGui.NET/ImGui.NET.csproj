@@ -32,5 +32,9 @@
       <PackagePath>runtimes/ubuntu.14.04-x64/native</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="..\..\deps\cimgui\osx.10.10-x64\cimgui.dylib">
+      <PackagePath>runtimes/osx.10.10-x64/native</PackagePath>
+      <Pack>true</Pack>
+    </Content>
   </ItemGroup>
 </Project>
