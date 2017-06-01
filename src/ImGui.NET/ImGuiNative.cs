@@ -454,6 +454,10 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igTreeNode(string str_label_id);
+        
+        [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool igTreeNodeEx(string label, TreeNodeFlags flags = 0);        
 
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
@@ -470,7 +474,7 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igTreePop();
         [DllImport(cimguiLib)]
-        public static extern void igSetNextTreeNodeOpened(bool opened, SetCondition cond);
+        public static extern void igSetNextTreeNodeOpen(bool opened, SetCondition cond);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igCollapsingHeader(string label, TreeNodeFlags flags = 0);
