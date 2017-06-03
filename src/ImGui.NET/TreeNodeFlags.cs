@@ -22,7 +22,7 @@ namespace ImGuiNET
         /// </summary>
         NoTreePushOnOpen = 1 << 3,
         /// <summary>
-        /// Don't do a TreePush() when open (e.g. for CollapsingHeader) = no extra indent nor pushing on ID stack
+        /// Don't automatically and temporarily open node when Logging is active (by default logging will automatically open tree nodes)
         /// </summary>
         NoAutoOpenOnLog = 1 << 4,
         /// <summary>

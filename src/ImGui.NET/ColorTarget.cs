@@ -9,6 +9,7 @@
         TextDisabled,
         WindowBg,
         ChildWindowBg,
+        PopupBg,
         Border,
         BorderShadow,
         /// <summary>
@@ -49,7 +50,6 @@
         PlotHistogram,
         PlotHistogramHovered,
         TextSelectedBg,
-        TooltipBg,
         /// <summary>
         /// darken entire screen when a modal window is active
         /// </summary>
