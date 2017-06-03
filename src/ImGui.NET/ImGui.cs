@@ -1069,7 +1069,7 @@ namespace ImGuiNET
 
         public static bool TreeNodeEx(string label, TreeNodeFlags flags = 0)
         {
-            return ImGuiNative.igTreeNodeEx(label);
+            return ImGuiNative.igTreeNodeEx(label, flags);
         }
 
         public static void TreePop()
