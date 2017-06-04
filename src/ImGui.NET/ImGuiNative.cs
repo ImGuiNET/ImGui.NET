@@ -480,7 +480,7 @@ namespace ImGuiNET
         public static extern bool igCollapsingHeader(string label, TreeNodeFlags flags = 0);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igCollapsingHeader(string label, ref bool p_open, TreeNodeFlags flags = 0);
+        public static extern bool igCollapsingHeaderEx(string label, ref bool p_open, TreeNodeFlags flags = 0);
 
         // Widgets: Selectable / Lists
         [DllImport(cimguiLib)]
@@ -515,10 +515,6 @@ namespace ImGuiNET
         public static extern void igValueUInt(string prefix, uint v);
         [DllImport(cimguiLib)]
         public static extern void igValueFloat(string prefix, float v, string float_format);
-        [DllImport(cimguiLib)]
-        public static extern void igColor(string prefix, Vector4 v);
-        [DllImport(cimguiLib)]
-        public static extern void igColor2(string prefix, uint v);
 
         // Tooltip
         [DllImport(cimguiLib)]
@@ -539,9 +535,6 @@ namespace ImGuiNET
         public static extern bool igBeginMenuBar();
         [DllImport(cimguiLib)]
         public static extern void igEndMenuBar();
-        [DllImport(cimguiLib)]
-        [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igBeginMenu(string label);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginMenu(string label, bool enabled);
@@ -829,9 +822,9 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_AddRectFilledMultiColor(NativeDrawList* list, Vector2 a, Vector2 b, uint col_upr_left, uint col_upr_right, uint col_bot_right, uint col_bot_left);
         [DllImport(cimguiLib)]
-        public static extern void ImDrawLust_AddQuad(NativeDrawList* list, Vector2 a, Vector2 b, Vector2 c, Vector2 d, uint col, float thickness);
+        public static extern void ImDrawList_AddQuad(NativeDrawList* list, Vector2 a, Vector2 b, Vector2 c, Vector2 d, uint col, float thickness);
         [DllImport(cimguiLib)]
-        public static extern void ImDrawLust_AddQuadFilled(NativeDrawList* list, Vector2 a, Vector2 b, Vector2 c, Vector2 d, uint col);
+        public static extern void ImDrawList_AddQuadFilled(NativeDrawList* list, Vector2 a, Vector2 b, Vector2 c, Vector2 d, uint col);
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_AddTriangle(NativeDrawList* list, Vector2 a, Vector2 b, Vector2 c, uint col, float thickness);
         [DllImport(cimguiLib)]
