@@ -23,6 +23,8 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igNewFrame();
         [DllImport(cimguiLib)]
+        public static extern void igNewLine();
+        [DllImport(cimguiLib)]
         public static extern void igRender();
         [DllImport(cimguiLib)]
         public static extern void igShutdown();
@@ -90,6 +92,9 @@ namespace ImGuiNET
         public static extern void igSetNextWindowPosCenter(SetCondition cond);
         [DllImport(cimguiLib)]
         public static extern void igSetNextWindowSize(Vector2 size, SetCondition cond);
+        public delegate void ImGuiSizeConstraintCallback(IntPtr data);
+        [DllImport(cimguiLib)]
+        public static extern void igSetNextWindowSizeConstraints(Vector2 size_min, Vector2 size_max, ImGuiSizeConstraintCallback custom_callback, void* custom_callback_data);
         [DllImport(cimguiLib)]
         public static extern void igSetNextWindowContentSize(Vector2 size);
         [DllImport(cimguiLib)]
@@ -160,6 +165,12 @@ namespace ImGuiNET
         public static extern NativeFont* igGetFont();
         [DllImport(cimguiLib)]
         public static extern float igGetFontSize();
+        [DllImport(cimguiLib)]
+        public static extern void igGetFontTexUvWhitePixel(Vector2* pOut);
+        [DllImport(cimguiLib)]
+        public static extern uint igGetColorU32(ColorTarget idx, float alpha_mul);
+        [DllImport(cimguiLib)]
+        public static extern uint igGetColorU32Vec(Vector4* col);
 
         // Parameters stacks (current window)
         [DllImport(cimguiLib)]
@@ -321,6 +332,18 @@ namespace ImGuiNET
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igCombo3(string label, ref int current_item, ItemSelectedCallback items_getter, IntPtr data, int items_count, int height_in_items);
 
+        public delegate IntPtr ImGuiContextAllocationFunction(UIntPtr size);
+        public delegate void ImGuiContextFreeFunction(IntPtr ptr);
+
+        [DllImport(cimguiLib)]
+        public static extern IntPtr igCreateContext(ImGuiContextAllocationFunction malloc_fn, ImGuiContextFreeFunction free_fn);
+        [DllImport(cimguiLib)]
+        public static extern void igDestroyContext(IntPtr ctx);
+        [DllImport(cimguiLib)]
+        public static extern IntPtr igGetCurrentContext();
+        [DllImport(cimguiLib)]
+        public static extern void igSetCurrentContext(IntPtr ctx);
+
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igColorButton(Vector4 col, bool small_height, bool outline_border);
@@ -334,19 +357,15 @@ namespace ImGuiNET
         public static extern void igColorEditMode(ColorEditMode mode);
         [DllImport(cimguiLib)]
         public static extern void igPlotLines(string label, float* values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size, int stride);
-
-        /*
-        [DllImport(LibName)]
-        public static extern void igPlotLines2(string label, float(*values_getter)(void* data, int idx), void* data, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size);
-        */
+        public delegate float ImGuiPlotHistogramValuesGetter(IntPtr data, int idx);
+        [DllImport(cimguiLib)]
+        public static extern void igPlotLines2(string label, ImGuiPlotHistogramValuesGetter values_getter, void* data, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size);
         [DllImport(cimguiLib)]
         public static extern void igPlotHistogram(string label, float* values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size, int stride);
-
-        /*
-        [DllImport(LibName)]
-        public static extern void igPlotHistogram2(string label, float(*values_getter)(void* data, int idx), void* data, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size);
-        */
-
+        [DllImport(cimguiLib)]
+        public static extern void igPlotHistogram2(string label, ImGuiPlotHistogramValuesGetter values_getter, void* data, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size);
+        [DllImport(cimguiLib)]
+        public static extern void igProgressBar(float fraction, Vector2* size_arg, string overlay);
         // Widgets: Sliders (tip: ctrl+click on a slider to input text)
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
@@ -474,6 +493,10 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igTreePop();
         [DllImport(cimguiLib)]
+        public static extern void igTreeAdvanceToLabelPos();
+        [DllImport(cimguiLib)]
+        public static extern float igGetTreeNodeToLabelSpacing();
+        [DllImport(cimguiLib)]
         public static extern void igSetNextTreeNodeOpen(bool opened, SetCondition cond);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
@@ -515,6 +538,10 @@ namespace ImGuiNET
         public static extern void igValueUInt(string prefix, uint v);
         [DllImport(cimguiLib)]
         public static extern void igValueFloat(string prefix, float v, string float_format);
+        [DllImport(cimguiLib)]
+        public static extern void igValueColor(string prefix, Vector4 v);
+        [DllImport(cimguiLib)]
+        public static extern void igValueColor2(string prefix, uint v);
 
         // Tooltip
         [DllImport(cimguiLib)]
@@ -619,6 +646,9 @@ namespace ImGuiNET
         public static extern bool igIsItemActive();
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool igIsItemClicked(int mouse_button);
+        [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsItemVisible();
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
@@ -633,6 +663,9 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igGetItemRectSize(out Vector2 pOut);
         [DllImport(cimguiLib)]
+        public static extern void igSetItemAllowOverlap();
+
+        [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsWindowHovered();
         [DllImport(cimguiLib)]
@@ -644,6 +677,9 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsRootWindowOrAnyChildFocused();
+        [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool igIsRootWindowOrAnyChildHovered();
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsRectVisible(Vector2 item_size);
@@ -678,6 +714,8 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igColorConvertHSVtoRGB(float h, float s, float v, float* out_r, float* out_g, float* out_b);
 
+        [DllImport(cimguiLib)]
+        public static extern int igGetKeyIndex(int key);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsKeyDown(int key_index);
@@ -748,6 +786,8 @@ namespace ImGuiNET
         CIMGUI_API void                    igSetCurrentContext(struct ImGuiContext* ctx);
         */
 
+        [DllImport(cimguiLib)]
+        public static extern void ImFontConfig_DefaultConstructor(FontConfig* config);
 
         [DllImport(cimguiLib)]
         public static extern void ImFontAtlas_GetTexDataAsRGBA32(NativeFontAtlas* atlas, byte** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
@@ -784,6 +824,8 @@ namespace ImGuiNET
         public static extern void ImGuiIO_AddInputCharacter(ushort c);
         [DllImport(cimguiLib)]
         public static extern void ImGuiIO_AddInputCharactersUTF8(string utf8_chars);
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiIO_ClearInputCharacters();
 
         [DllImport(cimguiLib)]
         public static extern int ImDrawList_GetVertexBufferSize(NativeDrawList* list);
