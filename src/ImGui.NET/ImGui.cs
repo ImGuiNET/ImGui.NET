@@ -511,6 +511,16 @@ namespace ImGuiNET
             return ImGuiNative.igBegin2(windowTitle, ref opened, new Vector2(), backgroundAlpha, flags);
         }
 
+        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, WindowFlags flags)
+        {
+            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, 1f, flags);
+        }
+        
+        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, float backgroundAlpha, WindowFlags flags)
+        {
+            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, backgroundAlpha, flags);
+        }
+
         public static bool BeginMenu(string label)
         {
             return ImGuiNative.igBeginMenu(label, true);
@@ -531,11 +541,6 @@ namespace ImGuiNET
             ImGuiNative.igCloseCurrentPopup();
         }
 
-        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, WindowFlags flags)
-        {
-            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, 1f, flags);
-        }
-
         public static void EndMenuBar()
         {
             ImGuiNative.igEndMenuBar();
@@ -544,11 +549,6 @@ namespace ImGuiNET
         public static void EndMenu()
         {
             ImGuiNative.igEndMenu();
-        }
-
-        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, float backgroundAlpha, WindowFlags flags)
-        {
-            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, backgroundAlpha, flags);
         }
 
         public static void Separator()
