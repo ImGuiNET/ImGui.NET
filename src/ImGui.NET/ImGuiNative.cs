@@ -103,7 +103,7 @@ namespace ImGuiNET
         public static extern void igSetNextWindowCollapsed(bool collapsed, SetCondition cond);
         [DllImport(cimguiLib)]
         public static extern void igSetNextWindowFocus();
-        [DllImport(cimguiLib)] 
+        [DllImport(cimguiLib)]
         public static extern void igSetWindowPos(Vector2 pos, SetCondition cond);  //(not recommended)
         [DllImport(cimguiLib)]
         public static extern void igSetWindowSize(Vector2 size, SetCondition cond); //(not recommended)
@@ -473,10 +473,10 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igTreeNode(string str_label_id);
-        
+
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igTreeNodeEx(string label, TreeNodeFlags flags = 0);        
+        public static extern bool igTreeNodeEx(string label, TreeNodeFlags flags = 0);
 
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
@@ -630,7 +630,7 @@ namespace ImGuiNET
 
         // Clipping
         [DllImport(cimguiLib)]
-        public static extern void igPushClipRect(Vector2 clip_rect_min,  Vector2 clip_rect_max, byte intersect_with_current_clip_rect);
+        public static extern void igPushClipRect(Vector2 clip_rect_min, Vector2 clip_rect_max, byte intersect_with_current_clip_rect);
         [DllImport(cimguiLib)]
         public static extern void igPopClipRect();
 
@@ -685,6 +685,9 @@ namespace ImGuiNET
         public static extern bool igIsRectVisible(Vector2 item_size);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool igIsRectVisible2(Vector2* rect_min, Vector2* rect_max);
+        [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsPosHoveringAnyWindow(Vector2 pos);
         [DllImport(cimguiLib)]
         public static extern float igGetTime();
@@ -715,16 +718,16 @@ namespace ImGuiNET
         public static extern void igColorConvertHSVtoRGB(float h, float s, float v, float* out_r, float* out_g, float* out_b);
 
         [DllImport(cimguiLib)]
-        public static extern int igGetKeyIndex(int key);
+        public static extern int igGetKeyIndex(int imgui_key);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsKeyDown(int key_index);
+        public static extern bool igIsKeyDown(int user_key_index);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsKeyPressed(int key_index, bool repeat);
+        public static extern bool igIsKeyPressed(int user_key_index, bool repeat);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsKeyReleased(int key_index);
+        public static extern bool igIsKeyReleased(int user_key_index);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseDown(int button);
@@ -796,7 +799,7 @@ namespace ImGuiNET
         public static extern void ImFontAtlas_GetTexDataAsAlpha8(NativeFontAtlas* atlas, byte** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
 
         [DllImport(cimguiLib)]
-        public static extern void ImFontAtlas_SetTexID(NativeFontAtlas* atlas, void* tex);
+        public static extern void ImFontAtlas_SetTexID(NativeFontAtlas* atlas, void* id);
 
         [DllImport(cimguiLib)]
         public static extern NativeFont* ImFontAtlas_AddFont(NativeFontAtlas* atlas, ref FontConfig font_cfg);
@@ -818,7 +821,18 @@ namespace ImGuiNET
         public static extern void ImFontAtlas_ClearTexData(NativeFontAtlas* atlas);
         [DllImport(cimguiLib)]
         public static extern void ImFontAtlas_Clear(NativeFontAtlas* atlas);
-
+        [DllImport(cimguiLib)]
+        public static extern char* ImFontAtlas_GetGlyphRangesDefault(NativeFontAtlas* atlas);
+        [DllImport(cimguiLib)]
+        public static extern char* ImFontAtlas_GetGlyphRangesKorean(NativeFontAtlas* atlas);
+        [DllImport(cimguiLib)]
+        public static extern char* ImFontAtlas_GetGlyphRangesJapanese(NativeFontAtlas* atlas);
+        [DllImport(cimguiLib)]
+        public static extern char* ImFontAtlas_GetGlyphRangesChinese(NativeFontAtlas* atlas);
+        [DllImport(cimguiLib)]
+        public static extern char* ImFontAtlas_GetGlyphRangesCyrillic(NativeFontAtlas* atlas);
+        [DllImport(cimguiLib)]
+        public static extern char* ImFontAtlas_GetGlyphRangesThai(NativeFontAtlas* atlas);
 
         [DllImport(cimguiLib)]
         public static extern void ImGuiIO_AddInputCharacter(ushort c);
@@ -842,6 +856,8 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void ImDrawData_DeIndexAllBuffers(DrawData* drawData);
         [DllImport(cimguiLib)]
+        public static extern void ImDrawData_ScaleClipRects(DrawData* drawData, Vector2 sc);
+        [DllImport(cimguiLib)]
         public static extern void ImDrawList_Clear(NativeDrawList* list);
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_ClearFreeMemory(NativeDrawList* list);
@@ -858,9 +874,9 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_AddLine(NativeDrawList* list, Vector2 a, Vector2 b, uint col, float thickness);
         [DllImport(cimguiLib)]
-        public static extern void ImDrawList_AddRect(NativeDrawList* list, Vector2 a, Vector2 b, uint col, float rounding, int rounding_corners, float thickness);
+        public static extern void ImDrawList_AddRect(NativeDrawList* list, Vector2 a, Vector2 b, uint col, float rounding, int rounding_corners_flags, float thickness);
         [DllImport(cimguiLib)]
-        public static extern void ImDrawList_AddRectFilled(NativeDrawList* list, Vector2 a, Vector2 b, uint col, float rounding, int rounding_corners);
+        public static extern void ImDrawList_AddRectFilled(NativeDrawList* list, Vector2 a, Vector2 b, uint col, float rounding, int rounding_corners_flags);
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_AddRectFilledMultiColor(NativeDrawList* list, Vector2 a, Vector2 b, uint col_upr_left, uint col_upr_right, uint col_bot_right, uint col_bot_left);
         [DllImport(cimguiLib)]
@@ -880,7 +896,9 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_AddTextExt(NativeDrawList* list, NativeFont* font, float font_size, Vector2 pos, uint col, byte* text_begin, byte* text_end, float wrap_width, Vector4* cpu_fine_clip_rect);
         [DllImport(cimguiLib)]
-        public static extern void ImDrawList_AddImage(NativeDrawList* list, void* user_texture_id, Vector2 a, Vector2 b, Vector2 uv0, Vector2 uv1, uint col);
+        public static extern void ImDrawList_AddImage(NativeDrawList* list, void* user_texture_id, Vector2 a, Vector2 b, Vector2 uv_a, Vector2 uv_b, uint col);
+        [DllImport(cimguiLib)]
+        public static extern void ImDrawList_AddImageQuad(NativeDrawList* list, void* user_texture_id, Vector2 a, Vector2 b, Vector2 c, Vector2 d, Vector2 uv_a, Vector2 uv_b, Vector2 uv_c, Vector2 uv_d, uint col);
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_AddPolyline(NativeDrawList* list, Vector2* points, int num_points, uint col, byte closed, float thickness, byte anti_aliased);
         [DllImport(cimguiLib)]
@@ -894,7 +912,7 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_PathLineToMergeDuplicate(NativeDrawList* list, Vector2 pos);
         [DllImport(cimguiLib)]
-        public static extern void ImDrawList_PathFill(NativeDrawList* list, uint col);
+        public static extern void ImDrawList_PathFillConvex(NativeDrawList* list, uint col);
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_PathStroke(NativeDrawList* list, uint col, byte closed, float thickness);
         [DllImport(cimguiLib)]
@@ -904,7 +922,7 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_PathBezierCurveTo(NativeDrawList* list, Vector2 p1, Vector2 p2, Vector2 p3, int num_segments);
         [DllImport(cimguiLib)]
-        public static extern void ImDrawList_PathRect(NativeDrawList* list, Vector2 rect_min, Vector2 rect_max, float rounding, int rounding_corners);
+        public static extern void ImDrawList_PathRect(NativeDrawList* list, Vector2 rect_min, Vector2 rect_max, float rounding, int rounding_corners_flags);
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_ChannelsSplit(NativeDrawList* list, int channels_count);
         [DllImport(cimguiLib)]
@@ -933,6 +951,73 @@ namespace ImGuiNET
         public static extern void ImDrawList_UpdateClipRect(NativeDrawList* list);
         [DllImport(cimguiLib)]
         public static extern void ImDrawList_UpdateTextureID(NativeDrawList* list);
+
+        // List Clipper
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiListClipper_Begin(void* clipper, int count, float items_height);
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiListClipper_End(void* clipper);
+        [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool ImGuiListClipper_Step(void* clipper);
+        [DllImport(cimguiLib)]
+        public static extern int ImGuiListClipper_GetDisplayStart(void* clipper);
+        [DllImport(cimguiLib)]
+        public static extern int ImGuiListClipper_GetDisplayEnd(void* clipper);
+
+        // ImGuiTextFilter
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiTextFilter_Init(void* filter, char* default_filter);
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiTextFilter_Clear(void* filter);
+        [DllImport(cimguiLib)]
+        public static extern bool ImGuiTextFilter_Draw(void* filter, char* label, float width);
+        [DllImport(cimguiLib)]
+        public static extern bool ImGuiTextFilter_PassFilter(void* filter, char* text, char* text_end);
+        [DllImport(cimguiLib)]
+        public static extern bool ImGuiTextFilter_IsActive(void* filter);
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiTextFilter_Build(void* filter);
+
+        // ImGuiTextEditCallbackData
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiTextEditCallbackData_DeleteChars(void* data, int pos, int bytes_count);
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiTextEditCallbackData_InsertChars(void* data, int pos, char* text, char* text_end);
+        [DllImport(cimguiLib)]
+        public static extern bool ImGuiTextEditCallbackData_HasSelection(void* data);
+
+        // ImGuiStorage
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiStorage_Init(void* storage);
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiStorage_Clear(void* storage);
+        [DllImport(cimguiLib)]
+        public static extern int ImGuiStorage_GetInt(void* storage, uint key, int default_val);
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiStorage_SetInt(void* storage, uint key, int val);
+        [DllImport(cimguiLib)]
+        public static extern bool ImGuiStorage_GetBool(void* storage, uint key, bool default_val);
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiStorage_SetBool(void* storage, uint key, bool val);
+        [DllImport(cimguiLib)]
+        public static extern float ImGuiStorage_GetFloat(void* storage, uint key, float default_val);
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiStorage_SetFloat(void* storage, uint key, float val);
+        [DllImport(cimguiLib)]
+        public static extern void* ImGuiStorage_GetVoidPtr(void* storage, uint key);
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiStorage_SetVoidPtr(void* storage, uint key, void* val);
+        [DllImport(cimguiLib)]
+        public static extern int* ImGuiStorage_GetIntRef(void* storage, uint key, int default_val);
+        [DllImport(cimguiLib)]
+        public static extern bool* ImGuiStorage_GetBoolRef(void* storage, uint key, bool default_val);
+        [DllImport(cimguiLib)]
+        public static extern float* ImGuiStorage_GetFloatRef(void* storage, uint key, float default_val);
+        [DllImport(cimguiLib)]
+        public static extern void** ImGuiStorage_GetVoidPtrRef(void* storage, uint key, void* default_val);
+        [DllImport(cimguiLib)]
+        public static extern void ImGuiStorage_SetAllInt(void* storage, int val);
     }
 
     public delegate bool ItemSelectedCallback(IntPtr data, int index, string out_text);

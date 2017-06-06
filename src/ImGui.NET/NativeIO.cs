@@ -89,6 +89,11 @@ namespace ImGuiNET
         /// </summary>
         public byte FontAllowUserScaling;
         /// <summary>
+        /// Font to use on NewFrame(). Use NULL to uses Fonts->Fonts[0].
+        /// Default value: null.
+        /// </summary>
+        public NativeFont* FontDefault;
+        /// <summary>
         /// For retina display or other situations where window coordinates are different from framebuffer coordinates.
         /// User storage only, presently not used by ImGui.
         /// Default value: (1.0f, 1.0f).
@@ -103,13 +108,16 @@ namespace ImGuiNET
         /// If the values are the same, we defaults to Min=0.0f) and Max=DisplaySize.
         /// Default value: (0.0f, 0.0f).
         /// </summary>
-        public Vector2 DisplayVisibleMax;        // <unset> (0.0f,0.0f)  // If the values are the same, we defaults to Min=(0.0f) and Max=DisplaySize
-
-        public byte WordMovementUsesAltKey;   // = defined(__APPLE__) // OS X style: Text editing cursor movement using Alt instead of Ctrl
-        public byte ShortcutsUseSuperKey;     // = defined(__APPLE__) // OS X style: Shortcuts using Cmd/Super instead of Ctrl
-        public byte DoubleClickSelectsWord;   // = defined(__APPLE__) // OS X style: Double click selects by word instead of selecting whole text
-        public byte MultiSelectUsesSuperKey;  // = defined(__APPLE__) // OS X style: Multi-selection in lists uses Cmd/Super instead of Ctrl [unused yet]
-
+        public Vector2 DisplayVisibleMax;
+        /// <summary>
+        /// OS X style: Text editing cursor movement using Alt instead of Ctrl,
+        /// Shortcuts using Cmd/Super instead of Ctrl,
+        /// Line/Text Start and End using Cmd+Arrows instead of Home/End,
+        /// Double click selects by word instead of selecting whole text,
+        /// Multi-selection in lists uses Cmd/Super instead of Ctrl
+        /// Default value: True on OSX; false otherwise.
+        /// </summary>
+        public byte OSXBehaviors;
 
         //------------------------------------------------------------------
         // User Functions
@@ -131,6 +139,7 @@ namespace ImGuiNET
         /// (default to use native Win32 clipboard on Windows, otherwise uses a private clipboard. Override to access OS clipboard on other architectures)
         /// </summary>
         public IntPtr SetClipboardTextFn;
+        public IntPtr ClipboardUserData;
 
         /// <summary>
         /// Optional: override memory allocations. MemFreeFn() may be called with a NULL pointer.
@@ -234,6 +243,11 @@ namespace ImGuiNET
         /// Number of visible windows (exclude child windows)
         /// </summary>
         public int MetricsActiveWindows;
+        /// <summary>
+        /// Mouse delta. Note that this is zero if either current or previous position are negative,
+        /// so a disappearing/reappearing mouse won't have a huge delta for one frame.
+        /// </summary>
+        public Vector2 MouseDelta;
 
         //------------------------------------------------------------------
         // [Internal] ImGui will maintain those fields for you
@@ -243,10 +257,6 @@ namespace ImGuiNET
         /// Previous mouse position
         /// </summary>
         public Vector2 MousePosPrev;
-        /// <summary>
-        /// Mouse delta. Note that this is zero if either current or previous position are negative to allow mouse enabling/disabling.
-        /// </summary>
-        public Vector2 MouseDelta;
         /// <summary>
         /// Mouse button went from !Down to Down
         /// </summary>

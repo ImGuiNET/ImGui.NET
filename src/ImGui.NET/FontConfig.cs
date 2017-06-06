@@ -50,6 +50,11 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 GlyphExtraSpacing;
         /// <summary>
+        /// Offset all glyphs from this font input.
+        /// Set to (0, 0).
+        /// </summary>
+        public Vector2 GlyphOffset;
+        /// <summary>
         /// List of Unicode range (2 value per range, values are inclusive, zero-terminated list).
         /// </summary>
         public char* GlyphRanges;
@@ -58,11 +63,6 @@ namespace ImGuiNET
         /// Set to false.
         /// </summary>
         public bool MergeMode;
-        /// <summary>
-        /// When merging (multiple ImFontInput for one ImFont), vertically center new glyphs instead of aligning their baseline.
-        /// Set to false.
-        /// </summary>
-        public bool MergeGlyphCenterV;
 
         // [Internal]
         /// <summary>
