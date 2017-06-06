@@ -59,6 +59,7 @@ namespace ImGuiNET
 
         public unsafe void AddText(Vector2 position, string text, uint color)
         {
+            // Consider using stack allocation if a newer version of Encoding is used (with byte* overloads).
             int bytes = Encoding.UTF8.GetByteCount(text);
             byte[] tempBytes = ArrayPool<byte>.Shared.Rent(bytes);
             Encoding.UTF8.GetBytes(text, 0, text.Length, tempBytes, 0);
@@ -66,6 +67,7 @@ namespace ImGuiNET
             {
                 ImGuiNative.ImDrawList_AddText(_nativeDrawList, position, color, bytePtr, bytePtr + bytes);
             }
+            ArrayPool<byte>.Shared.Return(tempBytes);
         }
 
         public void PushClipRect(Vector2 min, Vector2 max, bool intersectWithCurrentClipRect)
