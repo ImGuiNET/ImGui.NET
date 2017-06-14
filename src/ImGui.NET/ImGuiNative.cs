@@ -275,7 +275,7 @@ namespace ImGuiNET
 
         // Widgets
         [DllImport(cimguiLib)]
-        public static extern void igText(string fmt);
+        public static extern void igText(byte* fmt);
 
         [DllImport(cimguiLib)]
         public static extern void igTextColored(Vector4 col, string fmt);

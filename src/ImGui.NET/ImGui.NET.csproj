@@ -3,7 +3,7 @@
     <Description>A .NET wrapper for the dear ImGui library.</Description>
     <VersionPrefix>0.2.1</VersionPrefix>
     <Authors>Eric Mellino</Authors>
-    <TargetFramework>netstandard1.1</TargetFramework>
+    <TargetFrameworks>netstandard1.1;netstandard1.6</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>portable</DebugType>
     <AssemblyName>ImGui.NET</AssemblyName>

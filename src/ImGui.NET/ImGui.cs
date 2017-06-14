@@ -2,11 +2,15 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Text;
+using System.Buffers;
 
 namespace ImGuiNET
 {
-    public static class ImGui
+    public static unsafe class ImGui
     {
+        private static readonly Encoding s_utf8 = Encoding.UTF8;
+
         public static void NewFrame()
         {
             ImGuiNative.igNewFrame();
@@ -75,7 +79,27 @@ namespace ImGuiNET
 
         public static void Text(string message)
         {
-            ImGuiNative.igText(message);
+#if NETSTANDARD1_6
+            fixed (char* messagePtr = message)
+            {
+                int messageLength = message.Length;
+                int byteCount = s_utf8.GetByteCount(messagePtr, messageLength);
+                byte* utf8Ptr = stackalloc byte[byteCount + 1];
+                s_utf8.GetBytes(messagePtr, messageLength, utf8Ptr, byteCount);
+                utf8Ptr[byteCount] = 0;
+                ImGuiNative.igText(utf8Ptr);
+            }
+#else
+            int messageLength = message.Length;
+            int byteCount = s_utf8.GetByteCount(message);
+            byte[] utf8Array = ArrayPool<byte>.Shared.Rent(byteCount + 1);
+            s_utf8.GetBytes(message, 0, messageLength, utf8Array, 0);
+            utf8Array[byteCount] = 0;
+            fixed (byte* utf8Ptr = &utf8Array[0])
+            {
+                ImGuiNative.igText(utf8Ptr);
+            }
+#endif
         }
 
         public static void Text(string message, Vector4 color)
