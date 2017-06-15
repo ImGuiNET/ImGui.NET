@@ -584,20 +584,6 @@ namespace ImGuiNET
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginPopupModal(string name, byte* p_opened, WindowFlags extra_flags);
 
-        public static bool igBeginPopupModal(string name, WindowFlags extra_flags)
-        {
-            return igBeginPopupModal(name, null, extra_flags);
-        }
-
-        public static bool igBeginPopupModal(string name, ref bool p_opened, WindowFlags extra_flags)
-        {
-            byte value = p_opened ? (byte)1 : (byte)0;
-            bool result = igBeginPopupModal(name, &value, extra_flags);
-
-            p_opened = value == 1 ? true : false;
-            return result;
-        }
-
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginPopupContextItem(string str_id, int mouse_button);
