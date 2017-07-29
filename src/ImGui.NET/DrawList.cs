@@ -130,11 +130,11 @@ namespace ImGuiNET
         public uint _VtxCurrentIdx;
 
         /// <summary>
-        /// [Internal] point within VtxBuffer.Data after each add command (to avoid using the ImVector<> operators too much)
+        /// [Internal] point within VtxBuffer.Data after each add command (to avoid using the ImVector operators too much)
         /// </summary>
         public IntPtr _VtxWritePtr;
         /// <summary>
-        /// [Internal] point within IdxBuffer.Data after each add command (to avoid using the ImVector<> operators too much)
+        /// [Internal] point within IdxBuffer.Data after each add command (to avoid using the ImVector operators too much)
         /// </summary>
         public IntPtr _IdxWritePtr;
 
