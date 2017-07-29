@@ -511,6 +511,16 @@ namespace ImGuiNET
             return ImGuiNative.igBegin2(windowTitle, ref opened, new Vector2(), backgroundAlpha, flags);
         }
 
+        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, WindowFlags flags)
+        {
+            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, 1f, flags);
+        }
+        
+        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, float backgroundAlpha, WindowFlags flags)
+        {
+            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, backgroundAlpha, flags);
+        }
+
         public static bool BeginMenu(string label)
         {
             return ImGuiNative.igBeginMenu(label, true);
@@ -531,11 +541,6 @@ namespace ImGuiNET
             ImGuiNative.igCloseCurrentPopup();
         }
 
-        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, WindowFlags flags)
-        {
-            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, 1f, flags);
-        }
-
         public static void EndMenuBar()
         {
             ImGuiNative.igEndMenuBar();
@@ -544,11 +549,6 @@ namespace ImGuiNET
         public static void EndMenu()
         {
             ImGuiNative.igEndMenu();
-        }
-
-        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, float backgroundAlpha, WindowFlags flags)
-        {
-            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, backgroundAlpha, flags);
         }
 
         public static void Separator()
@@ -884,22 +884,26 @@ namespace ImGuiNET
 
         public static bool BeginPopupModal(string name)
         {
-            return ImGuiNative.igBeginPopupModal(name, WindowFlags.Default);
-        }
-
-        public static bool BeginPopupModal(string name, WindowFlags extraFlags)
-        {
-            return ImGuiNative.igBeginPopupModal(name, extraFlags);
+            return BeginPopupModal(name, WindowFlags.Default);
         }
 
         public static bool BeginPopupModal(string name, ref bool opened)
         {
-            return ImGuiNative.igBeginPopupModal(name, ref opened, WindowFlags.Default);
+            return BeginPopupModal(name, ref opened, WindowFlags.Default);
         }
 
-        public static bool BeginPopupModal(string name, ref bool opened, WindowFlags extraFlags)
+        public static unsafe bool BeginPopupModal(string name, WindowFlags extra_flags)
         {
-            return ImGuiNative.igBeginPopupModal(name, ref opened, extraFlags);
+            return ImGuiNative.igBeginPopupModal(name, null, extra_flags);
+        }
+
+        public static unsafe bool BeginPopupModal(string name, ref bool p_opened, WindowFlags extra_flags)
+        {
+            byte value = p_opened ? (byte)1 : (byte)0;
+            bool result = ImGuiNative.igBeginPopupModal(name, &value, extra_flags);
+
+            p_opened = value == 1 ? true : false;
+            return result;
         }
 
         public static bool Selectable(string label, bool isSelected, SelectableFlags flags)
