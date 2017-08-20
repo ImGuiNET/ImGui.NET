@@ -319,7 +319,7 @@ namespace ImGuiNET
             MouseState cursorState = Mouse.GetCursorState();
             MouseState mouseState = Mouse.GetState();
 
-            if (_nativeWindow.Bounds.Contains(cursorState.X, cursorState.Y))
+            if (_nativeWindow.Focused)
             {
                 Point windowPoint = _nativeWindow.PointToClient(new Point(cursorState.X, cursorState.Y));
                 io.MousePosition = new System.Numerics.Vector2(windowPoint.X / io.DisplayFramebufferScale.X, windowPoint.Y / io.DisplayFramebufferScale.Y);
