@@ -6,7 +6,7 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\deps\cimgui\win7-x64\cimgui.dll" Link="cimgui.dll">
+    <None Include="..\..\deps\cimgui\win-x64\cimgui.dll" Link="cimgui.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <ProjectReference Include="..\ImGui.NET\ImGui.NET.csproj" />
