@@ -4,7 +4,7 @@
     /// Condition flags for ImGui::SetWindow***(), SetNextWindow***(), SetNextTreeNode***() functions.
     /// All those functions treat 0 as a shortcut to Always.
     /// </summary>
-    public enum SetCondition
+    public enum Condition
     {
         /// <summary>
         /// Set the variable.

@@ -202,8 +202,8 @@ namespace ImGuiNET
         {
             ImGui.GetStyle().WindowRounding = 0;
 
-            ImGui.SetNextWindowSize(new System.Numerics.Vector2(_nativeWindow.Width - 10, _nativeWindow.Height - 20), SetCondition.Always);
-            ImGui.SetNextWindowPosCenter(SetCondition.Always);
+            ImGui.SetNextWindowSize(new System.Numerics.Vector2(_nativeWindow.Width - 10, _nativeWindow.Height - 20), Condition.Always);
+            ImGui.SetNextWindowPosCenter(Condition.Always);
             ImGui.BeginWindow("ImGUI.NET Sample Program", ref _mainWindowOpened, WindowFlags.NoResize | WindowFlags.NoTitleBar | WindowFlags.NoMove);
 
             ImGui.BeginMainMenuBar();
@@ -247,8 +247,8 @@ namespace ImGuiNET
             }
             if (ImGui.TreeNode("Second Item"))
             {
-                ImGui.ColorButton(_buttonColor, false, true);
-                if (ImGui.Button("Push me to change color", new System.Numerics.Vector2(120, 30)))
+                ImGui.ColorButton("Color button", _buttonColor, ColorEditFlags.Default, new System.Numerics.Vector2(0, 0));
+                if (ImGui.Button("Push me to change color", new System.Numerics.Vector2(0, 30)))
                 {
                     _buttonColor = new System.Numerics.Vector4(_buttonColor.Y + .25f, _buttonColor.Z, _buttonColor.X, _buttonColor.W);
                     if (_buttonColor.X > 1.0f)
