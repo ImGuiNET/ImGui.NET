@@ -87,11 +87,11 @@ namespace ImGuiNET
         public static extern bool igIsWindowCollapsed();
 
         [DllImport(cimguiLib)]
-        public static extern void igSetNextWindowPos(Vector2 pos, SetCondition cond);
+        public static extern void igSetNextWindowPos(Vector2 pos, Condition cond);
         [DllImport(cimguiLib)]
-        public static extern void igSetNextWindowPosCenter(SetCondition cond);
+        public static extern void igSetNextWindowPosCenter(Condition cond);
         [DllImport(cimguiLib)]
-        public static extern void igSetNextWindowSize(Vector2 size, SetCondition cond);
+        public static extern void igSetNextWindowSize(Vector2 size, Condition cond);
         public delegate void ImGuiSizeConstraintCallback(IntPtr data);
         [DllImport(cimguiLib)]
         public static extern void igSetNextWindowSizeConstraints(Vector2 size_min, Vector2 size_max, ImGuiSizeConstraintCallback custom_callback, void* custom_callback_data);
@@ -100,23 +100,23 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern void igSetNextWindowContentWidth(float width);
         [DllImport(cimguiLib)]
-        public static extern void igSetNextWindowCollapsed(bool collapsed, SetCondition cond);
+        public static extern void igSetNextWindowCollapsed(bool collapsed, Condition cond);
         [DllImport(cimguiLib)]
         public static extern void igSetNextWindowFocus();
         [DllImport(cimguiLib)]
-        public static extern void igSetWindowPos(Vector2 pos, SetCondition cond);  //(not recommended)
+        public static extern void igSetWindowPos(Vector2 pos, Condition cond);  //(not recommended)
         [DllImport(cimguiLib)]
-        public static extern void igSetWindowSize(Vector2 size, SetCondition cond); //(not recommended)
+        public static extern void igSetWindowSize(Vector2 size, Condition cond); //(not recommended)
         [DllImport(cimguiLib)]
-        public static extern void igSetWindowCollapsed(bool collapsed, SetCondition cond); //(not recommended)
+        public static extern void igSetWindowCollapsed(bool collapsed, Condition cond); //(not recommended)
         [DllImport(cimguiLib)]
         public static extern void igSetWindowFocus(); //(not recommended)
         [DllImport(cimguiLib)]
-        public static extern void igSetWindowPosByName(string name, Vector2 pos, SetCondition cond);
+        public static extern void igSetWindowPosByName(string name, Vector2 pos, Condition cond);
         [DllImport(cimguiLib)]
-        public static extern void igSetWindowSize2(string name, Vector2 size, SetCondition cond);
+        public static extern void igSetWindowSize2(string name, Vector2 size, Condition cond);
         [DllImport(cimguiLib)]
-        public static extern void igSetWindowCollapsed2(string name, bool collapsed, SetCondition cond);
+        public static extern void igSetWindowCollapsed2(string name, bool collapsed, Condition cond);
         [DllImport(cimguiLib)]
         public static extern void igSetWindowFocus2(string name);
 
@@ -250,6 +250,8 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern float igGetColumnWidth(int column_index);
         [DllImport(cimguiLib)]
+        public static extern void igSetColumnWidth(int column_index, float width);
+        [DllImport(cimguiLib)]
         public static extern int igGetColumnsCount();
 
 
@@ -346,15 +348,22 @@ namespace ImGuiNET
 
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igColorButton(Vector4 col, bool small_height, bool outline_border);
+        public static extern bool igColorButton(string desc_id, Vector4 col, ColorEditFlags flags, Vector2 size);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igColorEdit3(string label, Vector3* col);
+        public static extern bool igColorEdit3(string label, Vector3* col, ColorEditFlags flags = 0);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igColorEdit4(string label, Vector4* col, bool show_alpha);
+        public static extern bool igColorEdit4(string label, Vector4* col, ColorEditFlags flags = 0);
         [DllImport(cimguiLib)]
-        public static extern void igColorEditMode(ColorEditMode mode);
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool igColorPicker3(string label, Vector3* col, ColorEditFlags flags = 0);
+        [DllImport(cimguiLib)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool igColorPicker4(string label, Vector4* col, ColorEditFlags flags = 0, float* ref_col = null);
+        [DllImport(cimguiLib)]
+        public static extern void SetColorEditOptions(ColorEditFlags flags);
+
         [DllImport(cimguiLib)]
         public static extern void igPlotLines(string label, float* values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size, int stride);
         public delegate float ImGuiPlotHistogramValuesGetter(IntPtr data, int idx);
@@ -497,7 +506,7 @@ namespace ImGuiNET
         [DllImport(cimguiLib)]
         public static extern float igGetTreeNodeToLabelSpacing();
         [DllImport(cimguiLib)]
-        public static extern void igSetNextTreeNodeOpen(bool opened, SetCondition cond);
+        public static extern void igSetNextTreeNodeOpen(bool opened, Condition cond);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igCollapsingHeader(string label, TreeNodeFlags flags = 0);
@@ -538,10 +547,6 @@ namespace ImGuiNET
         public static extern void igValueUInt(string prefix, uint v);
         [DllImport(cimguiLib)]
         public static extern void igValueFloat(string prefix, float v, string float_format);
-        [DllImport(cimguiLib)]
-        public static extern void igValueColor(string prefix, Vector4 v);
-        [DllImport(cimguiLib)]
-        public static extern void igValueColor2(string prefix, uint v);
 
         // Tooltip
         [DllImport(cimguiLib)]
@@ -589,12 +594,14 @@ namespace ImGuiNET
         public static extern bool igBeginPopupContextItem(string str_id, int mouse_button);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igBeginPopupContextWindow(bool also_over_items, string str_id, int mouse_button);
+        public static extern bool igBeginPopupContextWindow(string str_id, int mouse_button, bool also_over_items);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginPopupContextVoid(string str_id, int mouse_button);
         [DllImport(cimguiLib)]
         public static extern void igEndPopup();
+        [DllImport(cimguiLib)]
+        public static extern bool igIsPopupOpen(string str_id);
         [DllImport(cimguiLib)]
         public static extern void igCloseCurrentPopup();
 
@@ -626,7 +633,7 @@ namespace ImGuiNET
         public static extern bool igIsItemHovered();
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsItemHoveredRect();
+        public static extern bool igIsItemRectHovered();
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsItemActive();
@@ -673,14 +680,11 @@ namespace ImGuiNET
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsRectVisible2(Vector2* rect_min, Vector2* rect_max);
         [DllImport(cimguiLib)]
-        [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsPosHoveringAnyWindow(Vector2 pos);
-        [DllImport(cimguiLib)]
         public static extern float igGetTime();
         [DllImport(cimguiLib)]
         public static extern int igGetFrameCount();
         [DllImport(cimguiLib)]
-        public static extern string igGetStyleColName(ColorTarget idx);
+        public static extern string igGetStyleColorName(ColorTarget idx);
         [DllImport(cimguiLib)]
         public static extern void igCalcItemRectClosestPoint(out Vector2 pOut, Vector2 pos, bool on_edge, float outward);
         [DllImport(cimguiLib)]
@@ -728,10 +732,10 @@ namespace ImGuiNET
         public static extern bool igIsMouseReleased(int button);
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsMouseHoveringWindow();
+        public static extern bool igIsWindowRectHovered();
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsMouseHoveringAnyWindow();
+        public static extern bool igIsAnyWindowHovered();
         [DllImport(cimguiLib)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseHoveringRect(Vector2 pos_min, Vector2 pos_max, bool clip);
