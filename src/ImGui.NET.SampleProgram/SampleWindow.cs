@@ -157,7 +157,7 @@ namespace ImGuiNET
         public void RunWindowLoop()
         {
             _nativeWindow.Visible = true;
-            while (_nativeWindow.Visible)
+            while (_nativeWindow.Exists)
             {
                 _previousFrameStartTime = DateTime.UtcNow;
 
