@@ -25,7 +25,7 @@ namespace ImGuiNET
         /// <summary>
         /// Alignment for title bar text.
         /// </summary>
-        public Align WindowTitleAlign;
+        public Vector2 WindowTitleAlign;
         /// <summary>
         /// Radius of child window corners rounding. Set to 0.0f to have rectangular windows.
         /// </summary>
@@ -74,6 +74,10 @@ namespace ImGuiNET
         /// Radius of grabs corners rounding. Set to 0.0f to have rectangular slider grabs.
         /// </summary>
         public float GrabRounding;
+        /// <summary>
+        /// Alignment of button text when button is larger than text. Defaults to (0.5f,0.5f) for horizontally+vertically centered.
+        /// </summary>
+        public Vector2 ButtonTextAlign;
         /// <summary>
         /// Window positions are clamped to be visible within the display area by at least this amount. Only covers regular windows.
         /// </summary>

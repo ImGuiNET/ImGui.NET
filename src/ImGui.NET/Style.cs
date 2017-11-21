@@ -50,7 +50,7 @@ namespace ImGuiNET
         /// <summary>
         /// Alignment for title bar text.
         /// </summary>
-        public Align WindowTitleAlign
+        public Vector2 WindowTitleAlign
         {
             get { return _stylePtr->WindowTitleAlign; }
             set { _stylePtr->WindowTitleAlign = value; }
