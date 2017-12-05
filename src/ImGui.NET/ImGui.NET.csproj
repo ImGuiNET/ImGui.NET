@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>A .NET wrapper for the dear ImGui library.</Description>
-    <AssemblyVersion>0.3.1</AssemblyVersion>
+    <AssemblyVersion>0.3.2</AssemblyVersion>
     <Authors>Eric Mellino</Authors>
     <TargetFramework>netstandard1.1</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -25,12 +25,12 @@
       <PackagePath>runtimes/win-x64/native</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="..\..\deps\cimgui\ubuntu.14.04-x64\cimgui.so">
+    <Content Include="..\..\deps\cimgui\ubuntu-x64\cimgui.so">
       <PackagePath>runtimes/ubuntu-x64/native</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="..\..\deps\cimgui\osx.10.10-x64\cimgui.dylib">
-      <PackagePath>runtimes/osx.10.10-x64/native</PackagePath>
+    <Content Include="..\..\deps\cimgui\osx-x64\cimgui.dylib">
+      <PackagePath>runtimes/osx-x64/native</PackagePath>
       <Pack>true</Pack>
     </Content>
   </ItemGroup>
