@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>A .NET wrapper for the dear ImGui library.</Description>
-    <AssemblyVersion>0.3.2</AssemblyVersion>
+    <AssemblyVersion>0.3.3</AssemblyVersion>
     <Authors>Eric Mellino</Authors>
     <TargetFramework>netstandard1.1</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
