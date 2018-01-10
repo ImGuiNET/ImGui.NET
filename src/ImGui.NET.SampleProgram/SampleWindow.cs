@@ -224,6 +224,8 @@ namespace ImGuiNET
             bool leftPressed = ImGui.GetIO().MouseDown[0];
             ImGui.Text("Current mouse position: " + pos + ". Pressed=" + leftPressed);
 
+            ImGui.ShowStyleSelector("Select style");
+
             if (ImGui.Button("Increment the counter."))
             {
                 _pressCount += 1;

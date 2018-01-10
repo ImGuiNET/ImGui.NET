@@ -15,13 +15,17 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 WindowPadding;
         /// <summary>
-        /// Minimum window size.
-        /// </summary>
-        public Vector2 WindowMinSize;
-        /// <summary>
         /// Radius of window corners rounding. Set to 0.0f to have rectangular windows.
         /// </summary>
         public float WindowRounding;
+        /// <summary>
+        /// Thickness of border around windows. Generally set to 0.0f or 1.0f. (Other values are not well tested and more CPU/GPU costly)
+        /// </summary>
+        public float WindowBorderSize;
+        /// <summary>
+        /// Minimum window size.
+        /// </summary>
+        public Vector2 WindowMinSize;
         /// <summary>
         /// Alignment for title bar text.
         /// </summary>
@@ -29,7 +33,19 @@ namespace ImGuiNET
         /// <summary>
         /// Radius of child window corners rounding. Set to 0.0f to have rectangular windows.
         /// </summary>
-        public float ChildWindowRounding;
+        public float ChildRounding;
+        /// <summary>
+        /// Thickness of border around child windows. Generally set to 0.0f or 1.0f. (Other values are not well tested and more CPU/GPU costly)
+        /// </summary>
+        public float ChildBorderSize;
+        /// <summary>
+        /// Radius of popup window corners rounding.
+        /// </summary>
+        public float PopupRounding;
+        /// <summary>
+        /// Thickness of border around popup windows. Generally set to 0.0f or 1.0f. (Other values are not well tested and more CPU/GPU costly)
+        /// </summary>
+        public float PopupBorderSize;
         /// <summary>
         /// Padding within a framed rectangle (used by most widgets).
         /// </summary>
@@ -38,6 +54,10 @@ namespace ImGuiNET
         /// Radius of frame corners rounding. Set to 0.0f to have rectangular frame (used by most widgets). 
         /// </summary>
         public float FrameRounding;
+        /// <summary>
+        /// Thickness of border around frames. Generally set to 0.0f or 1.0f. (Other values are not well tested and more CPU/GPU costly)
+        /// </summary>
+        public float FrameBorderSize;
         /// <summary>
         /// Horizontal and vertical spacing between widgets/lines.
         /// </summary>
@@ -93,7 +113,7 @@ namespace ImGuiNET
         /// <summary>
         /// Enable anti-aliasing on filled shapes (rounded rectangles, circles, etc.)
         /// </summary>
-        public byte AntiAliasedShapes;
+        public byte AntiAliasedFill;
         /// <summary>
         /// Tessellation tolerance. Decrease for highly tessellated curves (higher quality, more polygons), increase to reduce quality.
         /// </summary>

@@ -8,7 +8,7 @@
         Text,
         TextDisabled,
         WindowBg,
-        ChildWindowBg,
+        ChildBg,
         PopupBg,
         Border,
         BorderShadow,
@@ -26,7 +26,6 @@
         ScrollbarGrab,
         ScrollbarGrabHovered,
         ScrollbarGrabActive,
-        ComboBg,
         CheckMark,
         SliderGrab,
         SliderGrabActive,
@@ -54,6 +53,7 @@
         /// darken entire screen when a modal window is active
         /// </summary>
         ModalWindowDarkening,
+        DragDropTarget,
         Count,
     };
 }

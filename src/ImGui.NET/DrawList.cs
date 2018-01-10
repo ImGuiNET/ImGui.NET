@@ -70,6 +70,28 @@ namespace ImGuiNET
             ArrayPool<byte>.Shared.Return(tempBytes);
         }
 
+        public unsafe void AddImageRounded(
+            IntPtr userTextureID,
+            Vector2 a,
+            Vector2 b,
+            Vector2 uvA,
+            Vector2 uvB,
+            uint color,
+            float rounding,
+            int roundingCorners)
+        {
+            ImGuiNative.ImDrawList_AddImageRounded(
+                _nativeDrawList,
+                userTextureID.ToPointer(),
+                a,
+                b,
+                uvA,
+                uvB,
+                color,
+                rounding,
+                roundingCorners);
+        }
+
         public void PushClipRect(Vector2 min, Vector2 max, bool intersectWithCurrentClipRect)
         {
             ImGuiNative.ImDrawList_PushClipRect(_nativeDrawList, min, max, intersectWithCurrentClipRect ? (byte)1 : (byte)0);

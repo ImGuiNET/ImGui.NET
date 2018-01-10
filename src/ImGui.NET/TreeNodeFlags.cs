@@ -16,7 +16,7 @@ namespace ImGuiNET
         /// <summary>
         /// Hit testing to allow subsequent widgets to overlap this one
         /// </summary>
-        AllowOverlapMode = 1 << 2,
+        AllowItemOverlap = 1 << 2,
         /// <summary>
         /// Don't do a TreePush() when open (e.g. for CollapsingHeader) = no extra indent nor pushing on ID stack
         /// </summary>

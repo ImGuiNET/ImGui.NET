@@ -117,7 +117,7 @@ namespace ImGuiNET
         /// Multi-selection in lists uses Cmd/Super instead of Ctrl
         /// Default value: True on OSX; false otherwise.
         /// </summary>
-        public byte OSXBehaviors;
+        public byte OptMacOSXBehaviors;
         /// <summary>
         /// Enable blinking cursor, for users who consider it annoying.
         /// Default value: true.

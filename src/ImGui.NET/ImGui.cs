@@ -35,17 +35,17 @@ namespace ImGuiNET
 
         public static void PushID(string id)
         {
-            ImGuiNative.igPushIdStr(id);
+            ImGuiNative.igPushIDStr(id);
         }
 
         public static void PushID(int id)
         {
-            ImGuiNative.igPushIdInt(id);
+            ImGuiNative.igPushIDInt(id);
         }
 
         public static void PushIDRange(string idBegin, string idEnd)
         {
-            ImGuiNative.igPushIdStrRange(idBegin, idEnd);
+            ImGuiNative.igPushIDStrRange(idBegin, idEnd);
         }
 
         public static void PushItemWidth(float width)
@@ -60,17 +60,17 @@ namespace ImGuiNET
 
         public static void PopID()
         {
-            ImGuiNative.igPopId();
+            ImGuiNative.igPopID();
         }
 
         public static uint GetID(string id)
         {
-            return ImGuiNative.igGetIdStr(id);
+            return ImGuiNative.igGetIDStr(id);
         }
 
         public static uint GetID(string idBegin, string idEnd)
         {
-            return ImGuiNative.igGetIdStrRange(idBegin, idEnd);
+            return ImGuiNative.igGetIDStrRange(idBegin, idEnd);
         }
 
         public static void Text(string message)
@@ -170,6 +170,11 @@ namespace ImGuiNET
         {
             return ImGuiNative.igRadioButtonBool(label, active);
         }
+
+        public static bool BeginCombo(string label, string previewValue, ComboFlags flags)
+            => ImGuiNative.igBeginCombo(label, previewValue, flags);
+
+        public static void EndCombo() => ImGuiNative.igEndCombo();
 
         public unsafe static bool Combo(string label, ref int current_item, string[] items)
         {
@@ -284,6 +289,16 @@ namespace ImGuiNET
                     graphSize,
                     stride);
             }
+        }
+
+        public static void ShowStyleSelector(string label)
+        {
+            ImGuiNative.igShowStyleSelector(label);
+        }
+
+        public static void ShowFontSelector(string label)
+        {
+            ImGuiNative.igShowFontSelector(label);
         }
 
         public unsafe static void PlotHistogram(string label, float[] values, int valuesOffset, string overlayText, float scaleMin, float scaleMax, Vector2 graphSize, int stride)
@@ -821,6 +836,11 @@ namespace ImGuiNET
             ImGuiNative.igSetCursorScreenPos(pos);
         }
 
+        public static float GetFrameHeightWithSpacing()
+        {
+            return ImGuiNative.igGetFrameHeightWithSpacing();
+        }
+
         public static void AlignTextToFramePadding()
         {
             ImGuiNative.igAlignTextToFramePadding();
@@ -1009,6 +1029,8 @@ namespace ImGuiNET
             ImGuiNative.igSpacing();
         }
 
+        public static float GetFrameHeight() => ImGuiNative.igGetFrameHeight();
+
         public static void Columns(int count, string id, bool border)
         {
             ImGuiNative.igColumns(count, id, border);
@@ -1059,6 +1081,21 @@ namespace ImGuiNET
             ImGuiNative.igSameLine(localPositionX, spacingW);
         }
 
+        public static bool BeginDragDropSource(DragDropFlags flags, int mouseButton)
+            => ImGuiNative.igBeginDragDropSource(flags, mouseButton);
+
+        public static unsafe bool SetDragDropPayload(string type, IntPtr data, uint size, Condition cond)
+            => ImGuiNative.igSetDragDropPayload(type, data.ToPointer(), size, cond);
+
+        public static void EndDragDropSource() => ImGuiNative.igEndDragDropSource();
+
+        public static bool BeginDragDropTarget() => ImGuiNative.igBeginDragDropTarget();
+
+        public static unsafe Payload AcceptDragDropPayload(string type, DragDropFlags flags)
+            => new Payload(ImGuiNative.igAcceptDragDropPayload(type, flags));
+
+        public static void EndDragDropTarget() => ImGuiNative.igEndDragDropTarget();
+
         public static void PushClipRect(Vector2 min, Vector2 max, bool intersectWithCurrentCliRect)
         {
             ImGuiNative.igPushClipRect(min, max, intersectWithCurrentCliRect ? (byte)1 : (byte)0);
@@ -1067,6 +1104,21 @@ namespace ImGuiNET
         public static void PopClipRect()
         {
             ImGuiNative.igPopClipRect();
+        }
+
+        public static unsafe void StyleColorsClassic(Style style)
+        {
+            ImGuiNative.igStyleColorsClassic(style.NativePtr);
+        }
+
+        public static unsafe void StyleColorsDark(Style style)
+        {
+            ImGuiNative.igStyleColorsDark(style.NativePtr);
+        }
+
+        public static unsafe void StyleColorsLight(Style style)
+        {
+            ImGuiNative.igStyleColorsLight(style.NativePtr);
         }
 
         public static bool IsItemHovered(HoveredFlags flags)
@@ -1093,6 +1145,8 @@ namespace ImGuiNET
         {
             return ImGuiNative.igIsAnyItemActive();
         }
+
+        public static unsafe DrawList GetOverlayDrawList() => new DrawList(ImGuiNative.igGetOverlayDrawList());
 
         public static void SetTooltip(string text)
         {
@@ -1158,6 +1212,11 @@ namespace ImGuiNET
         public static void SetScrollHere()
         {
             ImGuiNative.igSetScrollHere();
+        }
+
+        public static void SetItemDefaultFocus()
+        {
+            ImGuiNative.igSetItemDefaultFocus();
         }
 
         public static void SetScrollHere(float centerYRatio)

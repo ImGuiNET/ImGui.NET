@@ -35,10 +35,6 @@
         /// </summary>
         AlwaysAutoResize = 1 << 6,
         /// <summary>
-        /// Show borders around windows and items
-        /// </summary>
-        ShowBorders = 1 << 7,
-        /// <summary>
         /// Never load/save settings in .ini file
         /// </summary>
         NoSavedSettings = 1 << 8,
@@ -63,5 +59,22 @@
         /// Disable bringing window to front when taking focus (e.g. clicking on it or programatically giving it focus)
         /// </summary>
         NoBringToFrontOnFocus = 1 << 13,
+        /// <summary>
+        /// Always show vertical scrollbar (even if ContentSize.y < Size.y)
+        /// </summary>
+        AlwaysVerticalScrollbar = 1 << 14,
+        /// <summary>
+        /// Always show horizontal scrollbar (even if ContentSize.x < Size.x)
+        /// </summary>
+        AlwaysHorizontalScrollbar = 1 << 15,
+        /// <summary>
+        /// Ensure child windows without border uses style.WindowPadding (ignored by default for non-bordered child windows, because more convenient)
+        /// </summary>
+        AlwaysUseWindowPadding = 1 << 16,
+        /// <summary>
+        /// Enable resize from any corners and borders. Your back-end needs to honor the different values of io.MouseCursor set by imgui.
+        /// </summary>
+        ResizeFromAnySide = 1 << 17,
+
     }
 }

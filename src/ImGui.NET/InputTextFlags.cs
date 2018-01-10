@@ -67,6 +67,14 @@
         /// </summary>
         ReadOnly = 1 << 14,
         /// <summary>
+        /// Password mode, display all characters as '*'
+        /// </summary>
+        Password,
+        /// <summary>
+        /// Disable undo/redo. Note that input text owns the text data while active, if you want to provide your own undo/redo stack you need e.g. to call ClearActiveID().
+        /// </summary>
+        NoUndoRedo,
+        /// <summary>
         /// For internal use by InputTextMultiline()
         /// </summary>
         Multiline = 1 << 20

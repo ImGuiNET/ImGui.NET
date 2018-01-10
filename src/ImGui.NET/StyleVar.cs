@@ -19,13 +19,29 @@
         /// </summary>
         WindowRounding,
         /// <summary>
+        /// float
+        /// </summary>
+        WindowBorderSize,
+        /// <summary>
         /// System.Numerics.Vector2
         /// </summary>
         WindowMinSize,
         /// <summary>
         /// float
         /// </summary>
-        ChildWindowRounding,
+        ChildRounding,
+        /// <summary>
+        /// float
+        /// </summary>
+        ChildBorderSize,
+        /// <summary>
+        /// float
+        /// </summary>
+        PopupRounding,
+        /// <summary>
+        /// float
+        /// </summary>
+        PopupBorderSize,
         /// <summary>
         /// System.Numerics.Vector2
         /// </summary>
@@ -34,6 +50,10 @@
         /// float
         /// </summary>
         FrameRounding,
+        /// <summary>
+        /// float
+        /// </summary>
+        FrameBorderSize,
         /// <summary>
         /// System.Numerics.Vector2
         /// </summary>
@@ -49,6 +69,10 @@
         /// <summary>
         /// float
         /// </summary>
-        GrabMinSize
+        GrabMinSize,
+        /// <summary>
+        /// System.Numerics.Vector2
+        /// </summary>
+        ButtonTextAlign,
     };
 }

@@ -4,11 +4,11 @@ namespace ImGuiNET
 {
     public unsafe class Style
     {
-        private readonly NativeStyle* _stylePtr;
+        public readonly NativeStyle* NativePtr;
 
         public Style(NativeStyle* style)
         {
-            _stylePtr = style;
+            NativePtr = style;
         }
 
         /// <summary>
@@ -16,8 +16,8 @@ namespace ImGuiNET
         /// </summary>
         public float Alpha
         {
-            get { return _stylePtr->Alpha; }
-            set { _stylePtr->Alpha = value; }
+            get { return NativePtr->Alpha; }
+            set { NativePtr->Alpha = value; }
         }
 
         /// <summary>
@@ -25,8 +25,8 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 WindowPadding
         {
-            get { return _stylePtr->WindowPadding; }
-            set { _stylePtr->WindowPadding = value; }
+            get { return NativePtr->WindowPadding; }
+            set { NativePtr->WindowPadding = value; }
         }
 
         /// <summary>
@@ -34,8 +34,8 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 WindowMinSize
         {
-            get { return _stylePtr->WindowMinSize; }
-            set { _stylePtr->WindowMinSize = value; }
+            get { return NativePtr->WindowMinSize; }
+            set { NativePtr->WindowMinSize = value; }
         }
 
         /// <summary>
@@ -43,8 +43,8 @@ namespace ImGuiNET
         /// </summary>
         public float WindowRounding
         {
-            get { return _stylePtr->WindowRounding; }
-            set { _stylePtr->WindowRounding = value; }
+            get { return NativePtr->WindowRounding; }
+            set { NativePtr->WindowRounding = value; }
         }
 
         /// <summary>
@@ -52,8 +52,8 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 WindowTitleAlign
         {
-            get { return _stylePtr->WindowTitleAlign; }
-            set { _stylePtr->WindowTitleAlign = value; }
+            get { return NativePtr->WindowTitleAlign; }
+            set { NativePtr->WindowTitleAlign = value; }
         }
 
         /// <summary>
@@ -61,8 +61,8 @@ namespace ImGuiNET
         /// </summary>
         public float ChildWindowRounding
         {
-            get { return _stylePtr->ChildWindowRounding; }
-            set { _stylePtr->ChildWindowRounding = value; }
+            get { return NativePtr->ChildRounding; }
+            set { NativePtr->ChildRounding = value; }
         }
 
         /// <summary>
@@ -70,8 +70,8 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 FramePadding
         {
-            get { return _stylePtr->FramePadding; }
-            set { _stylePtr->FramePadding = value; }
+            get { return NativePtr->FramePadding; }
+            set { NativePtr->FramePadding = value; }
         }
 
         /// <summary>
@@ -79,8 +79,8 @@ namespace ImGuiNET
         /// </summary>
         public float FrameRounding
         {
-            get { return _stylePtr->FrameRounding; }
-            set { _stylePtr->FrameRounding = value; }
+            get { return NativePtr->FrameRounding; }
+            set { NativePtr->FrameRounding = value; }
         }
 
         /// <summary>
@@ -88,8 +88,8 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 ItemSpacing
         {
-            get { return _stylePtr->ItemSpacing; }
-            set { _stylePtr->ItemSpacing = value; }
+            get { return NativePtr->ItemSpacing; }
+            set { NativePtr->ItemSpacing = value; }
         }
 
         /// <summary>
@@ -97,8 +97,8 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 ItemInnerSpacing
         {
-            get { return _stylePtr->ItemInnerSpacing; }
-            set { _stylePtr->ItemInnerSpacing = value; }
+            get { return NativePtr->ItemInnerSpacing; }
+            set { NativePtr->ItemInnerSpacing = value; }
         }
 
         /// <summary>
@@ -106,8 +106,8 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 TouchExtraPadding
         {
-            get { return _stylePtr->TouchExtraPadding; }
-            set { _stylePtr->TouchExtraPadding = value; }
+            get { return NativePtr->TouchExtraPadding; }
+            set { NativePtr->TouchExtraPadding = value; }
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace ImGuiNET
         /// </summary>
         public float IndentSpacing
         {
-            get { return _stylePtr->IndentSpacing; }
-            set { _stylePtr->IndentSpacing = value; }
+            get { return NativePtr->IndentSpacing; }
+            set { NativePtr->IndentSpacing = value; }
         }
 
         /// <summary>
@@ -124,8 +124,8 @@ namespace ImGuiNET
         /// </summary>
         public float ColumnsMinSpacing
         {
-            get { return _stylePtr->ColumnsMinSpacing; }
-            set { _stylePtr->ColumnsMinSpacing = value; }
+            get { return NativePtr->ColumnsMinSpacing; }
+            set { NativePtr->ColumnsMinSpacing = value; }
         }
 
         /// <summary>
@@ -133,8 +133,8 @@ namespace ImGuiNET
         /// </summary>
         public float ScrollbarSize
         {
-            get { return _stylePtr->ScrollbarSize; }
-            set { _stylePtr->ScrollbarSize = value; }
+            get { return NativePtr->ScrollbarSize; }
+            set { NativePtr->ScrollbarSize = value; }
         }
 
         /// <summary>
@@ -142,8 +142,8 @@ namespace ImGuiNET
         /// </summary>
         public float ScrollbarRounding
         {
-            get { return _stylePtr->ScrollbarRounding; }
-            set { _stylePtr->ScrollbarRounding = value; }
+            get { return NativePtr->ScrollbarRounding; }
+            set { NativePtr->ScrollbarRounding = value; }
         }
 
         /// <summary>
@@ -151,8 +151,8 @@ namespace ImGuiNET
         /// </summary>
         public float GrabMinSize
         {
-            get { return _stylePtr->GrabMinSize; }
-            set { _stylePtr->GrabMinSize = value; }
+            get { return NativePtr->GrabMinSize; }
+            set { NativePtr->GrabMinSize = value; }
         }
 
         /// <summary>
@@ -160,8 +160,8 @@ namespace ImGuiNET
         /// </summary>
         public float GrabRounding
         {
-            get { return _stylePtr->GrabRounding; }
-            set { _stylePtr->GrabRounding = value; }
+            get { return NativePtr->GrabRounding; }
+            set { NativePtr->GrabRounding = value; }
         }
 
         /// <summary>
@@ -169,8 +169,8 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 DisplayWindowPadding
         {
-            get { return _stylePtr->DisplayWindowPadding; }
-            set { _stylePtr->DisplayWindowPadding = value; }
+            get { return NativePtr->DisplayWindowPadding; }
+            set { NativePtr->DisplayWindowPadding = value; }
         }
 
         /// <summary>
@@ -178,8 +178,8 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 DisplaySafeAreaPadding
         {
-            get { return _stylePtr->DisplaySafeAreaPadding; }
-            set { _stylePtr->DisplaySafeAreaPadding = value; }
+            get { return NativePtr->DisplaySafeAreaPadding; }
+            set { NativePtr->DisplaySafeAreaPadding = value; }
         }
 
         /// <summary>
@@ -187,17 +187,17 @@ namespace ImGuiNET
         /// </summary>
         public bool AntiAliasedLines
         {
-            get { return _stylePtr->AntiAliasedLines == 1; }
-            set { _stylePtr->AntiAliasedLines = value ? (byte)1 : (byte)0; }
+            get { return NativePtr->AntiAliasedLines == 1; }
+            set { NativePtr->AntiAliasedLines = value ? (byte)1 : (byte)0; }
         }
 
         /// <summary>
         /// Enable anti-aliasing on filled shapes (rounded rectangles, circles, etc.)
         /// </summary>
-        public bool AntiAliasedShapes
+        public bool AntiAliasedFill
         {
-            get { return _stylePtr->AntiAliasedShapes == 1; }
-            set { _stylePtr->AntiAliasedShapes = value ? (byte)1 : (byte)0; }
+            get { return NativePtr->AntiAliasedFill == 1; }
+            set { NativePtr->AntiAliasedFill = value ? (byte)1 : (byte)0; }
         }
 
         /// <summary>
@@ -205,8 +205,8 @@ namespace ImGuiNET
         /// </summary>
         public float CurveTessellationTolerance
         {
-            get { return _stylePtr->CurveTessellationTol; }
-            set { _stylePtr->CurveTessellationTol = value; }
+            get { return NativePtr->CurveTessellationTol; }
+            set { NativePtr->CurveTessellationTol = value; }
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace ImGuiNET
         /// </summary>
         /// <param name="target">The type of UI element.</param>
         /// <returns>The element's color as currently configured.</returns>
-        public Vector4 GetColor(ColorTarget target) => *(Vector4*)&_stylePtr->Colors[(int)target * 4];
+        public Vector4 GetColor(ColorTarget target) => *(Vector4*)&NativePtr->Colors[(int)target * 4];
 
         /// <summary>
         /// Sets the style color for a particular UI element type.
@@ -223,10 +223,10 @@ namespace ImGuiNET
         /// <param name="value">The new color.</param>
         public void SetColor(ColorTarget target, Vector4 value)
         {
-            _stylePtr->Colors[(int)target * 4 + 0] = value.X;
-            _stylePtr->Colors[(int)target * 4 + 1] = value.Y;
-            _stylePtr->Colors[(int)target * 4 + 2] = value.Z;
-            _stylePtr->Colors[(int)target * 4 + 3] = value.W;
+            NativePtr->Colors[(int)target * 4 + 0] = value.X;
+            NativePtr->Colors[(int)target * 4 + 1] = value.Y;
+            NativePtr->Colors[(int)target * 4 + 2] = value.Z;
+            NativePtr->Colors[(int)target * 4 + 3] = value.W;
         }
     }
 }
