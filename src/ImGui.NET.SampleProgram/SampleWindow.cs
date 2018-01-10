@@ -203,7 +203,7 @@ namespace ImGuiNET
             ImGui.GetStyle().WindowRounding = 0;
 
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(_nativeWindow.Width - 10, _nativeWindow.Height - 20), Condition.Always);
-            ImGui.SetNextWindowPosCenter(Condition.Always);
+            ImGui.SetNextWindowPos(ImGui.GetIO().DisplaySize, Condition.Always, new System.Numerics.Vector2(1f));
             ImGui.BeginWindow("ImGUI.NET Sample Program", ref _mainWindowOpened, WindowFlags.NoResize | WindowFlags.NoTitleBar | WindowFlags.NoMove);
 
             ImGui.BeginMainMenuBar();

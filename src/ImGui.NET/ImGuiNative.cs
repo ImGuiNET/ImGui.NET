@@ -73,6 +73,9 @@ namespace ImGuiNET
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern NativeDrawList* igGetWindowDrawList();
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool igIsWindowAppearing();
+        [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern void igSetWindowFontScale(float scale);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern void igGetWindowPos(out Vector2 @out);
@@ -85,11 +88,8 @@ namespace ImGuiNET
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsWindowCollapsed();
-
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igSetNextWindowPos(Vector2 pos, Condition cond);
-        [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igSetNextWindowPosCenter(Condition cond);
+        public static extern void igSetNextWindowPos(Vector2 pos, Condition cond, Vector2 pivot);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern void igSetNextWindowSize(Vector2 size, Condition cond);
         public delegate void ImGuiSizeConstraintCallback(IntPtr data);
@@ -228,7 +228,7 @@ namespace ImGuiNET
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern void igSetCursorScreenPos(Vector2 pos);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igAlignFirstTextHeightToWidgets();
+        public static extern void igAlignTextToFramePadding();
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern float igGetTextLineHeight();
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
@@ -584,6 +584,9 @@ namespace ImGuiNET
         public static extern void igOpenPopup(string str_id);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool igOpenPopupOnItemClick(string str_id, int mouse_button);
+        [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBeginPopup(string str_id);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
@@ -630,10 +633,7 @@ namespace ImGuiNET
         // Utilities
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsItemHovered();
-        [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsItemRectHovered();
+        public static extern bool igIsItemHovered(HoveredFlags flags);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsItemActive();
@@ -660,10 +660,10 @@ namespace ImGuiNET
 
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsWindowHovered();
+        public static extern bool igIsWindowHovered(HoveredFlags flags);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsWindowFocused();
+        public static extern bool igIsWindowFocused(FocusedFlags flags);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsRootWindowFocused();
@@ -719,6 +719,8 @@ namespace ImGuiNET
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsKeyReleased(int user_key_index);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int igGetKeyPressedAmount(int key_index, float repeat_delay, float rate);
+        [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseDown(int button);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
@@ -732,10 +734,10 @@ namespace ImGuiNET
         public static extern bool igIsMouseReleased(int button);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsWindowRectHovered();
+        public static extern bool igIsAnyWindowHovered();
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsAnyWindowHovered();
+        public static extern bool igIsMousePosValid(Vector2* mousePos);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseHoveringRect(Vector2 pos_min, Vector2 pos_max, bool clip);

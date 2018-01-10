@@ -118,6 +118,11 @@ namespace ImGuiNET
         /// Default value: True on OSX; false otherwise.
         /// </summary>
         public byte OSXBehaviors;
+        /// <summary>
+        /// Enable blinking cursor, for users who consider it annoying.
+        /// Default value: true.
+        /// </summary>
+        public byte OptCursorBlink;
 
         //------------------------------------------------------------------
         // User Functions
@@ -196,6 +201,9 @@ namespace ImGuiNET
         /// Keyboard modifier pressed: Alt
         /// </summary>
         public byte KeyAlt;
+        /// <summary>
+        /// Keyboard modifier pressed: Cmd/Super/Windows
+        /// </summary>
         public byte KeySuper;
         /// <summary>
         /// Keyboard keys that are pressed (in whatever storage order you naturally have access to keyboard data)
@@ -223,6 +231,10 @@ namespace ImGuiNET
         /// Some text input widget is active, which will read input characters from the InputCharacters array.
         /// </summary>
         public byte WantTextInput;
+        /// <summary>
+        /// MousePos has been altered, back-end should reposition mouse on next frame. Set only when 'NavMovesMouse=true'.
+        /// </summary>
+        public byte WantMoveMouse;
         /// <summary>
         /// Framerate estimation, in frame per second. Rolling average estimation based on IO.DeltaTime over 120 frames.
         /// </summary>
@@ -258,10 +270,6 @@ namespace ImGuiNET
         /// </summary>
         public Vector2 MousePosPrev;
         /// <summary>
-        /// Mouse button went from !Down to Down
-        /// </summary>
-        public fixed byte MouseClicked[5];
-        /// <summary>
         /// Position at time of clicking
         /// </summary>
         public Vector2 MouseClickedPos0;
@@ -286,6 +294,10 @@ namespace ImGuiNET
         /// </summary>
         public fixed float MouseClickedTime[5];
         /// <summary>
+        /// Mouse button went from !Down to Down
+        /// </summary>
+        public fixed byte MouseClicked[5];
+        /// <summary>
         /// Has mouse button been double-clicked?
         /// </summary>
         public fixed byte MouseDoubleClicked[5];
@@ -306,6 +318,26 @@ namespace ImGuiNET
         /// Previous time the mouse button has been down
         /// </summary>
         public fixed float MouseDownDurationPrev[5];
+        /// <summary>
+        /// Maximum distance, absolute, on each axis, of how much mouse has traveled from the clicking point
+        /// </summary>
+        public Vector2 MouseDragMaxDistanceAbs0;
+        /// <summary>
+        /// Maximum distance, absolute, on each axis, of how much mouse has traveled from the clicking point
+        /// </summary>
+        public Vector2 MouseDragMaxDistanceAbs1;
+        /// <summary>
+        /// Maximum distance, absolute, on each axis, of how much mouse has traveled from the clicking point
+        /// </summary>
+        public Vector2 MouseDragMaxDistanceAbs2;
+        /// <summary>
+        /// Maximum distance, absolute, on each axis, of how much mouse has traveled from the clicking point
+        /// </summary>
+        public Vector2 MouseDragMaxDistanceAbs3;
+        /// <summary>
+        /// Maximum distance, absolute, on each axis, of how much mouse has traveled from the clicking point
+        /// </summary>
+        public Vector2 MouseDragMaxDistanceAbs4;
         /// <summary>
         /// Squared maximum distance of how much mouse has traveled from the click point
         /// </summary>

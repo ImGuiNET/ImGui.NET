@@ -443,14 +443,9 @@ namespace ImGuiNET
             ImGuiNative.igSetNextWindowFocus();
         }
 
-        public static void SetNextWindowPos(Vector2 position, Condition condition)
+        public static void SetNextWindowPos(Vector2 position, Condition condition, Vector2 pivot)
         {
-            ImGuiNative.igSetNextWindowPos(position, condition);
-        }
-
-        public static void SetNextWindowPosCenter(Condition condition)
-        {
-            ImGuiNative.igSetNextWindowPosCenter(condition);
+            ImGuiNative.igSetNextWindowPos(position, condition, pivot);
         }
 
         public static void AddInputCharacter(char keyChar)
@@ -532,7 +527,7 @@ namespace ImGuiNET
         {
             return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, 1f, flags);
         }
-        
+
         public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, float backgroundAlpha, WindowFlags flags)
         {
             return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, backgroundAlpha, flags);
@@ -709,6 +704,11 @@ namespace ImGuiNET
             return ImGuiNative.igIsKeyReleased(keyIndex);
         }
 
+        public static int GetKeyPressedAmount(int keyIndex, float repeatDelay, float rate)
+        {
+            return ImGuiNative.igGetKeyPressedAmount(keyIndex, repeatDelay, rate);
+        }
+
         public static bool IsMouseDown(int button)
         {
             return ImGuiNative.igIsMouseDown(button);
@@ -729,24 +729,34 @@ namespace ImGuiNET
             return ImGuiNative.igIsMouseReleased(button);
         }
 
-        public static bool IsWindowRectHovered()
-        {
-            return ImGuiNative.igIsWindowRectHovered();
-        }
-
         public static bool IsAnyWindowHovered()
         {
             return ImGuiNative.igIsAnyWindowHovered();
         }
 
-        public static bool IsWindowFocused()
+        public static bool IsWindowFocused(FocusedFlags flags)
         {
-            return ImGuiNative.igIsWindowFocused();
+            return ImGuiNative.igIsWindowFocused(flags);
+        }
+
+        public static bool IsWindowHovered(HoveredFlags flags)
+        {
+            return ImGuiNative.igIsWindowHovered(flags);
         }
 
         public static bool IsMouseHoveringRect(Vector2 minPosition, Vector2 maxPosition, bool clip)
         {
             return ImGuiNative.igIsMouseHoveringRect(minPosition, maxPosition, clip);
+        }
+
+        public static unsafe bool IsMousePosValid()
+        {
+            return ImGuiNative.igIsMousePosValid(null);
+        }
+
+        public static unsafe bool IsMousePosValid(Vector2 mousePos)
+        {
+            return ImGuiNative.igIsMousePosValid(&mousePos);
         }
 
         public static bool IsMouseDragging(int button, float lockThreshold)
@@ -810,6 +820,12 @@ namespace ImGuiNET
         {
             ImGuiNative.igSetCursorScreenPos(pos);
         }
+
+        public static void AlignTextToFramePadding()
+        {
+            ImGuiNative.igAlignTextToFramePadding();
+        }
+
 
         public static bool BeginChild(string id, bool border = false, WindowFlags flags = 0)
         {
@@ -882,6 +898,11 @@ namespace ImGuiNET
         public static bool BeginMainMenuBar()
         {
             return ImGuiNative.igBeginMainMenuBar();
+        }
+
+        public static bool OpenPopupOnItemClick(string id, int mouseButton)
+        {
+            return ImGuiNative.igOpenPopupOnItemClick(id, mouseButton);
         }
 
         public static bool BeginPopup(string id)
@@ -1048,21 +1069,16 @@ namespace ImGuiNET
             ImGuiNative.igPopClipRect();
         }
 
-        public static bool IsLastItemHovered()
+        public static bool IsItemHovered(HoveredFlags flags)
         {
-            return ImGuiNative.igIsItemHovered();
-        }
-
-        public static bool IsItemRectHovered()
-        {
-            return ImGuiNative.igIsItemRectHovered();
+            return ImGuiNative.igIsItemHovered(flags);
         }
 
         public static bool IsLastItemActive()
         {
             return ImGuiNative.igIsItemActive();
         }
-   
+
         public static bool IsLastItemVisible()
         {
             return ImGuiNative.igIsItemVisible();
@@ -1129,6 +1145,11 @@ namespace ImGuiNET
             return result;
         }
 
+        public static bool IsWindowAppearing()
+        {
+            return ImGuiNative.igIsWindowAppearing();
+        }
+
         public static void SetWindowFontScale(float scale)
         {
             ImGuiNative.igSetWindowFontScale(scale);
@@ -1163,10 +1184,10 @@ namespace ImGuiNET
         {
             ImGuiNative.igSetKeyboardFocusHere(offset);
         }
-        
+
         public static void CalcListClipping(int itemsCount, float itemsHeight, ref int outItemsDisplayStart, ref int outItemsDisplayEnd)
         {
             ImGuiNative.igCalcListClipping(itemsCount, itemsHeight, ref outItemsDisplayStart, ref outItemsDisplayEnd);
-        }        
+        }
     }
 }

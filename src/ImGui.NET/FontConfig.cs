@@ -19,7 +19,7 @@ namespace ImGuiNET
         /// TTF data ownership taken by the container ImFontAtlas (will delete memory itself).
         /// Set to true.
         /// </summary>
-        public bool FontDataOwnedByAtlas;
+        public byte FontDataOwnedByAtlas;
         /// <summary>
         /// 0.
         /// Index of font within TTF file
@@ -43,7 +43,7 @@ namespace ImGuiNET
         /// Align every character to pixel boundary (if enabled, set OversampleH/V to 1).
         /// Set to false.
         /// </summary>
-        public bool PixelSnapH;
+        public byte PixelSnapH;
         /// <summary>
         /// Extra spacing (in pixels) between glyphs.
         /// Set to (0, 0).
@@ -62,7 +62,17 @@ namespace ImGuiNET
         /// Merge into previous ImFont, so you can combine multiple inputs font into one ImFont (e.g. ASCII font + icons + Japanese glyphs).
         /// Set to false.
         /// </summary>
-        public bool MergeMode;
+        public byte MergeMode;
+        /// <summary>
+        /// Settings for custom font rasterizer (e.g. ImGuiFreeType). Leave as zero if you aren't using one.
+        /// Defaults to 0.
+        /// </summary>
+        public uint RasterizerFlags;
+        /// <summary>
+        /// Brighten (&gt;1.0f) or darken (&lt;1.0f) font output. Brightening small fonts may be a good workaround to make them more readable.
+        /// Defaults to 1.0.
+        /// </summary>
+        public float RasterizerMultiply;
 
         // [Internal]
         /// <summary>

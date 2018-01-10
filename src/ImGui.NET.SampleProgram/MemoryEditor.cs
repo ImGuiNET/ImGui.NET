@@ -162,7 +162,7 @@ namespace ImGuiNET
                     else
                     {
                         ImGui.Text(FixedHex(mem_data[addr], 2));
-                        if (AllowEdits && ImGui.IsLastItemHovered() && ImGui.IsMouseClicked(0))
+                        if (AllowEdits && ImGui.IsItemHovered(HoveredFlags.Default) && ImGui.IsMouseClicked(0))
                         {
                             DataEditingTakeFocus = true;
                             DataEditingAddr = addr;
@@ -197,7 +197,7 @@ namespace ImGuiNET
 
             ImGui.Separator();
                 
-            ImGuiNative.igAlignFirstTextHeightToWidgets();
+            ImGuiNative.igAlignTextToFramePadding();
             ImGui.PushItemWidth(50);
             ImGuiNative.igPushAllowKeyboardFocus(false);
             int rows_backup = Rows;
