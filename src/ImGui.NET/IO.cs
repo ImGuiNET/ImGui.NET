@@ -265,6 +265,12 @@ namespace ImGuiNET
             return new Font(nativeFontPtr);
         }
 
+        public Font AddDefaultFont(FontConfig cfg)
+        {
+            NativeFont* nativeFontPtr = ImGuiNative.ImFontAtlas_AddFontDefault(_atlasPtr, new IntPtr(&cfg));
+            return new Font(nativeFontPtr);
+        }
+
         public Font AddFontFromFileTTF(string fileName, float pixelSize)
         {
             NativeFont* nativeFontPtr = ImGuiNative.ImFontAtlas_AddFontFromFileTTF(_atlasPtr, fileName, pixelSize, IntPtr.Zero, null);
