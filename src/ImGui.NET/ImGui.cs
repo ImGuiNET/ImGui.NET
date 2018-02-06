@@ -34,7 +34,7 @@ namespace ImGuiNET
         public static void PushID(string id)
         {
             ImGuiNative.igPushIDStr(id);
-        }
+		}
 
         public static void PushID(object id)
         {
