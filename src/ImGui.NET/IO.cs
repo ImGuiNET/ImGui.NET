@@ -120,6 +120,24 @@ namespace ImGuiNET
             get { return _nativePtr->KeyAlt == 1; }
             set { _nativePtr->KeyAlt = value ? (byte)1 : (byte)0; }
         }
+
+        public bool WantCaptureMouse
+        {
+            get { return _nativePtr->WantCaptureMouse == 1; }
+            set { _nativePtr->WantCaptureMouse = value ? (byte)1 : (byte)0; }
+        }
+
+        public bool WantCaptureKeyboard
+        {
+            get { return _nativePtr->WantCaptureKeyboard == 1; }
+            set { _nativePtr->WantCaptureKeyboard = value ? (byte)1 : (byte)0; }
+        }
+
+        public bool WantTextInput
+        {
+            get { return _nativePtr->WantTextInput == 1; }
+            set { _nativePtr->WantTextInput = value ? (byte)1 : (byte)0; }
+        }
     }
 
     public unsafe class KeyMap
