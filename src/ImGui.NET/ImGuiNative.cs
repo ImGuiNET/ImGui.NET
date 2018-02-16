@@ -354,11 +354,11 @@ namespace ImGuiNET
         public delegate void ImGuiContextFreeFunction(IntPtr ptr);
 
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr igCreateContext(ImGuiContextAllocationFunction malloc_fn, ImGuiContextFreeFunction free_fn);
+        public static extern NativeContext* igCreateContext(ImGuiContextAllocationFunction malloc_fn, ImGuiContextFreeFunction free_fn);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern void igDestroyContext(IntPtr ctx);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr igGetCurrentContext();
+        public static extern NativeContext* igGetCurrentContext();
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern void igSetCurrentContext(IntPtr ctx);
 

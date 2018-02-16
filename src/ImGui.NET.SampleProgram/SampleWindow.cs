@@ -14,7 +14,7 @@ namespace ImGuiNET
 {
     public class SampleWindow
     {
-        private NativeWindow _nativeWindow;
+        private OpenTK.NativeWindow _nativeWindow;
         private GraphicsContext _graphicsContext;
         private int s_fontTexture;
         private int _pressCount;
@@ -35,7 +35,7 @@ namespace ImGuiNET
         public unsafe SampleWindow()
         {
             int desiredWidth = 960, desiredHeight = 540;
-            _nativeWindow = new NativeWindow(desiredWidth, desiredHeight, "ImGui.NET", GameWindowFlags.Default, OpenTK.Graphics.GraphicsMode.Default, DisplayDevice.Default);
+            _nativeWindow = new OpenTK.NativeWindow(desiredWidth, desiredHeight, "ImGui.NET", GameWindowFlags.Default, OpenTK.Graphics.GraphicsMode.Default, DisplayDevice.Default);
             _scaleFactor = _nativeWindow.Width / desiredWidth;
 
             GraphicsContextFlags flags = GraphicsContextFlags.Default;
