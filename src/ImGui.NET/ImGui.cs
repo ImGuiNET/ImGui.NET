@@ -21,10 +21,8 @@ namespace ImGuiNET
         {
             ImGuiNative.igShutdown();
         }
-
-        private static unsafe readonly IO s_io = new IO(ImGuiNative.igGetIO());
-
-        public static unsafe IO GetIO() => s_io;
+        
+        public static unsafe IO GetIO() => new IO(ImGuiNative.igGetIO());
 
         private static unsafe readonly Style s_style = new Style(ImGuiNative.igGetStyle());
 
@@ -36,6 +34,11 @@ namespace ImGuiNET
         public static void PushID(string id)
         {
             ImGuiNative.igPushIDStr(id);
+		}
+
+        public static void PushID(object id)
+        {
+            PushID(id?.GetHashCode() ?? 0);
         }
 
         public static void PushID(int id)
@@ -76,6 +79,11 @@ namespace ImGuiNET
         public static void Text(string message)
         {
             ImGuiNative.igText(message);
+        }
+
+        public static void Text(string format, params object[] args)
+        {
+            ImGuiNative.igText(string.Format(format, args));
         }
 
         public static void Text(string message, Vector4 color)
@@ -122,7 +130,7 @@ namespace ImGuiNET
         {
             return ImGuiNative.igInvisibleButton(id, size);
         }
-
+        
         public static void Image(IntPtr userTextureID, Vector2 size, Vector2 uv0, Vector2 uv1, Vector4 tintColor, Vector4 borderColor)
         {
             ImGuiNative.igImage(userTextureID, size, uv0, uv1, tintColor, borderColor);
