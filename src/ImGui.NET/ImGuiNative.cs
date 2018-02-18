@@ -356,11 +356,11 @@ namespace ImGuiNET
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern NativeContext* igCreateContext(ImGuiContextAllocationFunction malloc_fn, ImGuiContextFreeFunction free_fn);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igDestroyContext(IntPtr ctx);
+        public static extern void igDestroyContext(NativeContext* ctx);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern NativeContext* igGetCurrentContext();
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igSetCurrentContext(IntPtr ctx);
+        public static extern void igSetCurrentContext(NativeContext* ctx);
 
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
