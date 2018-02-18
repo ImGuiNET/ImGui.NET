@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.InteropServices;
 
 namespace ImGuiNET
 {
+    [StructLayout(LayoutKind.Sequential)]
     public unsafe struct NativeContext
     {
         public byte Initialized;

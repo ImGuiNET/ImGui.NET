@@ -1,5 +1,8 @@
-﻿namespace ImGuiNET
+﻿using System.Runtime.InteropServices;
+
+namespace ImGuiNET
 {
+    [StructLayout(LayoutKind.Sequential)]
     public unsafe struct NativePayload
     {
         public void* Data;

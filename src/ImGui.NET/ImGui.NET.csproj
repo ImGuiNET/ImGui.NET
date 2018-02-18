@@ -17,10 +17,6 @@
     <RootNamespace>ImGuiNET</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\NativeDrawContext.cs" Link="NativeDrawContext.cs" />
-    <Compile Include="..\..\NativeSimpleColumns.cs" Link="NativeSimpleColumns.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="System.Numerics.Vectors" Version="4.4.0" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.4.0" />
     <PackageReference Include="System.Buffers" Version="4.4.0" />
