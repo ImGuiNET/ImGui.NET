@@ -22,16 +22,9 @@ namespace ImGuiNET
             ImGuiNative.igShutdown();
         }
 
-        private static unsafe readonly IO s_io = new IO(ImGuiNative.igGetIO());
+        public static unsafe IO GetIO() => new IO(ImGuiNative.igGetIO());
 
-        public static unsafe IO GetIO() => s_io;
-
-        private static unsafe readonly Style s_style = new Style(ImGuiNative.igGetStyle());
-
-        public static unsafe Style GetStyle()
-        {
-            return s_style;
-        }
+        public static unsafe Style GetStyle() => new Style(ImGuiNative.igGetStyle());
 
         public static void PushID(string id)
         {
