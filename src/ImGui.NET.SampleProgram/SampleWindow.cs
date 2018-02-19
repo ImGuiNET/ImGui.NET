@@ -299,6 +299,9 @@ namespace ImGuiNET
                 ImGui.Selectable("Just click somewhere to get rid of me.");
                 ImGui.EndPopup();
             }
+            
+            ImGui.Text("ProgressBar:");
+            ImGui.ProgressBar(0.5f, new System.Numerics.Vector2(300, 20), "50%");
 
             ImGui.EndWindow();
 
