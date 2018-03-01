@@ -57,6 +57,7 @@ namespace ImGuiNET
 
         public unsafe void Draw(string title, byte[] mem_data, int mem_size, int base_display_addr = 0)
         {
+            ImGui.SetNextWindowSize(new Vector2(500, 350), Condition.FirstUseEver);
             if (!ImGui.BeginWindow(title))
             {
                 ImGui.EndWindow();
@@ -155,7 +156,7 @@ namespace ImGuiNET
                         {
                             int data;
                             if (TryHexParse(DataInput, out data))
-                                 mem_data[addr] = (byte)data;
+                                mem_data[addr] = (byte)data;
                         }
                         ImGui.PopID();
                     }
@@ -196,7 +197,7 @@ namespace ImGuiNET
             }
 
             ImGui.Separator();
-                
+
             ImGuiNative.igAlignTextToFramePadding();
             ImGui.PushItemWidth(50);
             ImGuiNative.igPushAllowKeyboardFocus(false);
@@ -211,7 +212,7 @@ namespace ImGuiNET
             ImGuiNative.igPopAllowKeyboardFocus();
             ImGui.PopItemWidth();
             ImGui.SameLine();
-            ImGui.Text(string.Format(" Range {0}..{1} ", FixedHex(base_display_addr, addr_digits_count), 
+            ImGui.Text(string.Format(" Range {0}..{1} ", FixedHex(base_display_addr, addr_digits_count),
                 FixedHex(base_display_addr + mem_size - 1, addr_digits_count)));
             ImGui.SameLine();
             ImGui.PushItemWidth(70);
@@ -232,7 +233,7 @@ namespace ImGuiNET
                 }
             }
             ImGui.PopItemWidth();
-            
+
             ImGui.EndWindow();
         }
     }

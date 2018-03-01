@@ -491,6 +491,11 @@ namespace ImGuiNET
             ImGuiNative.igSetNextWindowFocus();
         }
 
+        public static void SetNextWindowPos(Vector2 position, Condition condition)
+        {
+            ImGuiNative.igSetNextWindowPos(position, condition, Vector2.Zero);
+        }
+
         public static void SetNextWindowPos(Vector2 position, Condition condition, Vector2 pivot)
         {
             ImGuiNative.igSetNextWindowPos(position, condition, pivot);

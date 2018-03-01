@@ -138,6 +138,12 @@ namespace ImGuiNET
             get { return _nativePtr->WantTextInput == 1; }
             set { _nativePtr->WantTextInput = value ? (byte)1 : (byte)0; }
         }
+
+        public float Framerate
+        {
+            get { return _nativePtr->Framerate; }
+            set { _nativePtr->Framerate = value; }
+        }
     }
 
     public unsafe class KeyMap
