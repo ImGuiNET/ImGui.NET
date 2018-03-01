@@ -254,3 +254,6 @@ Session.vim
 
 # MSVC Stuff
 *.VC.db
+
+# Rider/Jetbrains IDEs
+.idea

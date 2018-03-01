@@ -441,6 +441,10 @@ namespace ImGuiNET
             return ImGuiNative.igButton(message, size);
         }
 
+        public static unsafe void ProgressBar(float fraction, Vector2 size, string overlayText) {
+            ImGuiNative.igProgressBar(fraction, &size, overlayText);
+        }
+
         public static void SetNextWindowSize(Vector2 size, Condition condition)
         {
             ImGuiNative.igSetNextWindowSize(size, condition);
