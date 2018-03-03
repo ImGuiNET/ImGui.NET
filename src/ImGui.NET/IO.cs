@@ -237,6 +237,8 @@ namespace ImGuiNET
             _atlasPtr = atlasPtr;
         }
 
+        public NativeFontAtlas* GetNativePointer() => _atlasPtr;
+
         public FontTextureData GetTexDataAsAlpha8()
         {
             byte* pixels;
@@ -286,6 +288,21 @@ namespace ImGuiNET
         public Font AddFontFromFileTTF(string fileName, float pixelSize)
         {
             NativeFont* nativeFontPtr = ImGuiNative.ImFontAtlas_AddFontFromFileTTF(_atlasPtr, fileName, pixelSize, IntPtr.Zero, null);
+            return new Font(nativeFontPtr);
+        }
+
+        public Font AddFontFromFileTTF(string fileName, float pixelSize, ushort[] glyphRanges)
+        {
+            fixed (ushort* ptrBuf = glyphRanges)
+            {
+                NativeFont* nativeFontPtr = ImGuiNative.ImFontAtlas_AddFontFromFileTTF(_atlasPtr, fileName, pixelSize, IntPtr.Zero, ptrBuf);
+                return new Font(nativeFontPtr);
+            }
+        }
+
+        public Font AddFontFromFileTTF(string fileName, float pixelSize, ushort* glyphRanges)
+        {
+            NativeFont* nativeFontPtr = ImGuiNative.ImFontAtlas_AddFontFromFileTTF(_atlasPtr, fileName, pixelSize, IntPtr.Zero, glyphRanges);
             return new Font(nativeFontPtr);
         }
 

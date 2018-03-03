@@ -50,8 +50,6 @@ namespace ImGuiNET
             _nativeWindow.KeyUp += OnKeyUp;
             _nativeWindow.KeyPress += OnKeyPress;
 
-            ImGui.GetIO().FontAtlas.AddDefaultFont();
-
             SetOpenTKKeyMappings();
 
             _textInputBufferLength = 1024;
@@ -125,6 +123,16 @@ namespace ImGuiNET
         private unsafe void CreateDeviceObjects()
         {
             IO io = ImGui.GetIO();
+
+            // Example: select custom font and glyph range through enum to support non-latin characters
+            ushort[] glyphRangeLatinExtended = new ushort[]
+             {
+                 0x0020, 0x00FF, // Basic Latin + Latin Supplement
+                 0x0100, 0x017F, // Latin Extended-A
+                 0
+            };
+            io.FontAtlas.AddDefaultFont();
+            //io.FontAtlas.AddFontFromFileTTF(@"LiberationMono-Regular.ttf", 14, glyphRangeLatinExtended);
 
             // Build texture atlas
             FontTextureData texData = io.FontAtlas.GetTexDataAsAlpha8();

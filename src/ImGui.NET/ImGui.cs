@@ -7,6 +7,8 @@ namespace ImGuiNET
 {
     public static class ImGui
     {
+        private static Utf8Buffer _utf8 = new Utf8Buffer();
+
         public static void NewFrame()
         {
             ImGuiNative.igNewFrame();
@@ -66,37 +68,34 @@ namespace ImGuiNET
             return ImGuiNative.igGetIDStrRange(idBegin, idEnd);
         }
 
-        public static void Text(string message)
+        public static unsafe void Text(string message)
         {
-            ImGuiNative.igText(message);
+            ImGuiNative.igText(_utf8.FromStr(message));
         }
 
-        public static void Text(string message, Vector4 color)
+        public static unsafe void Text(string message, Vector4 color)
         {
-            ImGuiNative.igTextColored(color, message);
+            ImGuiNative.igTextColored(color, _utf8.FromStr(message));
         }
 
-        public static void TextDisabled(string text)
+        public static unsafe void TextDisabled(string text)
         {
-            ImGuiNative.igTextDisabled(text);
+            ImGuiNative.igTextDisabled(_utf8.FromStr(text));
         }
 
-        public static void TextWrapped(string text)
+        public static unsafe void TextWrapped(string text)
         {
-            ImGuiNative.igTextWrapped(text);
+            ImGuiNative.igTextWrapped(_utf8.FromStr(text));
         }
 
         public static unsafe void TextUnformatted(string message)
         {
-            fixed (byte* bytes = System.Text.Encoding.UTF8.GetBytes(message))
-            {
-                ImGuiNative.igTextUnformatted(bytes, null);
-            }
+            ImGuiNative.igTextUnformatted(_utf8.FromStr(message), null);
         }
-
-        public static void LabelText(string label, string text)
+    
+        public static unsafe void LabelText(string label, string text)
         {
-            ImGuiNative.igLabelText(label, text);
+            ImGuiNative.igLabelText(_utf8.FromStr(label), _utf8.FromStr(text));
         }
 
         public static void Bullet()
@@ -104,9 +103,9 @@ namespace ImGuiNET
             ImGuiNative.igBullet();
         }
 
-        public static void BulletText(string text)
+        public static unsafe void BulletText(string text)
         {
-            ImGuiNative.igBulletText(text);
+            ImGuiNative.igBulletText(_utf8.FromStr(text));
         }
 
         public static bool InvisibleButton(string id) => InvisibleButton(id, Vector2.Zero);
@@ -134,60 +133,61 @@ namespace ImGuiNET
         }
 
         //obsolete!
-        public static bool CollapsingHeader(string label, string id, bool displayFrame, bool defaultOpen)
+        public static unsafe bool CollapsingHeader(string label, string id, bool displayFrame, bool defaultOpen)
         {
             TreeNodeFlags default_open_flags = TreeNodeFlags.DefaultOpen;
-            return ImGuiNative.igCollapsingHeader(label, (defaultOpen ? default_open_flags : 0));
+            return ImGuiNative.igCollapsingHeader(_utf8.FromStr(label), (defaultOpen ? default_open_flags : 0));
         }
 
-
-        public static bool CollapsingHeader(string label, TreeNodeFlags flags)
+        public static unsafe bool CollapsingHeader(string label, TreeNodeFlags flags)
         {
-            return ImGuiNative.igCollapsingHeader(label, flags);
+            return ImGuiNative.igCollapsingHeader(_utf8.FromStr(label), flags);
         }
 
-        public static bool Checkbox(string label, ref bool value)
+        public static unsafe bool Checkbox(string label, ref bool value)
         {
-            return ImGuiNative.igCheckbox(label, ref value);
+            return ImGuiNative.igCheckbox(_utf8.FromStr(label), ref value);
         }
 
         public static unsafe bool RadioButton(string label, ref int target, int buttonValue)
         {
             int targetCopy = target;
-            bool result = ImGuiNative.igRadioButton(label, &targetCopy, buttonValue);
+            bool result = ImGuiNative.igRadioButton(_utf8.FromStr(label), &targetCopy, buttonValue);
             target = targetCopy;
             return result;
         }
 
-        public static bool RadioButtonBool(string label, bool active)
+        public static unsafe bool RadioButtonBool(string label, bool active)
         {
-            return ImGuiNative.igRadioButtonBool(label, active);
+            return ImGuiNative.igRadioButtonBool(_utf8.FromStr(label), active);
         }
 
-        public static bool BeginCombo(string label, string previewValue, ComboFlags flags)
-            => ImGuiNative.igBeginCombo(label, previewValue, flags);
+        public static unsafe bool BeginCombo(string label, string previewValue, ComboFlags flags)
+        {
+            return ImGuiNative.igBeginCombo(_utf8.FromStr(label), previewValue, flags);
+        }
 
         public static void EndCombo() => ImGuiNative.igEndCombo();
 
-        public unsafe static bool Combo(string label, ref int current_item, string[] items)
+        public static unsafe bool Combo(string label, ref int current_item, string[] items)
         {
-            return ImGuiNative.igCombo(label, ref current_item, items, items.Length, 5);
+            return ImGuiNative.igCombo(_utf8.FromStr(label), ref current_item, items, items.Length, 5);
         }
 
-        public unsafe static bool Combo(string label, ref int current_item, string[] items, int heightInItems)
+        public static unsafe bool Combo(string label, ref int current_item, string[] items, int heightInItems)
         {
-            return ImGuiNative.igCombo(label, ref current_item, items, items.Length, heightInItems);
+            return ImGuiNative.igCombo(_utf8.FromStr(label), ref current_item, items, items.Length, heightInItems);
         }
 
-        public static bool ColorButton(string desc_id, Vector4 color, ColorEditFlags flags, Vector2 size)
+        public static unsafe bool ColorButton(string desc_id, Vector4 color, ColorEditFlags flags, Vector2 size)
         {
-            return ImGuiNative.igColorButton(desc_id, color, flags, size);
+            return ImGuiNative.igColorButton(_utf8.FromStr(desc_id), color, flags, size);
         }
 
         public static unsafe bool ColorEdit3(string label, ref float r, ref float g, ref float b, ColorEditFlags flags = ColorEditFlags.Default)
         {
             Vector3 localColor = new Vector3(r, g, b);
-            bool result = ImGuiNative.igColorEdit3(label, &localColor, flags);
+            bool result = ImGuiNative.igColorEdit3(_utf8.FromStr(label), &localColor, flags);
             if (result)
             {
                 r = localColor.X;
@@ -201,7 +201,7 @@ namespace ImGuiNET
         public static unsafe bool ColorEdit3(string label, ref Vector3 color, ColorEditFlags flags = ColorEditFlags.Default)
         {
             Vector3 localColor = color;
-            bool result = ImGuiNative.igColorEdit3(label, &localColor, flags);
+            bool result = ImGuiNative.igColorEdit3(_utf8.FromStr(label), &localColor, flags);
             if (result)
             {
                 color = localColor;
@@ -213,7 +213,7 @@ namespace ImGuiNET
         public static unsafe bool ColorEdit4(string label, ref float r, ref float g, ref float b, ref float a, ColorEditFlags flags = ColorEditFlags.Default)
         {
             Vector4 localColor = new Vector4(r, g, b, a);
-            bool result = ImGuiNative.igColorEdit4(label, &localColor, flags);
+            bool result = ImGuiNative.igColorEdit4(_utf8.FromStr(label), &localColor, flags);
             if (result)
             {
                 r = localColor.X;
@@ -228,7 +228,7 @@ namespace ImGuiNET
         public static unsafe bool ColorEdit4(string label, ref Vector4 color, ColorEditFlags flags = ColorEditFlags.Default)
         {
             Vector4 localColor = color;
-            bool result = ImGuiNative.igColorEdit4(label, &localColor, flags);
+            bool result = ImGuiNative.igColorEdit4(_utf8.FromStr(label), &localColor, flags);
             if (result)
             {
                 color = localColor;
@@ -240,7 +240,7 @@ namespace ImGuiNET
         public static unsafe bool ColorPicker3(string label, ref Vector3 color, ColorEditFlags flags = ColorEditFlags.Default)
         {
             Vector3 localColor = color;
-            bool result = ImGuiNative.igColorPicker3(label, &localColor, flags);
+            bool result = ImGuiNative.igColorPicker3(_utf8.FromStr(label), &localColor, flags);
             if (result)
             {
                 color = localColor;
@@ -251,7 +251,7 @@ namespace ImGuiNET
         public static unsafe bool ColorPicker4(string label, ref Vector4 color, ColorEditFlags flags = ColorEditFlags.Default)
         {
             Vector4 localColor = color;
-            bool result = ImGuiNative.igColorPicker4(label, &localColor, flags);
+            bool result = ImGuiNative.igColorPicker4(_utf8.FromStr(label), &localColor, flags);
             if (result)
             {
                 color = localColor;
@@ -259,7 +259,7 @@ namespace ImGuiNET
             return result;
         }
 
-        public unsafe static void PlotLines(
+        public static unsafe void PlotLines(
             string label,
             float[] values,
             int valuesOffset,
@@ -272,7 +272,7 @@ namespace ImGuiNET
             fixed (float* valuesBasePtr = values)
             {
                 ImGuiNative.igPlotLines(
-                    label,
+                    _utf8.FromStr(label),
                     valuesBasePtr,
                     values.Length,
                     valuesOffset,
@@ -294,12 +294,12 @@ namespace ImGuiNET
             ImGuiNative.igShowFontSelector(label);
         }
 
-        public unsafe static void PlotHistogram(string label, float[] values, int valuesOffset, string overlayText, float scaleMin, float scaleMax, Vector2 graphSize, int stride)
+        public static unsafe void PlotHistogram(string label, float[] values, int valuesOffset, string overlayText, float scaleMin, float scaleMax, Vector2 graphSize, int stride)
         {
             fixed (float* valuesBasePtr = values)
             {
                 ImGuiNative.igPlotHistogram(
-                    label,
+                    _utf8.FromStr(label),
                     valuesBasePtr,
                     values.Length,
                     valuesOffset,
@@ -311,72 +311,72 @@ namespace ImGuiNET
             }
         }
 
-        public static bool SliderFloat(string sliderLabel, ref float value, float min, float max, string displayText, float power)
+        public static unsafe bool SliderFloat(string label, ref float value, float min, float max, string displayText, float power)
         {
-            return ImGuiNative.igSliderFloat(sliderLabel, ref value, min, max, displayText, power);
+            return ImGuiNative.igSliderFloat(_utf8.FromStr(label), ref value, min, max, displayText, power);
         }
 
-        public static bool SliderVector2(string label, ref Vector2 value, float min, float max, string displayText, float power)
+        public static unsafe bool SliderVector2(string label, ref Vector2 value, float min, float max, string displayText, float power)
         {
-            return ImGuiNative.igSliderFloat2(label, ref value, min, max, displayText, power);
+            return ImGuiNative.igSliderFloat2(_utf8.FromStr(label), ref value, min, max, displayText, power);
         }
 
-        public static bool SliderVector3(string label, ref Vector3 value, float min, float max, string displayText, float power)
+        public static unsafe bool SliderVector3(string label, ref Vector3 value, float min, float max, string displayText, float power)
         {
-            return ImGuiNative.igSliderFloat3(label, ref value, min, max, displayText, power);
+            return ImGuiNative.igSliderFloat3(_utf8.FromStr(label), ref value, min, max, displayText, power);
         }
 
-        public static bool SliderVector4(string label, ref Vector4 value, float min, float max, string displayText, float power)
+        public static unsafe bool SliderVector4(string label, ref Vector4 value, float min, float max, string displayText, float power)
         {
-            return ImGuiNative.igSliderFloat4(label, ref value, min, max, displayText, power);
+            return ImGuiNative.igSliderFloat4(_utf8.FromStr(label), ref value, min, max, displayText, power);
         }
 
-        public static bool SliderAngle(string label, ref float radians, float minDegrees, float maxDegrees)
+        public static unsafe bool SliderAngle(string label, ref float radians, float minDegrees, float maxDegrees)
         {
-            return ImGuiNative.igSliderAngle(label, ref radians, minDegrees, maxDegrees);
+            return ImGuiNative.igSliderAngle(_utf8.FromStr(label), ref radians, minDegrees, maxDegrees);
         }
 
-        public static bool SliderInt(string sliderLabel, ref int value, int min, int max, string displayText)
+        public static unsafe bool SliderInt(string label, ref int value, int min, int max, string displayText)
         {
-            return ImGuiNative.igSliderInt(sliderLabel, ref value, min, max, displayText);
+            return ImGuiNative.igSliderInt(_utf8.FromStr(label), ref value, min, max, displayText);
         }
 
-        public static bool SliderInt2(string label, ref Int2 value, int min, int max, string displayText)
+        public static unsafe bool SliderInt2(string label, ref Int2 value, int min, int max, string displayText)
         {
-            return ImGuiNative.igSliderInt2(label, ref value, min, max, displayText);
+            return ImGuiNative.igSliderInt2(_utf8.FromStr(label), ref value, min, max, displayText);
         }
 
-        public static bool SliderInt3(string label, ref Int3 value, int min, int max, string displayText)
+        public static unsafe bool SliderInt3(string label, ref Int3 value, int min, int max, string displayText)
         {
-            return ImGuiNative.igSliderInt3(label, ref value, min, max, displayText);
+            return ImGuiNative.igSliderInt3(_utf8.FromStr(label), ref value, min, max, displayText);
         }
 
-        public static bool SliderInt4(string label, ref Int4 value, int min, int max, string displayText)
+        public static unsafe bool SliderInt4(string label, ref Int4 value, int min, int max, string displayText)
         {
-            return ImGuiNative.igSliderInt4(label, ref value, min, max, displayText);
+            return ImGuiNative.igSliderInt4(_utf8.FromStr(label), ref value, min, max, displayText);
         }
 
-        public static bool DragFloat(string label, ref float value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
+        public static unsafe bool DragFloat(string label, ref float value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
         {
-            return ImGuiNative.igDragFloat(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
+            return ImGuiNative.igDragFloat(_utf8.FromStr(label), ref value, dragSpeed, min, max, displayFormat, dragPower);
         }
 
-        public static bool DragVector2(string label, ref Vector2 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
+        public static unsafe bool DragVector2(string label, ref Vector2 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
         {
-            return ImGuiNative.igDragFloat2(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
+            return ImGuiNative.igDragFloat2(_utf8.FromStr(label), ref value, dragSpeed, min, max, displayFormat, dragPower);
         }
 
-        public static bool DragVector3(string label, ref Vector3 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
+        public static unsafe bool DragVector3(string label, ref Vector3 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
         {
-            return ImGuiNative.igDragFloat3(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
+            return ImGuiNative.igDragFloat3(_utf8.FromStr(label), ref value, dragSpeed, min, max, displayFormat, dragPower);
         }
 
-        public static bool DragVector4(string label, ref Vector4 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
+        public static unsafe bool DragVector4(string label, ref Vector4 value, float min, float max, float dragSpeed = 1f, string displayFormat = "%f", float dragPower = 1f)
         {
-            return ImGuiNative.igDragFloat4(label, ref value, dragSpeed, min, max, displayFormat, dragPower);
+            return ImGuiNative.igDragFloat4(_utf8.FromStr(label), ref value, dragSpeed, min, max, displayFormat, dragPower);
         }
 
-        public static bool DragFloatRange2(
+        public static unsafe bool DragFloatRange2(
             string label,
             ref float currentMinValue,
             ref float currentMaxValue,
@@ -387,30 +387,30 @@ namespace ImGuiNET
             string displayFormatMax = null,
             float power = 1.0f)
         {
-            return ImGuiNative.igDragFloatRange2(label, ref currentMinValue, ref currentMaxValue, speed, minValueLimit, maxValueLimit, displayFormat, displayFormatMax, power);
+            return ImGuiNative.igDragFloatRange2(_utf8.FromStr(label), ref currentMinValue, ref currentMaxValue, speed, minValueLimit, maxValueLimit, displayFormat, displayFormatMax, power);
         }
 
-        public static bool DragInt(string label, ref int value, float speed, int minValue, int maxValue, string displayText)
+        public static unsafe bool DragInt(string label, ref int value, float speed, int minValue, int maxValue, string displayText)
         {
-            return ImGuiNative.igDragInt(label, ref value, speed, minValue, maxValue, displayText);
+            return ImGuiNative.igDragInt(_utf8.FromStr(label), ref value, speed, minValue, maxValue, displayText);
         }
 
-        public static bool DragInt2(string label, ref Int2 value, float speed, int minValue, int maxValue, string displayText)
+        public static unsafe bool DragInt2(string label, ref Int2 value, float speed, int minValue, int maxValue, string displayText)
         {
-            return ImGuiNative.igDragInt2(label, ref value, speed, minValue, maxValue, displayText);
+            return ImGuiNative.igDragInt2(_utf8.FromStr(label), ref value, speed, minValue, maxValue, displayText);
         }
 
-        public static bool DragInt3(string label, ref Int3 value, float speed, int minValue, int maxValue, string displayText)
+        public static unsafe bool DragInt3(string label, ref Int3 value, float speed, int minValue, int maxValue, string displayText)
         {
-            return ImGuiNative.igDragInt3(label, ref value, speed, minValue, maxValue, displayText);
+            return ImGuiNative.igDragInt3(_utf8.FromStr(label), ref value, speed, minValue, maxValue, displayText);
         }
 
-        public static bool DragInt4(string label, ref Int4 value, float speed, int minValue, int maxValue, string displayText)
+        public static unsafe bool DragInt4(string label, ref Int4 value, float speed, int minValue, int maxValue, string displayText)
         {
-            return ImGuiNative.igDragInt4(label, ref value, speed, minValue, maxValue, displayText);
+            return ImGuiNative.igDragInt4(_utf8.FromStr(label), ref value, speed, minValue, maxValue, displayText);
         }
 
-        public static bool DragIntRange2(
+        public static unsafe bool DragIntRange2(
             string label,
             ref int currentMinValue,
             ref int currentMaxValue,
@@ -421,7 +421,7 @@ namespace ImGuiNET
             string displayFormatMax = null)
         {
             return ImGuiNative.igDragIntRange2(
-                label,
+                _utf8.FromStr(label),
                 ref currentMinValue,
                 ref currentMaxValue,
                 speed,
@@ -431,14 +431,14 @@ namespace ImGuiNET
                 displayFormatMax);
         }
 
-        public static bool Button(string message)
+        public static unsafe bool Button(string message)
         {
-            return ImGuiNative.igButton(message, Vector2.Zero);
+            return ImGuiNative.igButton(_utf8.FromStr(message), Vector2.Zero);
         }
 
-        public static bool Button(string message, Vector2 size)
+        public static unsafe bool Button(string message, Vector2 size)
         {
-            return ImGuiNative.igButton(message, size);
+            return ImGuiNative.igButton(_utf8.FromStr(message), size);
         }
 
         public static unsafe void ProgressBar(float fraction, Vector2 size, string overlayText)
@@ -520,40 +520,40 @@ namespace ImGuiNET
 
         public static bool BeginWindow(string windowTitle) => BeginWindow(windowTitle, WindowFlags.Default);
 
-        public static bool BeginWindow(string windowTitle, WindowFlags flags)
+        public static unsafe bool BeginWindow(string windowTitle, WindowFlags flags)
         {
             bool opened = true;
-            return ImGuiNative.igBegin(windowTitle, ref opened, flags);
+            return ImGuiNative.igBegin(_utf8.FromStr(windowTitle), ref opened, flags);
         }
 
-        public static bool BeginWindow(string windowTitle, ref bool opened, WindowFlags flags)
+        public static unsafe bool BeginWindow(string windowTitle, ref bool opened, WindowFlags flags)
         {
-            return ImGuiNative.igBegin(windowTitle, ref opened, flags);
+            return ImGuiNative.igBegin(_utf8.FromStr(windowTitle), ref opened, flags);
         }
 
-        public static bool BeginWindow(string windowTitle, ref bool opened, float backgroundAlpha, WindowFlags flags)
+        public static unsafe bool BeginWindow(string windowTitle, ref bool opened, float backgroundAlpha, WindowFlags flags)
         {
-            return ImGuiNative.igBegin2(windowTitle, ref opened, new Vector2(), backgroundAlpha, flags);
+            return ImGuiNative.igBegin2(_utf8.FromStr(windowTitle), ref opened, new Vector2(), backgroundAlpha, flags);
         }
 
-        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, WindowFlags flags)
+        public static unsafe bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, WindowFlags flags)
         {
-            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, 1f, flags);
+            return ImGuiNative.igBegin2(_utf8.FromStr(windowTitle), ref opened, startingSize, 1f, flags);
         }
 
-        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, float backgroundAlpha, WindowFlags flags)
+        public static unsafe bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, float backgroundAlpha, WindowFlags flags)
         {
-            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, backgroundAlpha, flags);
+            return ImGuiNative.igBegin2(_utf8.FromStr(windowTitle), ref opened, startingSize, backgroundAlpha, flags);
         }
 
-        public static bool BeginMenu(string label)
+        public static unsafe bool BeginMenu(string label)
         {
-            return ImGuiNative.igBeginMenu(label, true);
+            return ImGuiNative.igBeginMenu(_utf8.FromStr(label), true);
         }
 
-        public static bool BeginMenu(string label, bool enabled)
+        public static unsafe bool BeginMenu(string label, bool enabled = true)
         {
-            return ImGuiNative.igBeginMenu(label, enabled);
+            return ImGuiNative.igBeginMenu(_utf8.FromStr(label), enabled);
         }
 
         public static bool BeginMenuBar()
@@ -596,9 +596,9 @@ namespace ImGuiNET
             return MenuItem(label, string.Empty, false, enabled);
         }
 
-        public static bool MenuItem(string label, string shortcut, bool selected, bool enabled)
+        public static unsafe bool MenuItem(string label, string shortcut, bool selected, bool enabled)
         {
-            return ImGuiNative.igMenuItem(label, shortcut, selected, enabled);
+            return ImGuiNative.igMenuItem(_utf8.FromStr(label), shortcut, selected, enabled);
         }
 
         public static unsafe bool InputText(string label, byte[] textBuffer, uint bufferSize, InputTextFlags flags, TextEditCallback textEditCallback)
@@ -622,7 +622,7 @@ namespace ImGuiNET
 
         public static unsafe bool InputText(string label, IntPtr textBuffer, uint bufferSize, InputTextFlags flags, TextEditCallback textEditCallback, IntPtr userData)
         {
-            return ImGuiNative.igInputText(label, textBuffer, bufferSize, flags, textEditCallback, userData.ToPointer());
+            return ImGuiNative.igInputText(_utf8.FromStr(label), textBuffer, bufferSize, flags, textEditCallback, userData.ToPointer());
         }
 
         public static void EndWindow()
@@ -653,7 +653,7 @@ namespace ImGuiNET
 
         public static unsafe void InputTextMultiline(string label, IntPtr textBuffer, uint bufferSize, Vector2 size, InputTextFlags flags, TextEditCallback callback)
         {
-            ImGuiNative.igInputTextMultiline(label, textBuffer, bufferSize, size, flags, callback, null);
+            ImGuiNative.igInputTextMultiline(_utf8.FromStr(label), textBuffer, bufferSize, size, flags, callback, null);
         }
 
         public static unsafe DrawData* GetDrawData()
@@ -663,7 +663,7 @@ namespace ImGuiNET
 
         public static unsafe void InputTextMultiline(string label, IntPtr textBuffer, uint bufferSize, Vector2 size, InputTextFlags flags, TextEditCallback callback, IntPtr userData)
         {
-            ImGuiNative.igInputTextMultiline(label, textBuffer, bufferSize, size, flags, callback, userData.ToPointer());
+            ImGuiNative.igInputTextMultiline(_utf8.FromStr(label), textBuffer, bufferSize, size, flags, callback, userData.ToPointer());
         }
 
         public static bool BeginChildFrame(uint id, Vector2 size, WindowFlags flags)
@@ -933,9 +933,9 @@ namespace ImGuiNET
             ImGuiNative.igEndMainMenuBar();
         }
 
-        public static bool SmallButton(string label)
+        public static unsafe bool SmallButton(string label)
         {
-            return ImGuiNative.igSmallButton(label);
+            return ImGuiNative.igSmallButton(_utf8.FromStr(label));
         }
 
         public static bool BeginPopupModal(string name)
@@ -950,13 +950,13 @@ namespace ImGuiNET
 
         public static unsafe bool BeginPopupModal(string name, WindowFlags extra_flags)
         {
-            return ImGuiNative.igBeginPopupModal(name, null, extra_flags);
+            return ImGuiNative.igBeginPopupModal(_utf8.FromStr(name), null, extra_flags);
         }
 
         public static unsafe bool BeginPopupModal(string name, ref bool p_opened, WindowFlags extra_flags)
         {
             byte value = p_opened ? (byte)1 : (byte)0;
-            bool result = ImGuiNative.igBeginPopupModal(name, &value, extra_flags);
+            bool result = ImGuiNative.igBeginPopupModal(_utf8.FromStr(name), &value, extra_flags);
 
             p_opened = value == 1 ? true : false;
             return result;
@@ -967,19 +967,19 @@ namespace ImGuiNET
             return Selectable(label, isSelected, flags, new Vector2());
         }
 
-        public static bool Selectable(string label, bool isSelected, SelectableFlags flags, Vector2 size)
+        public static unsafe bool Selectable(string label, bool isSelected, SelectableFlags flags, Vector2 size)
         {
-            return ImGuiNative.igSelectable(label, isSelected, flags, size);
+            return ImGuiNative.igSelectable(_utf8.FromStr(label), isSelected, flags, size);
         }
 
-        public static bool SelectableEx(string label, ref bool isSelected)
+        public static unsafe bool SelectableEx(string label, ref bool isSelected)
         {
-            return ImGuiNative.igSelectableEx(label, ref isSelected, SelectableFlags.Default, new Vector2());
+            return ImGuiNative.igSelectableEx(_utf8.FromStr(label), ref isSelected, SelectableFlags.Default, new Vector2());
         }
 
-        public static bool SelectableEx(string label, ref bool isSelected, SelectableFlags flags, Vector2 size)
+        public static unsafe bool SelectableEx(string label, ref bool isSelected, SelectableFlags flags, Vector2 size)
         {
-            return ImGuiNative.igSelectableEx(label, ref isSelected, flags, size);
+            return ImGuiNative.igSelectableEx(_utf8.FromStr(label), ref isSelected, flags, size);
         }
 
         public static unsafe Vector2 GetTextSize(string text, float wrapWidth = Int32.MaxValue)
@@ -1012,9 +1012,9 @@ namespace ImGuiNET
             ImGuiNative.igEndPopup();
         }
 
-        public static bool IsPopupOpen(string id)
+        public static unsafe bool IsPopupOpen(string id)
         {
-            return ImGuiNative.igIsPopupOpen(id);
+            return ImGuiNative.igIsPopupOpen(_utf8.FromStr(id));
         }
 
         public static unsafe void Dummy(Vector2 size)
@@ -1146,9 +1146,9 @@ namespace ImGuiNET
 
         public static unsafe DrawList GetOverlayDrawList() => new DrawList(ImGuiNative.igGetOverlayDrawList());
 
-        public static void SetTooltip(string text)
+        public static unsafe void SetTooltip(string text)
         {
-            ImGuiNative.igSetTooltip(text);
+            ImGuiNative.igSetTooltip(_utf8.FromStr(text));
         }
 
         public static void SetNextTreeNodeOpen(bool opened)
@@ -1161,14 +1161,14 @@ namespace ImGuiNET
             ImGuiNative.igSetNextTreeNodeOpen(opened, setCondition);
         }
 
-        public static bool TreeNode(string label)
+        public static unsafe bool TreeNode(string label)
         {
-            return ImGuiNative.igTreeNode(label);
+            return ImGuiNative.igTreeNode(_utf8.FromStr(label));
         }
 
-        public static bool TreeNodeEx(string label, TreeNodeFlags flags = 0)
+        public static unsafe bool TreeNodeEx(string label, TreeNodeFlags flags = 0)
         {
-            return ImGuiNative.igTreeNodeEx(label, flags);
+            return ImGuiNative.igTreeNodeEx(_utf8.FromStr(label), flags);
         }
 
         public static void TreePop()
@@ -1245,6 +1245,16 @@ namespace ImGuiNET
         public static void CalcListClipping(int itemsCount, float itemsHeight, ref int outItemsDisplayStart, ref int outItemsDisplayEnd)
         {
             ImGuiNative.igCalcListClipping(itemsCount, itemsHeight, ref outItemsDisplayStart, ref outItemsDisplayEnd);
+        }
+
+        public static unsafe void SetClipboardText(string text)
+        {
+            ImGuiNative.igSetClipboardText(_utf8.FromStr(text));
+        }
+
+        public static unsafe string GetClipboardText()
+        {
+            return _utf8.ToStr(ImGuiNative.igGetClipboardText());
         }
     }
 }
