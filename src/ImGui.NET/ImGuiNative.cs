@@ -52,6 +52,12 @@ namespace ImGuiNET
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igBegin2(string name, byte* p_opened, Vector2 size_on_first_use, float bg_alpha, WindowFlags flags);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool igBegin(string name, ref bool p_opened, WindowFlags flags);
+        [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool igBegin2(string name, ref bool p_opened, Vector2 size_on_first_use, float bg_alpha, WindowFlags flags);
+        [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern void igEnd();
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
