@@ -723,7 +723,7 @@ namespace ImGuiNET
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern void igCalcItemRectClosestPoint(out Vector2 pOut, Vector2 pos, bool on_edge, float outward);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igCalcTextSize(out Vector2 pOut, char* text, char* text_end, bool hide_text_after_double_hash, float wrap_width);
+        public static extern void igCalcTextSize(out Vector2 pOut, char* text, char* text_end, [MarshalAs(UnmanagedType.I1)] bool hide_text_after_double_hash, float wrap_width);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         public static extern void igCalcListClipping(int items_count, float items_height, ref int out_items_display_start, ref int out_items_display_end);
 
@@ -760,7 +760,7 @@ namespace ImGuiNET
         public static extern bool igIsMouseDown(int button);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
-        public static extern bool igIsMouseClicked(int button, bool repeat);
+        public static extern bool igIsMouseClicked(int button, [MarshalAs(UnmanagedType.I1)] bool repeat);
         [DllImport(cimguiLib, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool igIsMouseDoubleClicked(int button);
