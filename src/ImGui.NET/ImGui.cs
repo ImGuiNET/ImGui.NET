@@ -520,30 +520,41 @@ namespace ImGuiNET
 
         public static bool BeginWindow(string windowTitle) => BeginWindow(windowTitle, WindowFlags.Default);
 
-        public static bool BeginWindow(string windowTitle, WindowFlags flags)
+        public static unsafe bool BeginWindow(string windowTitle, WindowFlags flags)
         {
-            bool opened = true;
-            return ImGuiNative.igBegin(windowTitle, ref opened, flags);
+            return ImGuiNative.igBegin(windowTitle, null, flags);
         }
 
-        public static bool BeginWindow(string windowTitle, ref bool opened, WindowFlags flags)
+        public static unsafe bool BeginWindow(string windowTitle, ref bool opened, WindowFlags flags)
         {
-            return ImGuiNative.igBegin(windowTitle, ref opened, flags);
+            byte openedLocal = opened ? (byte)1 : (byte)0;
+            bool ret = ImGuiNative.igBegin(windowTitle, &openedLocal, flags);
+            opened = openedLocal != 0;
+            return ret;
         }
 
-        public static bool BeginWindow(string windowTitle, ref bool opened, float backgroundAlpha, WindowFlags flags)
+        public static unsafe bool BeginWindow(string windowTitle, ref bool opened, float backgroundAlpha, WindowFlags flags)
         {
-            return ImGuiNative.igBegin2(windowTitle, ref opened, new Vector2(), backgroundAlpha, flags);
+            byte openedLocal = opened ? (byte)1 : (byte)0;
+            bool ret = ImGuiNative.igBegin2(windowTitle, &openedLocal, new Vector2(), backgroundAlpha, flags);
+            opened = openedLocal != 0;
+            return ret;
         }
 
-        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, WindowFlags flags)
+        public static unsafe bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, WindowFlags flags)
         {
-            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, 1f, flags);
+            byte openedLocal = opened ? (byte)1 : (byte)0;
+            bool ret = ImGuiNative.igBegin2(windowTitle, &openedLocal, startingSize, 1f, flags);
+            opened = openedLocal != 0;
+            return ret;
         }
 
-        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, float backgroundAlpha, WindowFlags flags)
+        public static unsafe bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, float backgroundAlpha, WindowFlags flags)
         {
-            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, backgroundAlpha, flags);
+            byte openedLocal = opened ? (byte)1 : (byte)0;
+            bool ret = ImGuiNative.igBegin2(windowTitle, &openedLocal, startingSize, backgroundAlpha, flags);
+            opened = openedLocal != 0;
+            return ret;
         }
 
         public static bool BeginMenu(string label)
