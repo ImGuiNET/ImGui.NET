@@ -26,8 +26,8 @@
       <PackagePath>runtimes/win-x64/native</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="..\..\deps\cimgui\ubuntu-x64\cimgui.so">
-      <PackagePath>runtimes/ubuntu-x64/native</PackagePath>
+    <Content Include="..\..\deps\cimgui\linux-x64\cimgui.so">
+      <PackagePath>runtimes/linux-x64/native</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="..\..\deps\cimgui\osx-x64\cimgui.dylib">
