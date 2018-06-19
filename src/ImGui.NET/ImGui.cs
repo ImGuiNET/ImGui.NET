@@ -329,7 +329,7 @@ namespace ImGuiNET
             float scaleMin = float.MaxValue,
             float scaleMax = float.MaxValue,
             Vector2 graphSize = default(Vector2),
-            int elementStride = sizeof(float))
+            int elementStride = 1)
         {
             fixed (float* valuesBasePtr = values)
             {
