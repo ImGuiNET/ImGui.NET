@@ -294,7 +294,16 @@ namespace ImGuiNET
             ImGuiNative.igShowFontSelector(label);
         }
 
-        public unsafe static void PlotHistogram(string label, float[] values, int valuesOffset, string overlayText, float scaleMin, float scaleMax, Vector2 graphSize, int stride)
+        [Obsolete("This PlotHistogram overload is deprecated. Use the overload accepting a startIndex and count.")]
+        public unsafe static void PlotHistogram(
+            string label,
+            float[] values,
+            int valuesOffset,
+            string overlayText,
+            float scaleMin,
+            float scaleMax,
+            Vector2 graphSize,
+            int stride)
         {
             fixed (float* valuesBasePtr = values)
             {
@@ -308,6 +317,32 @@ namespace ImGuiNET
                     scaleMax,
                     graphSize,
                     stride);
+            }
+        }
+
+        public unsafe static void PlotHistogram(
+            string label,
+            float[] values,
+            int startIndex,
+            int count,
+            string overlayText = null,
+            float scaleMin = float.MaxValue,
+            float scaleMax = float.MaxValue,
+            Vector2 graphSize = default(Vector2),
+            int elementStride = sizeof(float))
+        {
+            fixed (float* valuesBasePtr = values)
+            {
+                ImGuiNative.igPlotHistogram(
+                    label,
+                    valuesBasePtr,
+                    count,
+                    startIndex,
+                    overlayText,
+                    scaleMin,
+                    scaleMax,
+                    graphSize,
+                    elementStride * sizeof(float));
             }
         }
 
