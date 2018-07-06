@@ -30,7 +30,6 @@ namespace ImGuiNET
             VeldridStartup.CreateWindowAndGraphicsDevice(
                 new WindowCreateInfo(50, 50, 1280, 720, WindowState.Normal, "ImGui.NET Sample Program"),
                 new GraphicsDeviceOptions(true, null, true),
-                GraphicsBackend.Vulkan,
                 out _window,
                 out _gd);
             _window.Resized += () =>
@@ -114,7 +113,7 @@ namespace ImGuiNET
 
             if (_showMemoryEditor)
             {
-                _memoryEditor.Draw("Memory Editor", _memoryEditorData, _memoryEditorData.Length);
+                _memoryEditor.Draw("Memory Editor", _memoryEditorData, _memoryEditorData.Length, ref _showMemoryEditor);
             }
         }
     }

@@ -55,10 +55,10 @@ namespace ImGuiNET
             }
         }
 
-        public unsafe void Draw(string title, byte[] mem_data, int mem_size, int base_display_addr = 0)
+        public unsafe void Draw(string title, byte[] mem_data, int mem_size, ref bool isOpen, int base_display_addr = 0)
         {
             ImGui.SetNextWindowSize(new Vector2(500, 350), Condition.FirstUseEver);
-            if (!ImGui.BeginWindow(title))
+            if (!ImGui.BeginWindow(title, ref isOpen, WindowFlags.Default))
             {
                 ImGui.EndWindow();
                 return;
