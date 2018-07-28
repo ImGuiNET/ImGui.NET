@@ -12,19 +12,48 @@ namespace CodeGenerator
     {
         private static readonly Dictionary<string, string> s_wellKnownTypes = new Dictionary<string, string>()
         {
-            { "bool", "Bool8" },
+            // { "bool", "Bool8" },
+            { "bool", "byte" },
             { "unsigned char", "byte" },
             { "char", "byte" },
             { "ImWchar", "char" },
+            { "unsigned short", "ushort" },
             { "unsigned int", "uint" },
             { "ImVec2", "Vector2" },
             { "ImVec3", "Vector3" },
             { "ImVec4", "Vector4" },
+            { "ImTextureID", "IntPtr" },
+            { "ImGuiID", "uint" },
+            { "ImDrawIdx", "ushort" },
+            { "ImDrawListSharedData", "IntPtr" },
+            { "ImU32", "uint" },
+            { "ImDrawCallback", "IntPtr" },
+            { "size_t", "uint" },
+            { "ImGuiContext*", "IntPtr" },
+
+            // TODO: These shouldn't exist
+            { "ImVector_ImWchar*", "ImVector" },
+            { "ImVector_TextRange", "ImVector" },
+        };
+
+        private static readonly HashSet<string> s_customDefinedTypes = new HashSet<string>()
+        {
+            "ImVector",
+            "ImVec2",
+            "ImVec4",
+            "Pair",
         };
 
         private static readonly Dictionary<string, string> s_wellKnownDefaultValues = new Dictionary<string, string>()
         {
             { "((void *)0)", "null" },
+        };
+
+        private static readonly Dictionary<string, string> s_identifierReplacements = new Dictionary<string, string>()
+        {
+            { "in", "@in" },
+            { "out", "@out" },
+            { "ref", "@ref" },
         };
 
         static void Main(string[] args)
@@ -104,6 +133,9 @@ namespace CodeGenerator
                     }
                     string returnType = val["ret"]?.ToString() ?? "void";
                     string comment = null;
+
+
+
                     return new OverloadDefinition(exportedName, parameters, defaultValues, returnType, comment, enums);
                 }).ToArray();
 
@@ -129,6 +161,8 @@ namespace CodeGenerator
 
             foreach (TypeDefinition td in types)
             {
+                if (s_customDefinedTypes.Contains(td.Name)) { continue; }
+
                 using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, td.Name + ".gen.cs")))
                 {
                     writer.Using("System");
@@ -153,7 +187,7 @@ namespace CodeGenerator
                 }
             }
 
-            using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, "functions.gen.cs")))
+            using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, "Functions.gen.cs")))
             {
                 writer.Using("System");
                 writer.Using("System.Numerics");
@@ -165,43 +199,37 @@ namespace CodeGenerator
                 {
                     foreach (OverloadDefinition overload in fd.Overloads)
                     {
-                        string ret = GetTypeString(overload.ReturnType, false);
                         string name = overload.ExportedName;
+                        if (name.Contains("~")) { continue; }
+                        if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
 
-                        StringBuilder paramsBuilder = new StringBuilder();
+                        string ret = GetTypeString(overload.ReturnType, false);
+
+                        bool hasVaList = false;
+                        List<string> paramParts = new List<string>();
                         for (int i = 0; i < overload.Parameters.Length; i++)
                         {
-                            if (overload.Parameters.Last().Name == "...")
-                            {
-                                continue;
-                            }
-
                             TypeReference p = overload.Parameters[i];
                             string paramType = GetTypeString(p.Type, p.IsFunctionPointer);
-                            paramsBuilder.Append(paramType);
-                            paramsBuilder.Append(' ');
-                            paramsBuilder.Append(p.Name);
-
-                            if (overload.DefaultValues.TryGetValue(p.Name, out string defaultVal))
+                            if (p.ArraySize != 0)
                             {
-                                if (s_wellKnownDefaultValues.TryGetValue(defaultVal, out string correctedDefault))
-                                {
-                                    defaultVal = correctedDefault;
-                                }
-
-                                if (!defaultVal.Contains("%")) // TODO: Can't handle this right now.
-                                {
-                                    paramsBuilder.Append(" = ");
-                                    paramsBuilder.Append(defaultVal);
-                                }
+                                paramType = paramType + "*";
                             }
 
-                            if (i != overload.Parameters.Length - 1)
+                            if (p.Name == "...") { continue; }
+
+                            paramParts.Add($"{paramType} {CorrectIdentifier(p.Name)}");
+
+                            if (paramType == "va_list")
                             {
-                                paramsBuilder.Append(", ");
+                                hasVaList = true;
+                                break;
                             }
                         }
-                        string parameters = paramsBuilder.ToString();
+
+                        if (hasVaList) { continue; }
+
+                        string parameters = string.Join(", ", paramParts);
 
                         writer.WriteLine("[DllImport(\"cimgui\")]");
                         writer.WriteLine($"public static extern {ret} {name}({parameters});");
@@ -212,26 +240,51 @@ namespace CodeGenerator
             }
         }
 
+        private static bool CorrectDefaultValue(string defaultVal, TypeReference tr, out string correctedDefault)
+        {
+            if (s_wellKnownDefaultValues.TryGetValue(defaultVal, out correctedDefault)) { return true; }
+
+            if (tr.Type == "bool")
+            {
+                correctedDefault = bool.Parse(defaultVal) ? "1" : "0";
+                return true;
+            }
+
+            if (defaultVal.Contains("%")) { correctedDefault = null; return false; }
+
+            correctedDefault = defaultVal;
+            return true;
+        }
+
         private static string GetTypeString(string typeName, bool isFunctionPointer)
         {
-            if (!s_wellKnownTypes.TryGetValue(typeName, out string typeStr))
-            {
-                int pointerLevel = 0;
-                if (typeName.EndsWith("**")) { pointerLevel = 2; }
-                else if (typeName.EndsWith("*")) { pointerLevel = 1; }
+            int pointerLevel = 0;
+            if (typeName.EndsWith("**")) { pointerLevel = 2; }
+            else if (typeName.EndsWith("*")) { pointerLevel = 1; }
 
-                if (pointerLevel > 0 && s_wellKnownTypes.TryGetValue(typeName.Substring(0, typeName.Length - pointerLevel), out typeStr))
-                {
-                    typeStr = typeStr + new string('*', pointerLevel);
-                }
-                else
-                {
-                    typeStr = typeName;
-                    if (isFunctionPointer) { typeStr = "IntPtr"; }
-                }
+            if (s_wellKnownTypes.TryGetValue(typeName.Substring(0, typeName.Length - pointerLevel), out string typeStr))
+            {
+                typeStr = typeStr + new string('*', pointerLevel);
+            }
+            else if (!s_wellKnownTypes.TryGetValue(typeName, out typeStr))
+            {
+                typeStr = typeName;
+                if (isFunctionPointer) { typeStr = "IntPtr"; }
             }
 
             return typeStr;
+        }
+
+        private static string CorrectIdentifier(string identifier)
+        {
+            if (s_identifierReplacements.TryGetValue(identifier, out string replacement))
+            {
+                return replacement;
+            }
+            else
+            {
+                return identifier;
+            }
         }
     }
 
@@ -394,24 +447,16 @@ namespace CodeGenerator
 
         public OverloadDefinition(
             string exportedName,
-            string parameters,
+            TypeReference[] parameters,
             Dictionary<string, string> defaultValues,
             string returnType,
             string comment,
             EnumDefinition[] enums)
         {
             ExportedName = exportedName;
-            string[] commaSplit = parameters.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            Parameters = new TypeReference[commaSplit.Length];
-            for (int i = 0; i < commaSplit.Length; i++)
-            {
-                string[] spaceSplit = commaSplit[i].Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                string name = spaceSplit.Last();
-                string type = string.Join(' ', spaceSplit.Take(spaceSplit.Length - 1));
-                Parameters[i] = new TypeReference(name, type, enums);
-            }
+            Parameters = parameters;
             DefaultValues = defaultValues;
-            ReturnType = returnType;
+            ReturnType = returnType.Replace("const", string.Empty).Replace("inline", string.Empty).Trim();
             Comment = comment;
         }
     }
