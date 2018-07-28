@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AssemblyName>ImGuiNET.FNA</AssemblyName>
+        <RootNamespace>ImGuiNET.FNA</RootNamespace>
+        <TargetFramework>net462</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ImGui.NET\ImGui.NET.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="FNA">
+            <HintPath>..\..\deps\FNA\FNA.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+</Project>

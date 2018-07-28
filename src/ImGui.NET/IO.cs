@@ -69,6 +69,15 @@ namespace ImGuiNET
         }
 
         /// <summary>
+        /// Request ImGui to draw a mouse cursor for you (if you are on a platform without a mouse cursor).
+        /// </summary>
+        public bool MouseDrawCursor
+        {
+            get { return _nativePtr->MouseDrawCursor == 1; }
+            set { _nativePtr->MouseDrawCursor = value ? (byte)1 : (byte)0; }
+        }
+
+        /// <summary>
         /// Mouse buttons: left, right, middle + extras.
         /// ImGui itself mostly only uses left button (BeginPopupContext** are using right button).
         /// Others buttons allows us to track if the mouse is being used by your application + available to user as a convenience via IsMouse** API.
@@ -119,6 +128,26 @@ namespace ImGuiNET
         {
             get { return _nativePtr->KeyAlt == 1; }
             set { _nativePtr->KeyAlt = value ? (byte)1 : (byte)0; }
+        }
+
+        /// <summary>
+        /// Keyboard modifier pressed: Cmd/Super/Windows
+        /// </summary>
+        public bool SuperPressed
+        {
+            get { return _nativePtr->KeySuper == 1; }
+            set { _nativePtr->KeySuper = value ? (byte)1 : (byte)0; }
+        }
+
+        /// <summary>
+        /// Rendering function, will be called in Render().
+        /// Alternatively you can keep this to NULL and call GetDrawData() after Render() to get the same pointer.
+        /// See example applications if you are unsure of how to implement this.
+        /// </summary>
+        public IntPtr RenderDrawListsFn
+        {
+            get { return _nativePtr->RenderDrawListsFn; }
+            set { _nativePtr->RenderDrawListsFn = value; }
         }
 
         public bool WantCaptureMouse

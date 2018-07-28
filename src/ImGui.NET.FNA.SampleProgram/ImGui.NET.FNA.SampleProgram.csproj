@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AssemblyName>ImGuiNET.FNA.SampleProgram</AssemblyName>
+        <OutputType>Exe</OutputType>
+        <RootNamespace>ImGuiNET.FNA.SampleProgram</RootNamespace>
+        <TargetFramework>net462</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ImGui.NET.FNA\ImGui.NET.FNA.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="FNA">
+            <HintPath>..\..\deps\FNA\FNA.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+
+</Project>
