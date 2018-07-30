@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace ImGuiNET.FNA.SampleProgram
+﻿namespace ImGuiNET.FNA.SampleProgram
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             new SampleGame().Run();
         }

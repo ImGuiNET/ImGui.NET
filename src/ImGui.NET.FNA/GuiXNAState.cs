@@ -7,66 +7,44 @@ using System.Runtime.InteropServices;
 
 namespace ImGuiNET.FNA
 {
-    public class GuiXNAState : /*DrawableGameComponent,*/ IImGuiRenderer
+    // TODO: Comments
+    // TODO: Check style against Veldrid renderer
+    // TODO: Test more (with ImGui demo?)
+    public class ImGuiRenderer
     {
-        public Game Game;
+        // Graphics
+        private GraphicsDevice _graphicsDevice;
 
-        public Effect Effect;
+        private BasicEffect _effect;
+        private RasterizerState _rasterizerState;
 
-        private RasterizerState RasterizerState = new RasterizerState()
-        {
-            CullMode = CullMode.None,
-            DepthBias = 0,
-            FillMode = FillMode.Solid,
-            MultiSampleAntiAlias = false,
-            ScissorTestEnable = true,
-            SlopeScaleDepthBias = 0
-        };
-
-        //private Dictionary<int, Texture2D> _IdTextureMap = new Dictionary<int, Texture2D>();
-        //private Dictionary<Texture2D, int> _TextureIdMap = new Dictionary<Texture2D, int>();
-
+        // Textures
         private object _lock = new object();
+
         private Dictionary<IntPtr, Texture2D> _loadedTextures = new Dictionary<IntPtr, Texture2D>();
-
-        private int _TextureId = 1;
-
+        private int _textureId = 1;
         private IntPtr? _fontTextureId;
-        //private Texture2D _fontTexture;
 
-        private double _Time = 0.0f;
-        private int _ScrollWheelValue;
+        // Input
+        private int _scrollWheelValue;
 
-        private static bool _Initialized = false;
-        public static bool Initialized => _Initialized;
+        private List<int> _keys = new List<int>();
 
-        private static List<int> _Keys = new List<int>();
-
-        public GuiXNAState(Game game)
+        public ImGuiRenderer(GraphicsDevice graphicsDevice)
         {
-            Game = game;
+            _graphicsDevice = graphicsDevice ?? throw new ArgumentNullException(nameof(graphicsDevice));
 
-            IO io = ImGui.GetIO();
+            _rasterizerState = new RasterizerState()
+            {
+                CullMode = CullMode.None,
+                DepthBias = 0,
+                FillMode = FillMode.Solid,
+                MultiSampleAntiAlias = false,
+                ScissorTestEnable = true,
+                SlopeScaleDepthBias = 0
+            };
 
-            _Keys.Add(io.KeyMap[GuiKey.Tab] = (int)Keys.Tab);
-            _Keys.Add(io.KeyMap[GuiKey.LeftArrow] = (int)Keys.Left);
-            _Keys.Add(io.KeyMap[GuiKey.RightArrow] = (int)Keys.Right);
-            _Keys.Add(io.KeyMap[GuiKey.UpArrow] = (int)Keys.Up);
-            _Keys.Add(io.KeyMap[GuiKey.DownArrow] = (int)Keys.Down);
-            _Keys.Add(io.KeyMap[GuiKey.PageUp] = (int)Keys.PageUp);
-            _Keys.Add(io.KeyMap[GuiKey.PageDown] = (int)Keys.PageDown);
-            _Keys.Add(io.KeyMap[GuiKey.Home] = (int)Keys.Home);
-            _Keys.Add(io.KeyMap[GuiKey.End] = (int)Keys.End);
-            _Keys.Add(io.KeyMap[GuiKey.Delete] = (int)Keys.Delete);
-            _Keys.Add(io.KeyMap[GuiKey.Backspace] = (int)Keys.Back);
-            _Keys.Add(io.KeyMap[GuiKey.Enter] = (int)Keys.Enter);
-            _Keys.Add(io.KeyMap[GuiKey.Escape] = (int)Keys.Escape);
-            _Keys.Add(io.KeyMap[GuiKey.A] = (int)Keys.A);
-            _Keys.Add(io.KeyMap[GuiKey.C] = (int)Keys.C);
-            _Keys.Add(io.KeyMap[GuiKey.V] = (int)Keys.V);
-            _Keys.Add(io.KeyMap[GuiKey.X] = (int)Keys.X);
-            _Keys.Add(io.KeyMap[GuiKey.Y] = (int)Keys.Y);
-            _Keys.Add(io.KeyMap[GuiKey.Z] = (int)Keys.Z);
+            SetupKeyMapping();
 
             TextInputEXT.TextInput += c =>
             {
@@ -75,30 +53,22 @@ namespace ImGuiNET.FNA
                 ImGui.AddInputCharacter(c);
             };
 
-            io.FontAtlas.AddDefaultFont();
+            ImGui.GetIO().FontAtlas.AddDefaultFont();
         }
 
-        // This would depend on an FNA extension. @flibitijibibo?
-        //io.SetGetClipboardTextFn(GetClipboardTextFn);
-        //io.SetSetClipboardTextFn(SetClipboardTextFn);
+        #region ImGuiRenderer
 
-        //public readonly static GetClipboardTextFn GetClipboardTextFn = (userData) => SDL2.SDL.SDL_GetClipboardText();
-        //public readonly static SetClipboardTextFn SetClipboardTextFn = (userData, text) => SDL2.SDL.SDL_SetClipboardText(text);
-
-        public void RebuildFontAtlas()
+        public virtual void RebuildFontAtlas()
         {
-            Console.WriteLine("RebuildFontAtlas");
-
             // Get font texture from ImGui
             var io = ImGui.GetIO();
             var texData = io.FontAtlas.GetTexDataAsRGBA32();
 
             var pixels = new byte[texData.Width * texData.Height * texData.BytesPerPixel];
-
             unsafe { Marshal.Copy(new IntPtr(texData.Pixels), pixels, 0, pixels.Length); }
 
             // Create and register the texture as an XNA texture
-            var tex2d = new Texture2D(Game.GraphicsDevice, texData.Width, texData.Height, false, SurfaceFormat.Color);
+            var tex2d = new Texture2D(_graphicsDevice, texData.Width, texData.Height, false, SurfaceFormat.Color);
             tex2d.SetData(pixels);
 
             if (_fontTextureId.HasValue) UnbindTexture(_fontTextureId.Value);
@@ -109,169 +79,36 @@ namespace ImGuiNET.FNA
             io.FontAtlas.ClearTexData(); // Clears CPU side texture data.
         }
 
-        public IntPtr BindTexture(object texture)
+        public virtual IntPtr BindTexture(object texture)
         {
-            var tex2d = texture as Texture2D; // TODO: null check
-            var id = new IntPtr(_TextureId++);
+            var tex2d = texture as Texture2D;
+            if (tex2d == null) throw new InvalidOperationException($"Only textures of type '{nameof(Texture2D)}' are supported");
 
-            lock (_lock) { _loadedTextures.Add(id, tex2d); }
+            lock (_lock)
+            {
+                var id = new IntPtr(_textureId++);
 
-            return id;
+                _loadedTextures.Add(id, tex2d);
+
+                return id;
+            }
         }
 
-        public void UnbindTexture(IntPtr textureId)
+        public virtual void UnbindTexture(IntPtr textureId)
         {
             lock (_lock) { _loadedTextures.Remove(textureId); }
         }
 
-        public object GetTexture(IntPtr textureId)
+        public virtual void BeforeLayout(GameTime gameTime)
         {
-            if (_loadedTextures.TryGetValue(textureId, out var tex2d)) return tex2d;
+            ImGui.GetIO().DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            return null;
-        }
-
-        //private IntPtr Register(Texture2D tex)
-        //{
-        //    int id;
-        //    if (_TextureIdMap.TryGetValue(tex, out id))
-        //        return new IntPtr(id);
-        //    id = _TextureId;
-        //    _TextureId++;
-        //    _TextureIdMap[tex] = id;
-        //    _IdTextureMap[id] = tex;
-        //    return new IntPtr(id);
-        //}
-
-        //private void Unregister(Texture2D tex)
-        //{
-        //    int id;
-        //    if (!_TextureIdMap.TryGetValue(tex, out id))
-        //        return;
-        //    _TextureIdMap.Remove(tex);
-        //    _IdTextureMap.Remove(id);
-        //}
-
-        //private void Unregister(int id)
-        //{
-        //    Texture2D tex;
-        //    if (!_IdTextureMap.TryGetValue(id, out tex))
-        //        return;
-        //    _TextureIdMap.Remove(tex);
-        //    _IdTextureMap.Remove(id);
-        //}
-
-        //private int? GetId(Texture2D tex)
-        //{
-        //    int id;
-        //    if (_TextureIdMap.TryGetValue(tex, out id))
-        //        return id;
-        //    return null;
-        //}
-
-        //private Texture2D GetTexture(int id)
-        //{
-        //    Texture2D tex;
-        //    if (_IdTextureMap.TryGetValue(id, out tex))
-        //        return tex;
-        //    return null;
-        //}
-
-        private Action<GuiXNAState, Effect> SetupEffect = _SetupEffect;
-
-        private static void _SetupEffect(GuiXNAState self, Effect _effect)
-        {
-            IO io = ImGui.GetIO();
-
-            const float translate = 0f;
-
-            if (_effect is BasicEffect)
-            {
-                BasicEffect effect = (BasicEffect)_effect;
-                effect.World = Matrix.Identity;
-                effect.View = Matrix.Identity;
-                effect.Projection = Matrix.CreateOrthographicOffCenter(translate, io.DisplaySize.X + translate, io.DisplaySize.Y + translate, translate, -1f, 1f);
-                effect.TextureEnabled = true;
-                effect.VertexColorEnabled = true;
-                return;
-            }
-
-            if (_effect is AlphaTestEffect)
-            {
-                AlphaTestEffect effect = (AlphaTestEffect)_effect;
-                effect.World = Matrix.Identity;
-                effect.View = Matrix.Identity;
-                effect.Projection = Matrix.CreateOrthographicOffCenter(translate, io.DisplaySize.X + translate, io.DisplaySize.Y + translate, translate, -1f, 1f);
-                effect.VertexColorEnabled = true;
-                return;
-            }
-
-            throw new Exception($"Default ImGuiXNAState.SetupEffect can't deal with {_effect.GetType().FullName}, please provide your own delegate.");
-        }
-
-        private Action<GuiXNAState, Effect, Texture2D> SetEffectTexture = _SetEffectTexture;
-
-        private static void _SetEffectTexture(GuiXNAState self, Effect _effect, Texture2D texture)
-        {
-            IO io = ImGui.GetIO();
-
-            if (_effect is BasicEffect)
-            {
-                BasicEffect effect = (BasicEffect)_effect;
-                effect.Texture = texture;
-                return;
-            }
-
-            if (_effect is AlphaTestEffect)
-            {
-                AlphaTestEffect effect = (AlphaTestEffect)_effect;
-                effect.Texture = texture;
-                return;
-            }
-
-            throw new Exception($"Default ImGuiXNAState.SetEffectTexture can't deal with {_effect.GetType().FullName}, please provide your own delegate.");
-        }
-
-        //public void Update(GameTime gameTime)
-        public void Update(float deltaTime)
-        {
-            IO io = ImGui.GetIO();
-
-            MouseState mouse = Mouse.GetState();
-            KeyboardState keyboard = Keyboard.GetState();
-
-            for (int i = 0; i < _Keys.Count; i++)
-                io.KeysDown[_Keys[i]] = keyboard.IsKeyDown((Keys)_Keys[i]);
-
-            io.ShiftPressed = keyboard.IsKeyDown(Keys.LeftShift) || keyboard.IsKeyDown(Keys.RightShift);
-            io.CtrlPressed = keyboard.IsKeyDown(Keys.LeftControl) || keyboard.IsKeyDown(Keys.RightControl);
-            io.AltPressed = keyboard.IsKeyDown(Keys.LeftAlt) || keyboard.IsKeyDown(Keys.RightAlt);
-            io.SuperPressed = keyboard.IsKeyDown(Keys.LeftWindows) || keyboard.IsKeyDown(Keys.RightWindows);
-
-            io.DisplaySize = new System.Numerics.Vector2(Game.GraphicsDevice.PresentationParameters.BackBufferWidth, Game.GraphicsDevice.PresentationParameters.BackBufferHeight);
-            io.DisplayFramebufferScale = new System.Numerics.Vector2(1f, 1f);
-
-            //double currentTime = gameTime.TotalGameTime.TotalSeconds;
-            //io.DeltaTime = _Time > 0D ? (float)(currentTime - _Time) : (1f / 60f);
-            //_Time = currentTime;
-            io.DeltaTime = deltaTime;
-
-            io.MousePosition = new System.Numerics.Vector2(mouse.X, mouse.Y);
-
-            io.MouseDown[0] = mouse.LeftButton == ButtonState.Pressed;
-            io.MouseDown[1] = mouse.RightButton == ButtonState.Pressed;
-            io.MouseDown[2] = mouse.MiddleButton == ButtonState.Pressed;
-
-            int scrollDelta = mouse.ScrollWheelValue - _ScrollWheelValue;
-            io.MouseWheel = scrollDelta > 0 ? 1 : scrollDelta < 0 ? -1 : 0;
-            _ScrollWheelValue = mouse.ScrollWheelValue;
-
-            Game.IsMouseVisible = !io.MouseDrawCursor;
+            UpdateInput();
 
             ImGui.NewFrame();
         }
 
-        public void Render()
+        public virtual void AfterLayout()
         {
             ImGui.Render();
 
@@ -281,95 +118,162 @@ namespace ImGuiNET.FNA
             }
         }
 
-        public unsafe void RenderDrawData(DrawData* drawData)
+        #endregion ImGuiRenderer
+
+        #region Setup & Update
+
+        protected virtual void SetupKeyMapping()
         {
-            GraphicsDevice device = Game.GraphicsDevice;
+            var io = ImGui.GetIO();
 
+            _keys.Add(io.KeyMap[GuiKey.Tab] = (int)Keys.Tab);
+            _keys.Add(io.KeyMap[GuiKey.LeftArrow] = (int)Keys.Left);
+            _keys.Add(io.KeyMap[GuiKey.RightArrow] = (int)Keys.Right);
+            _keys.Add(io.KeyMap[GuiKey.UpArrow] = (int)Keys.Up);
+            _keys.Add(io.KeyMap[GuiKey.DownArrow] = (int)Keys.Down);
+            _keys.Add(io.KeyMap[GuiKey.PageUp] = (int)Keys.PageUp);
+            _keys.Add(io.KeyMap[GuiKey.PageDown] = (int)Keys.PageDown);
+            _keys.Add(io.KeyMap[GuiKey.Home] = (int)Keys.Home);
+            _keys.Add(io.KeyMap[GuiKey.End] = (int)Keys.End);
+            _keys.Add(io.KeyMap[GuiKey.Delete] = (int)Keys.Delete);
+            _keys.Add(io.KeyMap[GuiKey.Backspace] = (int)Keys.Back);
+            _keys.Add(io.KeyMap[GuiKey.Enter] = (int)Keys.Enter);
+            _keys.Add(io.KeyMap[GuiKey.Escape] = (int)Keys.Escape);
+            _keys.Add(io.KeyMap[GuiKey.A] = (int)Keys.A);
+            _keys.Add(io.KeyMap[GuiKey.C] = (int)Keys.C);
+            _keys.Add(io.KeyMap[GuiKey.V] = (int)Keys.V);
+            _keys.Add(io.KeyMap[GuiKey.X] = (int)Keys.X);
+            _keys.Add(io.KeyMap[GuiKey.Y] = (int)Keys.Y);
+            _keys.Add(io.KeyMap[GuiKey.Z] = (int)Keys.Z);
+        }
+
+        protected virtual Effect UpdateEffect(Texture2D texture)
+        {
+            _effect = _effect ?? new BasicEffect(_graphicsDevice);
+
+            var io = ImGui.GetIO();
+
+            _effect.World = Matrix.Identity;
+            _effect.View = Matrix.Identity;
+            _effect.Projection = Matrix.CreateOrthographicOffCenter(0f, io.DisplaySize.X + 0f, io.DisplaySize.Y + 0f, 0f, -1f, 1f);
+            _effect.TextureEnabled = true;
+            _effect.Texture = texture;
+            _effect.VertexColorEnabled = true;
+
+            return _effect;
+        }
+
+        private void UpdateInput()
+        {
+            var io = ImGui.GetIO();
+
+            var mouse = Mouse.GetState();
+            var keyboard = Keyboard.GetState();
+
+            for (int i = 0; i < _keys.Count; i++)
+            {
+                io.KeysDown[_keys[i]] = keyboard.IsKeyDown((Keys)_keys[i]);
+            }
+
+            io.ShiftPressed = keyboard.IsKeyDown(Keys.LeftShift) || keyboard.IsKeyDown(Keys.RightShift);
+            io.CtrlPressed = keyboard.IsKeyDown(Keys.LeftControl) || keyboard.IsKeyDown(Keys.RightControl);
+            io.AltPressed = keyboard.IsKeyDown(Keys.LeftAlt) || keyboard.IsKeyDown(Keys.RightAlt);
+            io.SuperPressed = keyboard.IsKeyDown(Keys.LeftWindows) || keyboard.IsKeyDown(Keys.RightWindows);
+
+            io.DisplaySize = new System.Numerics.Vector2(_graphicsDevice.PresentationParameters.BackBufferWidth, _graphicsDevice.PresentationParameters.BackBufferHeight);
+            io.DisplayFramebufferScale = new System.Numerics.Vector2(1f, 1f);
+
+            io.MousePosition = new System.Numerics.Vector2(mouse.X, mouse.Y);
+
+            io.MouseDown[0] = mouse.LeftButton == ButtonState.Pressed;
+            io.MouseDown[1] = mouse.RightButton == ButtonState.Pressed;
+            io.MouseDown[2] = mouse.MiddleButton == ButtonState.Pressed;
+
+            var scrollDelta = mouse.ScrollWheelValue - _scrollWheelValue;
+            io.MouseWheel = scrollDelta > 0 ? 1 : scrollDelta < 0 ? -1 : 0;
+            _scrollWheelValue = mouse.ScrollWheelValue;
+        }
+
+        #endregion Setup & Update
+
+        #region Internals
+
+        private unsafe void RenderDrawData(DrawData* drawData)
+        {
             // Setup render state: alpha-blending enabled, no face culling, no depth testing, scissor enabled, vertex/texcoord/color pointers.
-            Viewport lastViewport = device.Viewport;
-            Rectangle lastScissorBox = device.ScissorRectangle;
+            var lastViewport = _graphicsDevice.Viewport;
+            var lastScissorBox = _graphicsDevice.ScissorRectangle;
 
-            device.BlendFactor = Color.White;
-            device.BlendState = BlendState.NonPremultiplied;
-            device.RasterizerState = RasterizerState;
-            device.DepthStencilState = DepthStencilState.DepthRead;
+            _graphicsDevice.BlendFactor = Color.White;
+            _graphicsDevice.BlendState = BlendState.NonPremultiplied;
+            _graphicsDevice.RasterizerState = _rasterizerState;
+            _graphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
 
             // Handle cases of screen coordinates != from framebuffer coordinates (e.g. retina displays)
-            IO io = ImGui.GetIO();
-            ImGui.ScaleClipRects(drawData, io.DisplayFramebufferScale);
+            ImGui.ScaleClipRects(drawData, ImGui.GetIO().DisplayFramebufferScale);
 
             // Setup projection
-            device.Viewport = new Viewport(0, 0, device.PresentationParameters.BackBufferWidth, device.PresentationParameters.BackBufferHeight);
-
-            if (Effect == null)
-                Effect = new BasicEffect(device);
-            Effect effect = Effect;
-            SetupEffect(this, effect);
+            _graphicsDevice.Viewport = new Viewport(0, 0, _graphicsDevice.PresentationParameters.BackBufferWidth, _graphicsDevice.PresentationParameters.BackBufferHeight);
 
             // Render command lists
             for (int n = 0; n < drawData->CmdListsCount; n++)
             {
                 var cmdList = drawData->CmdLists[n];
 
-                ImVector<DrawVertXNA> vtxBuffer;
-
-                vtxBuffer = new ImVector<DrawVertXNA>(&cmdList->VtxBuffer);
-
-                DrawVertXNA[] vtxArray = new DrawVertXNA[vtxBuffer.Size];
+                var vtxBuffer = new ImVector<DrawVertXNA>(&cmdList->VtxBuffer);
+                var vtxArray = new DrawVertXNA[vtxBuffer.Size];
                 for (int i = 0; i < vtxBuffer.Size; i++)
+                {
                     vtxArray[i] = vtxBuffer[i];
+                }
 
-                ImVector<short> idxBuffer;
-
-                idxBuffer = new ImVector<short>(&cmdList->IdxBuffer);
-
-                /*
-                short[] idxArray = new short[idxBuffer.Size];
-                for (int i = 0; i < idxBuffer.Size; i++)
-                    idxArray[i] = idxBuffer[i];
-                */
+                var idxBuffer = new ImVector<short>(&cmdList->IdxBuffer);
 
                 uint offset = 0;
                 for (int cmdi = 0; cmdi < cmdList->CmdBuffer.Size; cmdi++)
                 {
-                    DrawCmd* pcmd = &(((DrawCmd*)cmdList->CmdBuffer.Data)[cmdi]);
-                    if (pcmd->UserCallback != IntPtr.Zero)
+                    var pcmd = &(((DrawCmd*)cmdList->CmdBuffer.Data)[cmdi]);
+                    if (pcmd->UserCallback != IntPtr.Zero) throw new NotImplementedException();
+
+                    // Instead of uploading the complete idxBuffer again and again, just upload what's required.
+                    var idxArray = new short[pcmd->ElemCount];
+                    for (int i = 0; i < pcmd->ElemCount; i++)
                     {
-                        throw new NotImplementedException();
+                        idxArray[i] = idxBuffer[(int)offset + i];
                     }
-                    else
+
+                    if (!_loadedTextures.ContainsKey(pcmd->TextureId)) throw new InvalidOperationException($"Could not find a texture with id '{pcmd->TextureId}', please check your bindings");
+
+                    var effect = UpdateEffect(_loadedTextures[pcmd->TextureId]);
+
+                    _graphicsDevice.ScissorRectangle = new Rectangle(
+                        (int)pcmd->ClipRect.X,
+                        (int)pcmd->ClipRect.Y,
+                        (int)(pcmd->ClipRect.Z - pcmd->ClipRect.X),
+                        (int)(pcmd->ClipRect.W - pcmd->ClipRect.Y)
+                    );
+
+                    foreach (var pass in effect.CurrentTechnique.Passes)
                     {
-                        // Instead of uploading the complete idxBuffer again and again, just upload what's required.
-                        short[] idxArray = new short[pcmd->ElemCount];
-                        for (int i = 0; i < pcmd->ElemCount; i++)
-                            idxArray[i] = idxBuffer[(int)offset + i];
+                        pass.Apply();
 
-                        SetEffectTexture(this, effect, _loadedTextures[pcmd->TextureId] ?? throw new InvalidOperationException($"Could not find a texture with id '{pcmd->TextureId}', please check your registrations"));
-
-                        device.ScissorRectangle = new Rectangle(
-                            (int)pcmd->ClipRect.X,
-                            (int)pcmd->ClipRect.Y,
-                            (int)(pcmd->ClipRect.Z - pcmd->ClipRect.X),
-                            (int)(pcmd->ClipRect.W - pcmd->ClipRect.Y)
+                        _graphicsDevice.DrawUserIndexedPrimitives(
+                            PrimitiveType.TriangleList,
+                            vtxArray, 0, vtxBuffer.Size,
+                            idxArray, 0, (int)pcmd->ElemCount / 3,
+                            DrawVertXNA._VertexDeclaration
                         );
-                        foreach (EffectPass pass in effect.CurrentTechnique.Passes)
-                        {
-                            pass.Apply();
-                            device.DrawUserIndexedPrimitives(
-                                PrimitiveType.TriangleList,
-                                vtxArray, 0, vtxBuffer.Size,
-                                idxArray, 0, (int)pcmd->ElemCount / 3,
-                                DrawVertXNA._VertexDeclaration
-                            );
-                        }
                     }
+
                     offset += pcmd->ElemCount;
                 }
             }
 
             // Restore modified state
-            device.Viewport = lastViewport;
-            device.ScissorRectangle = lastScissorBox;
+            _graphicsDevice.Viewport = lastViewport;
+            _graphicsDevice.ScissorRectangle = lastScissorBox;
         }
+
+        #endregion Internals
     }
 }
