@@ -7,11 +7,9 @@ using System.Runtime.InteropServices;
 
 namespace ImGuiNET.FNA
 {
-    public class GuiXNAState
+    public class GuiXNAState : /*DrawableGameComponent,*/ IImGuiRenderer
     {
         public Game Game;
-
-        public int FontTexture = 0;
 
         public Effect Effect;
 
@@ -25,9 +23,16 @@ namespace ImGuiNET.FNA
             SlopeScaleDepthBias = 0
         };
 
-        private Dictionary<int, Texture2D> _IdTextureMap = new Dictionary<int, Texture2D>();
-        private Dictionary<Texture2D, int> _TextureIdMap = new Dictionary<Texture2D, int>();
+        //private Dictionary<int, Texture2D> _IdTextureMap = new Dictionary<int, Texture2D>();
+        //private Dictionary<Texture2D, int> _TextureIdMap = new Dictionary<Texture2D, int>();
+
+        private object _lock = new object();
+        private Dictionary<IntPtr, Texture2D> _loadedTextures = new Dictionary<IntPtr, Texture2D>();
+
         private int _TextureId = 1;
+
+        private IntPtr? _fontTextureId;
+        //private Texture2D _fontTexture;
 
         private double _Time = 0.0f;
         private int _ScrollWheelValue;
@@ -37,28 +42,9 @@ namespace ImGuiNET.FNA
 
         private static List<int> _Keys = new List<int>();
 
-#if XNA
-        private ImGuiXNAFormsHook _FormsHook;
-#endif
-
         public GuiXNAState(Game game)
         {
-            Init();
-#if XNA
-            _FormsHook = new ImGuiXNAFormsHook(game.Window.Handle, (ref Win32.Message msg) => {
-                if (msg.Msg != 0x0102)
-                    return;
-                OnTextInput((char) msg.WParam);
-            });
-#endif
             Game = game;
-        }
-
-        public static void Init()
-        {
-            if (_Initialized)
-                return;
-            _Initialized = true;
 
             IO io = ImGui.GetIO();
 
@@ -82,93 +68,116 @@ namespace ImGuiNET.FNA
             _Keys.Add(io.KeyMap[GuiKey.Y] = (int)Keys.Y);
             _Keys.Add(io.KeyMap[GuiKey.Z] = (int)Keys.Z);
 
-#if FNA
-            TextInputEXT.TextInput += OnTextInput;
-            io.SetGetClipboardTextFn(GetClipboardTextFn);
-            io.SetSetClipboardTextFn(SetClipboardTextFn);
-#endif
-            // 1. Text input in XNA depends on the game's window. It thus can't be set up statically.
-            // 2. ImGui already handles the Windows clipboard out of the box.
+            TextInputEXT.TextInput += c =>
+            {
+                if (c == '\t') return;
 
-            // If no font added, add default font.
-            //if (io.FontAtlas.Fonts.Size == 0)
+                ImGui.AddInputCharacter(c);
+            };
+
             io.FontAtlas.AddDefaultFont();
         }
 
-        public static void OnTextInput(char c) => ImGui.AddInputCharacter(c);
-
-#if FNA
         // This would depend on an FNA extension. @flibitijibibo?
-        public readonly static GetClipboardTextFn GetClipboardTextFn = (userData) => SDL2.SDL.SDL_GetClipboardText();
-        public readonly static SetClipboardTextFn SetClipboardTextFn = (userData, text) => SDL2.SDL.SDL_SetClipboardText(text);
-#endif
+        //io.SetGetClipboardTextFn(GetClipboardTextFn);
+        //io.SetSetClipboardTextFn(SetClipboardTextFn);
 
-        public unsafe void BuildTextureAtlas()
+        //public readonly static GetClipboardTextFn GetClipboardTextFn = (userData) => SDL2.SDL.SDL_GetClipboardText();
+        //public readonly static SetClipboardTextFn SetClipboardTextFn = (userData, text) => SDL2.SDL.SDL_SetClipboardText(text);
+
+        public void RebuildFontAtlas()
         {
-            IO io = ImGui.GetIO();
-            // ImFontTextureData texData = io.FontAtlas.GetTexDataAsAlpha8();
-            // Alpha8 has got some blending issues.
-            FontTextureData texData = io.FontAtlas.GetTexDataAsRGBA32();
+            Console.WriteLine("RebuildFontAtlas");
 
-            Texture2D tex = new Texture2D(Game.GraphicsDevice, texData.Width, texData.Height, false, SurfaceFormat.Color);
+            // Get font texture from ImGui
+            var io = ImGui.GetIO();
+            var texData = io.FontAtlas.GetTexDataAsRGBA32();
 
-            int[] data = new int[texData.Width * texData.Height];
-            Marshal.Copy(new IntPtr(texData.Pixels), data, 0, data.Length);
-            tex.SetData(data);
+            var pixels = new byte[texData.Width * texData.Height * texData.BytesPerPixel];
 
-            FontTexture = Register(tex);
+            unsafe { Marshal.Copy(new IntPtr(texData.Pixels), pixels, 0, pixels.Length); }
 
-            io.FontAtlas.SetTexID(FontTexture);
+            // Create and register the texture as an XNA texture
+            var tex2d = new Texture2D(Game.GraphicsDevice, texData.Width, texData.Height, false, SurfaceFormat.Color);
+            tex2d.SetData(pixels);
+
+            if (_fontTextureId.HasValue) UnbindTexture(_fontTextureId.Value);
+
+            _fontTextureId = BindTexture(tex2d);
+
+            io.FontAtlas.SetTexID(_fontTextureId.Value);
             io.FontAtlas.ClearTexData(); // Clears CPU side texture data.
         }
 
-        public int Register(Texture2D tex)
+        public IntPtr BindTexture(object texture)
         {
-            int id;
-            if (_TextureIdMap.TryGetValue(tex, out id))
-                return id;
-            id = _TextureId;
-            _TextureId++;
-            _TextureIdMap[tex] = id;
-            _IdTextureMap[id] = tex;
+            var tex2d = texture as Texture2D; // TODO: null check
+            var id = new IntPtr(_TextureId++);
+
+            lock (_lock) { _loadedTextures.Add(id, tex2d); }
+
             return id;
         }
 
-        public void Unregister(Texture2D tex)
+        public void UnbindTexture(IntPtr textureId)
         {
-            int id;
-            if (!_TextureIdMap.TryGetValue(tex, out id))
-                return;
-            _TextureIdMap.Remove(tex);
-            _IdTextureMap.Remove(id);
+            lock (_lock) { _loadedTextures.Remove(textureId); }
         }
 
-        public void Unregister(int id)
+        public object GetTexture(IntPtr textureId)
         {
-            Texture2D tex;
-            if (!_IdTextureMap.TryGetValue(id, out tex))
-                return;
-            _TextureIdMap.Remove(tex);
-            _IdTextureMap.Remove(id);
-        }
+            if (_loadedTextures.TryGetValue(textureId, out var tex2d)) return tex2d;
 
-        public int? GetId(Texture2D tex)
-        {
-            int id;
-            if (_TextureIdMap.TryGetValue(tex, out id))
-                return id;
             return null;
         }
 
-        public Texture2D GetTexture(int id)
-        {
-            Texture2D tex;
-            if (_IdTextureMap.TryGetValue(id, out tex))
-                return tex;
-            return null;
-        }
+        //private IntPtr Register(Texture2D tex)
+        //{
+        //    int id;
+        //    if (_TextureIdMap.TryGetValue(tex, out id))
+        //        return new IntPtr(id);
+        //    id = _TextureId;
+        //    _TextureId++;
+        //    _TextureIdMap[tex] = id;
+        //    _IdTextureMap[id] = tex;
+        //    return new IntPtr(id);
+        //}
 
-        public Action<GuiXNAState, Effect> SetupEffect = _SetupEffect;
+        //private void Unregister(Texture2D tex)
+        //{
+        //    int id;
+        //    if (!_TextureIdMap.TryGetValue(tex, out id))
+        //        return;
+        //    _TextureIdMap.Remove(tex);
+        //    _IdTextureMap.Remove(id);
+        //}
+
+        //private void Unregister(int id)
+        //{
+        //    Texture2D tex;
+        //    if (!_IdTextureMap.TryGetValue(id, out tex))
+        //        return;
+        //    _TextureIdMap.Remove(tex);
+        //    _IdTextureMap.Remove(id);
+        //}
+
+        //private int? GetId(Texture2D tex)
+        //{
+        //    int id;
+        //    if (_TextureIdMap.TryGetValue(tex, out id))
+        //        return id;
+        //    return null;
+        //}
+
+        //private Texture2D GetTexture(int id)
+        //{
+        //    Texture2D tex;
+        //    if (_IdTextureMap.TryGetValue(id, out tex))
+        //        return tex;
+        //    return null;
+        //}
+
+        private Action<GuiXNAState, Effect> SetupEffect = _SetupEffect;
 
         private static void _SetupEffect(GuiXNAState self, Effect _effect)
         {
@@ -200,7 +209,7 @@ namespace ImGuiNET.FNA
             throw new Exception($"Default ImGuiXNAState.SetupEffect can't deal with {_effect.GetType().FullName}, please provide your own delegate.");
         }
 
-        public Action<GuiXNAState, Effect, Texture2D> SetEffectTexture = _SetEffectTexture;
+        private Action<GuiXNAState, Effect, Texture2D> SetEffectTexture = _SetEffectTexture;
 
         private static void _SetEffectTexture(GuiXNAState self, Effect _effect, Texture2D texture)
         {
@@ -223,7 +232,8 @@ namespace ImGuiNET.FNA
             throw new Exception($"Default ImGuiXNAState.SetEffectTexture can't deal with {_effect.GetType().FullName}, please provide your own delegate.");
         }
 
-        public void NewFrame(GameTime gameTime)
+        //public void Update(GameTime gameTime)
+        public void Update(float deltaTime)
         {
             IO io = ImGui.GetIO();
 
@@ -241,9 +251,10 @@ namespace ImGuiNET.FNA
             io.DisplaySize = new System.Numerics.Vector2(Game.GraphicsDevice.PresentationParameters.BackBufferWidth, Game.GraphicsDevice.PresentationParameters.BackBufferHeight);
             io.DisplayFramebufferScale = new System.Numerics.Vector2(1f, 1f);
 
-            double currentTime = gameTime.TotalGameTime.TotalSeconds;
-            io.DeltaTime = _Time > 0D ? (float)(currentTime - _Time) : (1f / 60f);
-            _Time = currentTime;
+            //double currentTime = gameTime.TotalGameTime.TotalSeconds;
+            //io.DeltaTime = _Time > 0D ? (float)(currentTime - _Time) : (1f / 60f);
+            //_Time = currentTime;
+            io.DeltaTime = deltaTime;
 
             io.MousePosition = new System.Numerics.Vector2(mouse.X, mouse.Y);
 
@@ -260,12 +271,14 @@ namespace ImGuiNET.FNA
             ImGui.NewFrame();
         }
 
-        public unsafe void Render()
+        public void Render()
         {
             ImGui.Render();
-            if (ImGui.GetIO().RenderDrawListsFn == IntPtr.Zero)
 
-                RenderDrawData(ImGui.GetDrawData());
+            if (ImGui.GetIO().RenderDrawListsFn == IntPtr.Zero)
+            {
+                unsafe { RenderDrawData(ImGui.GetDrawData()); }
+            }
         }
 
         public unsafe void RenderDrawData(DrawData* drawData)
@@ -330,7 +343,9 @@ namespace ImGuiNET.FNA
                         short[] idxArray = new short[pcmd->ElemCount];
                         for (int i = 0; i < pcmd->ElemCount; i++)
                             idxArray[i] = idxBuffer[(int)offset + i];
-                        SetEffectTexture(this, effect, GetTexture((int)pcmd->TextureId));
+
+                        SetEffectTexture(this, effect, _loadedTextures[pcmd->TextureId] ?? throw new InvalidOperationException($"Could not find a texture with id '{pcmd->TextureId}', please check your registrations"));
+
                         device.ScissorRectangle = new Rectangle(
                             (int)pcmd->ClipRect.X,
                             (int)pcmd->ClipRect.Y,

@@ -21,7 +21,7 @@ namespace ImGuiNET.FNA.SampleProgram
 
         protected override void Initialize()
         {
-            ImGuiState.BuildTextureAtlas();
+            ImGuiState.RebuildFontAtlas();
 
             base.Initialize();
         }
@@ -30,7 +30,7 @@ namespace ImGuiNET.FNA.SampleProgram
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            ImGuiState.NewFrame(gameTime);
+            ImGuiState.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             ImGuiLayout();
 
             ImGuiState.Render();
@@ -56,6 +56,8 @@ namespace ImGuiNET.FNA.SampleProgram
                 if (ImGui.Button("Test Window")) show_test_window = !show_test_window;
                 if (ImGui.Button("Another Window")) show_another_window = !show_another_window;
                 ImGui.Text(string.Format("Application average {0:F3} ms/frame ({1:F1} FPS)", 1000f / ImGui.GetIO().Framerate, ImGui.GetIO().Framerate));
+
+                ImGui.InputText("sup", new byte[100], 100, InputTextFlags.Default, null);
             }
 
             // 2. Show another simple window, this time using an explicit Begin/End pair
