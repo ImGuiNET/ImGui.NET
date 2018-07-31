@@ -70,7 +70,7 @@ namespace ImGuiNET.FNA
             var tex2d = new Texture2D(_graphicsDevice, texData.Width, texData.Height, false, SurfaceFormat.Color);
             tex2d.SetData(pixels);
 
-            // Should a texture already been build previously, unbind it first so it can be deallocated
+            // Should a texture already have been build previously, unbind it first so it can be deallocated
             if (_fontTextureId.HasValue) UnbindTexture(_fontTextureId.Value);
 
             // Bind the new texture to a ImGui-friendly id
@@ -270,7 +270,7 @@ namespace ImGuiNET.FNA
                 for (int cmdi = 0; cmdi < cmdList->CmdBuffer.Size; cmdi++)
                 {
                     var pcmd = &(((DrawCmd*)cmdList->CmdBuffer.Data)[cmdi]);
-                    if (pcmd->UserCallback != IntPtr.Zero) throw new NotImplementedException();
+                    if (pcmd->UserCallback != IntPtr.Zero) throw new NotSupportedException("The user callback of the command buffer is not supported");
 
                     // Instead of uploading the complete idxBuffer again and again, just upload what's required
                     var idxArray = new short[pcmd->ElemCount];
