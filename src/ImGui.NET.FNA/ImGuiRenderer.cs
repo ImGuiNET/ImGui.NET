@@ -128,10 +128,7 @@ namespace ImGuiNET.FNA
         {
             ImGui.Render();
 
-            if (ImGui.GetIO().RenderDrawListsFn == IntPtr.Zero)
-            {
-                unsafe { RenderDrawData(ImGui.GetDrawData()); }
-            }
+            unsafe { RenderDrawData(ImGui.GetDrawData()); }
         }
 
         #endregion ImGuiRenderer
