@@ -44,7 +44,7 @@ namespace ImGuiNET.FNA.SampleProgram
             // Texture loading example
             using (var stream = new MemoryStream())
             {
-                // First, load the texture as a Texture2D (can also be done using Texture2D.FromStream or the XNA/FNA content pipeline)
+                // First, load the texture as a Texture2D (can also be done using the XNA/FNA content pipeline)
                 Assets.FNA_Logo.Save(stream, ImageFormat.Bmp);
                 stream.Position = 0;
                 _textureRatio = (float)Assets.FNA_Logo.Width / (float)Assets.FNA_Logo.Height;
@@ -95,7 +95,7 @@ namespace ImGuiNET.FNA.SampleProgram
                 ImGui.Text(string.Format("Application average {0:F3} ms/frame ({1:F1} FPS)", 1000f / ImGui.GetIO().Framerate, ImGui.GetIO().Framerate));
 
                 ImGui.InputText("Text input", _textBuffer, 100, InputTextFlags.Default, null);
-                ImGui.Image(_imGuiTexture, new Num.Vector2(100 * _textureRatio, 100), Num.Vector2.Zero, Num.Vector2.One, Num.Vector4.One, Num.Vector4.One); // Here, the previously loade texture is used
+                ImGui.Image(_imGuiTexture, new Num.Vector2(100 * _textureRatio, 100), Num.Vector2.Zero, Num.Vector2.One, Num.Vector4.One, Num.Vector4.One); // Here, the previously loaded texture is used
             }
 
             // 2. Show another simple window, this time using an explicit Begin/End pair

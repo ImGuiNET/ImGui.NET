@@ -10,7 +10,7 @@ namespace ImGuiNET.FNA
 
         private readonly static int _TSize = Marshal.SizeOf(_T);
 
-        public readonly ImGuiNET.ImVector* Native;
+        public readonly ImVector* Native;
 
         public ImVector(ImGuiNET.ImVector* native)
         {
@@ -19,51 +19,27 @@ namespace ImGuiNET.FNA
 
         public int Size
         {
-            get
-            {
-                return Native->Size;
-            }
-            set
-            {
-                Native->Size = value;
-            }
+            get => Native->Size;
+            set => Native->Size = value;
         }
 
         public int Capacity
         {
-            get
-            {
-                return Native->Capacity;
-            }
-            set
-            {
-                Native->Capacity = value;
-            }
+            get => Native->Capacity;
+            set => Native->Capacity = value;
         }
 
         public IntPtr Data
         {
-            get
-            {
-                return new IntPtr(Native->Data);
-            }
-            set
-            {
-                Native->Data = value.ToPointer();
-            }
+            get => new IntPtr(Native->Data);
+            set => Native->Data = value.ToPointer();
         }
 
         // T* not allowed in C#; Using Marshal.SizeOf(typeof(T)) instead.
         public T this[int i]
         {
-            get
-            {
-                return (T)Marshal.PtrToStructure(new IntPtr((long)Data + i * _TSize), _T);
-            }
-            set
-            {
-                Marshal.StructureToPtr(value, new IntPtr((long)Data + i * _TSize), true);
-            }
+            get => (T)Marshal.PtrToStructure(new IntPtr((long)Data + i * _TSize), _T);
+            set => Marshal.StructureToPtr(value, new IntPtr((long)Data + i * _TSize), true);
         }
 
         public static implicit operator ImVector* (ImVector<T> v) => v.Native;

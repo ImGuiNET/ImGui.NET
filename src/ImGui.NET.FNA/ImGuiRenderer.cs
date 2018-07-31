@@ -73,7 +73,7 @@ namespace ImGuiNET.FNA
             // Should a texture already have been build previously, unbind it first so it can be deallocated
             if (_fontTextureId.HasValue) UnbindTexture(_fontTextureId.Value);
 
-            // Bind the new texture to a ImGui-friendly id
+            // Bind the new texture to an ImGui-friendly id
             _fontTextureId = BindTexture(tex2d);
 
             // Let ImGui know where to find the texture
