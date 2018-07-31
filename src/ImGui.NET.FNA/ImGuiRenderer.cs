@@ -2,14 +2,15 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace ImGuiNET.FNA
 {
-    // TODO: Comments
-    // TODO: Check style against Veldrid renderer
-    // TODO: Test more (with ImGui demo?)
+    /// <summary>
+    /// ImGui renderer for use with FNA, backported from https://github.com/0x0ade/ImGuiCS
+    /// </summary>
     public class ImGuiRenderer
     {
         // Graphics
@@ -21,8 +22,9 @@ namespace ImGuiNET.FNA
         // Textures
         private object _lock = new object();
 
-        private Dictionary<IntPtr, Texture2D> _loadedTextures = new Dictionary<IntPtr, Texture2D>();
-        private int _textureId = 1;
+        private ConcurrentDictionary<IntPtr, Texture2D> _loadedTextures;
+        private int _textureId;
+
         private IntPtr? _fontTextureId;
 
         // Input
@@ -34,6 +36,8 @@ namespace ImGuiNET.FNA
         {
             _graphicsDevice = graphicsDevice ?? throw new ArgumentNullException(nameof(graphicsDevice));
 
+            _loadedTextures = new ConcurrentDictionary<IntPtr, Texture2D>();
+
             _rasterizerState = new RasterizerState()
             {
                 CullMode = CullMode.None,
@@ -44,26 +48,21 @@ namespace ImGuiNET.FNA
                 SlopeScaleDepthBias = 0
             };
 
-            SetupKeyMapping();
-
-            TextInputEXT.TextInput += c =>
-            {
-                if (c == '\t') return;
-
-                ImGui.AddInputCharacter(c);
-            };
-
-            ImGui.GetIO().FontAtlas.AddDefaultFont();
+            SetupInput();
         }
 
         #region ImGuiRenderer
 
+        /// <summary>
+        /// Creates a texture and loads the font data from ImGui. Should be called when the <see cref="GraphicsDevice" /> is initialized but before any rendering is done
+        /// </summary>
         public virtual void RebuildFontAtlas()
         {
             // Get font texture from ImGui
             var io = ImGui.GetIO();
             var texData = io.FontAtlas.GetTexDataAsRGBA32();
 
+            // Copy the data to a managed array
             var pixels = new byte[texData.Width * texData.Height * texData.BytesPerPixel];
             unsafe { Marshal.Copy(new IntPtr(texData.Pixels), pixels, 0, pixels.Length); }
 
@@ -71,34 +70,48 @@ namespace ImGuiNET.FNA
             var tex2d = new Texture2D(_graphicsDevice, texData.Width, texData.Height, false, SurfaceFormat.Color);
             tex2d.SetData(pixels);
 
+            // Should a texture already been build previously, unbind it first so it can be deallocated
             if (_fontTextureId.HasValue) UnbindTexture(_fontTextureId.Value);
 
+            // Bind the new texture to a ImGui-friendly id
             _fontTextureId = BindTexture(tex2d);
 
+            // Let ImGui know where to find the texture
             io.FontAtlas.SetTexID(_fontTextureId.Value);
-            io.FontAtlas.ClearTexData(); // Clears CPU side texture data.
+            io.FontAtlas.ClearTexData(); // Clears CPU side texture data
         }
 
+        /// <summary>
+        /// Creates a pointer to a texture, which can be passed through ImGui calls such as <see cref="ImGui.Image" />. That pointer is then used by ImGui to let us know what texture to draw
+        /// </summary>
         public virtual IntPtr BindTexture(object texture)
         {
+            // Since this is an XNA-specific renderer, we only support the native Texture2D
             var tex2d = texture as Texture2D;
             if (tex2d == null) throw new InvalidOperationException($"Only textures of type '{nameof(Texture2D)}' are supported");
 
+            // The creation of a new texture id and adding it to the local dictionary should be an atomic operation, so we use a lock to ensure that (the concurrent dictionary alone isn't enough)
             lock (_lock)
             {
                 var id = new IntPtr(_textureId++);
 
-                _loadedTextures.Add(id, tex2d);
+                _loadedTextures.TryAdd(id, tex2d);
 
                 return id;
             }
         }
 
+        /// <summary>
+        /// Removes a previously created texture pointer, releasing its reference and allowing it to be deallocated
+        /// </summary>
         public virtual void UnbindTexture(IntPtr textureId)
         {
-            lock (_lock) { _loadedTextures.Remove(textureId); }
+            _loadedTextures.TryRemove(textureId, out var texture);
         }
 
+        /// <summary>
+        /// Sets up ImGui for a new frame, should be called at frame start
+        /// </summary>
         public virtual void BeforeLayout(GameTime gameTime)
         {
             ImGui.GetIO().DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -108,6 +121,9 @@ namespace ImGuiNET.FNA
             ImGui.NewFrame();
         }
 
+        /// <summary>
+        /// Asks ImGui for the generated geometry data and sends it to the graphics pipeline, should be called after the UI is drawn using ImGui.** calls
+        /// </summary>
         public virtual void AfterLayout()
         {
             ImGui.Render();
@@ -122,7 +138,10 @@ namespace ImGuiNET.FNA
 
         #region Setup & Update
 
-        protected virtual void SetupKeyMapping()
+        /// <summary>
+        /// Maps ImGui keys to FNA keys. We use this later on to tell ImGui what keys were pressed
+        /// </summary>
+        protected virtual void SetupInput()
         {
             var io = ImGui.GetIO();
 
@@ -145,8 +164,20 @@ namespace ImGuiNET.FNA
             _keys.Add(io.KeyMap[GuiKey.X] = (int)Keys.X);
             _keys.Add(io.KeyMap[GuiKey.Y] = (int)Keys.Y);
             _keys.Add(io.KeyMap[GuiKey.Z] = (int)Keys.Z);
+
+            TextInputEXT.TextInput += c =>
+            {
+                if (c == '\t') return;
+
+                ImGui.AddInputCharacter(c);
+            };
+
+            ImGui.GetIO().FontAtlas.AddDefaultFont();
         }
 
+        /// <summary>
+        /// Updates the <see cref="Effect" /> to the current matrices and texture
+        /// </summary>
         protected virtual Effect UpdateEffect(Texture2D texture)
         {
             _effect = _effect ?? new BasicEffect(_graphicsDevice);
@@ -163,7 +194,10 @@ namespace ImGuiNET.FNA
             return _effect;
         }
 
-        private void UpdateInput()
+        /// <summary>
+        /// Sends FNA input state to ImGui
+        /// </summary>
+        protected virtual void UpdateInput()
         {
             var io = ImGui.GetIO();
 
@@ -198,9 +232,12 @@ namespace ImGuiNET.FNA
 
         #region Internals
 
+        /// <summary>
+        /// Gets the geometry as set up by ImGui and sends it to the graphics device
+        /// </summary>
         private unsafe void RenderDrawData(DrawData* drawData)
         {
-            // Setup render state: alpha-blending enabled, no face culling, no depth testing, scissor enabled, vertex/texcoord/color pointers.
+            // Setup render state: alpha-blending enabled, no face culling, no depth testing, scissor enabled, vertex/texcoord/color pointers
             var lastViewport = _graphicsDevice.Viewport;
             var lastScissorBox = _graphicsDevice.ScissorRectangle;
 
@@ -235,7 +272,7 @@ namespace ImGuiNET.FNA
                     var pcmd = &(((DrawCmd*)cmdList->CmdBuffer.Data)[cmdi]);
                     if (pcmd->UserCallback != IntPtr.Zero) throw new NotImplementedException();
 
-                    // Instead of uploading the complete idxBuffer again and again, just upload what's required.
+                    // Instead of uploading the complete idxBuffer again and again, just upload what's required
                     var idxArray = new short[pcmd->ElemCount];
                     for (int i = 0; i < pcmd->ElemCount; i++)
                     {

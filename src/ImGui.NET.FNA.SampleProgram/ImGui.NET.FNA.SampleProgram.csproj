@@ -18,4 +18,19 @@
         </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Update="Assets.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Assets.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Assets.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Assets.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
 </Project>
