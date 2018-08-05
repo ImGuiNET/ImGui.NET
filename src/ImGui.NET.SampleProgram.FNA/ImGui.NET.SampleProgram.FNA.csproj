@@ -14,12 +14,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="FNA">
-            <HintPath>..\..\deps\FNA\FNA.dll</HintPath>
-        </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Update="Assets.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>

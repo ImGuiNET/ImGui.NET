@@ -9,7 +9,6 @@ namespace ImGuiNET.SampleProgram.FNA
 {
     /// <summary>
     /// Simple FNA + ImGui example
-    /// Note that in order to run this, the FNA dependencies should first be downloaded from https://github.com/FNA-XNA/FNA/wiki/3:-Distributing-FNA-Games
     /// </summary>
     public class SampleGame : Game
     {
