@@ -1,4 +1,4 @@
-﻿namespace ImGuiNET.FNA.SampleProgram
+﻿namespace ImGuiNET.SampleProgram.FNA
 {
     public static class Program
     {

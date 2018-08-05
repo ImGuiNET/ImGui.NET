@@ -1,15 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <AssemblyName>ImGuiNET.FNA.SampleProgram</AssemblyName>
-        <OutputType>Exe</OutputType>
-        <RootNamespace>ImGuiNET.FNA.SampleProgram</RootNamespace>
+        <AssemblyName>ImGuiNET.SampleProgram.FNA</AssemblyName>
+        <RootNamespace>ImGuiNET.SampleProgram.FNA</RootNamespace>
         <TargetFramework>net462</TargetFramework>
+        <OutputType>Exe</OutputType>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ImGui.NET.FNA\ImGui.NET.FNA.csproj" />
+      <ProjectReference Include="..\ImGui.NET\ImGui.NET.csproj" />
     </ItemGroup>
 
     <ItemGroup>

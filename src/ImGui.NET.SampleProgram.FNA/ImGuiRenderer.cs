@@ -2,14 +2,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace ImGuiNET.FNA
+namespace ImGuiNET.SampleProgram.FNA
 {
     /// <summary>
-    /// ImGui renderer for use with FNA, backported from https://github.com/0x0ade/ImGuiCS
+    /// ImGui renderer for use with FNA
     /// </summary>
     public class ImGuiRenderer
     {
@@ -19,10 +18,15 @@ namespace ImGuiNET.FNA
         private BasicEffect _effect;
         private RasterizerState _rasterizerState;
 
-        // Textures
-        private object _lock = new object();
+        private VertexBuffer _vertexBuffer;
+        private int _vertexBufferSize;
 
-        private ConcurrentDictionary<IntPtr, Texture2D> _loadedTextures;
+        private IndexBuffer _indexBuffer;
+        private int _indexBufferSize;
+
+        // Textures
+        private Dictionary<IntPtr, Texture2D> _loadedTextures;
+
         private int _textureId;
 
         private IntPtr? _fontTextureId;
@@ -36,7 +40,7 @@ namespace ImGuiNET.FNA
         {
             _graphicsDevice = graphicsDevice ?? throw new ArgumentNullException(nameof(graphicsDevice));
 
-            _loadedTextures = new ConcurrentDictionary<IntPtr, Texture2D>();
+            _loadedTextures = new Dictionary<IntPtr, Texture2D>();
 
             _rasterizerState = new RasterizerState()
             {
@@ -90,15 +94,11 @@ namespace ImGuiNET.FNA
             var tex2d = texture as Texture2D;
             if (tex2d == null) throw new InvalidOperationException($"Only textures of type '{nameof(Texture2D)}' are supported");
 
-            // The creation of a new texture id and adding it to the local dictionary should be an atomic operation, so we use a lock to ensure that (the concurrent dictionary alone isn't enough)
-            lock (_lock)
-            {
-                var id = new IntPtr(_textureId++);
+            var id = new IntPtr(_textureId++);
 
-                _loadedTextures.TryAdd(id, tex2d);
+            _loadedTextures.Add(id, tex2d);
 
-                return id;
-            }
+            return id;
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace ImGuiNET.FNA
         /// </summary>
         public virtual void UnbindTexture(IntPtr textureId)
         {
-            _loadedTextures.TryRemove(textureId, out var texture);
+            _loadedTextures.Remove(textureId);
         }
 
         /// <summary>
@@ -249,63 +249,96 @@ namespace ImGuiNET.FNA
             // Setup projection
             _graphicsDevice.Viewport = new Viewport(0, 0, _graphicsDevice.PresentationParameters.BackBufferWidth, _graphicsDevice.PresentationParameters.BackBufferHeight);
 
-            // Render command lists
+            UpdateBuffers(drawData);
+
+            RenderCommandLists(drawData);
+
+            // Restore modified state
+            _graphicsDevice.Viewport = lastViewport;
+            _graphicsDevice.ScissorRectangle = lastScissorBox;
+        }
+
+        private unsafe void UpdateBuffers(DrawData* drawData)
+        {
+            // Expand buffers if we need more room
+            if (drawData->TotalVtxCount > _vertexBufferSize)
+            {
+                _vertexBuffer?.Dispose();
+
+                _vertexBufferSize = (int)(drawData->TotalVtxCount * 1.5f);
+                _vertexBuffer = new VertexBuffer(_graphicsDevice, DrawVertDeclaration.Declaration, _vertexBufferSize, BufferUsage.None);
+            }
+
+            if (drawData->TotalIdxCount > _indexBufferSize)
+            {
+                _indexBuffer?.Dispose();
+
+                _indexBufferSize = (int)(drawData->TotalIdxCount * 1.5f);
+                _indexBuffer = new IndexBuffer(_graphicsDevice, IndexElementSize.SixteenBits, _indexBufferSize, BufferUsage.None);
+            }
+
+            // Update buffers with the latest data from ImGui
+            int vtxOffset = 0;
+            int idxOffset = 0;
+
             for (int n = 0; n < drawData->CmdListsCount; n++)
             {
                 var cmdList = drawData->CmdLists[n];
 
-                var vtxBuffer = new ImVector<DrawVertXNA>(&cmdList->VtxBuffer);
-                var vtxArray = new DrawVertXNA[vtxBuffer.Size];
-                for (int i = 0; i < vtxBuffer.Size; i++)
-                {
-                    vtxArray[i] = vtxBuffer[i];
-                }
+                _vertexBuffer.SetDataPointerEXT(vtxOffset * DrawVertDeclaration.Size, (IntPtr)cmdList->VtxBuffer.Data, cmdList->VtxBuffer.Size * DrawVertDeclaration.Size, SetDataOptions.None);
+                _indexBuffer.SetDataPointerEXT(idxOffset * (int)sizeof(ushort), (IntPtr)cmdList->IdxBuffer.Data, cmdList->IdxBuffer.Size * sizeof(ushort), SetDataOptions.None);
 
-                var idxBuffer = new ImVector<short>(&cmdList->IdxBuffer);
+                vtxOffset += cmdList->VtxBuffer.Size;
+                idxOffset += cmdList->IdxBuffer.Size;
+            }
+        }
 
-                uint offset = 0;
+        private unsafe void RenderCommandLists(DrawData* drawData)
+        {
+            _graphicsDevice.SetVertexBuffer(_vertexBuffer);
+            _graphicsDevice.Indices = _indexBuffer;
+
+            int vtxOffset = 0;
+            int idxOffset = 0;
+
+            for (int n = 0; n < drawData->CmdListsCount; n++)
+            {
+                var cmdList = drawData->CmdLists[n];
+
                 for (int cmdi = 0; cmdi < cmdList->CmdBuffer.Size; cmdi++)
                 {
-                    var pcmd = &(((DrawCmd*)cmdList->CmdBuffer.Data)[cmdi]);
-                    if (pcmd->UserCallback != IntPtr.Zero) throw new NotSupportedException("The user callback of the command buffer is not supported");
+                    var drawCmd = &(((DrawCmd*)cmdList->CmdBuffer.Data)[cmdi]);
 
-                    // Instead of uploading the complete idxBuffer again and again, just upload what's required
-                    var idxArray = new short[pcmd->ElemCount];
-                    for (int i = 0; i < pcmd->ElemCount; i++)
-                    {
-                        idxArray[i] = idxBuffer[(int)offset + i];
-                    }
-
-                    if (!_loadedTextures.ContainsKey(pcmd->TextureId)) throw new InvalidOperationException($"Could not find a texture with id '{pcmd->TextureId}', please check your bindings");
-
-                    var effect = UpdateEffect(_loadedTextures[pcmd->TextureId]);
+                    if (!_loadedTextures.ContainsKey(drawCmd->TextureId)) throw new InvalidOperationException($"Could not find a texture with id '{drawCmd->TextureId}', please check your bindings");
 
                     _graphicsDevice.ScissorRectangle = new Rectangle(
-                        (int)pcmd->ClipRect.X,
-                        (int)pcmd->ClipRect.Y,
-                        (int)(pcmd->ClipRect.Z - pcmd->ClipRect.X),
-                        (int)(pcmd->ClipRect.W - pcmd->ClipRect.Y)
+                        (int)drawCmd->ClipRect.X,
+                        (int)drawCmd->ClipRect.Y,
+                        (int)(drawCmd->ClipRect.Z - drawCmd->ClipRect.X),
+                        (int)(drawCmd->ClipRect.W - drawCmd->ClipRect.Y)
                     );
+
+                    var effect = UpdateEffect(_loadedTextures[drawCmd->TextureId]);
 
                     foreach (var pass in effect.CurrentTechnique.Passes)
                     {
                         pass.Apply();
 
-                        _graphicsDevice.DrawUserIndexedPrimitives(
-                            PrimitiveType.TriangleList,
-                            vtxArray, 0, vtxBuffer.Size,
-                            idxArray, 0, (int)pcmd->ElemCount / 3,
-                            DrawVertXNA._VertexDeclaration
+                        _graphicsDevice.DrawIndexedPrimitives(
+                            primitiveType: PrimitiveType.TriangleList,
+                            baseVertex: vtxOffset,
+                            minVertexIndex: vtxOffset,
+                            numVertices: (int)(drawCmd->ElemCount / 3),
+                            startIndex: idxOffset,
+                            primitiveCount: (int)drawCmd->ElemCount / 3
                         );
                     }
 
-                    offset += pcmd->ElemCount;
+                    idxOffset += (int)drawCmd->ElemCount;
                 }
-            }
 
-            // Restore modified state
-            _graphicsDevice.Viewport = lastViewport;
-            _graphicsDevice.ScissorRectangle = lastScissorBox;
+                vtxOffset += cmdList->VtxBuffer.Size;
+            }
         }
 
         #endregion Internals

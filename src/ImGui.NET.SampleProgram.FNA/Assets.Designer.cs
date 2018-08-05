@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ImGuiNET.FNA.SampleProgram {
+namespace ImGuiNET.SampleProgram.FNA {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ImGuiNET.FNA.SampleProgram {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ImGuiNET.FNA.SampleProgram.Assets", typeof(Assets).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ImGuiNET.SampleProgram.FNA.Assets", typeof(Assets).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
