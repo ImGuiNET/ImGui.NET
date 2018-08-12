@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Drawing.Imaging;
 using System.IO;
 using Num = System.Numerics;
 
@@ -17,7 +16,6 @@ namespace ImGuiNET.SampleProgram.FNA
 
         private Texture2D _xnaTexture;
         private IntPtr _imGuiTexture;
-        private float _textureRatio;
 
         public SampleGame()
         {
@@ -41,18 +39,12 @@ namespace ImGuiNET.SampleProgram.FNA
         protected override void LoadContent()
         {
             // Texture loading example
-            using (var stream = new MemoryStream())
-            {
-                // First, load the texture as a Texture2D (can also be done using the XNA/FNA content pipeline)
-                Assets.FNA_Logo.Save(stream, ImageFormat.Bmp);
-                stream.Position = 0;
-                _textureRatio = (float)Assets.FNA_Logo.Width / (float)Assets.FNA_Logo.Height;
 
-                _xnaTexture = Texture2D.FromStream(GraphicsDevice, stream);
+            // First, load the texture as a Texture2D (can also be done using the XNA/FNA content pipeline)
+            _xnaTexture = Texture2D.FromStream(GraphicsDevice, GenerateImage(300, 150));
 
-                // Then, bind it to an ImGui-friendly pointer, that we can use during regular ImGui.** calls (see below)
-                _imGuiTexture = _imGuiRenderer.BindTexture(_xnaTexture);
-            }
+            // Then, bind it to an ImGui-friendly pointer, that we can use during regular ImGui.** calls (see below)
+            _imGuiTexture = _imGuiRenderer.BindTexture(_xnaTexture);
 
             base.LoadContent();
         }
@@ -94,7 +86,9 @@ namespace ImGuiNET.SampleProgram.FNA
                 ImGui.Text(string.Format("Application average {0:F3} ms/frame ({1:F1} FPS)", 1000f / ImGui.GetIO().Framerate, ImGui.GetIO().Framerate));
 
                 ImGui.InputText("Text input", _textBuffer, 100, InputTextFlags.Default, null);
-                ImGui.Image(_imGuiTexture, new Num.Vector2(100 * _textureRatio, 100), Num.Vector2.Zero, Num.Vector2.One, Num.Vector4.One, Num.Vector4.One); // Here, the previously loaded texture is used
+
+                ImGui.Text("Texture sample");
+                ImGui.Image(_imGuiTexture, new Num.Vector2(300, 150), Num.Vector2.Zero, Num.Vector2.One, Num.Vector4.One, Num.Vector4.One); // Here, the previously loaded texture is used
             }
 
             // 2. Show another simple window, this time using an explicit Begin/End pair
@@ -112,6 +106,30 @@ namespace ImGuiNET.SampleProgram.FNA
                 ImGui.SetNextWindowPos(new Num.Vector2(650, 20), Condition.FirstUseEver);
                 ImGuiNative.igShowDemoWindow(ref show_test_window);
             }
+        }
+
+        private static Stream GenerateImage(int width, int height)
+        {
+            var stream = new MemoryStream();
+            var random = new Random(42);
+
+            var bmp = new System.Drawing.Bitmap(width, height);
+            var graphics = System.Drawing.Graphics.FromImage(bmp);
+            graphics.Clear(System.Drawing.Color.Black);
+
+            for (int i = 0; i < 100; i++)
+            {
+                var size = random.Next(10, 50);
+                var pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255)), random.Next(1, 4));
+
+                graphics.DrawEllipse(pen, random.Next(0, width), random.Next(0, height), size, size);
+            }
+
+            bmp.Save(stream, System.Drawing.Imaging.ImageFormat.Bmp);
+
+            stream.Position = 0;
+
+            return stream;
         }
     }
 }
