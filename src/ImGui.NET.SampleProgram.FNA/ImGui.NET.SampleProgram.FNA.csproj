@@ -10,7 +10,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ImGui.NET\ImGui.NET.csproj" />
+        <ProjectReference Include="..\ImGui.NET\ImGui.NET.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="$(RepositoryRootDirectory)/deps/cimgui/win-x64/cimgui.dll" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="$(RepositoryRootDirectory)/deps/cimgui/osx-x64/cimgui.dylib" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="$(RepositoryRootDirectory)/deps/cimgui/linux-x64/cimgui.so" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
 </Project>
