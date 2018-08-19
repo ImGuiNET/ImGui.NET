@@ -162,15 +162,6 @@ namespace ImGuiNET.SampleProgram.XNA
             _keys.Add(io.KeyMap[GuiKey.Y] = (int)Keys.Y);
             _keys.Add(io.KeyMap[GuiKey.Z] = (int)Keys.Z);
 
-            // FNA-specific ///////////////////////////
-            //TextInputEXT.TextInput += c =>
-            //{
-            //    if (c == '\t') return;
-
-            //    ImGui.AddInputCharacter(c);
-            //};
-            ///////////////////////////////////////////
-
             // MonoGame-specific //////////////////////
             _game.Window.TextInput += (s, a) =>
             {
@@ -178,6 +169,15 @@ namespace ImGuiNET.SampleProgram.XNA
 
                 ImGui.AddInputCharacter(a.Character);
             };
+            ///////////////////////////////////////////
+
+            // FNA-specific ///////////////////////////
+            //TextInputEXT.TextInput += c =>
+            //{
+            //    if (c == '\t') return;
+
+            //    ImGui.AddInputCharacter(c);
+            //};
             ///////////////////////////////////////////
 
             ImGui.GetIO().FontAtlas.AddDefaultFont();
@@ -192,12 +192,12 @@ namespace ImGuiNET.SampleProgram.XNA
 
             var io = ImGui.GetIO();
 
-            // FNA-specific ///////////////////////////
-            //var offset = 0f;
-            ///////////////////////////////////////////
-
             // MonoGame-specific //////////////////////
             var offset = .5f;
+            ///////////////////////////////////////////
+
+            // FNA-specific ///////////////////////////
+            //var offset = 0f;
             ///////////////////////////////////////////
 
             _effect.World = Matrix.Identity;
