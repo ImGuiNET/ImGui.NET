@@ -121,6 +121,15 @@ namespace ImGuiNET
             set { _nativePtr->KeyAlt = value ? (byte)1 : (byte)0; }
         }
 
+        /// <summary>
+        /// Keyboard modifier pressed: Cmd/Super/Windows
+        /// </summary>
+        public bool SuperPressed
+        {
+            get { return _nativePtr->KeySuper == 1; }
+            set { _nativePtr->KeySuper = value ? (byte)1 : (byte)0; }
+        }
+
         public bool WantCaptureMouse
         {
             get { return _nativePtr->WantCaptureMouse == 1; }
