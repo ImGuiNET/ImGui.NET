@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using Num = System.Numerics;
 
-namespace ImGuiNET.SampleProgram.FNA
+namespace ImGuiNET.SampleProgram.XNA
 {
     /// <summary>
     /// Simple FNA + ImGui example
@@ -24,13 +24,12 @@ namespace ImGuiNET.SampleProgram.FNA
             _graphics.PreferredBackBufferHeight = 768;
             _graphics.PreferMultiSampling = true;
 
-            _imGuiRenderer = new ImGuiRenderer(GraphicsDevice);
-
             IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
+            _imGuiRenderer = new ImGuiRenderer(this);
             _imGuiRenderer.RebuildFontAtlas();
 
             base.Initialize();

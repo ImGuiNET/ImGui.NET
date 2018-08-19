@@ -5,22 +5,26 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace ImGuiNET.SampleProgram.FNA
+namespace ImGuiNET.SampleProgram.XNA
 {
     /// <summary>
-    /// ImGui renderer for use with FNA
+    /// ImGui renderer for use with XNA-likes (FNA & MonoGame)
     /// </summary>
     public class ImGuiRenderer
     {
+        private Game _game;
+
         // Graphics
         private GraphicsDevice _graphicsDevice;
 
         private BasicEffect _effect;
         private RasterizerState _rasterizerState;
 
+        private byte[] _vertexData;
         private VertexBuffer _vertexBuffer;
         private int _vertexBufferSize;
 
+        private byte[] _indexData;
         private IndexBuffer _indexBuffer;
         private int _indexBufferSize;
 
@@ -28,7 +32,6 @@ namespace ImGuiNET.SampleProgram.FNA
         private Dictionary<IntPtr, Texture2D> _loadedTextures;
 
         private int _textureId;
-
         private IntPtr? _fontTextureId;
 
         // Input
@@ -36,9 +39,10 @@ namespace ImGuiNET.SampleProgram.FNA
 
         private List<int> _keys = new List<int>();
 
-        public ImGuiRenderer(GraphicsDevice graphicsDevice)
+        public ImGuiRenderer(Game game)
         {
-            _graphicsDevice = graphicsDevice ?? throw new ArgumentNullException(nameof(graphicsDevice));
+            _game = game ?? throw new ArgumentNullException(nameof(game));
+            _graphicsDevice = game.GraphicsDevice;
 
             _loadedTextures = new Dictionary<IntPtr, Texture2D>();
 
@@ -88,15 +92,11 @@ namespace ImGuiNET.SampleProgram.FNA
         /// <summary>
         /// Creates a pointer to a texture, which can be passed through ImGui calls such as <see cref="ImGui.Image" />. That pointer is then used by ImGui to let us know what texture to draw
         /// </summary>
-        public virtual IntPtr BindTexture(object texture)
+        public virtual IntPtr BindTexture(Texture2D texture)
         {
-            // Since this is an XNA-specific renderer, we only support the native Texture2D
-            var tex2d = texture as Texture2D;
-            if (tex2d == null) throw new InvalidOperationException($"Only textures of type '{nameof(Texture2D)}' are supported");
-
             var id = new IntPtr(_textureId++);
 
-            _loadedTextures.Add(id, tex2d);
+            _loadedTextures.Add(id, texture);
 
             return id;
         }
@@ -136,7 +136,7 @@ namespace ImGuiNET.SampleProgram.FNA
         #region Setup & Update
 
         /// <summary>
-        /// Maps ImGui keys to FNA keys. We use this later on to tell ImGui what keys were pressed
+        /// Maps ImGui keys to XNA keys. We use this later on to tell ImGui what keys were pressed
         /// </summary>
         protected virtual void SetupInput()
         {
@@ -162,12 +162,23 @@ namespace ImGuiNET.SampleProgram.FNA
             _keys.Add(io.KeyMap[GuiKey.Y] = (int)Keys.Y);
             _keys.Add(io.KeyMap[GuiKey.Z] = (int)Keys.Z);
 
-            TextInputEXT.TextInput += c =>
-            {
-                if (c == '\t') return;
+            // FNA-specific ///////////////////////////
+            //TextInputEXT.TextInput += c =>
+            //{
+            //    if (c == '\t') return;
 
-                ImGui.AddInputCharacter(c);
+            //    ImGui.AddInputCharacter(c);
+            //};
+            ///////////////////////////////////////////
+
+            // MonoGame-specific //////////////////////
+            _game.Window.TextInput += (s, a) =>
+            {
+                if (a.Character == '\t') return;
+
+                ImGui.AddInputCharacter(a.Character);
             };
+            ///////////////////////////////////////////
 
             ImGui.GetIO().FontAtlas.AddDefaultFont();
         }
@@ -181,9 +192,17 @@ namespace ImGuiNET.SampleProgram.FNA
 
             var io = ImGui.GetIO();
 
+            // FNA-specific ///////////////////////////
+            //var offset = 0f;
+            ///////////////////////////////////////////
+
+            // MonoGame-specific //////////////////////
+            var offset = .5f;
+            ///////////////////////////////////////////
+
             _effect.World = Matrix.Identity;
             _effect.View = Matrix.Identity;
-            _effect.Projection = Matrix.CreateOrthographicOffCenter(0f, io.DisplaySize.X + 0f, io.DisplaySize.Y + 0f, 0f, -1f, 1f);
+            _effect.Projection = Matrix.CreateOrthographicOffCenter(offset, io.DisplaySize.X + offset, io.DisplaySize.Y + offset, offset, -1f, 1f);
             _effect.TextureEnabled = true;
             _effect.Texture = texture;
             _effect.VertexColorEnabled = true;
@@ -192,7 +211,7 @@ namespace ImGuiNET.SampleProgram.FNA
         }
 
         /// <summary>
-        /// Sends FNA input state to ImGui
+        /// Sends XNA input state to ImGui
         /// </summary>
         protected virtual void UpdateInput()
         {
@@ -267,6 +286,7 @@ namespace ImGuiNET.SampleProgram.FNA
 
                 _vertexBufferSize = (int)(drawData->TotalVtxCount * 1.5f);
                 _vertexBuffer = new VertexBuffer(_graphicsDevice, DrawVertDeclaration.Declaration, _vertexBufferSize, BufferUsage.None);
+                _vertexData = new byte[_vertexBufferSize * DrawVertDeclaration.Size];
             }
 
             if (drawData->TotalIdxCount > _indexBufferSize)
@@ -275,9 +295,10 @@ namespace ImGuiNET.SampleProgram.FNA
 
                 _indexBufferSize = (int)(drawData->TotalIdxCount * 1.5f);
                 _indexBuffer = new IndexBuffer(_graphicsDevice, IndexElementSize.SixteenBits, _indexBufferSize, BufferUsage.None);
+                _indexData = new byte[_indexBufferSize * sizeof(ushort)];
             }
 
-            // Update buffers with the latest data from ImGui
+            // Copy ImGui's vertices and indices to a set of managed byte arrays
             int vtxOffset = 0;
             int idxOffset = 0;
 
@@ -285,12 +306,20 @@ namespace ImGuiNET.SampleProgram.FNA
             {
                 var cmdList = drawData->CmdLists[n];
 
-                _vertexBuffer.SetDataPointerEXT(vtxOffset * DrawVertDeclaration.Size, (IntPtr)cmdList->VtxBuffer.Data, cmdList->VtxBuffer.Size * DrawVertDeclaration.Size, SetDataOptions.None);
-                _indexBuffer.SetDataPointerEXT(idxOffset * (int)sizeof(ushort), (IntPtr)cmdList->IdxBuffer.Data, cmdList->IdxBuffer.Size * sizeof(ushort), SetDataOptions.None);
+                fixed (void* vtxDstPtr = &_vertexData[vtxOffset * DrawVertDeclaration.Size])
+                fixed (void* idxDstPtr = &_indexData[idxOffset * sizeof(ushort)])
+                {
+                    Buffer.MemoryCopy(cmdList->VtxBuffer.Data, vtxDstPtr, _vertexData.Length, cmdList->VtxBuffer.Size * DrawVertDeclaration.Size);
+                    Buffer.MemoryCopy(cmdList->IdxBuffer.Data, idxDstPtr, _indexData.Length, cmdList->IdxBuffer.Size * sizeof(ushort));
+                }
 
                 vtxOffset += cmdList->VtxBuffer.Size;
                 idxOffset += cmdList->IdxBuffer.Size;
             }
+
+            // Copy the managed byte arrays to the gpu vertex- and index buffers
+            _vertexBuffer.SetData(_vertexData, 0, drawData->TotalVtxCount * DrawVertDeclaration.Size);
+            _indexBuffer.SetData(_indexData, 0, drawData->TotalIdxCount * sizeof(ushort));
         }
 
         private unsafe void RenderCommandLists(DrawData* drawData)
