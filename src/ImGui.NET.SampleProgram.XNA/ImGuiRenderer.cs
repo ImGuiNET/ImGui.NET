@@ -353,6 +353,7 @@ namespace ImGuiNET.SampleProgram.XNA
                     {
                         pass.Apply();
 
+#pragma warning disable CS0618 // // FNA does not expose an alternative method.
                         _graphicsDevice.DrawIndexedPrimitives(
                             primitiveType: PrimitiveType.TriangleList,
                             baseVertex: vtxOffset,
@@ -361,6 +362,7 @@ namespace ImGuiNET.SampleProgram.XNA
                             startIndex: idxOffset,
                             primitiveCount: (int)drawCmd->ElemCount / 3
                         );
+#pragma warning restore CS0618
                     }
 
                     idxOffset += (int)drawCmd->ElemCount;
