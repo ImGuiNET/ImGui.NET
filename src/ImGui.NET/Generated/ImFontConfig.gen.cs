@@ -15,7 +15,7 @@ namespace ImGuiNET
         public byte PixelSnapH;
         public Vector2 GlyphExtraSpacing;
         public Vector2 GlyphOffset;
-        public char* GlyphRanges;
+        public ushort* GlyphRanges;
         public float GlyphMinAdvanceX;
         public float GlyphMaxAdvanceX;
         public byte MergeMode;

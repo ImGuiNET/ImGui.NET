@@ -5,7 +5,7 @@ namespace ImGuiNET
 {
     public unsafe struct ImFontGlyph
     {
-        public char Codepoint;
+        public ushort Codepoint;
         public float AdvanceX;
         public float X0;
         public float Y0;

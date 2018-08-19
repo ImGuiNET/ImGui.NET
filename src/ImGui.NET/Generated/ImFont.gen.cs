@@ -13,7 +13,7 @@ namespace ImGuiNET
         public ImVector/*<unsigned short>*/ IndexLookup;
         public ImFontGlyph* FallbackGlyph;
         public float FallbackAdvanceX;
-        public char FallbackChar;
+        public ushort FallbackChar;
         public short ConfigDataCount;
         public ImFontConfig* ConfigData;
         public ImFontAtlas* ContainerAtlas;

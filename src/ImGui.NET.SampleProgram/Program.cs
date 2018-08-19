@@ -5,6 +5,8 @@ using Veldrid;
 using Veldrid.Sdl2;
 using Veldrid.StartupUtilities;
 
+using static ImGuiNET.ImGuiNative;
+
 namespace ImGuiNET
 {
     class Program
@@ -69,7 +71,7 @@ namespace ImGuiNET
             _gd.Dispose();
         }
 
-        private static void SubmitUI()
+        private static unsafe void SubmitUI()
         {
             // Demo code adapted from the official Dear ImGui demo program:
             // https://github.com/ocornut/imgui/blob/master/examples/example_win32_directx11/main.cpp#L172
@@ -79,28 +81,28 @@ namespace ImGuiNET
             {
                 ImGui.Text("Hello, world!");                                        // Display some text (you can use a format string too)
                 ImGui.SliderFloat("float", ref _f, 0, 1, _f.ToString("0.000"), 1);  // Edit 1 float using a slider from 0.0f to 1.0f    
-                ImGui.ColorEdit3("clear color", ref _clearColor);                   // Edit 3 floats representing a color
+                //ImGui.ColorEdit3("clear color", ref _clearColor);                   // Edit 3 floats representing a color
 
                 ImGui.Checkbox("Demo Window", ref _showDemoWindow);                 // Edit bools storing our windows open/close state
                 ImGui.Checkbox("Another Window", ref _showAnotherWindow);
                 ImGui.Checkbox("Memory Editor", ref _showMemoryEditor);
-
                 if (ImGui.Button("Button"))                                         // Buttons return true when clicked (NB: most widgets return true when edited/activated)
                     _counter++;
-                ImGui.SameLine();
+                ImGui.SameLine(0, -1);
                 ImGui.Text($"counter = {_counter}");
 
-                ImGui.Text($"Application average {1000.0f / ImGui.GetIO().Framerate:0.##} ms/frame ({ImGui.GetIO().Framerate:0.#} FPS)");
+                float framerate = igGetIO()->Framerate;
+                ImGui.Text($"Application average {1000.0f / framerate:0.##} ms/frame ({framerate:0.#} FPS)");
             }
 
             // 2. Show another simple window. In most cases you will use an explicit Begin/End pair to name your windows.
             if (_showAnotherWindow)
             {
-                ImGui.BeginWindow("Another Window", ref _showAnotherWindow, WindowFlags.Default);
+                ImGui.Begin("Another Window", ref _showAnotherWindow);
                 ImGui.Text("Hello from another window!");
                 if (ImGui.Button("Close Me"))
                     _showAnotherWindow = false;
-                ImGui.EndWindow();
+                ImGui.End();
             }
 
             // 3. Show the ImGui demo window. Most of the sample code is in ImGui.ShowDemoWindow(). Read its code to learn more about Dear ImGui!
@@ -108,8 +110,8 @@ namespace ImGuiNET
             {
                 // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway.
                 // Here we just want to make the demo initial state a bit more friendly!
-                ImGui.SetNextWindowPos(new Vector2(650, 20), Condition.FirstUseEver); 
-                ImGuiNative.igShowDemoWindow(ref _showDemoWindow);
+                ImGui.SetNextWindowPos(new Vector2(650, 20), ImGuiCond.FirstUseEver);
+                ImGui.ShowDemoWindow(ref _showDemoWindow);
             }
 
             if (_showMemoryEditor)

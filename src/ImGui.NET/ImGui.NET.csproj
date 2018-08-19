@@ -3,7 +3,7 @@
     <Description>A .NET wrapper for the dear ImGui library.</Description>
     <AssemblyVersion>0.4.7</AssemblyVersion>
     <Authors>Eric Mellino</Authors>
-    <TargetFramework>netstandard1.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>portable</DebugType>
     <AssemblyName>ImGui.NET</AssemblyName>
@@ -12,7 +12,6 @@
     <PackageTags>ImGui ImGui.NET Immediate Mode GUI</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/mellinoe/imgui.net</PackageProjectUrl>
-    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
     <DocumentationFile Condition="'$(Configuration)' == 'Release'">$(OutputPath)\ImGui.NET.xml</DocumentationFile>
     <RootNamespace>ImGuiNET</RootNamespace>
   </PropertyGroup>

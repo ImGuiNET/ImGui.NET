@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Reflection;
 using System.IO;
 using Veldrid;
+using static ImGuiNET.ImGuiNative;
 
 namespace ImGuiNET
 {
@@ -51,16 +52,20 @@ namespace ImGuiNET
         /// <summary>
         /// Constructs a new ImGuiRenderer.
         /// </summary>
-        public ImGuiController(GraphicsDevice gd, OutputDescription outputDescription, int width, int height)
+        public unsafe ImGuiController(GraphicsDevice gd, OutputDescription outputDescription, int width, int height)
         {
             _gd = gd;
             _windowWidth = width;
             _windowHeight = height;
 
-            ImGui.GetIO().FontAtlas.AddDefaultFont();
+            IntPtr context = igCreateContext(null);
+            ImGui.SetCurrentContext(context);
+
+            ImGuiIO* io = igGetIO();
+            ImFontAtlas_AddFontDefault(io->Fonts, null);
 
             CreateDeviceResources(gd, outputDescription);
-            SetOpenTKKeyMappings();
+            SetKeyMappings();
 
             SetPerFrameImGuiData(1f / 60f);
 
@@ -241,16 +246,18 @@ namespace ImGuiNET
         /// </summary>
         public unsafe void RecreateFontDeviceTexture(GraphicsDevice gd)
         {
-            IO io = ImGui.GetIO();
+            var io = igGetIO();
             // Build
-            FontTextureData textureData = io.FontAtlas.GetTexDataAsRGBA32();
+            byte* pixels;
+            int width, height, bytesPerPixel;
+            ImFontAtlas_GetTexDataAsRGBA32((ImFontAtlas*)io->Fonts, &pixels, &width, &height, &bytesPerPixel);
 
             // Store our identifier
-            io.FontAtlas.SetTexID(_fontAtlasID);
+            ImFontAtlas_SetTexID((ImFontAtlas*)io->Fonts, _fontAtlasID);
 
             _fontTexture = gd.ResourceFactory.CreateTexture(TextureDescription.Texture2D(
-                (uint)textureData.Width,
-                (uint)textureData.Height,
+                (uint)width,
+                (uint)height,
                 1,
                 1,
                 PixelFormat.R8_G8_B8_A8_UNorm,
@@ -258,19 +265,19 @@ namespace ImGuiNET
             _fontTexture.Name = "ImGui.NET Font Texture";
             gd.UpdateTexture(
                 _fontTexture,
-                (IntPtr)textureData.Pixels,
-                (uint)(textureData.BytesPerPixel * textureData.Width * textureData.Height),
+                (IntPtr)pixels,
+                (uint)(bytesPerPixel * width * height),
                 0,
                 0,
                 0,
-                (uint)textureData.Width,
-                (uint)textureData.Height,
+                (uint)width,
+                (uint)height,
                 1,
                 0,
                 0);
             _fontTextureView = gd.ResourceFactory.CreateTextureView(_fontTexture);
 
-            io.FontAtlas.ClearTexData();
+            ImFontAtlas_ClearTexData((ImFontAtlas*)io->Fonts);
         }
 
         /// <summary>
@@ -284,8 +291,8 @@ namespace ImGuiNET
             if (_frameBegun)
             {
                 _frameBegun = false;
-                ImGui.Render();
-                RenderImDrawData(ImGui.GetDrawData(), gd, cl);
+                igRender();
+                RenderImDrawData(igGetDrawData(), gd, cl);
             }
         }
 
@@ -296,14 +303,14 @@ namespace ImGuiNET
         {
             if (_frameBegun)
             {
-                ImGui.Render();
+                igRender();
             }
 
             SetPerFrameImGuiData(deltaSeconds);
             UpdateImGuiInput(snapshot);
 
             _frameBegun = true;
-            ImGui.NewFrame();
+            igNewFrame();
         }
 
         /// <summary>
@@ -312,42 +319,42 @@ namespace ImGuiNET
         /// </summary>
         private unsafe void SetPerFrameImGuiData(float deltaSeconds)
         {
-            IO io = ImGui.GetIO();
-            io.DisplaySize = new Vector2(
+            ImGuiIO* io = igGetIO();
+            io->DisplaySize = new Vector2(
                 _windowWidth / _scaleFactor.X,
                 _windowHeight / _scaleFactor.Y);
-            io.DisplayFramebufferScale = _scaleFactor;
-            io.DeltaTime = deltaSeconds; // DeltaTime is in seconds.
+            io->DisplayFramebufferScale = _scaleFactor;
+            io->DeltaTime = deltaSeconds; // DeltaTime is in seconds.
         }
 
         private unsafe void UpdateImGuiInput(InputSnapshot snapshot)
         {
-            IO io = ImGui.GetIO();
+            ImGuiIO* io = igGetIO();
 
             Vector2 mousePosition = snapshot.MousePosition;
 
-            io.MousePosition = mousePosition;
-            io.MouseDown[0] = snapshot.IsMouseDown(MouseButton.Left);
-            io.MouseDown[1] = snapshot.IsMouseDown(MouseButton.Right);
-            io.MouseDown[2] = snapshot.IsMouseDown(MouseButton.Middle);
+            io->MousePos = mousePosition;
+            io->MouseDown[0] = snapshot.IsMouseDown(MouseButton.Left) ? (byte)1 : (byte)0;
+            io->MouseDown[1] = snapshot.IsMouseDown(MouseButton.Right) ? (byte)1 : (byte)0;
+            io->MouseDown[2] = snapshot.IsMouseDown(MouseButton.Middle) ? (byte)1 : (byte)0;
 
             float delta = snapshot.WheelDelta;
-            io.MouseWheel = delta;
+            io->MouseWheel = delta;
 
-            ImGui.GetIO().MouseWheel = delta;
+            io->MouseWheel = delta;
 
             IReadOnlyList<char> keyCharPresses = snapshot.KeyCharPresses;
             for (int i = 0; i < keyCharPresses.Count; i++)
             {
                 char c = keyCharPresses[i];
-                ImGui.AddInputCharacter(c);
+                ImGuiIO_AddInputCharacter(io, c);
             }
 
             IReadOnlyList<KeyEvent> keyEvents = snapshot.KeyEvents;
             for (int i = 0; i < keyEvents.Count; i++)
             {
                 KeyEvent keyEvent = keyEvents[i];
-                io.KeysDown[(int)keyEvent.Key] = keyEvent.Down;
+                io->KeysDown[(int)keyEvent.Key] = keyEvent.Down ? (byte)1 : (byte)0;
                 if (keyEvent.Key == Key.ControlLeft)
                 {
                     _controlDown = keyEvent.Down;
@@ -362,36 +369,36 @@ namespace ImGuiNET
                 }
             }
 
-            io.CtrlPressed = _controlDown;
-            io.AltPressed = _altDown;
-            io.ShiftPressed = _shiftDown;
+            io->KeyCtrl = _controlDown ? (byte)1 : (byte)0; ;
+            io->KeyAlt = _altDown ? (byte)1 : (byte)0;
+            io->KeyShift = _shiftDown ? (byte)1 : (byte)0;
         }
 
-        private static unsafe void SetOpenTKKeyMappings()
+        private static unsafe void SetKeyMappings()
         {
-            IO io = ImGui.GetIO();
-            io.KeyMap[GuiKey.Tab] = (int)Key.Tab;
-            io.KeyMap[GuiKey.LeftArrow] = (int)Key.Left;
-            io.KeyMap[GuiKey.RightArrow] = (int)Key.Right;
-            io.KeyMap[GuiKey.UpArrow] = (int)Key.Up;
-            io.KeyMap[GuiKey.DownArrow] = (int)Key.Down;
-            io.KeyMap[GuiKey.PageUp] = (int)Key.PageUp;
-            io.KeyMap[GuiKey.PageDown] = (int)Key.PageDown;
-            io.KeyMap[GuiKey.Home] = (int)Key.Home;
-            io.KeyMap[GuiKey.End] = (int)Key.End;
-            io.KeyMap[GuiKey.Delete] = (int)Key.Delete;
-            io.KeyMap[GuiKey.Backspace] = (int)Key.BackSpace;
-            io.KeyMap[GuiKey.Enter] = (int)Key.Enter;
-            io.KeyMap[GuiKey.Escape] = (int)Key.Escape;
-            io.KeyMap[GuiKey.A] = (int)Key.A;
-            io.KeyMap[GuiKey.C] = (int)Key.C;
-            io.KeyMap[GuiKey.V] = (int)Key.V;
-            io.KeyMap[GuiKey.X] = (int)Key.X;
-            io.KeyMap[GuiKey.Y] = (int)Key.Y;
-            io.KeyMap[GuiKey.Z] = (int)Key.Z;
+            ImGuiIO* io = igGetIO();
+            io->KeyMap[(int)ImGuiKey.Tab] = (int)Key.Tab;
+            io->KeyMap[(int)ImGuiKey.LeftArrow] = (int)Key.Left;
+            io->KeyMap[(int)ImGuiKey.RightArrow] = (int)Key.Right;
+            io->KeyMap[(int)ImGuiKey.UpArrow] = (int)Key.Up;
+            io->KeyMap[(int)ImGuiKey.DownArrow] = (int)Key.Down;
+            io->KeyMap[(int)ImGuiKey.PageUp] = (int)Key.PageUp;
+            io->KeyMap[(int)ImGuiKey.PageDown] = (int)Key.PageDown;
+            io->KeyMap[(int)ImGuiKey.Home] = (int)Key.Home;
+            io->KeyMap[(int)ImGuiKey.End] = (int)Key.End;
+            io->KeyMap[(int)ImGuiKey.Delete] = (int)Key.Delete;
+            io->KeyMap[(int)ImGuiKey.Backspace] = (int)Key.BackSpace;
+            io->KeyMap[(int)ImGuiKey.Enter] = (int)Key.Enter;
+            io->KeyMap[(int)ImGuiKey.Escape] = (int)Key.Escape;
+            io->KeyMap[(int)ImGuiKey.A] = (int)Key.A;
+            io->KeyMap[(int)ImGuiKey.C] = (int)Key.C;
+            io->KeyMap[(int)ImGuiKey.V] = (int)Key.V;
+            io->KeyMap[(int)ImGuiKey.X] = (int)Key.X;
+            io->KeyMap[(int)ImGuiKey.Y] = (int)Key.Y;
+            io->KeyMap[(int)ImGuiKey.Z] = (int)Key.Z;
         }
 
-        private unsafe void RenderImDrawData(DrawData* draw_data, GraphicsDevice gd, CommandList cl)
+        private unsafe void RenderImDrawData(ImDrawData* draw_data, GraphicsDevice gd, CommandList cl)
         {
             uint vertexOffsetInVertices = 0;
             uint indexOffsetInElements = 0;
@@ -401,7 +408,7 @@ namespace ImGuiNET
                 return;
             }
 
-            uint totalVBSize = (uint)(draw_data->TotalVtxCount * sizeof(DrawVert));
+            uint totalVBSize = (uint)(draw_data->TotalVtxCount * sizeof(ImDrawVert));
             if (totalVBSize > _vertexBuffer.SizeInBytes)
             {
                 gd.DisposeWhenIdle(_vertexBuffer);
@@ -417,13 +424,13 @@ namespace ImGuiNET
 
             for (int i = 0; i < draw_data->CmdListsCount; i++)
             {
-                NativeDrawList* cmd_list = draw_data->CmdLists[i];
+                ImDrawList* cmd_list = draw_data->CmdLists[i];
 
                 cl.UpdateBuffer(
                     _vertexBuffer,
-                    vertexOffsetInVertices * (uint)sizeof(DrawVert),
+                    vertexOffsetInVertices * (uint)sizeof(ImDrawVert),
                     (IntPtr)cmd_list->VtxBuffer.Data,
-                    (uint)(cmd_list->VtxBuffer.Size * sizeof(DrawVert)));
+                    (uint)(cmd_list->VtxBuffer.Size * sizeof(ImDrawVert)));
 
                 cl.UpdateBuffer(
                     _indexBuffer,
@@ -436,36 +443,33 @@ namespace ImGuiNET
             }
 
             // Setup orthographic projection matrix into our constant buffer
-            {
-                IO io = ImGui.GetIO();
+            ImGuiIO* io = igGetIO();
+            Matrix4x4 mvp = Matrix4x4.CreateOrthographicOffCenter(
+                0f,
+                io->DisplaySize.X,
+                io->DisplaySize.Y,
+                0.0f,
+                -1.0f,
+                1.0f);
 
-                Matrix4x4 mvp = Matrix4x4.CreateOrthographicOffCenter(
-                    0f,
-                    io.DisplaySize.X,
-                    io.DisplaySize.Y,
-                    0.0f,
-                    -1.0f,
-                    1.0f);
-
-                _gd.UpdateBuffer(_projMatrixBuffer, 0, ref mvp);
-            }
+            _gd.UpdateBuffer(_projMatrixBuffer, 0, ref mvp);
 
             cl.SetVertexBuffer(0, _vertexBuffer);
             cl.SetIndexBuffer(_indexBuffer, IndexFormat.UInt16);
             cl.SetPipeline(_pipeline);
             cl.SetGraphicsResourceSet(0, _mainResourceSet);
 
-            ImGui.ScaleClipRects(draw_data, ImGui.GetIO().DisplayFramebufferScale);
+            ImDrawData_ScaleClipRects(draw_data, io->DisplayFramebufferScale);
 
             // Render command lists
             int vtx_offset = 0;
             int idx_offset = 0;
             for (int n = 0; n < draw_data->CmdListsCount; n++)
             {
-                NativeDrawList* cmd_list = draw_data->CmdLists[n];
+                ImDrawList* cmd_list = draw_data->CmdLists[n];
                 for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
                 {
-                    DrawCmd* pcmd = &(((DrawCmd*)cmd_list->CmdBuffer.Data)[cmd_i]);
+                    ImDrawCmd* pcmd = &(((ImDrawCmd*)cmd_list->CmdBuffer.Data)[cmd_i]);
                     if (pcmd->UserCallback != IntPtr.Zero)
                     {
                         throw new NotImplementedException();

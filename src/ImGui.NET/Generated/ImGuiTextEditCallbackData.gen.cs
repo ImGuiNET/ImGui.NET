@@ -9,7 +9,7 @@ namespace ImGuiNET
         public ImGuiInputTextFlags Flags;
         public void* UserData;
         public byte ReadOnly;
-        public char EventChar;
+        public ushort EventChar;
         public ImGuiKey EventKey;
         public byte* Buf;
         public int BufTextLen;
