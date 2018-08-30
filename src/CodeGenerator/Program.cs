@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -177,7 +178,7 @@ namespace CodeGenerator
                     string returnType = val["ret"]?.ToString() ?? "void";
                     string comment = null;
 
-                    bool isMemberFunction = val["stname"].ToString() != "ImGui";
+                    string structName = val["stname"].ToString();
 
                     return new OverloadDefinition(
                         exportedName,
@@ -185,7 +186,7 @@ namespace CodeGenerator
                         parameters.ToArray(),
                         defaultValues,
                         returnType,
-                        isMemberFunction,
+                        structName,
                         comment,
                         enums);
                 }).ToArray();
@@ -218,8 +219,11 @@ namespace CodeGenerator
                 {
                     writer.Using("System");
                     writer.Using("System.Numerics");
+                    writer.Using("System.Runtime.CompilerServices");
+                    writer.Using("System.Text");
                     writer.WriteLine(string.Empty);
                     writer.PushBlock("namespace ImGuiNET");
+
                     writer.PushBlock($"public unsafe struct {td.Name}");
                     foreach (TypeReference field in td.Fields)
                     {
@@ -244,6 +248,78 @@ namespace CodeGenerator
                         }
                     }
                     writer.PopBlock();
+
+                    string ptrTypeName = td.Name + "Ptr";
+                    writer.PushBlock($"public unsafe struct {ptrTypeName}");
+                    writer.WriteLine($"public {td.Name}* NativePtr {{ get; }}");
+                    writer.WriteLine($"public {ptrTypeName}({td.Name}* nativePtr) => NativePtr = nativePtr;");
+                    foreach (TypeReference field in td.Fields)
+                    {
+                        string typeStr = GetTypeString(field.Type, field.IsFunctionPointer);
+                        if (field.ArraySize != 0)
+                        {
+                        }
+                        else
+                        {
+                            if (typeStr.Contains("*") && !typeStr.Contains("ImVector"))
+                            {
+                                writer.WriteLine($"public {typeStr} {field.Name} {{ get => NativePtr->{field.Name}; set => NativePtr->{field.Name} = value; }}");
+                            }
+                            else
+                            {
+                                writer.WriteLine($"public ref {typeStr} {field.Name} => ref Unsafe.AsRef<{typeStr}>(&NativePtr->{field.Name});");
+                            }
+                        }
+                    }
+
+                    foreach (FunctionDefinition fd in functions)
+                    {
+                        foreach (OverloadDefinition overload in fd.Overloads)
+                        {
+                            if (overload.StructName != td.Name)
+                            {
+                                continue;
+                            }
+
+                            string exportedName = overload.ExportedName;
+                            if (exportedName.StartsWith("ig"))
+                            {
+                                exportedName = exportedName.Substring(2, exportedName.Length - 2);
+                            }
+                            if (exportedName.Contains("~")) { continue; }
+                            if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
+
+                            bool hasVaList = false;
+                            for (int i = 0; i < overload.Parameters.Length; i++)
+                            {
+                                TypeReference p = overload.Parameters[i];
+                                string paramType = GetTypeString(p.Type, p.IsFunctionPointer);
+                                if (p.Name == "...") { continue; }
+
+                                if (paramType == "va_list")
+                                {
+                                    hasVaList = true;
+                                    break;
+                                }
+                            }
+                            if (hasVaList) { continue; }
+
+                            KeyValuePair<string, string>[] orderedDefaults = overload.DefaultValues.OrderByDescending(
+                                kvp => GetIndex(overload.Parameters, kvp.Key)).ToArray();
+
+                            for (int i = overload.DefaultValues.Count; i >= 0; i--)
+                            {
+                                Dictionary<string, string> defaults = new Dictionary<string, string>();
+                                for (int j = 0; j < i; j++)
+                                {
+                                    defaults.Add(orderedDefaults[j].Key, orderedDefaults[j].Value);
+                                }
+                                EmitOverload(writer, overload, defaults, "NativePtr");
+                            }
+                        }
+                    }
+                    writer.PopBlock();
+
                     writer.PopBlock();
                 }
             }
@@ -342,12 +418,13 @@ namespace CodeGenerator
 
                         for (int i = overload.DefaultValues.Count; i >= 0; i--)
                         {
+                            if (overload.IsMemberFunction) { continue; }
                             Dictionary<string, string> defaults = new Dictionary<string, string>();
                             for (int j = 0; j < i; j++)
                             {
                                 defaults.Add(orderedDefaults[j].Key, orderedDefaults[j].Value);
                             }
-                            EmitOverload(writer, overload, defaults);
+                            EmitOverload(writer, overload, defaults, null);
                         }
                     }
                 }
@@ -366,9 +443,9 @@ namespace CodeGenerator
             throw new InvalidOperationException();
         }
 
-        private static void EmitOverload(CSharpCodeWriter writer, OverloadDefinition overload, Dictionary<string, string> defaultValues)
+        private static void EmitOverload(CSharpCodeWriter writer, OverloadDefinition overload, Dictionary<string, string> defaultValues, string selfName)
         {
-            if (overload.Parameters.Length > 0 && overload.Parameters[0].Name == "self") { return; }
+            Debug.Assert(!overload.IsMemberFunction || selfName != null);
 
             string nativeRet = GetTypeString(overload.ReturnType, false);
             string safeRet = GetSafeType(overload.ReturnType);
@@ -378,8 +455,11 @@ namespace CodeGenerator
             List<string> preCallLines = new List<string>();
             List<string> postCallLines = new List<string>();
             List<string> byRefParams = new List<string>();
+
             for (int i = 0; i < overload.Parameters.Length; i++)
             {
+                if (i == 0 && selfName != null) { continue; }
+
                 TypeReference tr = overload.Parameters[i];
                 if (tr.Name == "...") { continue; }
 
@@ -501,14 +581,15 @@ namespace CodeGenerator
 
             string invocationList = string.Join(", ", invocationArgs);
 
-            string friendlyName = overload.IsMemberFunction ? overload.ExportedName : overload.FriendlyName;
-
             if (overload.IsMemberFunction)
             {
 
             }
 
-            writer.PushBlock($"public static {safeRet} {friendlyName}({invocationList})");
+            string friendlyName = overload.FriendlyName;
+
+            string staticPortion = selfName == null ? "static " : string.Empty;
+            writer.PushBlock($"public {staticPortion}{safeRet} {friendlyName}({invocationList})");
 
             foreach (string line in preCallLines)
             {
@@ -516,6 +597,11 @@ namespace CodeGenerator
             }
 
             List<string> nativeInvocationArgs = new List<string>();
+
+            if (selfName != null)
+            {
+                nativeInvocationArgs.Add(selfName);
+            }
 
             for (int i = 0; i < marshalledParameters.Length; i++)
             {
@@ -549,7 +635,6 @@ namespace CodeGenerator
             {
                 writer.WriteLine(line);
             }
-
 
             if (safeRet != "void")
             {
@@ -791,6 +876,7 @@ namespace CodeGenerator
         public TypeReference[] Parameters { get; }
         public Dictionary<string, string> DefaultValues { get; }
         public string ReturnType { get; }
+        public string StructName { get; }
         public bool IsMemberFunction { get; }
         public string Comment { get; }
 
@@ -800,7 +886,7 @@ namespace CodeGenerator
             TypeReference[] parameters,
             Dictionary<string, string> defaultValues,
             string returnType,
-            bool isMemberFunction,
+            string structName,
             string comment,
             EnumDefinition[] enums)
         {
@@ -809,7 +895,8 @@ namespace CodeGenerator
             Parameters = parameters;
             DefaultValues = defaultValues;
             ReturnType = returnType.Replace("const", string.Empty).Replace("inline", string.Empty).Trim();
-            IsMemberFunction = isMemberFunction;
+            StructName = structName;
+            IsMemberFunction = structName != "ImGui";
             Comment = comment;
         }
     }
