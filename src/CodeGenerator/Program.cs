@@ -263,7 +263,14 @@ namespace CodeGenerator
                         {
                             if (typeStr.Contains("*") && !typeStr.Contains("ImVector"))
                             {
-                                writer.WriteLine($"public {typeStr} {field.Name} {{ get => NativePtr->{field.Name}; set => NativePtr->{field.Name} = value; }}");
+                                if (GetWrappedType(typeStr, out string wrappedTypeName))
+                                {
+                                    writer.WriteLine($"public {wrappedTypeName} {field.Name} => new {wrappedTypeName}(NativePtr->{field.Name});");
+                                }
+                                else
+                                {
+                                    writer.WriteLine($"public {typeStr} {field.Name} {{ get => NativePtr->{field.Name}; set => NativePtr->{field.Name} = value; }}");
+                                }
                             }
                             else
                             {
@@ -664,6 +671,20 @@ namespace CodeGenerator
         private static string GetSafeType(TypeReference typeRef)
         {
             return typeRef.Type;
+        }
+
+        private static bool GetWrappedType(string nativeType, out string wrappedType)
+        {
+            if (nativeType.StartsWith("Im") && nativeType.EndsWith("*"))
+            {
+                wrappedType = nativeType.Substring(0, nativeType.Length - 1) + "Ptr";
+                return true;
+            }
+            else
+            {
+                wrappedType = null;
+                return false;
+            }
         }
 
         private static bool CorrectDefaultValue(string defaultVal, TypeReference tr, out string correctedDefault)
