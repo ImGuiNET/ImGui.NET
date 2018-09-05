@@ -1,5 +1,7 @@
 using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace ImGuiNET
 {
@@ -15,5 +17,20 @@ namespace ImGuiNET
         public float V0;
         public float U1;
         public float V1;
+    }
+    public unsafe struct ImFontGlyphPtr
+    {
+        public ImFontGlyph* NativePtr { get; }
+        public ImFontGlyphPtr(ImFontGlyph* nativePtr) => NativePtr = nativePtr;
+        public ref ushort Codepoint => ref Unsafe.AsRef<ushort>(&NativePtr->Codepoint);
+        public ref float AdvanceX => ref Unsafe.AsRef<float>(&NativePtr->AdvanceX);
+        public ref float X0 => ref Unsafe.AsRef<float>(&NativePtr->X0);
+        public ref float Y0 => ref Unsafe.AsRef<float>(&NativePtr->Y0);
+        public ref float X1 => ref Unsafe.AsRef<float>(&NativePtr->X1);
+        public ref float Y1 => ref Unsafe.AsRef<float>(&NativePtr->Y1);
+        public ref float U0 => ref Unsafe.AsRef<float>(&NativePtr->U0);
+        public ref float V0 => ref Unsafe.AsRef<float>(&NativePtr->V0);
+        public ref float U1 => ref Unsafe.AsRef<float>(&NativePtr->U1);
+        public ref float V1 => ref Unsafe.AsRef<float>(&NativePtr->V1);
     }
 }

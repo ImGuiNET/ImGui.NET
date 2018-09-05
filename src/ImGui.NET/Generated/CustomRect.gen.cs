@@ -1,5 +1,7 @@
 using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace ImGuiNET
 {
@@ -13,5 +15,27 @@ namespace ImGuiNET
         public float GlyphAdvanceX;
         public Vector2 GlyphOffset;
         public ImFont* Font;
+    }
+    public unsafe struct CustomRectPtr
+    {
+        public CustomRect* NativePtr { get; }
+        public CustomRectPtr(CustomRect* nativePtr) => NativePtr = nativePtr;
+        public ref uint ID => ref Unsafe.AsRef<uint>(&NativePtr->ID);
+        public ref ushort Width => ref Unsafe.AsRef<ushort>(&NativePtr->Width);
+        public ref ushort Height => ref Unsafe.AsRef<ushort>(&NativePtr->Height);
+        public ref ushort X => ref Unsafe.AsRef<ushort>(&NativePtr->X);
+        public ref ushort Y => ref Unsafe.AsRef<ushort>(&NativePtr->Y);
+        public ref float GlyphAdvanceX => ref Unsafe.AsRef<float>(&NativePtr->GlyphAdvanceX);
+        public ref Vector2 GlyphOffset => ref Unsafe.AsRef<Vector2>(&NativePtr->GlyphOffset);
+        public ImFontPtr Font => new ImFontPtr(NativePtr->Font);
+        public bool IsPacked()
+        {
+            byte ret = ImGuiNative.CustomRect_IsPacked(NativePtr);
+            return ret != 0;
+        }
+        public void CustomRect()
+        {
+            ImGuiNative.CustomRect_CustomRect(NativePtr);
+        }
     }
 }

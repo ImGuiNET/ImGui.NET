@@ -35,6 +35,8 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern Vector2 igGetCursorScreenPos();
         [DllImport("cimgui")]
+        public static extern void igGetCursorScreenPos_nonUDT(Vector2* pOut);
+        [DllImport("cimgui")]
         public static extern byte igDebugCheckVersionAndDataLayout(byte* version_str, uint sz_io, uint sz_style, uint sz_vec2, uint sz_vec4, uint sz_drawvert);
         [DllImport("cimgui")]
         public static extern void igSetScrollHere(float center_y_ratio);
@@ -71,6 +73,8 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern Vector2 igGetItemRectMax();
         [DllImport("cimgui")]
+        public static extern void igGetItemRectMax_nonUDT(Vector2* pOut);
+        [DllImport("cimgui")]
         public static extern byte igIsItemDeactivated();
         [DllImport("cimgui")]
         public static extern void igPushStyleVarFloat(ImGuiStyleVar idx, float val);
@@ -91,27 +95,27 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern Vector2 igGetCursorStartPos();
         [DllImport("cimgui")]
-        public static extern void igSetCursorScreenPos(Vector2 screen_pos);
+        public static extern void igGetCursorStartPos_nonUDT(Vector2* pOut);
         [DllImport("cimgui")]
-        public static extern void ImFont_AddRemapChar(ImFont* self, ushort dst, ushort src, byte overwrite_dst);
+        public static extern void igSetCursorScreenPos(Vector2 screen_pos);
         [DllImport("cimgui")]
         public static extern byte igInputInt4(byte* label, int* v, ImGuiInputTextFlags extra_flags);
         [DllImport("cimgui")]
-        public static extern void ImFont_AddGlyph(ImFont* self, ushort c, float x0, float y0, float x1, float y1, float u0, float v0, float u1, float v1, float advance_x);
+        public static extern void ImFont_AddRemapChar(ImFont* self, ushort dst, ushort src, byte overwrite_dst);
         [DllImport("cimgui")]
-        public static extern void ImFont_GrowIndex(ImFont* self, int new_size);
+        public static extern void ImFont_AddGlyph(ImFont* self, ushort c, float x0, float y0, float x1, float y1, float u0, float v0, float u1, float v1, float advance_x);
         [DllImport("cimgui")]
         public static extern byte igIsRectVisible(Vector2 size);
         [DllImport("cimgui")]
         public static extern byte igIsRectVisibleVec2(Vector2 rect_min, Vector2 rect_max);
         [DllImport("cimgui")]
-        public static extern void ImFont_RenderText(ImFont* self, ImDrawList* draw_list, float size, Vector2 pos, uint col, Vector4 clip_rect, byte* text_begin, byte* text_end, float wrap_width, byte cpu_fine_clip);
+        public static extern void ImFont_GrowIndex(ImFont* self, int new_size);
         [DllImport("cimgui")]
         public static extern byte ImFontAtlas_Build(ImFontAtlas* self);
         [DllImport("cimgui")]
-        public static extern byte igSliderFloat4(byte* label, float* v, float v_min, float v_max, byte* format, float power);
+        public static extern void igLabelText(byte* label, byte* fmt);
         [DllImport("cimgui")]
-        public static extern ImFontGlyph* ImFont_FindGlyph(ImFont* self, ushort c);
+        public static extern void ImFont_RenderText(ImFont* self, ImDrawList* draw_list, float size, Vector2 pos, uint col, Vector4 clip_rect, byte* text_begin, byte* text_end, float wrap_width, byte cpu_fine_clip);
         [DllImport("cimgui")]
         public static extern void igLogFinish();
         [DllImport("cimgui")]
@@ -121,7 +125,7 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void ImDrawList_PopClipRect(ImDrawList* self);
         [DllImport("cimgui")]
-        public static extern byte* ImFont_CalcWordWrapPositionA(ImFont* self, float scale, byte* text, byte* text_end, float wrap_width);
+        public static extern ImFontGlyph* ImFont_FindGlyphNoFallback(ImFont* self, ushort c);
         [DllImport("cimgui")]
         public static extern void igSetNextWindowCollapsed(byte collapsed, ImGuiCond cond);
         [DllImport("cimgui")]
@@ -133,7 +137,11 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern byte igIsAnyMouseDown();
         [DllImport("cimgui")]
+        public static extern byte* ImFont_CalcWordWrapPositionA(ImFont* self, float scale, byte* text, byte* text_end, float wrap_width);
+        [DllImport("cimgui")]
         public static extern Vector2 ImFont_CalcTextSizeA(ImFont* self, float size, float max_width, float wrap_width, byte* text_begin, byte* text_end, byte** remaining);
+        [DllImport("cimgui")]
+        public static extern void ImFont_CalcTextSizeA_nonUDT(ImFont* self, Vector2* pOut, float size, float max_width, float wrap_width, byte* text_begin, byte* text_end, byte** remaining);
         [DllImport("cimgui")]
         public static extern void GlyphRangesBuilder_SetBit(GlyphRangesBuilder* self, int n);
         [DllImport("cimgui")]
@@ -141,11 +149,9 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern float ImFont_GetCharAdvance(ImFont* self, ushort c);
         [DllImport("cimgui")]
-        public static extern void ImFont_SetFallbackChar(ImFont* self, ushort c);
-        [DllImport("cimgui")]
         public static extern byte igImageButton(IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1, int frame_padding, Vector4 bg_col, Vector4 tint_col);
         [DllImport("cimgui")]
-        public static extern ImFontGlyph* ImFont_FindGlyphNoFallback(ImFont* self, ushort c);
+        public static extern void ImFont_SetFallbackChar(ImFont* self, ushort c);
         [DllImport("cimgui")]
         public static extern void igEndFrame();
         [DllImport("cimgui")]
@@ -159,21 +165,23 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void ImDrawList_PushClipRect(ImDrawList* self, Vector2 clip_rect_min, Vector2 clip_rect_max, byte intersect_with_current_clip_rect);
         [DllImport("cimgui")]
-        public static extern void ImGuiTextEditCallbackData_DeleteChars(ImGuiTextEditCallbackData* self, int pos, int bytes_count);
+        public static extern ImFontGlyph* ImFont_FindGlyph(ImFont* self, ushort c);
         [DllImport("cimgui")]
-        public static extern byte igInputScalarN(byte* label, ImGuiDataType data_type, void* v, int components, void* step, void* step_fast, byte* format, ImGuiInputTextFlags extra_flags);
+        public static extern byte igIsItemDeactivatedAfterEdit();
         [DllImport("cimgui")]
         public static extern ImDrawList* igGetWindowDrawList();
+        [DllImport("cimgui")]
+        public static extern ImFont* ImFontAtlas_AddFont(ImFontAtlas* self, ImFontConfig* font_cfg);
         [DllImport("cimgui")]
         public static extern void ImDrawList_PathBezierCurveTo(ImDrawList* self, Vector2 p1, Vector2 p2, Vector2 p3, int num_segments);
         [DllImport("cimgui")]
         public static extern void ImGuiPayload_Clear(ImGuiPayload* self);
         [DllImport("cimgui")]
-        public static extern byte igInputInt2(byte* label, int* v, ImGuiInputTextFlags extra_flags);
+        public static extern void igNewLine();
         [DllImport("cimgui")]
         public static extern byte igIsItemFocused();
         [DllImport("cimgui")]
-        public static extern void igSaveIniSettingsToDisk(byte* ini_filename);
+        public static extern void igLoadIniSettingsFromMemory(byte* ini_data, uint ini_size);
         [DllImport("cimgui")]
         public static extern byte igSliderInt2(byte* label, int* v, int v_min, int v_max, byte* format);
         [DllImport("cimgui")]
@@ -185,7 +193,7 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void ImFont_ImFont(ImFont* self);
         [DllImport("cimgui")]
-        public static extern void ImGuiTextEditCallbackData_InsertChars(ImGuiTextEditCallbackData* self, int pos, byte* text, byte* text_end);
+        public static extern void ImGuiStorage_SetFloat(ImGuiStorage* self, uint key, float val);
         [DllImport("cimgui")]
         public static extern void igColorConvertRGBtoHSV(float r, float g, float b, float* out_h, float* out_s, float* out_v);
         [DllImport("cimgui")]
@@ -201,9 +209,9 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void GlyphRangesBuilder_AddText(GlyphRangesBuilder* self, byte* text, byte* text_end);
         [DllImport("cimgui")]
-        public static extern byte TextRange_is_blank(TextRange* self, byte c);
+        public static extern void ImDrawList_UpdateTextureID(ImDrawList* self);
         [DllImport("cimgui")]
-        public static extern void igSetScrollX(float scroll_x);
+        public static extern void igSetNextWindowSize(Vector2 size, ImGuiCond cond);
         [DllImport("cimgui")]
         public static extern int ImFontAtlas_AddCustomRectRegular(ImFontAtlas* self, uint id, int width, int height);
         [DllImport("cimgui")]
@@ -212,6 +220,8 @@ namespace ImGuiNET
         public static extern void igSetWindowCollapsedStr(byte* name, byte collapsed, ImGuiCond cond);
         [DllImport("cimgui")]
         public static extern Vector2 igGetMouseDragDelta(int button, float lock_threshold);
+        [DllImport("cimgui")]
+        public static extern void igGetMouseDragDelta_nonUDT(Vector2* pOut, int button, float lock_threshold);
         [DllImport("cimgui")]
         public static extern ImGuiPayload* igAcceptDragDropPayload(byte* type, ImGuiDragDropFlags flags);
         [DllImport("cimgui")]
@@ -227,13 +237,13 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void ImVec2_ImVec2Float(Vector2* self, float _x, float _y);
         [DllImport("cimgui")]
-        public static extern byte ImGuiPayload_IsDataType(ImGuiPayload* self, byte* type);
+        public static extern void ImGuiPayload_ImGuiPayload(ImGuiPayload* self);
         [DllImport("cimgui")]
         public static extern void ImDrawList_Clear(ImDrawList* self);
         [DllImport("cimgui")]
         public static extern void GlyphRangesBuilder_AddRanges(GlyphRangesBuilder* self, ushort* ranges);
         [DllImport("cimgui")]
-        public static extern Vector2 igGetMousePos();
+        public static extern int igGetFrameCount();
         [DllImport("cimgui")]
         public static extern byte* ImFont_GetDebugName(ImFont* self);
         [DllImport("cimgui")]
@@ -246,6 +256,8 @@ namespace ImGuiNET
         public static extern void GlyphRangesBuilder_GlyphRangesBuilder(GlyphRangesBuilder* self);
         [DllImport("cimgui")]
         public static extern Vector2 igGetWindowSize();
+        [DllImport("cimgui")]
+        public static extern void igGetWindowSize_nonUDT(Vector2* pOut);
         [DllImport("cimgui")]
         public static extern ushort* ImFontAtlas_GetGlyphRangesThai(ImFontAtlas* self);
         [DllImport("cimgui")]
@@ -269,11 +281,11 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern Vector2 igGetWindowPos();
         [DllImport("cimgui")]
-        public static extern byte igShowStyleSelector(byte* label);
+        public static extern void igGetWindowPos_nonUDT(Vector2* pOut);
         [DllImport("cimgui")]
-        public static extern void igSetColumnOffset(int column_index, float offset_x);
+        public static extern void ImGuiInputTextCallbackData_ImGuiInputTextCallbackData(ImGuiInputTextCallbackData* self);
         [DllImport("cimgui")]
-        public static extern void TextRange_trim_blanks(TextRange* self);
+        public static extern void igSetNextWindowContentSize(Vector2 size);
         [DllImport("cimgui")]
         public static extern void igTextColored(Vector4 col, byte* fmt);
         [DllImport("cimgui")]
@@ -281,31 +293,33 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern byte igButton(byte* label, Vector2 size);
         [DllImport("cimgui")]
-        public static extern byte ImGuiStorage_GetBool(ImGuiStorage* self, uint key, byte default_val);
+        public static extern byte igIsItemEdited();
         [DllImport("cimgui")]
         public static extern void ImDrawList_PushTextureID(ImDrawList* self, IntPtr texture_id);
         [DllImport("cimgui")]
         public static extern void igTreeAdvanceToLabelPos();
         [DllImport("cimgui")]
-        public static extern ushort* ImFontAtlas_GetGlyphRangesDefault(ImFontAtlas* self);
+        public static extern void ImGuiInputTextCallbackData_DeleteChars(ImGuiInputTextCallbackData* self, int pos, int bytes_count);
         [DllImport("cimgui")]
         public static extern byte igDragInt2(byte* label, int* v, float v_speed, int v_min, int v_max, byte* format);
         [DllImport("cimgui")]
-        public static extern void ImFontAtlas_SetTexID(ImFontAtlas* self, IntPtr id);
+        public static extern ushort* ImFontAtlas_GetGlyphRangesDefault(ImFontAtlas* self);
         [DllImport("cimgui")]
         public static extern byte igIsAnyItemActive();
         [DllImport("cimgui")]
-        public static extern void igShowFontSelector(byte* label);
+        public static extern void ImFontAtlas_SetTexID(ImFontAtlas* self, IntPtr id);
         [DllImport("cimgui")]
-        public static extern byte igInputText(byte* label, byte* buf, uint buf_size, ImGuiInputTextFlags flags, ImGuiTextEditCallback callback, void* user_data);
+        public static extern byte igMenuItemBool(byte* label, byte* shortcut, byte selected, byte enabled);
         [DllImport("cimgui")]
-        public static extern void ImDrawList_AddRectFilled(ImDrawList* self, Vector2 a, Vector2 b, uint col, float rounding, int rounding_corners_flags);
+        public static extern byte igMenuItemBoolPtr(byte* label, byte* shortcut, byte* p_selected, byte enabled);
+        [DllImport("cimgui")]
+        public static extern byte igSliderFloat4(byte* label, float* v, float v_min, float v_max, byte* format, float power);
         [DllImport("cimgui")]
         public static extern float igGetCursorPosX();
         [DllImport("cimgui")]
-        public static extern void ImFontAtlas_ClearFonts(ImFontAtlas* self);
-        [DllImport("cimgui")]
         public static extern void ImFontAtlas_ClearTexData(ImFontAtlas* self);
+        [DllImport("cimgui")]
+        public static extern void ImFontAtlas_ClearFonts(ImFontAtlas* self);
         [DllImport("cimgui")]
         public static extern int igGetColumnsCount();
         [DllImport("cimgui")]
@@ -321,25 +335,27 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern byte igIsAnyItemFocused();
         [DllImport("cimgui")]
-        public static extern ImFont* ImFontAtlas_AddFontFromMemoryCompressedTTF(ImFontAtlas* self, void* compressed_font_data, int compressed_font_size, float size_pixels, ImFontConfig* font_cfg, ushort* glyph_ranges);
+        public static extern void ImDrawList_AddRectFilled(ImDrawList* self, Vector2 a, Vector2 b, uint col, float rounding, int rounding_corners_flags);
         [DllImport("cimgui")]
-        public static extern ImFont* ImFontAtlas_AddFontFromMemoryTTF(ImFontAtlas* self, void* font_data, int font_size, float size_pixels, ImFontConfig* font_cfg, ushort* glyph_ranges);
+        public static extern ImFont* ImFontAtlas_AddFontFromMemoryCompressedTTF(ImFontAtlas* self, void* compressed_font_data, int compressed_font_size, float size_pixels, ImFontConfig* font_cfg, ushort* glyph_ranges);
         [DllImport("cimgui")]
         public static extern void igMemFree(void* ptr);
         [DllImport("cimgui")]
         public static extern Vector2 igGetFontTexUvWhitePixel();
         [DllImport("cimgui")]
+        public static extern void igGetFontTexUvWhitePixel_nonUDT(Vector2* pOut);
+        [DllImport("cimgui")]
         public static extern void ImDrawList_AddDrawCmd(ImDrawList* self);
         [DllImport("cimgui")]
         public static extern byte igIsItemClicked(int mouse_button);
         [DllImport("cimgui")]
-        public static extern ImFont* ImFontAtlas_AddFontFromFileTTF(ImFontAtlas* self, byte* filename, float size_pixels, ImFontConfig* font_cfg, ushort* glyph_ranges);
+        public static extern ImFont* ImFontAtlas_AddFontFromMemoryTTF(ImFontAtlas* self, void* font_data, int font_size, float size_pixels, ImFontConfig* font_cfg, ushort* glyph_ranges);
         [DllImport("cimgui")]
-        public static extern ImFont* ImFontAtlas_AddFontDefault(ImFontAtlas* self, ImFontConfig* font_cfg);
+        public static extern ImFont* ImFontAtlas_AddFontFromFileTTF(ImFontAtlas* self, byte* filename, float size_pixels, ImFontConfig* font_cfg, ushort* glyph_ranges);
         [DllImport("cimgui")]
         public static extern void igProgressBar(float fraction, Vector2 size_arg, byte* overlay);
         [DllImport("cimgui")]
-        public static extern ImFont* ImFontAtlas_AddFont(ImFontAtlas* self, ImFontConfig* font_cfg);
+        public static extern ImFont* ImFontAtlas_AddFontDefault(ImFontAtlas* self, ImFontConfig* font_cfg);
         [DllImport("cimgui")]
         public static extern void igSetNextWindowBgAlpha(float alpha);
         [DllImport("cimgui")]
@@ -361,37 +377,43 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern ushort* ImFontAtlas_GetGlyphRangesJapanese(ImFontAtlas* self);
         [DllImport("cimgui")]
-        public static extern void ImFontConfig_ImFontConfig(ImFontConfig* self);
+        public static extern byte igListBoxHeaderVec2(byte* label, Vector2 size);
         [DllImport("cimgui")]
-        public static extern void ImDrawData_ScaleClipRects(ImDrawData* self, Vector2 sc);
+        public static extern byte igListBoxHeaderInt(byte* label, int items_count, int height_in_items);
+        [DllImport("cimgui")]
+        public static extern void ImFontConfig_ImFontConfig(ImFontConfig* self);
         [DllImport("cimgui")]
         public static extern byte igIsMouseReleased(int button);
         [DllImport("cimgui")]
-        public static extern void ImDrawData_DeIndexAllBuffers(ImDrawData* self);
+        public static extern void ImDrawData_ScaleClipRects(ImDrawData* self, Vector2 sc);
         [DllImport("cimgui")]
         public static extern Vector2 igGetItemRectMin();
         [DllImport("cimgui")]
-        public static extern void ImDrawData_Clear(ImDrawData* self);
+        public static extern void igGetItemRectMin_nonUDT(Vector2* pOut);
+        [DllImport("cimgui")]
+        public static extern void ImDrawData_DeIndexAllBuffers(ImDrawData* self);
         [DllImport("cimgui")]
         public static extern void igLogText(byte* fmt);
+        [DllImport("cimgui")]
+        public static extern void ImDrawData_Clear(ImDrawData* self);
         [DllImport("cimgui")]
         public static extern void* ImGuiStorage_GetVoidPtr(ImGuiStorage* self, uint key);
         [DllImport("cimgui")]
         public static extern void igTextWrapped(byte* fmt);
         [DllImport("cimgui")]
-        public static extern void ImDrawList_UpdateTextureID(ImDrawList* self);
-        [DllImport("cimgui")]
         public static extern void ImDrawList_UpdateClipRect(ImDrawList* self);
         [DllImport("cimgui")]
         public static extern void ImDrawList_PrimVtx(ImDrawList* self, Vector2 pos, Vector2 uv, uint col);
         [DllImport("cimgui")]
-        public static extern int igGetFrameCount();
+        public static extern void igEndGroup();
         [DllImport("cimgui")]
-        public static extern byte igInvisibleButton(byte* str_id, Vector2 size);
+        public static extern ImFont* igGetFont();
         [DllImport("cimgui")]
-        public static extern byte* igGetClipboardText();
+        public static extern void igTreePushStr(byte* str_id);
         [DllImport("cimgui")]
-        public static extern byte igColorPicker4(byte* label, float* col, ImGuiColorEditFlags flags, float* ref_col);
+        public static extern void igTreePushPtr(void* ptr_id);
+        [DllImport("cimgui")]
+        public static extern void igTextDisabled(byte* fmt);
         [DllImport("cimgui")]
         public static extern void ImDrawList_PrimRect(ImDrawList* self, Vector2 a, Vector2 b, uint col);
         [DllImport("cimgui")]
@@ -431,7 +453,7 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void igBeginTooltip();
         [DllImport("cimgui")]
-        public static extern void igEndGroup();
+        public static extern void igSetScrollX(float scroll_x);
         [DllImport("cimgui")]
         public static extern ImDrawData* igGetDrawData();
         [DllImport("cimgui")]
@@ -475,9 +497,7 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void ImFontAtlas_GetTexDataAsAlpha8(ImFontAtlas* self, byte** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
         [DllImport("cimgui")]
-        public static extern void igSetWindowFocus();
-        [DllImport("cimgui")]
-        public static extern void igSetWindowFocusStr(byte* name);
+        public static extern byte igIsKeyReleased(int user_key_index);
         [DllImport("cimgui")]
         public static extern void igSetClipboardText(byte* text);
         [DllImport("cimgui")]
@@ -487,7 +507,7 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern byte igIsWindowCollapsed();
         [DllImport("cimgui")]
-        public static extern void ImGuiIO_AddInputCharacter(ImGuiIO* self, ushort c);
+        public static extern void igShowFontSelector(byte* label);
         [DllImport("cimgui")]
         public static extern void ImDrawList_AddImageQuad(ImDrawList* self, IntPtr user_texture_id, Vector2 a, Vector2 b, Vector2 c, Vector2 d, Vector2 uv_a, Vector2 uv_b, Vector2 uv_c, Vector2 uv_d, uint col);
         [DllImport("cimgui")]
@@ -509,7 +529,7 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void ImDrawList_AddCircleFilled(ImDrawList* self, Vector2 centre, float radius, uint col, int num_segments);
         [DllImport("cimgui")]
-        public static extern byte igDragFloat2(byte* label, float* v, float v_speed, float v_min, float v_max, byte* format, float power);
+        public static extern byte igInputFloat2(byte* label, float* v, byte* format, ImGuiInputTextFlags extra_flags);
         [DllImport("cimgui")]
         public static extern void igPushButtonRepeat(byte repeat);
         [DllImport("cimgui")]
@@ -537,7 +557,7 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void ImDrawList_AddLine(ImDrawList* self, Vector2 a, Vector2 b, uint col, float thickness);
         [DllImport("cimgui")]
-        public static extern byte igInputTextMultiline(byte* label, byte* buf, uint buf_size, Vector2 size, ImGuiInputTextFlags flags, ImGuiTextEditCallback callback, void* user_data);
+        public static extern byte igInputTextMultiline(byte* label, byte* buf, uint buf_size, Vector2 size, ImGuiInputTextFlags flags, ImGuiInputTextCallback callback, void* user_data);
         [DllImport("cimgui")]
         public static extern byte igSelectable(byte* label, byte selected, ImGuiSelectableFlags flags, Vector2 size);
         [DllImport("cimgui")]
@@ -545,21 +565,23 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern byte igListBoxStr_arr(byte* label, int* current_item, byte** items, int items_count, int height_in_items);
         [DllImport("cimgui")]
-        public static extern void ImGuiTextFilter_ImGuiTextFilter(ImGuiTextFilter* self, byte* default_filter);
+        public static extern Vector2 igGetCursorPos();
+        [DllImport("cimgui")]
+        public static extern void igGetCursorPos_nonUDT(Vector2* pOut);
         [DllImport("cimgui")]
         public static extern Vector2 ImDrawList_GetClipRectMin(ImDrawList* self);
+        [DllImport("cimgui")]
+        public static extern void ImDrawList_GetClipRectMin_nonUDT(ImDrawList* self, Vector2* pOut);
         [DllImport("cimgui")]
         public static extern void ImDrawList_PopTextureID(ImDrawList* self);
         [DllImport("cimgui")]
         public static extern byte igInputFloat4(byte* label, float* v, byte* format, ImGuiInputTextFlags extra_flags);
         [DllImport("cimgui")]
-        public static extern void igNewLine();
+        public static extern void igSetCursorPosY(float y);
         [DllImport("cimgui")]
         public static extern byte* igGetVersion();
         [DllImport("cimgui")]
         public static extern void igEndCombo();
-        [DllImport("cimgui")]
-        public static extern byte TextRange_front(TextRange* self);
         [DllImport("cimgui")]
         public static extern void igPushIDStr(byte* str_id);
         [DllImport("cimgui")]
@@ -573,53 +595,55 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void ImDrawCmd_ImDrawCmd(ImDrawCmd* self);
         [DllImport("cimgui")]
+        public static extern void ImGuiListClipper_End(ImGuiListClipper* self);
+        [DllImport("cimgui")]
         public static extern void igAlignTextToFramePadding();
         [DllImport("cimgui")]
         public static extern void igPopStyleColor(int count);
         [DllImport("cimgui")]
-        public static extern void ImGuiListClipper_End(ImGuiListClipper* self);
+        public static extern void ImGuiListClipper_Begin(ImGuiListClipper* self, int items_count, float items_height);
         [DllImport("cimgui")]
         public static extern void igText(byte* fmt);
         [DllImport("cimgui")]
-        public static extern void ImGuiListClipper_Begin(ImGuiListClipper* self, int items_count, float items_height);
+        public static extern byte ImGuiListClipper_Step(ImGuiListClipper* self);
         [DllImport("cimgui")]
         public static extern float igGetTextLineHeightWithSpacing();
-        [DllImport("cimgui")]
-        public static extern byte ImGuiListClipper_Step(ImGuiListClipper* self);
         [DllImport("cimgui")]
         public static extern float* ImGuiStorage_GetFloatRef(ImGuiStorage* self, uint key, float default_val);
         [DllImport("cimgui")]
         public static extern void igEndTooltip();
         [DllImport("cimgui")]
-        public static extern byte igDragInt(byte* label, int* v, float v_speed, int v_min, int v_max, byte* format);
-        [DllImport("cimgui")]
         public static extern void ImGuiListClipper_ImGuiListClipper(ImGuiListClipper* self, int items_count, float items_height);
         [DllImport("cimgui")]
-        public static extern void igEndMainMenuBar();
+        public static extern byte igDragInt(byte* label, int* v, float v_speed, int v_min, int v_max, byte* format);
         [DllImport("cimgui")]
-        public static extern void igColorConvertHSVtoRGB(float h, float s, float v, float* out_r, float* out_g, float* out_b);
+        public static extern byte igSliderFloat(byte* label, float* v, float v_min, float v_max, byte* format, float power);
+        [DllImport("cimgui")]
+        public static extern uint igColorConvertFloat4ToU32(Vector4 @in);
+        [DllImport("cimgui")]
+        public static extern void ImGuiIO_ClearInputCharacters(ImGuiIO* self);
         [DllImport("cimgui")]
         public static extern void igPushClipRect(Vector2 clip_rect_min, Vector2 clip_rect_max, byte intersect_with_current_clip_rect);
         [DllImport("cimgui")]
         public static extern void igSetColumnWidth(int column_index, float width);
         [DllImport("cimgui")]
-        public static extern void ImGuiIO_ImGuiIO(ImGuiIO* self);
+        public static extern byte ImGuiPayload_IsDataType(ImGuiPayload* self, byte* type);
         [DllImport("cimgui")]
         public static extern byte igBeginMainMenuBar();
         [DllImport("cimgui")]
         public static extern void CustomRect_CustomRect(CustomRect* self);
         [DllImport("cimgui")]
-        public static extern void ImGuiPayload_ImGuiPayload(ImGuiPayload* self);
+        public static extern byte ImGuiInputTextCallbackData_HasSelection(ImGuiInputTextCallbackData* self);
         [DllImport("cimgui")]
-        public static extern float igGetWindowContentRegionWidth();
+        public static extern void ImGuiInputTextCallbackData_InsertChars(ImGuiInputTextCallbackData* self, int pos, byte* text, byte* text_end);
         [DllImport("cimgui")]
         public static extern byte ImFontAtlas_GetMouseCursorTexData(ImFontAtlas* self, ImGuiMouseCursor cursor, Vector2* out_offset, Vector2* out_size, Vector2* out_uv_border, Vector2* out_uv_fill);
         [DllImport("cimgui")]
         public static extern byte igVSliderScalar(byte* label, Vector2 size, ImGuiDataType data_type, void* v, void* v_min, void* v_max, byte* format, float power);
         [DllImport("cimgui")]
-        public static extern void ImGuiStorage_SetVoidPtr(ImGuiStorage* self, uint key, void* val);
-        [DllImport("cimgui")]
         public static extern void ImGuiStorage_SetAllInt(ImGuiStorage* self, int val);
+        [DllImport("cimgui")]
+        public static extern void** ImGuiStorage_GetVoidPtrRef(ImGuiStorage* self, uint key, void* default_val);
         [DllImport("cimgui")]
         public static extern void igStyleColorsLight(ImGuiStyle* dst);
         [DllImport("cimgui")]
@@ -627,27 +651,29 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern byte igDragFloat(byte* label, float* v, float v_speed, float v_min, float v_max, byte* format, float power);
         [DllImport("cimgui")]
-        public static extern void** ImGuiStorage_GetVoidPtrRef(ImGuiStorage* self, uint key, void* default_val);
+        public static extern byte* ImGuiStorage_GetBoolRef(ImGuiStorage* self, uint key, byte default_val);
         [DllImport("cimgui")]
         public static extern float igGetWindowHeight();
         [DllImport("cimgui")]
         public static extern Vector2 igGetMousePosOnOpeningCurrentPopup();
         [DllImport("cimgui")]
-        public static extern byte* ImGuiStorage_GetBoolRef(ImGuiStorage* self, uint key, byte default_val);
+        public static extern void igGetMousePosOnOpeningCurrentPopup_nonUDT(Vector2* pOut);
+        [DllImport("cimgui")]
+        public static extern int* ImGuiStorage_GetIntRef(ImGuiStorage* self, uint key, int default_val);
         [DllImport("cimgui")]
         public static extern void igCalcListClipping(int items_count, float items_height, int* out_items_display_start, int* out_items_display_end);
         [DllImport("cimgui")]
-        public static extern int* ImGuiStorage_GetIntRef(ImGuiStorage* self, uint key, int default_val);
+        public static extern void ImGuiStorage_SetVoidPtr(ImGuiStorage* self, uint key, void* val);
         [DllImport("cimgui")]
         public static extern void igEndDragDropSource();
         [DllImport("cimgui")]
         public static extern void ImGuiStorage_BuildSortByKey(ImGuiStorage* self);
         [DllImport("cimgui")]
-        public static extern void ImGuiStorage_SetFloat(ImGuiStorage* self, uint key, float val);
-        [DllImport("cimgui")]
         public static extern float ImGuiStorage_GetFloat(ImGuiStorage* self, uint key, float default_val);
         [DllImport("cimgui")]
         public static extern void ImGuiStorage_SetBool(ImGuiStorage* self, uint key, byte val);
+        [DllImport("cimgui")]
+        public static extern byte ImGuiStorage_GetBool(ImGuiStorage* self, uint key, byte default_val);
         [DllImport("cimgui")]
         public static extern float igGetFrameHeightWithSpacing();
         [DllImport("cimgui")]
@@ -657,7 +683,7 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void ImGuiTextBuffer_clear(ImGuiTextBuffer* self);
         [DllImport("cimgui")]
-        public static extern void igPushTextWrapPos(float wrap_pos_x);
+        public static extern void igBeginGroup();
         [DllImport("cimgui")]
         public static extern void ImGuiStorage_Clear(ImGuiStorage* self);
         [DllImport("cimgui")]
@@ -677,9 +703,7 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern byte igSliderScalar(byte* label, ImGuiDataType data_type, void* v, void* v_min, void* v_max, byte* format, float power);
         [DllImport("cimgui")]
-        public static extern void igTreePushStr(byte* str_id);
-        [DllImport("cimgui")]
-        public static extern void igTreePushPtr(void* ptr_id);
+        public static extern byte igBeginCombo(byte* label, byte* preview_value, ImGuiComboFlags flags);
         [DllImport("cimgui")]
         public static extern int ImGuiTextBuffer_size(ImGuiTextBuffer* self);
         [DllImport("cimgui")]
@@ -691,11 +715,11 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void igBullet();
         [DllImport("cimgui")]
-        public static extern byte igSliderFloat(byte* label, float* v, float v_min, float v_max, byte* format, float power);
+        public static extern byte igInputText(byte* label, byte* buf, uint buf_size, ImGuiInputTextFlags flags, ImGuiInputTextCallback callback, void* user_data);
         [DllImport("cimgui")]
         public static extern byte igInputInt3(byte* label, int* v, ImGuiInputTextFlags extra_flags);
         [DllImport("cimgui")]
-        public static extern byte igIsMouseDoubleClicked(int button);
+        public static extern void ImGuiIO_ImGuiIO(ImGuiIO* self);
         [DllImport("cimgui")]
         public static extern void igStyleColorsDark(ImGuiStyle* dst);
         [DllImport("cimgui")]
@@ -705,9 +729,9 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern byte igSliderInt(byte* label, int* v, int v_min, int v_max, byte* format);
         [DllImport("cimgui")]
-        public static extern byte igIsItemDeactivatedAfterChange();
+        public static extern byte* TextRange_end(TextRange* self);
         [DllImport("cimgui")]
-        public static extern Vector4 igColorConvertU32ToFloat4(uint @in);
+        public static extern byte* TextRange_begin(TextRange* self);
         [DllImport("cimgui")]
         public static extern void igSetNextWindowPos(Vector2 pos, ImGuiCond cond, Vector2 pivot);
         [DllImport("cimgui")]
@@ -715,23 +739,27 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void igOpenPopup(byte* str_id);
         [DllImport("cimgui")]
-        public static extern Vector2 igGetWindowContentRegionMax();
-        [DllImport("cimgui")]
-        public static extern Vector2 ImDrawList_GetClipRectMax(ImDrawList* self);
-        [DllImport("cimgui")]
-        public static extern void ImGuiOnceUponAFrame_ImGuiOnceUponAFrame(ImGuiOnceUponAFrame* self);
-        [DllImport("cimgui")]
-        public static extern IntPtr* igGetDrawListSharedData();
-        [DllImport("cimgui")]
-        public static extern byte* TextRange_end(TextRange* self);
-        [DllImport("cimgui")]
-        public static extern byte igIsItemActive();
-        [DllImport("cimgui")]
-        public static extern byte* TextRange_begin(TextRange* self);
-        [DllImport("cimgui")]
         public static extern void TextRange_TextRange(TextRange* self);
         [DllImport("cimgui")]
         public static extern void TextRange_TextRangeStr(TextRange* self, byte* _b, byte* _e);
+        [DllImport("cimgui")]
+        public static extern Vector2 ImDrawList_GetClipRectMax(ImDrawList* self);
+        [DllImport("cimgui")]
+        public static extern void ImDrawList_GetClipRectMax_nonUDT(ImDrawList* self, Vector2* pOut);
+        [DllImport("cimgui")]
+        public static extern Vector2 igCalcTextSize(byte* text, byte* text_end, byte hide_text_after_double_hash, float wrap_width);
+        [DllImport("cimgui")]
+        public static extern void igCalcTextSize_nonUDT(Vector2* pOut, byte* text, byte* text_end, byte hide_text_after_double_hash, float wrap_width);
+        [DllImport("cimgui")]
+        public static extern IntPtr* igGetDrawListSharedData();
+        [DllImport("cimgui")]
+        public static extern void igColumns(int count, byte* id, byte border);
+        [DllImport("cimgui")]
+        public static extern byte igIsItemActive();
+        [DllImport("cimgui")]
+        public static extern void ImGuiTextFilter_ImGuiTextFilter(ImGuiTextFilter* self, byte* default_filter);
+        [DllImport("cimgui")]
+        public static extern void ImGuiOnceUponAFrame_ImGuiOnceUponAFrame(ImGuiOnceUponAFrame* self);
         [DllImport("cimgui")]
         public static extern byte igBeginDragDropTarget();
         [DllImport("cimgui")]
@@ -739,27 +767,25 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern byte ImGuiPayload_IsDelivery(ImGuiPayload* self);
         [DllImport("cimgui")]
-        public static extern void ImGuiIO_ClearInputCharacters(ImGuiIO* self);
+        public static extern void ImGuiIO_AddInputCharacter(ImGuiIO* self, ushort c);
         [DllImport("cimgui")]
         public static extern void ImDrawList_AddImageRounded(ImDrawList* self, IntPtr user_texture_id, Vector2 a, Vector2 b, Vector2 uv_a, Vector2 uv_b, uint col, float rounding, int rounding_corners);
         [DllImport("cimgui")]
-        public static extern uint igGetColorU32(ImGuiCol idx, float alpha_mul);
-        [DllImport("cimgui")]
-        public static extern uint igGetColorU32Vec4(Vector4 col);
-        [DllImport("cimgui")]
-        public static extern uint igGetColorU32U32(uint col);
-        [DllImport("cimgui")]
         public static extern void ImGuiStyle_ImGuiStyle(ImGuiStyle* self);
+        [DllImport("cimgui")]
+        public static extern byte igColorPicker3(byte* label, float* col, ImGuiColorEditFlags flags);
         [DllImport("cimgui")]
         public static extern Vector2 igGetContentRegionMax();
         [DllImport("cimgui")]
+        public static extern void igGetContentRegionMax_nonUDT(Vector2* pOut);
+        [DllImport("cimgui")]
         public static extern byte igBeginChildFrame(uint id, Vector2 size, ImGuiWindowFlags flags);
         [DllImport("cimgui")]
-        public static extern void igSetCurrentContext(IntPtr ctx);
+        public static extern void igSaveIniSettingsToDisk(byte* ini_filename);
         [DllImport("cimgui")]
         public static extern void ImFont_ClearOutputData(ImFont* self);
         [DllImport("cimgui")]
-        public static extern void igLoadIniSettingsFromMemory(byte* ini_data, uint ini_size);
+        public static extern byte* igGetClipboardText();
         [DllImport("cimgui")]
         public static extern void ImDrawList_PrimQuadUV(ImDrawList* self, Vector2 a, Vector2 b, Vector2 c, Vector2 d, Vector2 uv_a, Vector2 uv_b, Vector2 uv_c, Vector2 uv_d, uint col);
         [DllImport("cimgui")]
@@ -777,13 +803,15 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern float igGetTreeNodeToLabelSpacing();
         [DllImport("cimgui")]
-        public static extern byte igArrowButton(byte* str_id, ImGuiDir dir);
+        public static extern Vector2 igGetMousePos();
+        [DllImport("cimgui")]
+        public static extern void igGetMousePos_nonUDT(Vector2* pOut);
         [DllImport("cimgui")]
         public static extern void GlyphRangesBuilder_AddChar(GlyphRangesBuilder* self, ushort c);
         [DllImport("cimgui")]
         public static extern void igPopID();
         [DllImport("cimgui")]
-        public static extern void igSetStateStorage(ImGuiStorage* storage);
+        public static extern byte igIsMouseDoubleClicked(int button);
         [DllImport("cimgui")]
         public static extern void igStyleColorsClassic(ImGuiStyle* dst);
         [DllImport("cimgui")]
@@ -791,9 +819,11 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void ImDrawList_PathClear(ImDrawList* self);
         [DllImport("cimgui")]
-        public static extern byte igIsKeyReleased(int user_key_index);
+        public static extern void igSetWindowFocus();
         [DllImport("cimgui")]
-        public static extern void igBeginGroup();
+        public static extern void igSetWindowFocusStr(byte* name);
+        [DllImport("cimgui")]
+        public static extern void igColorConvertHSVtoRGB(float h, float s, float v, float* out_r, float* out_g, float* out_b);
         [DllImport("cimgui")]
         public static extern void ImColor_ImColor(ImColor* self);
         [DllImport("cimgui")]
@@ -807,19 +837,21 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern byte igVSliderFloat(byte* label, Vector2 size, float* v, float v_min, float v_max, byte* format, float power);
         [DllImport("cimgui")]
-        public static extern uint igColorConvertFloat4ToU32(Vector4 @in);
+        public static extern Vector4 igColorConvertU32ToFloat4(uint @in);
+        [DllImport("cimgui")]
+        public static extern void igColorConvertU32ToFloat4_nonUDT(Vector4* pOut, uint @in);
         [DllImport("cimgui")]
         public static extern void igPopTextWrapPos();
         [DllImport("cimgui")]
         public static extern void ImGuiTextFilter_Clear(ImGuiTextFilter* self);
         [DllImport("cimgui")]
-        public static extern Vector2 igCalcTextSize(byte* text, byte* text_end, byte hide_text_after_double_hash, float wrap_width);
+        public static extern ImGuiStorage* igGetStateStorage();
         [DllImport("cimgui")]
         public static extern float igGetColumnWidth(int column_index);
         [DllImport("cimgui")]
         public static extern void igEndMenuBar();
         [DllImport("cimgui")]
-        public static extern ImGuiStorage* igGetStateStorage();
+        public static extern void igSetStateStorage(ImGuiStorage* storage);
         [DllImport("cimgui")]
         public static extern byte* igGetStyleColorName(ImGuiCol idx);
         [DllImport("cimgui")]
@@ -835,7 +867,7 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void* igMemAlloc(uint size);
         [DllImport("cimgui")]
-        public static extern void igLabelText(byte* label, byte* fmt);
+        public static extern void igSetCurrentContext(IntPtr ctx);
         [DllImport("cimgui")]
         public static extern void igPushItemWidth(float item_width);
         [DllImport("cimgui")]
@@ -855,15 +887,21 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void igSetMouseCursor(ImGuiMouseCursor type);
         [DllImport("cimgui")]
-        public static extern void igSetNextWindowContentSize(Vector2 size);
+        public static extern Vector2 igGetWindowContentRegionMax();
+        [DllImport("cimgui")]
+        public static extern void igGetWindowContentRegionMax_nonUDT(Vector2* pOut);
         [DllImport("cimgui")]
         public static extern byte igInputScalar(byte* label, ImGuiDataType data_type, void* v, void* step, void* step_fast, byte* format, ImGuiInputTextFlags extra_flags);
         [DllImport("cimgui")]
         public static extern void ImDrawList_PushClipRectFullScreen(ImDrawList* self);
         [DllImport("cimgui")]
-        public static extern void igSetCursorPosY(float y);
+        public static extern uint igGetColorU32(ImGuiCol idx, float alpha_mul);
         [DllImport("cimgui")]
-        public static extern float igGetTime();
+        public static extern uint igGetColorU32Vec4(Vector4 col);
+        [DllImport("cimgui")]
+        public static extern uint igGetColorU32U32(uint col);
+        [DllImport("cimgui")]
+        public static extern double igGetTime();
         [DllImport("cimgui")]
         public static extern void ImDrawList_ChannelsMerge(ImDrawList* self);
         [DllImport("cimgui")]
@@ -871,45 +909,51 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern byte igBeginPopupContextItem(byte* str_id, int mouse_button);
         [DllImport("cimgui")]
-        public static extern byte igListBoxHeaderVec2(byte* label, Vector2 size);
-        [DllImport("cimgui")]
-        public static extern byte igListBoxHeaderInt(byte* label, int items_count, int height_in_items);
+        public static extern void igSetCursorPosX(float x);
         [DllImport("cimgui")]
         public static extern Vector2 igGetItemRectSize();
         [DllImport("cimgui")]
-        public static extern void igSetCursorPosX(float x);
+        public static extern void igGetItemRectSize_nonUDT(Vector2* pOut);
+        [DllImport("cimgui")]
+        public static extern byte igArrowButton(byte* str_id, ImGuiDir dir);
         [DllImport("cimgui")]
         public static extern ImGuiMouseCursor igGetMouseCursor();
         [DllImport("cimgui")]
-        public static extern byte igMenuItemBool(byte* label, byte* shortcut, byte selected, byte enabled);
-        [DllImport("cimgui")]
-        public static extern byte igMenuItemBoolPtr(byte* label, byte* shortcut, byte* p_selected, byte enabled);
+        public static extern void igPushAllowKeyboardFocus(byte allow_keyboard_focus);
         [DllImport("cimgui")]
         public static extern float igGetScrollY();
         [DllImport("cimgui")]
-        public static extern void igPushAllowKeyboardFocus(byte allow_keyboard_focus);
+        public static extern void igSetColumnOffset(int column_index, float offset_x);
         [DllImport("cimgui")]
         public static extern byte* ImGuiTextBuffer_begin(ImGuiTextBuffer* self);
-        [DllImport("cimgui")]
-        public static extern ImFont* igGetFont();
         [DllImport("cimgui")]
         public static extern void igSetWindowPosVec2(Vector2 pos, ImGuiCond cond);
         [DllImport("cimgui")]
         public static extern void igSetWindowPosStr(byte* name, Vector2 pos, ImGuiCond cond);
         [DllImport("cimgui")]
+        public static extern void igSetKeyboardFocusHere(int offset);
+        [DllImport("cimgui")]
         public static extern float igGetCursorPosY();
         [DllImport("cimgui")]
         public static extern int ImFontAtlas_AddCustomRectFontGlyph(ImFontAtlas* self, ImFont* font, ushort id, int width, int height, float advance_x, Vector2 offset);
         [DllImport("cimgui")]
-        public static extern void igSetNextWindowSize(Vector2 size, ImGuiCond cond);
+        public static extern void igEndMainMenuBar();
         [DllImport("cimgui")]
         public static extern float igGetContentRegionAvailWidth();
-        [DllImport("cimgui")]
-        public static extern void igShowUserGuide();
         [DllImport("cimgui")]
         public static extern byte igIsKeyDown(int user_key_index);
         [DllImport("cimgui")]
         public static extern byte igIsMouseDown(int button);
+        [DllImport("cimgui")]
+        public static extern Vector2 igGetWindowContentRegionMin();
+        [DllImport("cimgui")]
+        public static extern void igGetWindowContentRegionMin_nonUDT(Vector2* pOut);
+        [DllImport("cimgui")]
+        public static extern void igLogButtons();
+        [DllImport("cimgui")]
+        public static extern float igGetWindowContentRegionWidth();
+        [DllImport("cimgui")]
+        public static extern byte igSliderAngle(byte* label, float* v_rad, float v_degrees_min, float v_degrees_max);
         [DllImport("cimgui")]
         public static extern byte igTreeNodeExStr(byte* label, ImGuiTreeNodeFlags flags);
         [DllImport("cimgui")]
@@ -917,47 +961,43 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern byte igTreeNodeExPtr(void* ptr_id, ImGuiTreeNodeFlags flags, byte* fmt);
         [DllImport("cimgui")]
-        public static extern void igLogButtons();
-        [DllImport("cimgui")]
-        public static extern Vector2 igGetWindowContentRegionMin();
-        [DllImport("cimgui")]
-        public static extern byte igSliderAngle(byte* label, float* v_rad, float v_degrees_min, float v_degrees_max);
-        [DllImport("cimgui")]
-        public static extern byte ImGuiTextEditCallbackData_HasSelection(ImGuiTextEditCallbackData* self);
-        [DllImport("cimgui")]
         public static extern float igGetWindowWidth();
         [DllImport("cimgui")]
-        public static extern Vector2 igGetCursorPos();
+        public static extern void igPushTextWrapPos(float wrap_pos_x);
         [DllImport("cimgui")]
         public static extern int ImGuiStorage_GetInt(ImGuiStorage* self, uint key, int default_val);
         [DllImport("cimgui")]
         public static extern byte igSliderInt3(byte* label, int* v, int v_min, int v_max, byte* format);
         [DllImport("cimgui")]
+        public static extern void igShowUserGuide();
+        [DllImport("cimgui")]
         public static extern byte igSliderScalarN(byte* label, ImGuiDataType data_type, void* v, int components, void* v_min, void* v_max, byte* format, float power);
         [DllImport("cimgui")]
         public static extern ImColor ImColor_HSV(ImColor* self, float h, float s, float v, float a);
         [DllImport("cimgui")]
-        public static extern void ImDrawList_PathLineTo(ImDrawList* self, Vector2 pos);
+        public static extern void ImColor_HSV_nonUDT(ImColor* self, ImColor* pOut, float h, float s, float v, float a);
         [DllImport("cimgui")]
-        public static extern byte igInputFloat2(byte* label, float* v, byte* format, ImGuiInputTextFlags extra_flags);
+        public static extern void ImDrawList_PathLineTo(ImDrawList* self, Vector2 pos);
         [DllImport("cimgui")]
         public static extern void igImage(IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1, Vector4 tint_col, Vector4 border_col);
         [DllImport("cimgui")]
+        public static extern void igSetNextWindowSizeConstraints(Vector2 size_min, Vector2 size_max, ImGuiSizeCallback custom_callback, void* custom_callback_data);
+        [DllImport("cimgui")]
         public static extern void igDummy(Vector2 size);
         [DllImport("cimgui")]
-        public static extern byte igColorPicker3(byte* label, float* col, ImGuiColorEditFlags flags);
+        public static extern byte igVSliderInt(byte* label, Vector2 size, int* v, int v_min, int v_max, byte* format);
         [DllImport("cimgui")]
         public static extern void ImGuiTextBuffer_ImGuiTextBuffer(ImGuiTextBuffer* self);
         [DllImport("cimgui")]
         public static extern void igBulletText(byte* fmt);
         [DllImport("cimgui")]
-        public static extern byte igVSliderInt(byte* label, Vector2 size, int* v, int v_min, int v_max, byte* format);
-        [DllImport("cimgui")]
         public static extern byte igColorEdit4(byte* label, float* col, ImGuiColorEditFlags flags);
+        [DllImport("cimgui")]
+        public static extern byte igColorPicker4(byte* label, float* col, ImGuiColorEditFlags flags, float* ref_col);
         [DllImport("cimgui")]
         public static extern void ImDrawList_PrimRectUV(ImDrawList* self, Vector2 a, Vector2 b, Vector2 uv_a, Vector2 uv_b, uint col);
         [DllImport("cimgui")]
-        public static extern void igTextDisabled(byte* fmt);
+        public static extern byte igInvisibleButton(byte* str_id, Vector2 size);
         [DllImport("cimgui")]
         public static extern void igLogToClipboard(int max_depth);
         [DllImport("cimgui")]
@@ -975,7 +1015,7 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern void igPushFont(ImFont* font);
         [DllImport("cimgui")]
-        public static extern void igSetNextWindowSizeConstraints(Vector2 size_min, Vector2 size_max, ImGuiSizeCallback custom_callback, void* custom_callback_data);
+        public static extern byte igInputInt2(byte* label, int* v, ImGuiInputTextFlags extra_flags);
         [DllImport("cimgui")]
         public static extern void igTreePop();
         [DllImport("cimgui")]
@@ -991,9 +1031,9 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern byte ImGuiTextFilter_PassFilter(ImGuiTextFilter* self, byte* text, byte* text_end);
         [DllImport("cimgui")]
-        public static extern byte igBeginCombo(byte* label, byte* preview_value, ImGuiComboFlags flags);
+        public static extern byte igShowStyleSelector(byte* label);
         [DllImport("cimgui")]
-        public static extern void igColumns(int count, byte* id, byte border);
+        public static extern byte igInputScalarN(byte* label, ImGuiDataType data_type, void* v, int components, void* step, void* step_fast, byte* format, ImGuiInputTextFlags extra_flags);
         [DllImport("cimgui")]
         public static extern byte igTreeNodeStr(byte* label);
         [DllImport("cimgui")]
@@ -1007,8 +1047,10 @@ namespace ImGuiNET
         [DllImport("cimgui")]
         public static extern Vector2 igGetContentRegionAvail();
         [DllImport("cimgui")]
+        public static extern void igGetContentRegionAvail_nonUDT(Vector2* pOut);
+        [DllImport("cimgui")]
         public static extern byte igInputFloat3(byte* label, float* v, byte* format, ImGuiInputTextFlags extra_flags);
         [DllImport("cimgui")]
-        public static extern void igSetKeyboardFocusHere(int offset);
+        public static extern byte igDragFloat2(byte* label, float* v, float v_speed, float v_min, float v_max, byte* format, float power);
     }
 }

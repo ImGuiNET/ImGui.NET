@@ -125,11 +125,11 @@ namespace ImGuiNET
                         ImGui.PushID(addr);
 
                         // FIXME: We should have a way to retrieve the text edit cursor position more easily in the API, this is rather tedious.
-                        ImGuiTextEditCallback callback = (data) =>
+                        ImGuiInputTextCallback callback = (data) =>
                         {
                             int* p_cursor_pos = (int*)data->UserData;
 
-                            if (ImGuiNative.ImGuiTextEditCallbackData_HasSelection(data) == 0)
+                            if (ImGuiNative.ImGuiInputTextCallbackData_HasSelection(data) == 0)
                                 *p_cursor_pos = data->CursorPos;
                             return 0;
                         };
@@ -263,7 +263,7 @@ namespace ImGuiNET
             DisplayEnd = DisplayStart = -1;
             if (ItemsHeight > 0.0f)
             {
-                ImGui.CalcListClipping(ItemsCount, ItemsHeight, ref DisplayStart, ref DisplayEnd); // calculate how many to clip/display
+                ImGui.CalcListClipping(ItemsCount, ItemsHeight, out DisplayStart, out DisplayEnd); // calculate how many to clip/display
                 if (DisplayStart > 0)
                     //SetCursorPosYAndSetupDummyPrevLine(StartPosY + DisplayStart * ItemsHeight, ItemsHeight); // advance cursor
                     ImGuiNative.igSetCursorPosY(StartPosY + DisplayStart * ItemsHeight);

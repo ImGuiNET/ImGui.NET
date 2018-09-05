@@ -8,6 +8,7 @@ namespace ImGuiNET
         SourceNoHoldToOpenOthers = 1 << 2,
         SourceAllowNullID = 1 << 3,
         SourceExtern = 1 << 4,
+        SourceAutoExpirePayload = 1 << 5,
         AcceptBeforeDelivery = 1 << 10,
         AcceptNoDrawDefaultRect = 1 << 11,
         AcceptNoPreviewTooltip = 1 << 12,

@@ -1,5 +1,7 @@
 using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace ImGuiNET
 {
@@ -76,5 +78,48 @@ namespace ImGuiNET
         public Vector4 Colors_39;
         public Vector4 Colors_40;
         public Vector4 Colors_41;
+        public Vector4 Colors_42;
+    }
+    public unsafe struct ImGuiStylePtr
+    {
+        public ImGuiStyle* NativePtr { get; }
+        public ImGuiStylePtr(ImGuiStyle* nativePtr) => NativePtr = nativePtr;
+        public ref float Alpha => ref Unsafe.AsRef<float>(&NativePtr->Alpha);
+        public ref Vector2 WindowPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->WindowPadding);
+        public ref float WindowRounding => ref Unsafe.AsRef<float>(&NativePtr->WindowRounding);
+        public ref float WindowBorderSize => ref Unsafe.AsRef<float>(&NativePtr->WindowBorderSize);
+        public ref Vector2 WindowMinSize => ref Unsafe.AsRef<Vector2>(&NativePtr->WindowMinSize);
+        public ref Vector2 WindowTitleAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->WindowTitleAlign);
+        public ref float ChildRounding => ref Unsafe.AsRef<float>(&NativePtr->ChildRounding);
+        public ref float ChildBorderSize => ref Unsafe.AsRef<float>(&NativePtr->ChildBorderSize);
+        public ref float PopupRounding => ref Unsafe.AsRef<float>(&NativePtr->PopupRounding);
+        public ref float PopupBorderSize => ref Unsafe.AsRef<float>(&NativePtr->PopupBorderSize);
+        public ref Vector2 FramePadding => ref Unsafe.AsRef<Vector2>(&NativePtr->FramePadding);
+        public ref float FrameRounding => ref Unsafe.AsRef<float>(&NativePtr->FrameRounding);
+        public ref float FrameBorderSize => ref Unsafe.AsRef<float>(&NativePtr->FrameBorderSize);
+        public ref Vector2 ItemSpacing => ref Unsafe.AsRef<Vector2>(&NativePtr->ItemSpacing);
+        public ref Vector2 ItemInnerSpacing => ref Unsafe.AsRef<Vector2>(&NativePtr->ItemInnerSpacing);
+        public ref Vector2 TouchExtraPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->TouchExtraPadding);
+        public ref float IndentSpacing => ref Unsafe.AsRef<float>(&NativePtr->IndentSpacing);
+        public ref float ColumnsMinSpacing => ref Unsafe.AsRef<float>(&NativePtr->ColumnsMinSpacing);
+        public ref float ScrollbarSize => ref Unsafe.AsRef<float>(&NativePtr->ScrollbarSize);
+        public ref float ScrollbarRounding => ref Unsafe.AsRef<float>(&NativePtr->ScrollbarRounding);
+        public ref float GrabMinSize => ref Unsafe.AsRef<float>(&NativePtr->GrabMinSize);
+        public ref float GrabRounding => ref Unsafe.AsRef<float>(&NativePtr->GrabRounding);
+        public ref Vector2 ButtonTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->ButtonTextAlign);
+        public ref Vector2 DisplayWindowPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayWindowPadding);
+        public ref Vector2 DisplaySafeAreaPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplaySafeAreaPadding);
+        public ref float MouseCursorScale => ref Unsafe.AsRef<float>(&NativePtr->MouseCursorScale);
+        public ref byte AntiAliasedLines => ref Unsafe.AsRef<byte>(&NativePtr->AntiAliasedLines);
+        public ref byte AntiAliasedFill => ref Unsafe.AsRef<byte>(&NativePtr->AntiAliasedFill);
+        public ref float CurveTessellationTol => ref Unsafe.AsRef<float>(&NativePtr->CurveTessellationTol);
+        public void ImGuiStyle()
+        {
+            ImGuiNative.ImGuiStyle_ImGuiStyle(NativePtr);
+        }
+        public void ScaleAllSizes(float scale_factor)
+        {
+            ImGuiNative.ImGuiStyle_ScaleAllSizes(NativePtr, scale_factor);
+        }
     }
 }

@@ -58,11 +58,10 @@ namespace ImGuiNET
             _windowWidth = width;
             _windowHeight = height;
 
-            IntPtr context = igCreateContext(null);
+            IntPtr context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
 
-            ImGuiIO* io = igGetIO();
-            ImFontAtlas_AddFontDefault(io->Fonts, null);
+            ImGui.GetIO().Fonts.AddFontDefault();
 
             CreateDeviceResources(gd, outputDescription);
             SetKeyMappings();
@@ -246,14 +245,13 @@ namespace ImGuiNET
         /// </summary>
         public unsafe void RecreateFontDeviceTexture(GraphicsDevice gd)
         {
-            var io = igGetIO();
+            ImGuiIOPtr io = ImGui.GetIO();
             // Build
             byte* pixels;
             int width, height, bytesPerPixel;
-            ImFontAtlas_GetTexDataAsRGBA32((ImFontAtlas*)io->Fonts, &pixels, &width, &height, &bytesPerPixel);
-
+            io.Fonts.GetTexDataAsRGBA32(out pixels, out width, out height, out bytesPerPixel);
             // Store our identifier
-            ImFontAtlas_SetTexID((ImFontAtlas*)io->Fonts, _fontAtlasID);
+            io.Fonts.SetTexID(_fontAtlasID);
 
             _fontTexture = gd.ResourceFactory.CreateTexture(TextureDescription.Texture2D(
                 (uint)width,
@@ -277,7 +275,7 @@ namespace ImGuiNET
                 0);
             _fontTextureView = gd.ResourceFactory.CreateTextureView(_fontTexture);
 
-            ImFontAtlas_ClearTexData((ImFontAtlas*)io->Fonts);
+            io.Fonts.ClearTexData();
         }
 
         /// <summary>

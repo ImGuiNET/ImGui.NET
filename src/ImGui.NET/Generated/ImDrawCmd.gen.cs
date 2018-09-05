@@ -1,5 +1,7 @@
 using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace ImGuiNET
 {
@@ -10,5 +12,19 @@ namespace ImGuiNET
         public IntPtr TextureId;
         public IntPtr UserCallback;
         public void* UserCallbackData;
+    }
+    public unsafe struct ImDrawCmdPtr
+    {
+        public ImDrawCmd* NativePtr { get; }
+        public ImDrawCmdPtr(ImDrawCmd* nativePtr) => NativePtr = nativePtr;
+        public ref uint ElemCount => ref Unsafe.AsRef<uint>(&NativePtr->ElemCount);
+        public ref Vector4 ClipRect => ref Unsafe.AsRef<Vector4>(&NativePtr->ClipRect);
+        public ref IntPtr TextureId => ref Unsafe.AsRef<IntPtr>(&NativePtr->TextureId);
+        public ref IntPtr UserCallback => ref Unsafe.AsRef<IntPtr>(&NativePtr->UserCallback);
+        public void* UserCallbackData { get => NativePtr->UserCallbackData; set => NativePtr->UserCallbackData = value; }
+        public void ImDrawCmd()
+        {
+            ImGuiNative.ImDrawCmd_ImDrawCmd(NativePtr);
+        }
     }
 }

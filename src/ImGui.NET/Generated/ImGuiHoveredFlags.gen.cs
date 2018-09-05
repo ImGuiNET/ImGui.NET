@@ -9,6 +9,7 @@ namespace ImGuiNET
         AllowWhenBlockedByPopup = 1 << 3,
         AllowWhenBlockedByActiveItem = 1 << 5,
         AllowWhenOverlapped = 1 << 6,
+        AllowWhenDisabled = 1 << 7,
         RectOnly = AllowWhenBlockedByPopup | AllowWhenBlockedByActiveItem | AllowWhenOverlapped,
         RootAndChildWindows = RootWindow | ChildWindows,
     }

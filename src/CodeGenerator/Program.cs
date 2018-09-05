@@ -455,7 +455,11 @@ namespace CodeGenerator
             Debug.Assert(!overload.IsMemberFunction || selfName != null);
 
             string nativeRet = GetTypeString(overload.ReturnType, false);
-            string safeRet = GetSafeType(overload.ReturnType);
+            bool isWrappedType = GetWrappedType(nativeRet, out string safeRet);
+            if (!isWrappedType)
+            {
+                safeRet = GetSafeType(overload.ReturnType);
+            }
 
             List<string> invocationArgs = new List<string>();
             MarshalledParameter[] marshalledParameters = new MarshalledParameter[overload.Parameters.Length];
@@ -570,8 +574,17 @@ namespace CodeGenerator
                 {
                     string nonPtrType = GetTypeString(tr.Type.Substring(0, tr.Type.Length - 1), false);
                     string nativeArgName = "native_" + tr.Name;
-                    marshalledParameters[i] = new MarshalledParameter($"ref {nonPtrType}", false, nativeArgName, false);
-                    preCallLines.Add($"{nonPtrType} {nativeArgName}_val = {correctedIdentifier};");
+                    bool isOutParam = tr.Name.Contains("out_");
+                    string direction = isOutParam ? "out" : "ref";
+                    marshalledParameters[i] = new MarshalledParameter($"{direction} {nonPtrType}", false, nativeArgName, false);
+                    if (isOutParam)
+                    {
+                        preCallLines.Add($"{nonPtrType} {nativeArgName}_val;");
+                    }
+                    else
+                    {
+                        preCallLines.Add($"{nonPtrType} {nativeArgName}_val = {correctedIdentifier};");
+                    }
                     preCallLines.Add($"{nonPtrType}* {nativeArgName} = &{nativeArgName}_val;");
                     postCallLines.Add($"{correctedIdentifier} = {nativeArgName}_val;");
                 }
@@ -587,12 +600,6 @@ namespace CodeGenerator
             }
 
             string invocationList = string.Join(", ", invocationArgs);
-
-            if (overload.IsMemberFunction)
-            {
-
-            }
-
             string friendlyName = overload.FriendlyName;
 
             string staticPortion = selfName == null ? "static " : string.Empty;
@@ -651,7 +658,8 @@ namespace CodeGenerator
                 }
                 else
                 {
-                    writer.WriteLine($"return ret;");
+                    string retVal = isWrappedType ? $"new {safeRet}(ret)" : "ret";
+                    writer.WriteLine($"return {retVal};");
                 }
             }
 
@@ -677,7 +685,14 @@ namespace CodeGenerator
         {
             if (nativeType.StartsWith("Im") && nativeType.EndsWith("*"))
             {
-                wrappedType = nativeType.Substring(0, nativeType.Length - 1) + "Ptr";
+                int pointerLevel = nativeType.Length - nativeType.IndexOf('*');
+                if (pointerLevel > 1)
+                {
+                    wrappedType = null;
+                    return false; // TODO
+                }
+                wrappedType = nativeType.Substring(0, nativeType.Length - pointerLevel) + "Ptr";
+
                 return true;
             }
             else

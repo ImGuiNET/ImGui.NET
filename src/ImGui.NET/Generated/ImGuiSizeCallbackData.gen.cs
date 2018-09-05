@@ -1,5 +1,7 @@
 using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace ImGuiNET
 {
@@ -9,5 +11,14 @@ namespace ImGuiNET
         public Vector2 Pos;
         public Vector2 CurrentSize;
         public Vector2 DesiredSize;
+    }
+    public unsafe struct ImGuiSizeCallbackDataPtr
+    {
+        public ImGuiSizeCallbackData* NativePtr { get; }
+        public ImGuiSizeCallbackDataPtr(ImGuiSizeCallbackData* nativePtr) => NativePtr = nativePtr;
+        public void* UserData { get => NativePtr->UserData; set => NativePtr->UserData = value; }
+        public ref Vector2 Pos => ref Unsafe.AsRef<Vector2>(&NativePtr->Pos);
+        public ref Vector2 CurrentSize => ref Unsafe.AsRef<Vector2>(&NativePtr->CurrentSize);
+        public ref Vector2 DesiredSize => ref Unsafe.AsRef<Vector2>(&NativePtr->DesiredSize);
     }
 }

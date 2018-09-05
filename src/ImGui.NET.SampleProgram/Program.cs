@@ -91,7 +91,7 @@ namespace ImGuiNET
                 ImGui.SameLine(0, -1);
                 ImGui.Text($"counter = {_counter}");
 
-                float framerate = igGetIO()->Framerate;
+                float framerate = ImGui.GetIO().Framerate;
                 ImGui.Text($"Application average {1000.0f / framerate:0.##} ms/frame ({framerate:0.#} FPS)");
             }
 

@@ -40,10 +40,11 @@ namespace ImGuiNET
         PlotHistogram = 35,
         PlotHistogramHovered = 36,
         TextSelectedBg = 37,
-        ModalWindowDarkening = 38,
-        DragDropTarget = 39,
-        NavHighlight = 40,
-        NavWindowingHighlight = 41,
-        COUNT = 42,
+        DragDropTarget = 38,
+        NavHighlight = 39,
+        NavWindowingHighlight = 40,
+        NavWindowingDimBg = 41,
+        ModalWindowDimBg = 42,
+        COUNT = 43,
     }
 }

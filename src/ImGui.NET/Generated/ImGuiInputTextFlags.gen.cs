@@ -21,6 +21,7 @@ namespace ImGuiNET
         Password = 1 << 15,
         NoUndoRedo = 1 << 16,
         CharsScientific = 1 << 17,
+        CallbackResize = 1 << 18,
         Multiline = 1 << 20,
     }
 }

@@ -26,7 +26,7 @@ namespace ImGuiNET
             byte[] buf,
             uint buf_size,
             ImGuiInputTextFlags flags,
-            ImGuiTextEditCallback callback)
+            ImGuiInputTextCallback callback)
         {
             return InputText(label, buf, buf_size, flags, callback, null);
         }
@@ -36,7 +36,7 @@ namespace ImGuiNET
             byte[] buf,
             uint buf_size,
             ImGuiInputTextFlags flags,
-            ImGuiTextEditCallback callback,
+            ImGuiInputTextCallback callback,
             void* user_data)
         {
 
