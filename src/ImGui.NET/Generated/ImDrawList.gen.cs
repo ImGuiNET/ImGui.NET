@@ -469,13 +469,6 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawList_PopTextureID(NativePtr);
         }
-        public void ImDrawList(ref IntPtr shared_data)
-        {
-            IntPtr native_shared_data_val = shared_data;
-            IntPtr* native_shared_data = &native_shared_data_val;
-            ImGuiNative.ImDrawList_ImDrawList(NativePtr, native_shared_data);
-            shared_data = native_shared_data_val;
-        }
         public void PrimWriteVtx(Vector2 pos, Vector2 uv, uint col)
         {
             ImGuiNative.ImDrawList_PrimWriteVtx(NativePtr, pos, uv, col);

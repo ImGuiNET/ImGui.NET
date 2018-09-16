@@ -55,10 +55,6 @@ namespace ImGuiNET
             byte* ret = ImGuiNative.ImGuiTextBuffer_begin(NativePtr);
             return ret;
         }
-        public void ImGuiTextBuffer()
-        {
-            ImGuiNative.ImGuiTextBuffer_ImGuiTextBuffer(NativePtr);
-        }
         public byte* end()
         {
             byte* ret = ImGuiNative.ImGuiTextBuffer_end(NativePtr);

@@ -229,10 +229,6 @@ namespace ImGuiNET
             ImFontGlyph* ret = ImGuiNative.ImFont_FindGlyph(NativePtr, c);
             return new ImFontGlyphPtr(ret);
         }
-        public void ImFont()
-        {
-            ImGuiNative.ImFont_ImFont(NativePtr);
-        }
         public byte* GetDebugName()
         {
             byte* ret = ImGuiNative.ImFont_GetDebugName(NativePtr);

@@ -34,10 +34,6 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiPayload_Clear(NativePtr);
         }
-        public void ImGuiPayload()
-        {
-            ImGuiNative.ImGuiPayload_ImGuiPayload(NativePtr);
-        }
         public bool IsPreview()
         {
             byte ret = ImGuiNative.ImGuiPayload_IsPreview(NativePtr);

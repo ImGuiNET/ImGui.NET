@@ -40,9 +40,5 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawData_Clear(NativePtr);
         }
-        public void ImDrawData()
-        {
-            ImGuiNative.ImDrawData_ImDrawData(NativePtr);
-        }
     }
 }

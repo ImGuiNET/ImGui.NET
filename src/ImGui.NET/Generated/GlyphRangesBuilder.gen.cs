@@ -57,10 +57,6 @@ namespace ImGuiNET
             ImGuiNative.GlyphRangesBuilder_AddRanges(NativePtr, native_ranges);
             ranges = native_ranges_val;
         }
-        public void GlyphRangesBuilder()
-        {
-            ImGuiNative.GlyphRangesBuilder_GlyphRangesBuilder(NativePtr);
-        }
         public void BuildRanges(out ImVector out_ranges)
         {
             ImVector native_out_ranges_val;

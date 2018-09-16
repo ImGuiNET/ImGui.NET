@@ -44,20 +44,5 @@ namespace ImGuiNET
             byte ret = ImGuiNative.ImGuiListClipper_Step(NativePtr);
             return ret != 0;
         }
-        public void ImGuiListClipper()
-        {
-            int items_count = -1;
-            float items_height = -1.0f;
-            ImGuiNative.ImGuiListClipper_ImGuiListClipper(NativePtr, items_count, items_height);
-        }
-        public void ImGuiListClipper(int items_count)
-        {
-            float items_height = -1.0f;
-            ImGuiNative.ImGuiListClipper_ImGuiListClipper(NativePtr, items_count, items_height);
-        }
-        public void ImGuiListClipper(int items_count, float items_height)
-        {
-            ImGuiNative.ImGuiListClipper_ImGuiListClipper(NativePtr, items_count, items_height);
-        }
     }
 }

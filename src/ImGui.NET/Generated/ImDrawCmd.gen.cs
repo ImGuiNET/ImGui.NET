@@ -24,9 +24,5 @@ namespace ImGuiNET
         public ref IntPtr TextureId => ref Unsafe.AsRef<IntPtr>(&NativePtr->TextureId);
         public ref IntPtr UserCallback => ref Unsafe.AsRef<IntPtr>(&NativePtr->UserCallback);
         public void* UserCallbackData { get => NativePtr->UserCallbackData; set => NativePtr->UserCallbackData = value; }
-        public void ImDrawCmd()
-        {
-            ImGuiNative.ImDrawCmd_ImDrawCmd(NativePtr);
-        }
     }
 }

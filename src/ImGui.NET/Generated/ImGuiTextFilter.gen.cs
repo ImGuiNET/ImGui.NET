@@ -62,28 +62,6 @@ namespace ImGuiNET
             byte ret = ImGuiNative.ImGuiTextFilter_Draw(NativePtr, native_label, width);
             return ret != 0;
         }
-        public void ImGuiTextFilter()
-        {
-            int default_filter_byteCount = Encoding.UTF8.GetByteCount("");
-            byte* native_default_filter = stackalloc byte[default_filter_byteCount + 1];
-            fixed (char* default_filter_ptr = "")
-            {
-                int native_default_filter_offset = Encoding.UTF8.GetBytes(default_filter_ptr, "".Length, native_default_filter, default_filter_byteCount);
-                native_default_filter[native_default_filter_offset] = 0;
-            }
-            ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(NativePtr, native_default_filter);
-        }
-        public void ImGuiTextFilter(string default_filter)
-        {
-            int default_filter_byteCount = Encoding.UTF8.GetByteCount(default_filter);
-            byte* native_default_filter = stackalloc byte[default_filter_byteCount + 1];
-            fixed (char* default_filter_ptr = default_filter)
-            {
-                int native_default_filter_offset = Encoding.UTF8.GetBytes(default_filter_ptr, default_filter.Length, native_default_filter, default_filter_byteCount);
-                native_default_filter[native_default_filter_offset] = 0;
-            }
-            ImGuiNative.ImGuiTextFilter_ImGuiTextFilter(NativePtr, native_default_filter);
-        }
         public bool IsActive()
         {
             byte ret = ImGuiNative.ImGuiTextFilter_IsActive(NativePtr);

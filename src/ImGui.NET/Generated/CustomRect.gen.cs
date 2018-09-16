@@ -35,9 +35,5 @@ namespace ImGuiNET
             byte ret = ImGuiNative.CustomRect_IsPacked(NativePtr);
             return ret != 0;
         }
-        public void CustomRect()
-        {
-            ImGuiNative.CustomRect_CustomRect(NativePtr);
-        }
     }
 }

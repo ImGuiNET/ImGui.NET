@@ -315,6 +315,11 @@ namespace CodeGenerator
                                 continue;
                             }
 
+                            if (overload.FriendlyName == overload.StructName)
+                            {
+                                continue;
+                            }
+
                             string exportedName = overload.ExportedName;
                             if (exportedName.StartsWith("ig"))
                             {

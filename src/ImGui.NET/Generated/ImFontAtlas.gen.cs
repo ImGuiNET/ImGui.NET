@@ -368,9 +368,5 @@ namespace ImGuiNET
             int ret = ImGuiNative.ImFontAtlas_AddCustomRectFontGlyph(NativePtr, native_font, id, width, height, advance_x, offset);
             return ret;
         }
-        public void ImFontAtlas()
-        {
-            ImGuiNative.ImFontAtlas_ImFontAtlas(NativePtr);
-        }
     }
 }

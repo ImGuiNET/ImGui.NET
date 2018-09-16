@@ -179,10 +179,6 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiIO_ClearInputCharacters(NativePtr);
         }
-        public void ImGuiIO()
-        {
-            ImGuiNative.ImGuiIO_ImGuiIO(NativePtr);
-        }
         public void AddInputCharacter(ushort c)
         {
             ImGuiNative.ImGuiIO_AddInputCharacter(NativePtr, c);
