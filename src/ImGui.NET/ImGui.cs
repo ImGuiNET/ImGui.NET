@@ -1195,6 +1195,8 @@ namespace ImGuiNET
             return ImGuiNative.igIsAnyItemActive();
         }
 
+        public static unsafe DrawList GetWindowDrawList() => new DrawList(ImGuiNative.igGetWindowDrawList());
+
         public static unsafe DrawList GetOverlayDrawList() => new DrawList(ImGuiNative.igGetOverlayDrawList());
 
         public static void SetTooltip(string text)
