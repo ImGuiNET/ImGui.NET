@@ -35,6 +35,7 @@ namespace ImGuiNET
         private bool _controlDown;
         private bool _shiftDown;
         private bool _altDown;
+        private bool _winKeyDown;
 
         private int _windowWidth;
         private int _windowHeight;
@@ -317,29 +318,29 @@ namespace ImGuiNET
         /// </summary>
         private unsafe void SetPerFrameImGuiData(float deltaSeconds)
         {
-            ImGuiIO* io = igGetIO();
-            io->DisplaySize = new Vector2(
+            ImGuiIOPtr io = ImGui.GetIO();
+            io.DisplaySize = new Vector2(
                 _windowWidth / _scaleFactor.X,
                 _windowHeight / _scaleFactor.Y);
-            io->DisplayFramebufferScale = _scaleFactor;
-            io->DeltaTime = deltaSeconds; // DeltaTime is in seconds.
+            io.DisplayFramebufferScale = _scaleFactor;
+            io.DeltaTime = deltaSeconds; // DeltaTime is in seconds.
         }
 
         private unsafe void UpdateImGuiInput(InputSnapshot snapshot)
         {
-            ImGuiIO* io = igGetIO();
+            var io = ImGui.GetIO();
 
             Vector2 mousePosition = snapshot.MousePosition;
 
-            io->MousePos = mousePosition;
-            io->MouseDown[0] = snapshot.IsMouseDown(MouseButton.Left) ? (byte)1 : (byte)0;
-            io->MouseDown[1] = snapshot.IsMouseDown(MouseButton.Right) ? (byte)1 : (byte)0;
-            io->MouseDown[2] = snapshot.IsMouseDown(MouseButton.Middle) ? (byte)1 : (byte)0;
+            io.MousePos = mousePosition;
+            io.MouseDown[0] = snapshot.IsMouseDown(MouseButton.Left) ? (byte)1 : (byte)0;
+            io.MouseDown[1] = snapshot.IsMouseDown(MouseButton.Right) ? (byte)1 : (byte)0;
+            io.MouseDown[2] = snapshot.IsMouseDown(MouseButton.Middle) ? (byte)1 : (byte)0;
 
             float delta = snapshot.WheelDelta;
-            io->MouseWheel = delta;
+            io.MouseWheel = delta;
 
-            io->MouseWheel = delta;
+            io.MouseWheel = delta;
 
             IReadOnlyList<char> keyCharPresses = snapshot.KeyCharPresses;
             for (int i = 0; i < keyCharPresses.Count; i++)
@@ -352,7 +353,7 @@ namespace ImGuiNET
             for (int i = 0; i < keyEvents.Count; i++)
             {
                 KeyEvent keyEvent = keyEvents[i];
-                io->KeysDown[(int)keyEvent.Key] = keyEvent.Down ? (byte)1 : (byte)0;
+                io.KeysDown[(int)keyEvent.Key] = keyEvent.Down ? (byte)1 : (byte)0;
                 if (keyEvent.Key == Key.ControlLeft)
                 {
                     _controlDown = keyEvent.Down;
@@ -365,87 +366,92 @@ namespace ImGuiNET
                 {
                     _altDown = keyEvent.Down;
                 }
+                if (keyEvent.Key == Key.WinLeft)
+                {
+                    _winKeyDown = keyEvent.Down;
+                }
             }
 
-            io->KeyCtrl = _controlDown ? (byte)1 : (byte)0; ;
-            io->KeyAlt = _altDown ? (byte)1 : (byte)0;
-            io->KeyShift = _shiftDown ? (byte)1 : (byte)0;
+            io.KeyCtrl = _controlDown ? (byte)1 : (byte)0; ;
+            io.KeyAlt = _altDown ? (byte)1 : (byte)0;
+            io.KeyShift = _shiftDown ? (byte)1 : (byte)0;
+            io.KeySuper = _winKeyDown ? (byte)1 : (byte)0;
         }
 
         private static unsafe void SetKeyMappings()
         {
-            ImGuiIO* io = igGetIO();
-            io->KeyMap[(int)ImGuiKey.Tab] = (int)Key.Tab;
-            io->KeyMap[(int)ImGuiKey.LeftArrow] = (int)Key.Left;
-            io->KeyMap[(int)ImGuiKey.RightArrow] = (int)Key.Right;
-            io->KeyMap[(int)ImGuiKey.UpArrow] = (int)Key.Up;
-            io->KeyMap[(int)ImGuiKey.DownArrow] = (int)Key.Down;
-            io->KeyMap[(int)ImGuiKey.PageUp] = (int)Key.PageUp;
-            io->KeyMap[(int)ImGuiKey.PageDown] = (int)Key.PageDown;
-            io->KeyMap[(int)ImGuiKey.Home] = (int)Key.Home;
-            io->KeyMap[(int)ImGuiKey.End] = (int)Key.End;
-            io->KeyMap[(int)ImGuiKey.Delete] = (int)Key.Delete;
-            io->KeyMap[(int)ImGuiKey.Backspace] = (int)Key.BackSpace;
-            io->KeyMap[(int)ImGuiKey.Enter] = (int)Key.Enter;
-            io->KeyMap[(int)ImGuiKey.Escape] = (int)Key.Escape;
-            io->KeyMap[(int)ImGuiKey.A] = (int)Key.A;
-            io->KeyMap[(int)ImGuiKey.C] = (int)Key.C;
-            io->KeyMap[(int)ImGuiKey.V] = (int)Key.V;
-            io->KeyMap[(int)ImGuiKey.X] = (int)Key.X;
-            io->KeyMap[(int)ImGuiKey.Y] = (int)Key.Y;
-            io->KeyMap[(int)ImGuiKey.Z] = (int)Key.Z;
+            ImGuiIOPtr io = ImGui.GetIO();
+            io.KeyMap[(int)ImGuiKey.Tab] = (int)Key.Tab;
+            io.KeyMap[(int)ImGuiKey.LeftArrow] = (int)Key.Left;
+            io.KeyMap[(int)ImGuiKey.RightArrow] = (int)Key.Right;
+            io.KeyMap[(int)ImGuiKey.UpArrow] = (int)Key.Up;
+            io.KeyMap[(int)ImGuiKey.DownArrow] = (int)Key.Down;
+            io.KeyMap[(int)ImGuiKey.PageUp] = (int)Key.PageUp;
+            io.KeyMap[(int)ImGuiKey.PageDown] = (int)Key.PageDown;
+            io.KeyMap[(int)ImGuiKey.Home] = (int)Key.Home;
+            io.KeyMap[(int)ImGuiKey.End] = (int)Key.End;
+            io.KeyMap[(int)ImGuiKey.Delete] = (int)Key.Delete;
+            io.KeyMap[(int)ImGuiKey.Backspace] = (int)Key.BackSpace;
+            io.KeyMap[(int)ImGuiKey.Enter] = (int)Key.Enter;
+            io.KeyMap[(int)ImGuiKey.Escape] = (int)Key.Escape;
+            io.KeyMap[(int)ImGuiKey.A] = (int)Key.A;
+            io.KeyMap[(int)ImGuiKey.C] = (int)Key.C;
+            io.KeyMap[(int)ImGuiKey.V] = (int)Key.V;
+            io.KeyMap[(int)ImGuiKey.X] = (int)Key.X;
+            io.KeyMap[(int)ImGuiKey.Y] = (int)Key.Y;
+            io.KeyMap[(int)ImGuiKey.Z] = (int)Key.Z;
         }
 
-        private unsafe void RenderImDrawData(ImDrawData* draw_data, GraphicsDevice gd, CommandList cl)
+        private unsafe void RenderImDrawData(ImDrawDataPtr draw_data, GraphicsDevice gd, CommandList cl)
         {
             uint vertexOffsetInVertices = 0;
             uint indexOffsetInElements = 0;
 
-            if (draw_data->CmdListsCount == 0)
+            if (draw_data.CmdListsCount == 0)
             {
                 return;
             }
 
-            uint totalVBSize = (uint)(draw_data->TotalVtxCount * sizeof(ImDrawVert));
+            uint totalVBSize = (uint)(draw_data.TotalVtxCount * sizeof(ImDrawVert));
             if (totalVBSize > _vertexBuffer.SizeInBytes)
             {
                 gd.DisposeWhenIdle(_vertexBuffer);
                 _vertexBuffer = gd.ResourceFactory.CreateBuffer(new BufferDescription((uint)(totalVBSize * 1.5f), BufferUsage.VertexBuffer | BufferUsage.Dynamic));
             }
 
-            uint totalIBSize = (uint)(draw_data->TotalIdxCount * sizeof(ushort));
+            uint totalIBSize = (uint)(draw_data.TotalIdxCount * sizeof(ushort));
             if (totalIBSize > _indexBuffer.SizeInBytes)
             {
                 gd.DisposeWhenIdle(_indexBuffer);
                 _indexBuffer = gd.ResourceFactory.CreateBuffer(new BufferDescription((uint)(totalIBSize * 1.5f), BufferUsage.IndexBuffer | BufferUsage.Dynamic));
             }
 
-            for (int i = 0; i < draw_data->CmdListsCount; i++)
+            for (int i = 0; i < draw_data.CmdListsCount; i++)
             {
-                ImDrawList* cmd_list = draw_data->CmdLists[i];
+                ImDrawListPtr cmd_list = draw_data.CmdLists[i];
 
                 cl.UpdateBuffer(
                     _vertexBuffer,
                     vertexOffsetInVertices * (uint)sizeof(ImDrawVert),
-                    (IntPtr)cmd_list->VtxBuffer.Data,
-                    (uint)(cmd_list->VtxBuffer.Size * sizeof(ImDrawVert)));
+                    (IntPtr)cmd_list.VtxBuffer.Data,
+                    (uint)(cmd_list.VtxBuffer.Size * sizeof(ImDrawVert)));
 
                 cl.UpdateBuffer(
                     _indexBuffer,
                     indexOffsetInElements * (uint)sizeof(ushort),
-                    (IntPtr)cmd_list->IdxBuffer.Data,
-                    (uint)(cmd_list->IdxBuffer.Size * sizeof(ushort)));
+                    (IntPtr)cmd_list.IdxBuffer.Data,
+                    (uint)(cmd_list.IdxBuffer.Size * sizeof(ushort)));
 
-                vertexOffsetInVertices += (uint)cmd_list->VtxBuffer.Size;
-                indexOffsetInElements += (uint)cmd_list->IdxBuffer.Size;
+                vertexOffsetInVertices += (uint)cmd_list.VtxBuffer.Size;
+                indexOffsetInElements += (uint)cmd_list.IdxBuffer.Size;
             }
 
             // Setup orthographic projection matrix into our constant buffer
-            ImGuiIO* io = igGetIO();
+            ImGuiIOPtr io = ImGui.GetIO();
             Matrix4x4 mvp = Matrix4x4.CreateOrthographicOffCenter(
                 0f,
-                io->DisplaySize.X,
-                io->DisplaySize.Y,
+                io.DisplaySize.X,
+                io.DisplaySize.Y,
                 0.0f,
                 -1.0f,
                 1.0f);
@@ -457,48 +463,48 @@ namespace ImGuiNET
             cl.SetPipeline(_pipeline);
             cl.SetGraphicsResourceSet(0, _mainResourceSet);
 
-            ImDrawData_ScaleClipRects(draw_data, io->DisplayFramebufferScale);
+            ImDrawData_ScaleClipRects(draw_data, io.DisplayFramebufferScale);
 
             // Render command lists
             int vtx_offset = 0;
             int idx_offset = 0;
-            for (int n = 0; n < draw_data->CmdListsCount; n++)
+            for (int n = 0; n < draw_data.CmdListsCount; n++)
             {
-                ImDrawList* cmd_list = draw_data->CmdLists[n];
-                for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
+                ImDrawListPtr cmd_list = draw_data.CmdLists[n];
+                for (int cmd_i = 0; cmd_i < cmd_list.CmdBuffer.Size; cmd_i++)
                 {
-                    ImDrawCmd* pcmd = &(((ImDrawCmd*)cmd_list->CmdBuffer.Data)[cmd_i]);
-                    if (pcmd->UserCallback != IntPtr.Zero)
+                    ImDrawCmdPtr pcmd = &(((ImDrawCmd*)cmd_list.CmdBuffer.Data)[cmd_i]);
+                    if (pcmd.UserCallback != IntPtr.Zero)
                     {
                         throw new NotImplementedException();
                     }
                     else
                     {
-                        if (pcmd->TextureId != IntPtr.Zero)
+                        if (pcmd.TextureId != IntPtr.Zero)
                         {
-                            if (pcmd->TextureId == _fontAtlasID)
+                            if (pcmd.TextureId == _fontAtlasID)
                             {
                                 cl.SetGraphicsResourceSet(1, _fontTextureResourceSet);
                             }
                             else
                             {
-                                cl.SetGraphicsResourceSet(1, GetImageResourceSet(pcmd->TextureId));
+                                cl.SetGraphicsResourceSet(1, GetImageResourceSet(pcmd.TextureId));
                             }
                         }
 
                         cl.SetScissorRect(
                             0,
-                            (uint)pcmd->ClipRect.X,
-                            (uint)pcmd->ClipRect.Y,
-                            (uint)(pcmd->ClipRect.Z - pcmd->ClipRect.X),
-                            (uint)(pcmd->ClipRect.W - pcmd->ClipRect.Y));
+                            (uint)pcmd.ClipRect.X,
+                            (uint)pcmd.ClipRect.Y,
+                            (uint)(pcmd.ClipRect.Z - pcmd.ClipRect.X),
+                            (uint)(pcmd.ClipRect.W - pcmd.ClipRect.Y));
 
-                        cl.DrawIndexed(pcmd->ElemCount, 1, (uint)idx_offset, vtx_offset, 0);
+                        cl.DrawIndexed(pcmd.ElemCount, 1, (uint)idx_offset, vtx_offset, 0);
                     }
 
-                    idx_offset += (int)pcmd->ElemCount;
+                    idx_offset += (int)pcmd.ElemCount;
                 }
-                vtx_offset += cmd_list->VtxBuffer.Size;
+                vtx_offset += cmd_list.VtxBuffer.Size;
             }
         }
 

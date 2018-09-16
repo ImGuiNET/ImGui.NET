@@ -15,6 +15,9 @@ namespace ImGuiNET
     {
         public ImGuiTextFilter* NativePtr { get; }
         public ImGuiTextFilterPtr(ImGuiTextFilter* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator ImGuiTextFilterPtr(ImGuiTextFilter* nativePtr) => new ImGuiTextFilterPtr(nativePtr);
+        public static implicit operator ImGuiTextFilter* (ImGuiTextFilterPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public RangeAccessor<byte> InputBuf => new RangeAccessor<byte>(NativePtr->InputBuf, 256);
         public ref ImVector/*<TextRange>*/ Filters => ref Unsafe.AsRef<ImVector/*<TextRange>*/>(&NativePtr->Filters);
         public ref int CountGrep => ref Unsafe.AsRef<int>(&NativePtr->CountGrep);
         public void Build()

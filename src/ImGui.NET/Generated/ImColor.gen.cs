@@ -13,6 +13,8 @@ namespace ImGuiNET
     {
         public ImColor* NativePtr { get; }
         public ImColorPtr(ImColor* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator ImColorPtr(ImColor* nativePtr) => new ImColorPtr(nativePtr);
+        public static implicit operator ImColor* (ImColorPtr wrappedPtr) => wrappedPtr.NativePtr;
         public ref Vector4 Value => ref Unsafe.AsRef<Vector4>(&NativePtr->Value);
         public void SetHSV(float h, float s, float v)
         {
@@ -63,21 +65,6 @@ namespace ImGuiNET
         {
             ImColor ret = ImGuiNative.ImColor_HSV(NativePtr, h, s, v, a);
             return ret;
-        }
-        public void HSV(ref ImColor pOut, float h, float s, float v)
-        {
-            ImColor native_pOut_val = pOut;
-            ImColor* native_pOut = &native_pOut_val;
-            float a = 1.0f;
-            ImGuiNative.ImColor_HSV_nonUDT(NativePtr, native_pOut, h, s, v, a);
-            pOut = native_pOut_val;
-        }
-        public void HSV(ref ImColor pOut, float h, float s, float v, float a)
-        {
-            ImColor native_pOut_val = pOut;
-            ImColor* native_pOut = &native_pOut_val;
-            ImGuiNative.ImColor_HSV_nonUDT(NativePtr, native_pOut, h, s, v, a);
-            pOut = native_pOut_val;
         }
     }
 }

@@ -13,6 +13,8 @@ namespace ImGuiNET
     {
         public ImGuiTextBuffer* NativePtr { get; }
         public ImGuiTextBufferPtr(ImGuiTextBuffer* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator ImGuiTextBufferPtr(ImGuiTextBuffer* nativePtr) => new ImGuiTextBufferPtr(nativePtr);
+        public static implicit operator ImGuiTextBuffer* (ImGuiTextBufferPtr wrappedPtr) => wrappedPtr.NativePtr;
         public ref ImVector/*<char>*/ Buf => ref Unsafe.AsRef<ImVector/*<char>*/>(&NativePtr->Buf);
         public void clear()
         {

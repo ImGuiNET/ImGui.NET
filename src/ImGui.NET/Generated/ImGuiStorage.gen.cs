@@ -13,6 +13,8 @@ namespace ImGuiNET
     {
         public ImGuiStorage* NativePtr { get; }
         public ImGuiStoragePtr(ImGuiStorage* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator ImGuiStoragePtr(ImGuiStorage* nativePtr) => new ImGuiStoragePtr(nativePtr);
+        public static implicit operator ImGuiStorage* (ImGuiStoragePtr wrappedPtr) => wrappedPtr.NativePtr;
         public ref ImVector/*<Pair>*/ Data => ref Unsafe.AsRef<ImVector/*<Pair>*/>(&NativePtr->Data);
         public void SetFloat(uint key, float val)
         {

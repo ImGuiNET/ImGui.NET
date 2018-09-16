@@ -22,6 +22,8 @@ namespace ImGuiNET
     {
         public ImFontGlyph* NativePtr { get; }
         public ImFontGlyphPtr(ImFontGlyph* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator ImFontGlyphPtr(ImFontGlyph* nativePtr) => new ImFontGlyphPtr(nativePtr);
+        public static implicit operator ImFontGlyph* (ImFontGlyphPtr wrappedPtr) => wrappedPtr.NativePtr;
         public ref ushort Codepoint => ref Unsafe.AsRef<ushort>(&NativePtr->Codepoint);
         public ref float AdvanceX => ref Unsafe.AsRef<float>(&NativePtr->AdvanceX);
         public ref float X0 => ref Unsafe.AsRef<float>(&NativePtr->X0);

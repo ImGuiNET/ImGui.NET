@@ -30,6 +30,8 @@ namespace ImGuiNET
     {
         public ImFontConfig* NativePtr { get; }
         public ImFontConfigPtr(ImFontConfig* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator ImFontConfigPtr(ImFontConfig* nativePtr) => new ImFontConfigPtr(nativePtr);
+        public static implicit operator ImFontConfig* (ImFontConfigPtr wrappedPtr) => wrappedPtr.NativePtr;
         public void* FontData { get => NativePtr->FontData; set => NativePtr->FontData = value; }
         public ref int FontDataSize => ref Unsafe.AsRef<int>(&NativePtr->FontDataSize);
         public ref byte FontDataOwnedByAtlas => ref Unsafe.AsRef<byte>(&NativePtr->FontDataOwnedByAtlas);
@@ -46,6 +48,7 @@ namespace ImGuiNET
         public ref byte MergeMode => ref Unsafe.AsRef<byte>(&NativePtr->MergeMode);
         public ref uint RasterizerFlags => ref Unsafe.AsRef<uint>(&NativePtr->RasterizerFlags);
         public ref float RasterizerMultiply => ref Unsafe.AsRef<float>(&NativePtr->RasterizerMultiply);
+        public RangeAccessor<byte> Name => new RangeAccessor<byte>(NativePtr->Name, 40);
         public ImFontPtr DstFont => new ImFontPtr(NativePtr->DstFont);
         public void ImFontConfig()
         {

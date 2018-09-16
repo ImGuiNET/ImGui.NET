@@ -13,6 +13,8 @@ namespace ImGuiNET
     {
         public GlyphRangesBuilder* NativePtr { get; }
         public GlyphRangesBuilderPtr(GlyphRangesBuilder* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator GlyphRangesBuilderPtr(GlyphRangesBuilder* nativePtr) => new GlyphRangesBuilderPtr(nativePtr);
+        public static implicit operator GlyphRangesBuilder* (GlyphRangesBuilderPtr wrappedPtr) => wrappedPtr.NativePtr;
         public ref ImVector/*<unsigned char>*/ UsedChars => ref Unsafe.AsRef<ImVector/*<unsigned char>*/>(&NativePtr->UsedChars);
         public void SetBit(int n)
         {

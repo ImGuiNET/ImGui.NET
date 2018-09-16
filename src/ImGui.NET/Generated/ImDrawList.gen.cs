@@ -27,6 +27,8 @@ namespace ImGuiNET
     {
         public ImDrawList* NativePtr { get; }
         public ImDrawListPtr(ImDrawList* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator ImDrawListPtr(ImDrawList* nativePtr) => new ImDrawListPtr(nativePtr);
+        public static implicit operator ImDrawList* (ImDrawListPtr wrappedPtr) => wrappedPtr.NativePtr;
         public ref ImVector/*<ImDrawCmd>*/ CmdBuffer => ref Unsafe.AsRef<ImVector/*<ImDrawCmd>*/>(&NativePtr->CmdBuffer);
         public ref ImVector/*<ImDrawIdx>*/ IdxBuffer => ref Unsafe.AsRef<ImVector/*<ImDrawIdx>*/>(&NativePtr->IdxBuffer);
         public ref ImVector/*<ImDrawVert>*/ VtxBuffer => ref Unsafe.AsRef<ImVector/*<ImDrawVert>*/>(&NativePtr->VtxBuffer);
@@ -322,10 +324,9 @@ namespace ImGuiNET
             }
             ImGuiNative.ImDrawList_AddText(NativePtr, pos, col, native_text_begin, native_text_end);
         }
-        public void AddText(ref ImFont font, float font_size, Vector2 pos, uint col, string text_begin)
+        public void AddText(ImFontPtr font, float font_size, Vector2 pos, uint col, string text_begin)
         {
-            ImFont native_font_val = font;
-            ImFont* native_font = &native_font_val;
+            ImFont* native_font = font.NativePtr;
             int text_begin_byteCount = Encoding.UTF8.GetByteCount(text_begin);
             byte* native_text_begin = stackalloc byte[text_begin_byteCount + 1];
             fixed (char* text_begin_ptr = text_begin)
@@ -337,12 +338,10 @@ namespace ImGuiNET
             float wrap_width = 0.0f;
             Vector4* cpu_fine_clip_rect = null;
             ImGuiNative.ImDrawList_AddTextFontPtr(NativePtr, native_font, font_size, pos, col, native_text_begin, native_text_end, wrap_width, cpu_fine_clip_rect);
-            font = native_font_val;
         }
-        public void AddText(ref ImFont font, float font_size, Vector2 pos, uint col, string text_begin, string text_end)
+        public void AddText(ImFontPtr font, float font_size, Vector2 pos, uint col, string text_begin, string text_end)
         {
-            ImFont native_font_val = font;
-            ImFont* native_font = &native_font_val;
+            ImFont* native_font = font.NativePtr;
             int text_begin_byteCount = Encoding.UTF8.GetByteCount(text_begin);
             byte* native_text_begin = stackalloc byte[text_begin_byteCount + 1];
             fixed (char* text_begin_ptr = text_begin)
@@ -360,12 +359,10 @@ namespace ImGuiNET
             float wrap_width = 0.0f;
             Vector4* cpu_fine_clip_rect = null;
             ImGuiNative.ImDrawList_AddTextFontPtr(NativePtr, native_font, font_size, pos, col, native_text_begin, native_text_end, wrap_width, cpu_fine_clip_rect);
-            font = native_font_val;
         }
-        public void AddText(ref ImFont font, float font_size, Vector2 pos, uint col, string text_begin, string text_end, float wrap_width)
+        public void AddText(ImFontPtr font, float font_size, Vector2 pos, uint col, string text_begin, string text_end, float wrap_width)
         {
-            ImFont native_font_val = font;
-            ImFont* native_font = &native_font_val;
+            ImFont* native_font = font.NativePtr;
             int text_begin_byteCount = Encoding.UTF8.GetByteCount(text_begin);
             byte* native_text_begin = stackalloc byte[text_begin_byteCount + 1];
             fixed (char* text_begin_ptr = text_begin)
@@ -382,12 +379,10 @@ namespace ImGuiNET
             }
             Vector4* cpu_fine_clip_rect = null;
             ImGuiNative.ImDrawList_AddTextFontPtr(NativePtr, native_font, font_size, pos, col, native_text_begin, native_text_end, wrap_width, cpu_fine_clip_rect);
-            font = native_font_val;
         }
-        public void AddText(ref ImFont font, float font_size, Vector2 pos, uint col, string text_begin, string text_end, float wrap_width, ref Vector4 cpu_fine_clip_rect)
+        public void AddText(ImFontPtr font, float font_size, Vector2 pos, uint col, string text_begin, string text_end, float wrap_width, ref Vector4 cpu_fine_clip_rect)
         {
-            ImFont native_font_val = font;
-            ImFont* native_font = &native_font_val;
+            ImFont* native_font = font.NativePtr;
             int text_begin_byteCount = Encoding.UTF8.GetByteCount(text_begin);
             byte* native_text_begin = stackalloc byte[text_begin_byteCount + 1];
             fixed (char* text_begin_ptr = text_begin)
@@ -405,7 +400,6 @@ namespace ImGuiNET
             Vector4 native_cpu_fine_clip_rect_val = cpu_fine_clip_rect;
             Vector4* native_cpu_fine_clip_rect = &native_cpu_fine_clip_rect_val;
             ImGuiNative.ImDrawList_AddTextFontPtr(NativePtr, native_font, font_size, pos, col, native_text_begin, native_text_end, wrap_width, native_cpu_fine_clip_rect);
-            font = native_font_val;
             cpu_fine_clip_rect = native_cpu_fine_clip_rect_val;
         }
         public void AddCircleFilled(Vector2 centre, float radius, uint col)
@@ -471,13 +465,6 @@ namespace ImGuiNET
             Vector2 ret = ImGuiNative.ImDrawList_GetClipRectMin(NativePtr);
             return ret;
         }
-        public void GetClipRectMin(ref Vector2 pOut)
-        {
-            Vector2 native_pOut_val = pOut;
-            Vector2* native_pOut = &native_pOut_val;
-            ImGuiNative.ImDrawList_GetClipRectMin_nonUDT(NativePtr, native_pOut);
-            pOut = native_pOut_val;
-        }
         public void PopTextureID()
         {
             ImGuiNative.ImDrawList_PopTextureID(NativePtr);
@@ -497,13 +484,6 @@ namespace ImGuiNET
         {
             Vector2 ret = ImGuiNative.ImDrawList_GetClipRectMax(NativePtr);
             return ret;
-        }
-        public void GetClipRectMax(ref Vector2 pOut)
-        {
-            Vector2 native_pOut_val = pOut;
-            Vector2* native_pOut = &native_pOut_val;
-            ImGuiNative.ImDrawList_GetClipRectMax_nonUDT(NativePtr, native_pOut);
-            pOut = native_pOut_val;
         }
         public void AddImageRounded(IntPtr user_texture_id, Vector2 a, Vector2 b, Vector2 uv_a, Vector2 uv_b, uint col, float rounding)
         {

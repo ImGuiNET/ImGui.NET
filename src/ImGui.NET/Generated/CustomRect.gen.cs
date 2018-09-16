@@ -20,6 +20,8 @@ namespace ImGuiNET
     {
         public CustomRect* NativePtr { get; }
         public CustomRectPtr(CustomRect* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator CustomRectPtr(CustomRect* nativePtr) => new CustomRectPtr(nativePtr);
+        public static implicit operator CustomRect* (CustomRectPtr wrappedPtr) => wrappedPtr.NativePtr;
         public ref uint ID => ref Unsafe.AsRef<uint>(&NativePtr->ID);
         public ref ushort Width => ref Unsafe.AsRef<ushort>(&NativePtr->Width);
         public ref ushort Height => ref Unsafe.AsRef<ushort>(&NativePtr->Height);

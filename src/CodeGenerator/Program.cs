@@ -21,8 +21,11 @@ namespace CodeGenerator
             { "unsigned short", "ushort" },
             { "unsigned int", "uint" },
             { "ImVec2", "Vector2" },
+            { "ImVec2_Simple", "Vector2" },
             { "ImVec3", "Vector3" },
             { "ImVec4", "Vector4" },
+            { "ImVec4_Simple", "Vector4" },
+            { "ImColor_Simple", "ImColor" },
             { "ImTextureID", "IntPtr" },
             { "ImGuiID", "uint" },
             { "ImDrawIdx", "ushort" },
@@ -78,9 +81,16 @@ namespace CodeGenerator
         private static readonly HashSet<string> s_legalFixedTypes = new HashSet<string>()
         {
             "byte",
+            "sbyte",
             "char",
-            "float",
+            "ushort",
+            "short",
+            "uint",
             "int",
+            "ulong",
+            "long",
+            "float",
+            "double",
         };
 
         static void Main(string[] args)
@@ -136,6 +146,12 @@ namespace CodeGenerator
             {
                 JProperty jp = (JProperty)jt;
                 string name = jp.Name;
+                if (name.Contains("GetMousePos"))
+                {
+
+                }
+
+                bool hasNonUdtVariants = jp.Values().Any(val => val["ov_cimguiname"]?.ToString().EndsWith("nonUDT") ?? false);
 
                 OverloadDefinition[] overloads = jp.Values().Select(val =>
                 {
@@ -147,6 +163,11 @@ namespace CodeGenerator
                     if (exportedName == null)
                     {
                         exportedName = cimguiname;
+                    }
+
+                    if (hasNonUdtVariants && !exportedName.EndsWith("nonUDT2"))
+                    {
+                        return null;
                     }
 
                     string selfTypeName = null;
@@ -189,7 +210,7 @@ namespace CodeGenerator
                         structName,
                         comment,
                         enums);
-                }).ToArray();
+                }).Where(od => od != null).ToArray();
 
                 return new FunctionDefinition(name, overloads);
             }).ToArray();
@@ -253,11 +274,17 @@ namespace CodeGenerator
                     writer.PushBlock($"public unsafe struct {ptrTypeName}");
                     writer.WriteLine($"public {td.Name}* NativePtr {{ get; }}");
                     writer.WriteLine($"public {ptrTypeName}({td.Name}* nativePtr) => NativePtr = nativePtr;");
+                    writer.WriteLine($"public static implicit operator {ptrTypeName}({td.Name}* nativePtr) => new {ptrTypeName}(nativePtr);");
+                    writer.WriteLine($"public static implicit operator {td.Name}* ({ptrTypeName} wrappedPtr) => wrappedPtr.NativePtr;");
+
                     foreach (TypeReference field in td.Fields)
                     {
                         string typeStr = GetTypeString(field.Type, field.IsFunctionPointer);
                         if (field.ArraySize != 0)
                         {
+                            string addrTarget = s_legalFixedTypes.Contains(typeStr) ? $"NativePtr->{field.Name}" : $"&NativePtr->{field.Name}_0";
+                            writer.WriteLine($"public RangeAccessor<{typeStr}> {field.Name} => new RangeAccessor<{typeStr}>({addrTarget}, {field.ArraySize});");
+                            // TODO
                         }
                         else
                         {
@@ -375,8 +402,21 @@ namespace CodeGenerator
 
                         string parameters = string.Join(", ", paramParts);
 
-                        writer.WriteLine("[DllImport(\"cimgui\")]");
-                        writer.WriteLine($"public static extern {ret} {exportedName}({parameters});");
+                        bool isUdtVariant = exportedName.Contains("nonUDT");
+                        string methodName = isUdtVariant
+                            ? exportedName.Substring(0, exportedName.IndexOf("_nonUDT"))
+                            : exportedName;
+
+                        if (isUdtVariant)
+                        {
+                            writer.WriteLine($"[DllImport(\"cimgui\", EntryPoint = \"{exportedName}\")]");
+
+                        }
+                        else
+                        {
+                            writer.WriteLine("[DllImport(\"cimgui\")]");
+                        }
+                        writer.WriteLine($"public static extern {ret} {methodName}({parameters});");
                     }
                 }
                 writer.PopBlock();
@@ -450,7 +490,12 @@ namespace CodeGenerator
             throw new InvalidOperationException();
         }
 
-        private static void EmitOverload(CSharpCodeWriter writer, OverloadDefinition overload, Dictionary<string, string> defaultValues, string selfName)
+        private static void EmitOverload(
+            CSharpCodeWriter writer,
+            OverloadDefinition overload,
+            Dictionary<string, string>
+            defaultValues,
+            string selfName)
         {
             Debug.Assert(!overload.IsMemberFunction || selfName != null);
 
@@ -570,6 +615,15 @@ namespace CodeGenerator
                     preCallLines.Add($"byte* {nativeArgName} = &{nativeArgName}_val;");
                     postCallLines.Add($"{correctedIdentifier} = {nativeArgName}_val != 0;");
                 }
+                else if (GetWrappedType(tr.Type, out string wrappedParamType)
+                    && !s_wellKnownTypes.ContainsKey(tr.Type)
+                    && !s_wellKnownTypes.ContainsKey(tr.Type.Substring(0, tr.Type.Length - 1)))
+                {
+                    marshalledParameters[i] = new MarshalledParameter(wrappedParamType, false, "native_" + tr.Name, false);
+                    string nativeArgName = "native_" + tr.Name;
+                    marshalledParameters[i] = new MarshalledParameter(wrappedParamType, false, nativeArgName, false);
+                    preCallLines.Add($"{tr.Type} {nativeArgName} = {correctedIdentifier}.NativePtr;");
+                }
                 else if (tr.Type.EndsWith("*") && tr.Type != "void*" && !s_wellKnownTypes.ContainsKey(tr.Type))
                 {
                     string nonPtrType = GetTypeString(tr.Type.Substring(0, tr.Type.Length - 1), false);
@@ -633,7 +687,14 @@ namespace CodeGenerator
 
             string nativeInvocationStr = string.Join(", ", nativeInvocationArgs);
             string ret = safeRet == "void" ? string.Empty : $"{nativeRet} ret = ";
-            writer.WriteLine($"{ret}ImGuiNative.{overload.ExportedName}({nativeInvocationStr});");
+
+            string targetName = overload.ExportedName;
+            if (targetName.Contains("nonUDT"))
+            {
+                targetName = targetName.Substring(0, targetName.IndexOf("_nonUDT"));
+            }
+
+            writer.WriteLine($"{ret}ImGuiNative.{targetName}({nativeInvocationStr});");
 
             for (int i = 0; i < marshalledParameters.Length; i++)
             {
@@ -691,7 +752,15 @@ namespace CodeGenerator
                     wrappedType = null;
                     return false; // TODO
                 }
-                wrappedType = nativeType.Substring(0, nativeType.Length - pointerLevel) + "Ptr";
+                string nonPtrType = nativeType.Substring(0, nativeType.Length - pointerLevel);
+
+                if (s_wellKnownTypes.ContainsKey(nonPtrType))
+                {
+                    wrappedType = null;
+                    return false;
+                }
+
+                wrappedType = nonPtrType + "Ptr";
 
                 return true;
             }

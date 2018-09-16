@@ -15,6 +15,8 @@ namespace ImGuiNET
     {
         public ImDrawVert* NativePtr { get; }
         public ImDrawVertPtr(ImDrawVert* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator ImDrawVertPtr(ImDrawVert* nativePtr) => new ImDrawVertPtr(nativePtr);
+        public static implicit operator ImDrawVert* (ImDrawVertPtr wrappedPtr) => wrappedPtr.NativePtr;
         public ref Vector2 pos => ref Unsafe.AsRef<Vector2>(&NativePtr->pos);
         public ref Vector2 uv => ref Unsafe.AsRef<Vector2>(&NativePtr->uv);
         public ref uint col => ref Unsafe.AsRef<uint>(&NativePtr->col);

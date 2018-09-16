@@ -18,6 +18,8 @@ namespace ImGuiNET
     {
         public ImGuiListClipper* NativePtr { get; }
         public ImGuiListClipperPtr(ImGuiListClipper* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator ImGuiListClipperPtr(ImGuiListClipper* nativePtr) => new ImGuiListClipperPtr(nativePtr);
+        public static implicit operator ImGuiListClipper* (ImGuiListClipperPtr wrappedPtr) => wrappedPtr.NativePtr;
         public ref float StartPosY => ref Unsafe.AsRef<float>(&NativePtr->StartPosY);
         public ref float ItemsHeight => ref Unsafe.AsRef<float>(&NativePtr->ItemsHeight);
         public ref int ItemsCount => ref Unsafe.AsRef<int>(&NativePtr->ItemsCount);

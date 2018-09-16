@@ -28,6 +28,8 @@ namespace ImGuiNET
     {
         public ImFont* NativePtr { get; }
         public ImFontPtr(ImFont* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator ImFontPtr(ImFont* nativePtr) => new ImFontPtr(nativePtr);
+        public static implicit operator ImFont* (ImFontPtr wrappedPtr) => wrappedPtr.NativePtr;
         public ref float FontSize => ref Unsafe.AsRef<float>(&NativePtr->FontSize);
         public ref float Scale => ref Unsafe.AsRef<float>(&NativePtr->Scale);
         public ref Vector2 DisplayOffset => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayOffset);
@@ -62,10 +64,9 @@ namespace ImGuiNET
         {
             ImGuiNative.ImFont_GrowIndex(NativePtr, new_size);
         }
-        public void RenderText(ref ImDrawList draw_list, float size, Vector2 pos, uint col, Vector4 clip_rect, string text_begin, string text_end)
+        public void RenderText(ImDrawListPtr draw_list, float size, Vector2 pos, uint col, Vector4 clip_rect, string text_begin, string text_end)
         {
-            ImDrawList native_draw_list_val = draw_list;
-            ImDrawList* native_draw_list = &native_draw_list_val;
+            ImDrawList* native_draw_list = draw_list.NativePtr;
             int text_begin_byteCount = Encoding.UTF8.GetByteCount(text_begin);
             byte* native_text_begin = stackalloc byte[text_begin_byteCount + 1];
             fixed (char* text_begin_ptr = text_begin)
@@ -83,12 +84,10 @@ namespace ImGuiNET
             float wrap_width = 0.0f;
             byte cpu_fine_clip = 0;
             ImGuiNative.ImFont_RenderText(NativePtr, native_draw_list, size, pos, col, clip_rect, native_text_begin, native_text_end, wrap_width, cpu_fine_clip);
-            draw_list = native_draw_list_val;
         }
-        public void RenderText(ref ImDrawList draw_list, float size, Vector2 pos, uint col, Vector4 clip_rect, string text_begin, string text_end, float wrap_width)
+        public void RenderText(ImDrawListPtr draw_list, float size, Vector2 pos, uint col, Vector4 clip_rect, string text_begin, string text_end, float wrap_width)
         {
-            ImDrawList native_draw_list_val = draw_list;
-            ImDrawList* native_draw_list = &native_draw_list_val;
+            ImDrawList* native_draw_list = draw_list.NativePtr;
             int text_begin_byteCount = Encoding.UTF8.GetByteCount(text_begin);
             byte* native_text_begin = stackalloc byte[text_begin_byteCount + 1];
             fixed (char* text_begin_ptr = text_begin)
@@ -105,12 +104,10 @@ namespace ImGuiNET
             }
             byte cpu_fine_clip = 0;
             ImGuiNative.ImFont_RenderText(NativePtr, native_draw_list, size, pos, col, clip_rect, native_text_begin, native_text_end, wrap_width, cpu_fine_clip);
-            draw_list = native_draw_list_val;
         }
-        public void RenderText(ref ImDrawList draw_list, float size, Vector2 pos, uint col, Vector4 clip_rect, string text_begin, string text_end, float wrap_width, bool cpu_fine_clip)
+        public void RenderText(ImDrawListPtr draw_list, float size, Vector2 pos, uint col, Vector4 clip_rect, string text_begin, string text_end, float wrap_width, bool cpu_fine_clip)
         {
-            ImDrawList native_draw_list_val = draw_list;
-            ImDrawList* native_draw_list = &native_draw_list_val;
+            ImDrawList* native_draw_list = draw_list.NativePtr;
             int text_begin_byteCount = Encoding.UTF8.GetByteCount(text_begin);
             byte* native_text_begin = stackalloc byte[text_begin_byteCount + 1];
             fixed (char* text_begin_ptr = text_begin)
@@ -127,7 +124,6 @@ namespace ImGuiNET
             }
             byte native_cpu_fine_clip = cpu_fine_clip ? (byte)1 : (byte)0;
             ImGuiNative.ImFont_RenderText(NativePtr, native_draw_list, size, pos, col, clip_rect, native_text_begin, native_text_end, wrap_width, native_cpu_fine_clip);
-            draw_list = native_draw_list_val;
         }
         public ImFontGlyphPtr FindGlyphNoFallback(ushort c)
         {
@@ -209,68 +205,6 @@ namespace ImGuiNET
             remaining = native_remaining_val;
             return ret;
         }
-        public void CalcTextSizeA(ref Vector2 pOut, float size, float max_width, float wrap_width, string text_begin)
-        {
-            Vector2 native_pOut_val = pOut;
-            Vector2* native_pOut = &native_pOut_val;
-            int text_begin_byteCount = Encoding.UTF8.GetByteCount(text_begin);
-            byte* native_text_begin = stackalloc byte[text_begin_byteCount + 1];
-            fixed (char* text_begin_ptr = text_begin)
-            {
-                int native_text_begin_offset = Encoding.UTF8.GetBytes(text_begin_ptr, text_begin.Length, native_text_begin, text_begin_byteCount);
-                native_text_begin[native_text_begin_offset] = 0;
-            }
-            byte* native_text_end = null;
-            byte** remaining = null;
-            ImGuiNative.ImFont_CalcTextSizeA_nonUDT(NativePtr, native_pOut, size, max_width, wrap_width, native_text_begin, native_text_end, remaining);
-            pOut = native_pOut_val;
-        }
-        public void CalcTextSizeA(ref Vector2 pOut, float size, float max_width, float wrap_width, string text_begin, string text_end)
-        {
-            Vector2 native_pOut_val = pOut;
-            Vector2* native_pOut = &native_pOut_val;
-            int text_begin_byteCount = Encoding.UTF8.GetByteCount(text_begin);
-            byte* native_text_begin = stackalloc byte[text_begin_byteCount + 1];
-            fixed (char* text_begin_ptr = text_begin)
-            {
-                int native_text_begin_offset = Encoding.UTF8.GetBytes(text_begin_ptr, text_begin.Length, native_text_begin, text_begin_byteCount);
-                native_text_begin[native_text_begin_offset] = 0;
-            }
-            int text_end_byteCount = Encoding.UTF8.GetByteCount(text_end);
-            byte* native_text_end = stackalloc byte[text_end_byteCount + 1];
-            fixed (char* text_end_ptr = text_end)
-            {
-                int native_text_end_offset = Encoding.UTF8.GetBytes(text_end_ptr, text_end.Length, native_text_end, text_end_byteCount);
-                native_text_end[native_text_end_offset] = 0;
-            }
-            byte** remaining = null;
-            ImGuiNative.ImFont_CalcTextSizeA_nonUDT(NativePtr, native_pOut, size, max_width, wrap_width, native_text_begin, native_text_end, remaining);
-            pOut = native_pOut_val;
-        }
-        public void CalcTextSizeA(ref Vector2 pOut, float size, float max_width, float wrap_width, string text_begin, string text_end, ref byte* remaining)
-        {
-            Vector2 native_pOut_val = pOut;
-            Vector2* native_pOut = &native_pOut_val;
-            int text_begin_byteCount = Encoding.UTF8.GetByteCount(text_begin);
-            byte* native_text_begin = stackalloc byte[text_begin_byteCount + 1];
-            fixed (char* text_begin_ptr = text_begin)
-            {
-                int native_text_begin_offset = Encoding.UTF8.GetBytes(text_begin_ptr, text_begin.Length, native_text_begin, text_begin_byteCount);
-                native_text_begin[native_text_begin_offset] = 0;
-            }
-            int text_end_byteCount = Encoding.UTF8.GetByteCount(text_end);
-            byte* native_text_end = stackalloc byte[text_end_byteCount + 1];
-            fixed (char* text_end_ptr = text_end)
-            {
-                int native_text_end_offset = Encoding.UTF8.GetBytes(text_end_ptr, text_end.Length, native_text_end, text_end_byteCount);
-                native_text_end[native_text_end_offset] = 0;
-            }
-            byte* native_remaining_val = remaining;
-            byte** native_remaining = &native_remaining_val;
-            ImGuiNative.ImFont_CalcTextSizeA_nonUDT(NativePtr, native_pOut, size, max_width, wrap_width, native_text_begin, native_text_end, native_remaining);
-            pOut = native_pOut_val;
-            remaining = native_remaining_val;
-        }
         public bool IsLoaded()
         {
             byte ret = ImGuiNative.ImFont_IsLoaded(NativePtr);
@@ -285,12 +219,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImFont_SetFallbackChar(NativePtr, c);
         }
-        public void RenderChar(ref ImDrawList draw_list, float size, Vector2 pos, uint col, ushort c)
+        public void RenderChar(ImDrawListPtr draw_list, float size, Vector2 pos, uint col, ushort c)
         {
-            ImDrawList native_draw_list_val = draw_list;
-            ImDrawList* native_draw_list = &native_draw_list_val;
+            ImDrawList* native_draw_list = draw_list.NativePtr;
             ImGuiNative.ImFont_RenderChar(NativePtr, native_draw_list, size, pos, col, c);
-            draw_list = native_draw_list_val;
         }
         public ImFontGlyphPtr FindGlyph(ushort c)
         {

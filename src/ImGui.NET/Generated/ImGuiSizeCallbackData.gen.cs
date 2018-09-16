@@ -16,6 +16,8 @@ namespace ImGuiNET
     {
         public ImGuiSizeCallbackData* NativePtr { get; }
         public ImGuiSizeCallbackDataPtr(ImGuiSizeCallbackData* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator ImGuiSizeCallbackDataPtr(ImGuiSizeCallbackData* nativePtr) => new ImGuiSizeCallbackDataPtr(nativePtr);
+        public static implicit operator ImGuiSizeCallbackData* (ImGuiSizeCallbackDataPtr wrappedPtr) => wrappedPtr.NativePtr;
         public void* UserData { get => NativePtr->UserData; set => NativePtr->UserData = value; }
         public ref Vector2 Pos => ref Unsafe.AsRef<Vector2>(&NativePtr->Pos);
         public ref Vector2 CurrentSize => ref Unsafe.AsRef<Vector2>(&NativePtr->CurrentSize);

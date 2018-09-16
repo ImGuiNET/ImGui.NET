@@ -84,6 +84,8 @@ namespace ImGuiNET
     {
         public ImGuiStyle* NativePtr { get; }
         public ImGuiStylePtr(ImGuiStyle* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator ImGuiStylePtr(ImGuiStyle* nativePtr) => new ImGuiStylePtr(nativePtr);
+        public static implicit operator ImGuiStyle* (ImGuiStylePtr wrappedPtr) => wrappedPtr.NativePtr;
         public ref float Alpha => ref Unsafe.AsRef<float>(&NativePtr->Alpha);
         public ref Vector2 WindowPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->WindowPadding);
         public ref float WindowRounding => ref Unsafe.AsRef<float>(&NativePtr->WindowRounding);
@@ -113,6 +115,7 @@ namespace ImGuiNET
         public ref byte AntiAliasedLines => ref Unsafe.AsRef<byte>(&NativePtr->AntiAliasedLines);
         public ref byte AntiAliasedFill => ref Unsafe.AsRef<byte>(&NativePtr->AntiAliasedFill);
         public ref float CurveTessellationTol => ref Unsafe.AsRef<float>(&NativePtr->CurveTessellationTol);
+        public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 43);
         public void ImGuiStyle()
         {
             ImGuiNative.ImGuiStyle_ImGuiStyle(NativePtr);

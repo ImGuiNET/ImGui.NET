@@ -26,6 +26,8 @@ namespace ImGuiNET
         private static bool _showMemoryEditor = false;
         private static byte[] _memoryEditorData;
 
+        static void SetThing(out float i, float val) { i = val; }
+
         static void Main(string[] args)
         {
             // Create window, GraphicsDevice, and all resources necessary for the demo.
@@ -83,6 +85,8 @@ namespace ImGuiNET
                 ImGui.SliderFloat("float", ref _f, 0, 1, _f.ToString("0.000"), 1);  // Edit 1 float using a slider from 0.0f to 1.0f    
                 //ImGui.ColorEdit3("clear color", ref _clearColor);                   // Edit 3 floats representing a color
 
+                ImGui.Text($"Mouse position: {ImGui.GetMousePos()}");
+
                 ImGui.Checkbox("Demo Window", ref _showDemoWindow);                 // Edit bools storing our windows open/close state
                 ImGui.Checkbox("Another Window", ref _showAnotherWindow);
                 ImGui.Checkbox("Memory Editor", ref _showMemoryEditor);
@@ -113,6 +117,9 @@ namespace ImGuiNET
                 ImGui.SetNextWindowPos(new Vector2(650, 20), ImGuiCond.FirstUseEver);
                 ImGui.ShowDemoWindow(ref _showDemoWindow);
             }
+
+            ImGuiIOPtr io = ImGui.GetIO();
+            SetThing(out io.DeltaTime, 2f);
 
             if (_showMemoryEditor)
             {

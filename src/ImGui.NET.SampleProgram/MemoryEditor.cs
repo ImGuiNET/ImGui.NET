@@ -80,7 +80,7 @@ namespace ImGuiNET
             float glyph_width = ImGui.CalcTextSize("F").X;
             float cell_width = glyph_width * 3; // "FF " we include trailing space in the width to easily catch clicks everywhere
 
-            var clipper = new ImGuiListClipper(line_total_count, line_height);
+            var clipper = new ImGuiListClipper2(line_total_count, line_height);
             int visible_start_addr = clipper.DisplayStart * Rows;
             int visible_end_addr = clipper.DisplayEnd * Rows;
 
@@ -243,13 +243,13 @@ namespace ImGuiNET
     //Not a proper translation, because ImGuiListClipper uses imgui's internal api.
     //Thus SetCursorPosYAndSetupDummyPrevLine isn't reimplemented, but SetCursorPosY + SetNextWindowContentSize seems to be working well instead.
     //TODO expose clipper through newer cimgui version
-    internal class ImGuiListClipper
+    internal class ImGuiListClipper2
     {
         public float StartPosY;
         public float ItemsHeight;
         public int ItemsCount, StepNo, DisplayStart, DisplayEnd;
 
-        public ImGuiListClipper(int items_count = -1, float items_height = -1.0f)
+        public ImGuiListClipper2(int items_count = -1, float items_height = -1.0f)
         {
             Begin(items_count, items_height);
         }

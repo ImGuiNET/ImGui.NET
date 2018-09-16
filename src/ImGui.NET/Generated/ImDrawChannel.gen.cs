@@ -14,6 +14,8 @@ namespace ImGuiNET
     {
         public ImDrawChannel* NativePtr { get; }
         public ImDrawChannelPtr(ImDrawChannel* nativePtr) => NativePtr = nativePtr;
+        public static implicit operator ImDrawChannelPtr(ImDrawChannel* nativePtr) => new ImDrawChannelPtr(nativePtr);
+        public static implicit operator ImDrawChannel* (ImDrawChannelPtr wrappedPtr) => wrappedPtr.NativePtr;
         public ref ImVector/*<ImDrawCmd>*/ CmdBuffer => ref Unsafe.AsRef<ImVector/*<ImDrawCmd>*/>(&NativePtr->CmdBuffer);
         public ref ImVector/*<ImDrawIdx>*/ IdxBuffer => ref Unsafe.AsRef<ImVector/*<ImDrawIdx>*/>(&NativePtr->IdxBuffer);
     }
