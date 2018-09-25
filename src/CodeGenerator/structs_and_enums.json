@@ -1172,44 +1172,44 @@
         "value": "0"
       },
       {
-        "calc_value": 2,
+        "calc_value": 1,
         "name": "ImGuiMouseCursor_TextInput",
+        "value": 1
+      },
+      {
+        "calc_value": 2,
+        "name": "ImGuiMouseCursor_ResizeAll",
         "value": 2
       },
       {
         "calc_value": 3,
-        "name": "ImGuiMouseCursor_ResizeAll",
+        "name": "ImGuiMouseCursor_ResizeNS",
         "value": 3
       },
       {
         "calc_value": 4,
-        "name": "ImGuiMouseCursor_ResizeNS",
+        "name": "ImGuiMouseCursor_ResizeEW",
         "value": 4
       },
       {
         "calc_value": 5,
-        "name": "ImGuiMouseCursor_ResizeEW",
+        "name": "ImGuiMouseCursor_ResizeNESW",
         "value": 5
       },
       {
         "calc_value": 6,
-        "name": "ImGuiMouseCursor_ResizeNESW",
+        "name": "ImGuiMouseCursor_ResizeNWSE",
         "value": 6
       },
       {
         "calc_value": 7,
-        "name": "ImGuiMouseCursor_ResizeNWSE",
+        "name": "ImGuiMouseCursor_Hand",
         "value": 7
       },
       {
         "calc_value": 8,
-        "name": "ImGuiMouseCursor_Hand",
-        "value": 8
-      },
-      {
-        "calc_value": 9,
         "name": "ImGuiMouseCursor_COUNT",
-        "value": 9
+        "value": 8
       }
     ],
     "ImGuiColorEditFlags_": [
@@ -1418,9 +1418,9 @@
         "value": "3"
       },
       {
-        "calc_value": 5,
+        "calc_value": 4,
         "name": "ImGuiDir_COUNT",
-        "value": 5
+        "value": 4
       }
     ],
     "ImDrawListFlags_": [
@@ -2209,11 +2209,15 @@
       },
       {
         "type": "bool",
+        "name": "MouseDrawCursor"
+      },
+      {
+        "type": "bool",
         "name": "ConfigMacOSXBehaviors"
       },
       {
         "type": "bool",
-        "name": "ConfigCursorBlink"
+        "name": "ConfigInputTextCursorBlink"
       },
       {
         "type": "bool",
@@ -2259,10 +2263,6 @@
       {
         "type": "float",
         "name": "MouseWheelH"
-      },
-      {
-        "type": "bool",
-        "name": "MouseDrawCursor"
       },
       {
         "type": "bool",

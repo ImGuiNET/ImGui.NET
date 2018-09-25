@@ -28,8 +28,9 @@ namespace ImGuiNET
         public Vector2 DisplayFramebufferScale;
         public Vector2 DisplayVisibleMin;
         public Vector2 DisplayVisibleMax;
+        public byte MouseDrawCursor;
         public byte ConfigMacOSXBehaviors;
-        public byte ConfigCursorBlink;
+        public byte ConfigInputTextCursorBlink;
         public byte ConfigResizeWindowsFromEdges;
         public IntPtr GetClipboardTextFn;
         public IntPtr SetClipboardTextFn;
@@ -41,7 +42,6 @@ namespace ImGuiNET
         public fixed byte MouseDown[5];
         public float MouseWheel;
         public float MouseWheelH;
-        public byte MouseDrawCursor;
         public byte KeyCtrl;
         public byte KeyShift;
         public byte KeyAlt;
@@ -116,8 +116,9 @@ namespace ImGuiNET
         public ref Vector2 DisplayFramebufferScale => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayFramebufferScale);
         public ref Vector2 DisplayVisibleMin => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayVisibleMin);
         public ref Vector2 DisplayVisibleMax => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayVisibleMax);
+        public ref byte MouseDrawCursor => ref Unsafe.AsRef<byte>(&NativePtr->MouseDrawCursor);
         public ref byte ConfigMacOSXBehaviors => ref Unsafe.AsRef<byte>(&NativePtr->ConfigMacOSXBehaviors);
-        public ref byte ConfigCursorBlink => ref Unsafe.AsRef<byte>(&NativePtr->ConfigCursorBlink);
+        public ref byte ConfigInputTextCursorBlink => ref Unsafe.AsRef<byte>(&NativePtr->ConfigInputTextCursorBlink);
         public ref byte ConfigResizeWindowsFromEdges => ref Unsafe.AsRef<byte>(&NativePtr->ConfigResizeWindowsFromEdges);
         public ref IntPtr GetClipboardTextFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->GetClipboardTextFn);
         public ref IntPtr SetClipboardTextFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->SetClipboardTextFn);
@@ -129,7 +130,6 @@ namespace ImGuiNET
         public RangeAccessor<byte> MouseDown => new RangeAccessor<byte>(NativePtr->MouseDown, 5);
         public ref float MouseWheel => ref Unsafe.AsRef<float>(&NativePtr->MouseWheel);
         public ref float MouseWheelH => ref Unsafe.AsRef<float>(&NativePtr->MouseWheelH);
-        public ref byte MouseDrawCursor => ref Unsafe.AsRef<byte>(&NativePtr->MouseDrawCursor);
         public ref byte KeyCtrl => ref Unsafe.AsRef<byte>(&NativePtr->KeyCtrl);
         public ref byte KeyShift => ref Unsafe.AsRef<byte>(&NativePtr->KeyShift);
         public ref byte KeyAlt => ref Unsafe.AsRef<byte>(&NativePtr->KeyAlt);

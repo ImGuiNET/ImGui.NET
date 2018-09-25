@@ -4,13 +4,13 @@ namespace ImGuiNET
     {
         None = -1,
         Arrow = 0,
-        TextInput = 2,
-        ResizeAll = 3,
-        ResizeNS = 4,
-        ResizeEW = 5,
-        ResizeNESW = 6,
-        ResizeNWSE = 7,
-        Hand = 8,
-        COUNT = 9,
+        TextInput = 1,
+        ResizeAll = 2,
+        ResizeNS = 3,
+        ResizeEW = 4,
+        ResizeNESW = 5,
+        ResizeNWSE = 6,
+        Hand = 7,
+        COUNT = 8,
     }
 }

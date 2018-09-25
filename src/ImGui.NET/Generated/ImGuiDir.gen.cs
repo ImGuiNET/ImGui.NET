@@ -7,6 +7,6 @@ namespace ImGuiNET
         Right = 1,
         Up = 2,
         Down = 3,
-        COUNT = 5,
+        COUNT = 4,
     }
 }
