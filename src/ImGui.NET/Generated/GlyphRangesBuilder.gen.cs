@@ -5,16 +5,18 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct GlyphRangesBuilder
+    public unsafe partial struct GlyphRangesBuilder
     {
         public ImVector/*<unsigned char>*/ UsedChars;
     }
-    public unsafe struct GlyphRangesBuilderPtr
+    public unsafe partial struct GlyphRangesBuilderPtr
     {
         public GlyphRangesBuilder* NativePtr { get; }
         public GlyphRangesBuilderPtr(GlyphRangesBuilder* nativePtr) => NativePtr = nativePtr;
+        public GlyphRangesBuilderPtr(IntPtr nativePtr) => NativePtr = (GlyphRangesBuilder*)nativePtr;
         public static implicit operator GlyphRangesBuilderPtr(GlyphRangesBuilder* nativePtr) => new GlyphRangesBuilderPtr(nativePtr);
         public static implicit operator GlyphRangesBuilder* (GlyphRangesBuilderPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator GlyphRangesBuilderPtr(IntPtr nativePtr) => new GlyphRangesBuilderPtr(nativePtr);
         public ref ImVector/*<unsigned char>*/ UsedChars => ref Unsafe.AsRef<ImVector/*<unsigned char>*/>(&NativePtr->UsedChars);
         public void SetBit(int n)
         {

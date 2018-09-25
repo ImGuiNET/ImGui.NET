@@ -5,16 +5,18 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct ImColor
+    public unsafe partial struct ImColor
     {
         public Vector4 Value;
     }
-    public unsafe struct ImColorPtr
+    public unsafe partial struct ImColorPtr
     {
         public ImColor* NativePtr { get; }
         public ImColorPtr(ImColor* nativePtr) => NativePtr = nativePtr;
+        public ImColorPtr(IntPtr nativePtr) => NativePtr = (ImColor*)nativePtr;
         public static implicit operator ImColorPtr(ImColor* nativePtr) => new ImColorPtr(nativePtr);
         public static implicit operator ImColor* (ImColorPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImColorPtr(IntPtr nativePtr) => new ImColorPtr(nativePtr);
         public ref Vector4 Value => ref Unsafe.AsRef<Vector4>(&NativePtr->Value);
         public void SetHSV(float h, float s, float v)
         {

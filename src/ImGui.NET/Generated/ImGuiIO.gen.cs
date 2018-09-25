@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct ImGuiIO
+    public unsafe partial struct ImGuiIO
     {
         public ImGuiConfigFlags ConfigFlags;
         public ImGuiBackendFlags BackendFlags;
@@ -87,12 +87,14 @@ namespace ImGuiNET
         public fixed float NavInputsDownDuration[21];
         public fixed float NavInputsDownDurationPrev[21];
     }
-    public unsafe struct ImGuiIOPtr
+    public unsafe partial struct ImGuiIOPtr
     {
         public ImGuiIO* NativePtr { get; }
         public ImGuiIOPtr(ImGuiIO* nativePtr) => NativePtr = nativePtr;
+        public ImGuiIOPtr(IntPtr nativePtr) => NativePtr = (ImGuiIO*)nativePtr;
         public static implicit operator ImGuiIOPtr(ImGuiIO* nativePtr) => new ImGuiIOPtr(nativePtr);
         public static implicit operator ImGuiIO* (ImGuiIOPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImGuiIOPtr(IntPtr nativePtr) => new ImGuiIOPtr(nativePtr);
         public ref ImGuiConfigFlags ConfigFlags => ref Unsafe.AsRef<ImGuiConfigFlags>(&NativePtr->ConfigFlags);
         public ref ImGuiBackendFlags BackendFlags => ref Unsafe.AsRef<ImGuiBackendFlags>(&NativePtr->BackendFlags);
         public ref Vector2 DisplaySize => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplaySize);

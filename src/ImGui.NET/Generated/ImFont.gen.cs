@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct ImFont
+    public unsafe partial struct ImFont
     {
         public float FontSize;
         public float Scale;
@@ -24,12 +24,14 @@ namespace ImGuiNET
         public byte DirtyLookupTables;
         public int MetricsTotalSurface;
     }
-    public unsafe struct ImFontPtr
+    public unsafe partial struct ImFontPtr
     {
         public ImFont* NativePtr { get; }
         public ImFontPtr(ImFont* nativePtr) => NativePtr = nativePtr;
+        public ImFontPtr(IntPtr nativePtr) => NativePtr = (ImFont*)nativePtr;
         public static implicit operator ImFontPtr(ImFont* nativePtr) => new ImFontPtr(nativePtr);
         public static implicit operator ImFont* (ImFontPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImFontPtr(IntPtr nativePtr) => new ImFontPtr(nativePtr);
         public ref float FontSize => ref Unsafe.AsRef<float>(&NativePtr->FontSize);
         public ref float Scale => ref Unsafe.AsRef<float>(&NativePtr->Scale);
         public ref Vector2 DisplayOffset => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayOffset);

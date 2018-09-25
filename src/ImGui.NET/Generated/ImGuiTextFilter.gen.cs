@@ -5,18 +5,20 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct ImGuiTextFilter
+    public unsafe partial struct ImGuiTextFilter
     {
         public fixed byte InputBuf[256];
         public ImVector/*<TextRange>*/ Filters;
         public int CountGrep;
     }
-    public unsafe struct ImGuiTextFilterPtr
+    public unsafe partial struct ImGuiTextFilterPtr
     {
         public ImGuiTextFilter* NativePtr { get; }
         public ImGuiTextFilterPtr(ImGuiTextFilter* nativePtr) => NativePtr = nativePtr;
+        public ImGuiTextFilterPtr(IntPtr nativePtr) => NativePtr = (ImGuiTextFilter*)nativePtr;
         public static implicit operator ImGuiTextFilterPtr(ImGuiTextFilter* nativePtr) => new ImGuiTextFilterPtr(nativePtr);
         public static implicit operator ImGuiTextFilter* (ImGuiTextFilterPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImGuiTextFilterPtr(IntPtr nativePtr) => new ImGuiTextFilterPtr(nativePtr);
         public RangeAccessor<byte> InputBuf => new RangeAccessor<byte>(NativePtr->InputBuf, 256);
         public ref ImVector/*<TextRange>*/ Filters => ref Unsafe.AsRef<ImVector/*<TextRange>*/>(&NativePtr->Filters);
         public ref int CountGrep => ref Unsafe.AsRef<int>(&NativePtr->CountGrep);

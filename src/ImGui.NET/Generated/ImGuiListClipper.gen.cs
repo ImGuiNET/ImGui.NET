@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct ImGuiListClipper
+    public unsafe partial struct ImGuiListClipper
     {
         public float StartPosY;
         public float ItemsHeight;
@@ -14,12 +14,14 @@ namespace ImGuiNET
         public int DisplayStart;
         public int DisplayEnd;
     }
-    public unsafe struct ImGuiListClipperPtr
+    public unsafe partial struct ImGuiListClipperPtr
     {
         public ImGuiListClipper* NativePtr { get; }
         public ImGuiListClipperPtr(ImGuiListClipper* nativePtr) => NativePtr = nativePtr;
+        public ImGuiListClipperPtr(IntPtr nativePtr) => NativePtr = (ImGuiListClipper*)nativePtr;
         public static implicit operator ImGuiListClipperPtr(ImGuiListClipper* nativePtr) => new ImGuiListClipperPtr(nativePtr);
         public static implicit operator ImGuiListClipper* (ImGuiListClipperPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImGuiListClipperPtr(IntPtr nativePtr) => new ImGuiListClipperPtr(nativePtr);
         public ref float StartPosY => ref Unsafe.AsRef<float>(&NativePtr->StartPosY);
         public ref float ItemsHeight => ref Unsafe.AsRef<float>(&NativePtr->ItemsHeight);
         public ref int ItemsCount => ref Unsafe.AsRef<int>(&NativePtr->ItemsCount);

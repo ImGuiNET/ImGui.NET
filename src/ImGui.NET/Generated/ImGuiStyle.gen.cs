@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct ImGuiStyle
+    public unsafe partial struct ImGuiStyle
     {
         public float Alpha;
         public Vector2 WindowPadding;
@@ -80,12 +80,14 @@ namespace ImGuiNET
         public Vector4 Colors_41;
         public Vector4 Colors_42;
     }
-    public unsafe struct ImGuiStylePtr
+    public unsafe partial struct ImGuiStylePtr
     {
         public ImGuiStyle* NativePtr { get; }
         public ImGuiStylePtr(ImGuiStyle* nativePtr) => NativePtr = nativePtr;
+        public ImGuiStylePtr(IntPtr nativePtr) => NativePtr = (ImGuiStyle*)nativePtr;
         public static implicit operator ImGuiStylePtr(ImGuiStyle* nativePtr) => new ImGuiStylePtr(nativePtr);
         public static implicit operator ImGuiStyle* (ImGuiStylePtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImGuiStylePtr(IntPtr nativePtr) => new ImGuiStylePtr(nativePtr);
         public ref float Alpha => ref Unsafe.AsRef<float>(&NativePtr->Alpha);
         public ref Vector2 WindowPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->WindowPadding);
         public ref float WindowRounding => ref Unsafe.AsRef<float>(&NativePtr->WindowRounding);

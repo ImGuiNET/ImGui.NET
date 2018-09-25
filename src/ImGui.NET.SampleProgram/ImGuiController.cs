@@ -5,6 +5,7 @@ using System.Reflection;
 using System.IO;
 using Veldrid;
 using static ImGuiNET.ImGuiNative;
+using System.Runtime.CompilerServices;
 
 namespace ImGuiNET
 {
@@ -53,7 +54,7 @@ namespace ImGuiNET
         /// <summary>
         /// Constructs a new ImGuiRenderer.
         /// </summary>
-        public unsafe ImGuiController(GraphicsDevice gd, OutputDescription outputDescription, int width, int height)
+        public ImGuiController(GraphicsDevice gd, OutputDescription outputDescription, int width, int height)
         {
             _gd = gd;
             _windowWidth = width;
@@ -285,13 +286,13 @@ namespace ImGuiNET
         /// or index data has increased beyond the capacity of the existing buffers.
         /// A <see cref="CommandList"/> is needed to submit drawing and resource update commands.
         /// </summary>
-        public unsafe void Render(GraphicsDevice gd, CommandList cl)
+        public void Render(GraphicsDevice gd, CommandList cl)
         {
             if (_frameBegun)
             {
                 _frameBegun = false;
                 igRender();
-                RenderImDrawData(igGetDrawData(), gd, cl);
+                RenderImDrawData(ImGui.GetDrawData(), gd, cl);
             }
         }
 
@@ -316,7 +317,7 @@ namespace ImGuiNET
         /// Sets per-frame data based on the associated window.
         /// This is called by Update(float).
         /// </summary>
-        private unsafe void SetPerFrameImGuiData(float deltaSeconds)
+        private void SetPerFrameImGuiData(float deltaSeconds)
         {
             ImGuiIOPtr io = ImGui.GetIO();
             io.DisplaySize = new Vector2(
@@ -326,7 +327,7 @@ namespace ImGuiNET
             io.DeltaTime = deltaSeconds; // DeltaTime is in seconds.
         }
 
-        private unsafe void UpdateImGuiInput(InputSnapshot snapshot)
+        private void UpdateImGuiInput(InputSnapshot snapshot)
         {
             var io = ImGui.GetIO();
 
@@ -346,7 +347,7 @@ namespace ImGuiNET
             for (int i = 0; i < keyCharPresses.Count; i++)
             {
                 char c = keyCharPresses[i];
-                ImGuiIO_AddInputCharacter(io, c);
+                io.AddInputCharacter(c);
             }
 
             IReadOnlyList<KeyEvent> keyEvents = snapshot.KeyEvents;
@@ -378,7 +379,7 @@ namespace ImGuiNET
             io.KeySuper = _winKeyDown ? (byte)1 : (byte)0;
         }
 
-        private static unsafe void SetKeyMappings()
+        private static void SetKeyMappings()
         {
             ImGuiIOPtr io = ImGui.GetIO();
             io.KeyMap[(int)ImGuiKey.Tab] = (int)Key.Tab;
@@ -402,7 +403,7 @@ namespace ImGuiNET
             io.KeyMap[(int)ImGuiKey.Z] = (int)Key.Z;
         }
 
-        private unsafe void RenderImDrawData(ImDrawDataPtr draw_data, GraphicsDevice gd, CommandList cl)
+        private void RenderImDrawData(ImDrawDataPtr draw_data, GraphicsDevice gd, CommandList cl)
         {
             uint vertexOffsetInVertices = 0;
             uint indexOffsetInElements = 0;
@@ -412,7 +413,7 @@ namespace ImGuiNET
                 return;
             }
 
-            uint totalVBSize = (uint)(draw_data.TotalVtxCount * sizeof(ImDrawVert));
+            uint totalVBSize = (uint)(draw_data.TotalVtxCount * Unsafe.SizeOf<ImDrawVert>());
             if (totalVBSize > _vertexBuffer.SizeInBytes)
             {
                 gd.DisposeWhenIdle(_vertexBuffer);
@@ -428,13 +429,13 @@ namespace ImGuiNET
 
             for (int i = 0; i < draw_data.CmdListsCount; i++)
             {
-                ImDrawListPtr cmd_list = draw_data.CmdLists[i];
+                ImDrawListPtr cmd_list = draw_data.CmdListsRange[i];
 
                 cl.UpdateBuffer(
                     _vertexBuffer,
-                    vertexOffsetInVertices * (uint)sizeof(ImDrawVert),
+                    vertexOffsetInVertices * (uint)Unsafe.SizeOf<ImDrawVert>(),
                     (IntPtr)cmd_list.VtxBuffer.Data,
-                    (uint)(cmd_list.VtxBuffer.Size * sizeof(ImDrawVert)));
+                    (uint)(cmd_list.VtxBuffer.Size * Unsafe.SizeOf<ImDrawVert>()));
 
                 cl.UpdateBuffer(
                     _indexBuffer,
@@ -463,17 +464,17 @@ namespace ImGuiNET
             cl.SetPipeline(_pipeline);
             cl.SetGraphicsResourceSet(0, _mainResourceSet);
 
-            ImDrawData_ScaleClipRects(draw_data, io.DisplayFramebufferScale);
+            draw_data.ScaleClipRects(io.DisplayFramebufferScale);
 
             // Render command lists
             int vtx_offset = 0;
             int idx_offset = 0;
             for (int n = 0; n < draw_data.CmdListsCount; n++)
             {
-                ImDrawListPtr cmd_list = draw_data.CmdLists[n];
+                ImDrawListPtr cmd_list = draw_data.CmdListsRange[n];
                 for (int cmd_i = 0; cmd_i < cmd_list.CmdBuffer.Size; cmd_i++)
                 {
-                    ImDrawCmdPtr pcmd = &(((ImDrawCmd*)cmd_list.CmdBuffer.Data)[cmd_i]);
+                    ref ImDrawCmd pcmd = ref cmd_list.CmdBuffer.Ref<ImDrawCmd>(cmd_i);
                     if (pcmd.UserCallback != IntPtr.Zero)
                     {
                         throw new NotImplementedException();

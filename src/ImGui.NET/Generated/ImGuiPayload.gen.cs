@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct ImGuiPayload
+    public unsafe partial struct ImGuiPayload
     {
         public void* Data;
         public int DataSize;
@@ -16,12 +16,14 @@ namespace ImGuiNET
         public byte Preview;
         public byte Delivery;
     }
-    public unsafe struct ImGuiPayloadPtr
+    public unsafe partial struct ImGuiPayloadPtr
     {
         public ImGuiPayload* NativePtr { get; }
         public ImGuiPayloadPtr(ImGuiPayload* nativePtr) => NativePtr = nativePtr;
+        public ImGuiPayloadPtr(IntPtr nativePtr) => NativePtr = (ImGuiPayload*)nativePtr;
         public static implicit operator ImGuiPayloadPtr(ImGuiPayload* nativePtr) => new ImGuiPayloadPtr(nativePtr);
         public static implicit operator ImGuiPayload* (ImGuiPayloadPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImGuiPayloadPtr(IntPtr nativePtr) => new ImGuiPayloadPtr(nativePtr);
         public void* Data { get => NativePtr->Data; set => NativePtr->Data = value; }
         public ref int DataSize => ref Unsafe.AsRef<int>(&NativePtr->DataSize);
         public ref uint SourceId => ref Unsafe.AsRef<uint>(&NativePtr->SourceId);

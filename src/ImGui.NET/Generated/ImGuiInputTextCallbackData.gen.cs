@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct ImGuiInputTextCallbackData
+    public unsafe partial struct ImGuiInputTextCallbackData
     {
         public ImGuiInputTextFlags EventFlag;
         public ImGuiInputTextFlags Flags;
@@ -20,12 +20,14 @@ namespace ImGuiNET
         public int SelectionStart;
         public int SelectionEnd;
     }
-    public unsafe struct ImGuiInputTextCallbackDataPtr
+    public unsafe partial struct ImGuiInputTextCallbackDataPtr
     {
         public ImGuiInputTextCallbackData* NativePtr { get; }
         public ImGuiInputTextCallbackDataPtr(ImGuiInputTextCallbackData* nativePtr) => NativePtr = nativePtr;
+        public ImGuiInputTextCallbackDataPtr(IntPtr nativePtr) => NativePtr = (ImGuiInputTextCallbackData*)nativePtr;
         public static implicit operator ImGuiInputTextCallbackDataPtr(ImGuiInputTextCallbackData* nativePtr) => new ImGuiInputTextCallbackDataPtr(nativePtr);
         public static implicit operator ImGuiInputTextCallbackData* (ImGuiInputTextCallbackDataPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImGuiInputTextCallbackDataPtr(IntPtr nativePtr) => new ImGuiInputTextCallbackDataPtr(nativePtr);
         public ref ImGuiInputTextFlags EventFlag => ref Unsafe.AsRef<ImGuiInputTextFlags>(&NativePtr->EventFlag);
         public ref ImGuiInputTextFlags Flags => ref Unsafe.AsRef<ImGuiInputTextFlags>(&NativePtr->Flags);
         public void* UserData { get => NativePtr->UserData; set => NativePtr->UserData = value; }

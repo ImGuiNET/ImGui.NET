@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct ImFontConfig
+    public unsafe partial struct ImFontConfig
     {
         public void* FontData;
         public int FontDataSize;
@@ -26,12 +26,14 @@ namespace ImGuiNET
         public fixed byte Name[40];
         public ImFont* DstFont;
     }
-    public unsafe struct ImFontConfigPtr
+    public unsafe partial struct ImFontConfigPtr
     {
         public ImFontConfig* NativePtr { get; }
         public ImFontConfigPtr(ImFontConfig* nativePtr) => NativePtr = nativePtr;
+        public ImFontConfigPtr(IntPtr nativePtr) => NativePtr = (ImFontConfig*)nativePtr;
         public static implicit operator ImFontConfigPtr(ImFontConfig* nativePtr) => new ImFontConfigPtr(nativePtr);
         public static implicit operator ImFontConfig* (ImFontConfigPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImFontConfigPtr(IntPtr nativePtr) => new ImFontConfigPtr(nativePtr);
         public void* FontData { get => NativePtr->FontData; set => NativePtr->FontData = value; }
         public ref int FontDataSize => ref Unsafe.AsRef<int>(&NativePtr->FontDataSize);
         public ref byte FontDataOwnedByAtlas => ref Unsafe.AsRef<byte>(&NativePtr->FontDataOwnedByAtlas);

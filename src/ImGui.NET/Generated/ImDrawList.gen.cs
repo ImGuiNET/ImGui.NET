@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct ImDrawList
+    public unsafe partial struct ImDrawList
     {
         public ImVector/*<ImDrawCmd>*/ CmdBuffer;
         public ImVector/*<ImDrawIdx>*/ IdxBuffer;
@@ -23,12 +23,14 @@ namespace ImGuiNET
         public int _ChannelsCount;
         public ImVector/*<ImDrawChannel>*/ _Channels;
     }
-    public unsafe struct ImDrawListPtr
+    public unsafe partial struct ImDrawListPtr
     {
         public ImDrawList* NativePtr { get; }
         public ImDrawListPtr(ImDrawList* nativePtr) => NativePtr = nativePtr;
+        public ImDrawListPtr(IntPtr nativePtr) => NativePtr = (ImDrawList*)nativePtr;
         public static implicit operator ImDrawListPtr(ImDrawList* nativePtr) => new ImDrawListPtr(nativePtr);
         public static implicit operator ImDrawList* (ImDrawListPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImDrawListPtr(IntPtr nativePtr) => new ImDrawListPtr(nativePtr);
         public ref ImVector/*<ImDrawCmd>*/ CmdBuffer => ref Unsafe.AsRef<ImVector/*<ImDrawCmd>*/>(&NativePtr->CmdBuffer);
         public ref ImVector/*<ImDrawIdx>*/ IdxBuffer => ref Unsafe.AsRef<ImVector/*<ImDrawIdx>*/>(&NativePtr->IdxBuffer);
         public ref ImVector/*<ImDrawVert>*/ VtxBuffer => ref Unsafe.AsRef<ImVector/*<ImDrawVert>*/>(&NativePtr->VtxBuffer);

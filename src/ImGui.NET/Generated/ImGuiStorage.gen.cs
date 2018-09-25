@@ -5,16 +5,18 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct ImGuiStorage
+    public unsafe partial struct ImGuiStorage
     {
         public ImVector/*<Pair>*/ Data;
     }
-    public unsafe struct ImGuiStoragePtr
+    public unsafe partial struct ImGuiStoragePtr
     {
         public ImGuiStorage* NativePtr { get; }
         public ImGuiStoragePtr(ImGuiStorage* nativePtr) => NativePtr = nativePtr;
+        public ImGuiStoragePtr(IntPtr nativePtr) => NativePtr = (ImGuiStorage*)nativePtr;
         public static implicit operator ImGuiStoragePtr(ImGuiStorage* nativePtr) => new ImGuiStoragePtr(nativePtr);
         public static implicit operator ImGuiStorage* (ImGuiStoragePtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImGuiStoragePtr(IntPtr nativePtr) => new ImGuiStoragePtr(nativePtr);
         public ref ImVector/*<Pair>*/ Data => ref Unsafe.AsRef<ImVector/*<Pair>*/>(&NativePtr->Data);
         public void SetFloat(uint key, float val)
         {

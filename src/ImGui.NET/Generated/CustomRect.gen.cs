@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct CustomRect
+    public unsafe partial struct CustomRect
     {
         public uint ID;
         public ushort Width;
@@ -16,12 +16,14 @@ namespace ImGuiNET
         public Vector2 GlyphOffset;
         public ImFont* Font;
     }
-    public unsafe struct CustomRectPtr
+    public unsafe partial struct CustomRectPtr
     {
         public CustomRect* NativePtr { get; }
         public CustomRectPtr(CustomRect* nativePtr) => NativePtr = nativePtr;
+        public CustomRectPtr(IntPtr nativePtr) => NativePtr = (CustomRect*)nativePtr;
         public static implicit operator CustomRectPtr(CustomRect* nativePtr) => new CustomRectPtr(nativePtr);
         public static implicit operator CustomRect* (CustomRectPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator CustomRectPtr(IntPtr nativePtr) => new CustomRectPtr(nativePtr);
         public ref uint ID => ref Unsafe.AsRef<uint>(&NativePtr->ID);
         public ref ushort Width => ref Unsafe.AsRef<ushort>(&NativePtr->Width);
         public ref ushort Height => ref Unsafe.AsRef<ushort>(&NativePtr->Height);

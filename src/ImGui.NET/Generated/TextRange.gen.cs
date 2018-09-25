@@ -5,17 +5,19 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct TextRange
+    public unsafe partial struct TextRange
     {
         public byte* b;
         public byte* e;
     }
-    public unsafe struct TextRangePtr
+    public unsafe partial struct TextRangePtr
     {
         public TextRange* NativePtr { get; }
         public TextRangePtr(TextRange* nativePtr) => NativePtr = nativePtr;
+        public TextRangePtr(IntPtr nativePtr) => NativePtr = (TextRange*)nativePtr;
         public static implicit operator TextRangePtr(TextRange* nativePtr) => new TextRangePtr(nativePtr);
         public static implicit operator TextRange* (TextRangePtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator TextRangePtr(IntPtr nativePtr) => new TextRangePtr(nativePtr);
         public byte* b { get => NativePtr->b; set => NativePtr->b = value; }
         public byte* e { get => NativePtr->e; set => NativePtr->e = value; }
         public void split(byte separator, ref ImVector @out)

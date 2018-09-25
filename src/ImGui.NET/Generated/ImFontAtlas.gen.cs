@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe struct ImFontAtlas
+    public unsafe partial struct ImFontAtlas
     {
         public byte Locked;
         public ImFontAtlasFlags Flags;
@@ -23,12 +23,14 @@ namespace ImGuiNET
         public ImVector/*<ImFontConfig>*/ ConfigData;
         public fixed int CustomRectIds[1];
     }
-    public unsafe struct ImFontAtlasPtr
+    public unsafe partial struct ImFontAtlasPtr
     {
         public ImFontAtlas* NativePtr { get; }
         public ImFontAtlasPtr(ImFontAtlas* nativePtr) => NativePtr = nativePtr;
+        public ImFontAtlasPtr(IntPtr nativePtr) => NativePtr = (ImFontAtlas*)nativePtr;
         public static implicit operator ImFontAtlasPtr(ImFontAtlas* nativePtr) => new ImFontAtlasPtr(nativePtr);
         public static implicit operator ImFontAtlas* (ImFontAtlasPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImFontAtlasPtr(IntPtr nativePtr) => new ImFontAtlasPtr(nativePtr);
         public ref byte Locked => ref Unsafe.AsRef<byte>(&NativePtr->Locked);
         public ref ImFontAtlasFlags Flags => ref Unsafe.AsRef<ImFontAtlasFlags>(&NativePtr->Flags);
         public ref IntPtr TexID => ref Unsafe.AsRef<IntPtr>(&NativePtr->TexID);

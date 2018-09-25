@@ -245,7 +245,7 @@ namespace CodeGenerator
                     writer.WriteLine(string.Empty);
                     writer.PushBlock("namespace ImGuiNET");
 
-                    writer.PushBlock($"public unsafe struct {td.Name}");
+                    writer.PushBlock($"public unsafe partial struct {td.Name}");
                     foreach (TypeReference field in td.Fields)
                     {
                         string typeStr = GetTypeString(field.Type, field.IsFunctionPointer);
@@ -271,11 +271,13 @@ namespace CodeGenerator
                     writer.PopBlock();
 
                     string ptrTypeName = td.Name + "Ptr";
-                    writer.PushBlock($"public unsafe struct {ptrTypeName}");
+                    writer.PushBlock($"public unsafe partial struct {ptrTypeName}");
                     writer.WriteLine($"public {td.Name}* NativePtr {{ get; }}");
                     writer.WriteLine($"public {ptrTypeName}({td.Name}* nativePtr) => NativePtr = nativePtr;");
+                    writer.WriteLine($"public {ptrTypeName}(IntPtr nativePtr) => NativePtr = ({td.Name}*)nativePtr;");
                     writer.WriteLine($"public static implicit operator {ptrTypeName}({td.Name}* nativePtr) => new {ptrTypeName}(nativePtr);");
                     writer.WriteLine($"public static implicit operator {td.Name}* ({ptrTypeName} wrappedPtr) => wrappedPtr.NativePtr;");
+                    writer.WriteLine($"public static implicit operator {ptrTypeName}(IntPtr nativePtr) => new {ptrTypeName}(nativePtr);");
 
                     foreach (TypeReference field in td.Fields)
                     {
