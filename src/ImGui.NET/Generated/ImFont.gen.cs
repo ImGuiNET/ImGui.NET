@@ -35,9 +35,9 @@ namespace ImGuiNET
         public ref float FontSize => ref Unsafe.AsRef<float>(&NativePtr->FontSize);
         public ref float Scale => ref Unsafe.AsRef<float>(&NativePtr->Scale);
         public ref Vector2 DisplayOffset => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayOffset);
-        public ref ImVector/*<ImFontGlyph>*/ Glyphs => ref Unsafe.AsRef<ImVector/*<ImFontGlyph>*/>(&NativePtr->Glyphs);
-        public ref ImVector/*<float>*/ IndexAdvanceX => ref Unsafe.AsRef<ImVector/*<float>*/>(&NativePtr->IndexAdvanceX);
-        public ref ImVector/*<unsigned short>*/ IndexLookup => ref Unsafe.AsRef<ImVector/*<unsigned short>*/>(&NativePtr->IndexLookup);
+        public ImPtrVector<ImFontGlyphPtr> Glyphs => new ImPtrVector<ImFontGlyphPtr>(NativePtr->Glyphs, Unsafe.SizeOf<ImFontGlyph>());
+        public ImVector<float> IndexAdvanceX => new ImVector<float>(NativePtr->IndexAdvanceX);
+        public ImVector<ushort> IndexLookup => new ImVector<ushort>(NativePtr->IndexLookup);
         public ImFontGlyphPtr FallbackGlyph => new ImFontGlyphPtr(NativePtr->FallbackGlyph);
         public ref float FallbackAdvanceX => ref Unsafe.AsRef<float>(&NativePtr->FallbackAdvanceX);
         public ref ushort FallbackChar => ref Unsafe.AsRef<ushort>(&NativePtr->FallbackChar);
@@ -46,7 +46,7 @@ namespace ImGuiNET
         public ImFontAtlasPtr ContainerAtlas => new ImFontAtlasPtr(NativePtr->ContainerAtlas);
         public ref float Ascent => ref Unsafe.AsRef<float>(&NativePtr->Ascent);
         public ref float Descent => ref Unsafe.AsRef<float>(&NativePtr->Descent);
-        public ref byte DirtyLookupTables => ref Unsafe.AsRef<byte>(&NativePtr->DirtyLookupTables);
+        public ref Bool8 DirtyLookupTables => ref Unsafe.AsRef<Bool8>(&NativePtr->DirtyLookupTables);
         public ref int MetricsTotalSurface => ref Unsafe.AsRef<int>(&NativePtr->MetricsTotalSurface);
         public void AddRemapChar(ushort dst, ushort src)
         {

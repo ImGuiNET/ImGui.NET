@@ -25,6 +25,6 @@ namespace ImGuiNET
         public ref Vector4 ClipRect => ref Unsafe.AsRef<Vector4>(&NativePtr->ClipRect);
         public ref IntPtr TextureId => ref Unsafe.AsRef<IntPtr>(&NativePtr->TextureId);
         public ref IntPtr UserCallback => ref Unsafe.AsRef<IntPtr>(&NativePtr->UserCallback);
-        public void* UserCallbackData { get => NativePtr->UserCallbackData; set => NativePtr->UserCallbackData = value; }
+        public IntPtr UserCallbackData { get => (IntPtr)NativePtr->UserCallbackData; set => NativePtr->UserCallbackData = (void*)value; }
     }
 }

@@ -31,21 +31,21 @@ namespace ImGuiNET
         public static implicit operator ImDrawListPtr(ImDrawList* nativePtr) => new ImDrawListPtr(nativePtr);
         public static implicit operator ImDrawList* (ImDrawListPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImDrawListPtr(IntPtr nativePtr) => new ImDrawListPtr(nativePtr);
-        public ref ImVector/*<ImDrawCmd>*/ CmdBuffer => ref Unsafe.AsRef<ImVector/*<ImDrawCmd>*/>(&NativePtr->CmdBuffer);
-        public ref ImVector/*<ImDrawIdx>*/ IdxBuffer => ref Unsafe.AsRef<ImVector/*<ImDrawIdx>*/>(&NativePtr->IdxBuffer);
-        public ref ImVector/*<ImDrawVert>*/ VtxBuffer => ref Unsafe.AsRef<ImVector/*<ImDrawVert>*/>(&NativePtr->VtxBuffer);
+        public ImPtrVector<ImDrawCmdPtr> CmdBuffer => new ImPtrVector<ImDrawCmdPtr>(NativePtr->CmdBuffer, Unsafe.SizeOf<ImDrawCmd>());
+        public ImVector<ushort> IdxBuffer => new ImVector<ushort>(NativePtr->IdxBuffer);
+        public ImPtrVector<ImDrawVertPtr> VtxBuffer => new ImPtrVector<ImDrawVertPtr>(NativePtr->VtxBuffer, Unsafe.SizeOf<ImDrawVert>());
         public ref ImDrawListFlags Flags => ref Unsafe.AsRef<ImDrawListFlags>(&NativePtr->Flags);
-        public IntPtr* _Data { get => NativePtr->_Data; set => NativePtr->_Data = value; }
-        public byte* _OwnerName { get => NativePtr->_OwnerName; set => NativePtr->_OwnerName = value; }
+        public IntPtr _Data { get => (IntPtr)NativePtr->_Data; set => NativePtr->_Data = (IntPtr*)value; }
+        public NullTerminatedString _OwnerName => new NullTerminatedString(NativePtr->_OwnerName);
         public ref uint _VtxCurrentIdx => ref Unsafe.AsRef<uint>(&NativePtr->_VtxCurrentIdx);
         public ImDrawVertPtr _VtxWritePtr => new ImDrawVertPtr(NativePtr->_VtxWritePtr);
-        public ushort* _IdxWritePtr { get => NativePtr->_IdxWritePtr; set => NativePtr->_IdxWritePtr = value; }
-        public ref ImVector/*<ImVec4>*/ _ClipRectStack => ref Unsafe.AsRef<ImVector/*<ImVec4>*/>(&NativePtr->_ClipRectStack);
-        public ref ImVector/*<ImTextureID>*/ _TextureIdStack => ref Unsafe.AsRef<ImVector/*<ImTextureID>*/>(&NativePtr->_TextureIdStack);
-        public ref ImVector/*<ImVec2>*/ _Path => ref Unsafe.AsRef<ImVector/*<ImVec2>*/>(&NativePtr->_Path);
+        public IntPtr _IdxWritePtr { get => (IntPtr)NativePtr->_IdxWritePtr; set => NativePtr->_IdxWritePtr = (ushort*)value; }
+        public ImVector<Vector4> _ClipRectStack => new ImVector<Vector4>(NativePtr->_ClipRectStack);
+        public ImVector<IntPtr> _TextureIdStack => new ImVector<IntPtr>(NativePtr->_TextureIdStack);
+        public ImVector<Vector2> _Path => new ImVector<Vector2>(NativePtr->_Path);
         public ref int _ChannelsCurrent => ref Unsafe.AsRef<int>(&NativePtr->_ChannelsCurrent);
         public ref int _ChannelsCount => ref Unsafe.AsRef<int>(&NativePtr->_ChannelsCount);
-        public ref ImVector/*<ImDrawChannel>*/ _Channels => ref Unsafe.AsRef<ImVector/*<ImDrawChannel>*/>(&NativePtr->_Channels);
+        public ImPtrVector<ImDrawChannelPtr> _Channels => new ImPtrVector<ImDrawChannelPtr>(NativePtr->_Channels, Unsafe.SizeOf<ImDrawChannel>());
         public void ChannelsSetCurrent(int channel_index)
         {
             ImGuiNative.ImDrawList_ChannelsSetCurrent(NativePtr, channel_index);

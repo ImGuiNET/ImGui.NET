@@ -23,8 +23,8 @@ namespace ImGuiNET
         public static implicit operator ImDrawDataPtr(ImDrawData* nativePtr) => new ImDrawDataPtr(nativePtr);
         public static implicit operator ImDrawData* (ImDrawDataPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImDrawDataPtr(IntPtr nativePtr) => new ImDrawDataPtr(nativePtr);
-        public ref byte Valid => ref Unsafe.AsRef<byte>(&NativePtr->Valid);
-        public ImDrawList** CmdLists { get => NativePtr->CmdLists; set => NativePtr->CmdLists = value; }
+        public ref Bool8 Valid => ref Unsafe.AsRef<Bool8>(&NativePtr->Valid);
+        public IntPtr CmdLists { get => (IntPtr)NativePtr->CmdLists; set => NativePtr->CmdLists = (ImDrawList**)value; }
         public ref int CmdListsCount => ref Unsafe.AsRef<int>(&NativePtr->CmdListsCount);
         public ref int TotalIdxCount => ref Unsafe.AsRef<int>(&NativePtr->TotalIdxCount);
         public ref int TotalVtxCount => ref Unsafe.AsRef<int>(&NativePtr->TotalVtxCount);

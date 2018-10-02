@@ -30,13 +30,13 @@ namespace ImGuiNET
         public static implicit operator ImGuiInputTextCallbackDataPtr(IntPtr nativePtr) => new ImGuiInputTextCallbackDataPtr(nativePtr);
         public ref ImGuiInputTextFlags EventFlag => ref Unsafe.AsRef<ImGuiInputTextFlags>(&NativePtr->EventFlag);
         public ref ImGuiInputTextFlags Flags => ref Unsafe.AsRef<ImGuiInputTextFlags>(&NativePtr->Flags);
-        public void* UserData { get => NativePtr->UserData; set => NativePtr->UserData = value; }
+        public IntPtr UserData { get => (IntPtr)NativePtr->UserData; set => NativePtr->UserData = (void*)value; }
         public ref ushort EventChar => ref Unsafe.AsRef<ushort>(&NativePtr->EventChar);
         public ref ImGuiKey EventKey => ref Unsafe.AsRef<ImGuiKey>(&NativePtr->EventKey);
-        public byte* Buf { get => NativePtr->Buf; set => NativePtr->Buf = value; }
+        public IntPtr Buf { get => (IntPtr)NativePtr->Buf; set => NativePtr->Buf = (byte*)value; }
         public ref int BufTextLen => ref Unsafe.AsRef<int>(&NativePtr->BufTextLen);
         public ref int BufSize => ref Unsafe.AsRef<int>(&NativePtr->BufSize);
-        public ref byte BufDirty => ref Unsafe.AsRef<byte>(&NativePtr->BufDirty);
+        public ref Bool8 BufDirty => ref Unsafe.AsRef<Bool8>(&NativePtr->BufDirty);
         public ref int CursorPos => ref Unsafe.AsRef<int>(&NativePtr->CursorPos);
         public ref int SelectionStart => ref Unsafe.AsRef<int>(&NativePtr->SelectionStart);
         public ref int SelectionEnd => ref Unsafe.AsRef<int>(&NativePtr->SelectionEnd);

@@ -18,8 +18,8 @@ namespace ImGuiNET
         public static implicit operator TextRangePtr(TextRange* nativePtr) => new TextRangePtr(nativePtr);
         public static implicit operator TextRange* (TextRangePtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator TextRangePtr(IntPtr nativePtr) => new TextRangePtr(nativePtr);
-        public byte* b { get => NativePtr->b; set => NativePtr->b = value; }
-        public byte* e { get => NativePtr->e; set => NativePtr->e = value; }
+        public IntPtr b { get => (IntPtr)NativePtr->b; set => NativePtr->b = (byte*)value; }
+        public IntPtr e { get => (IntPtr)NativePtr->e; set => NativePtr->e = (byte*)value; }
         public void split(byte separator, ref ImVector @out)
         {
             ImVector native_out_val = @out;

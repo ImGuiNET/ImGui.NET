@@ -114,8 +114,8 @@ namespace ImGuiNET
         public ref Vector2 DisplayWindowPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayWindowPadding);
         public ref Vector2 DisplaySafeAreaPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplaySafeAreaPadding);
         public ref float MouseCursorScale => ref Unsafe.AsRef<float>(&NativePtr->MouseCursorScale);
-        public ref byte AntiAliasedLines => ref Unsafe.AsRef<byte>(&NativePtr->AntiAliasedLines);
-        public ref byte AntiAliasedFill => ref Unsafe.AsRef<byte>(&NativePtr->AntiAliasedFill);
+        public ref Bool8 AntiAliasedLines => ref Unsafe.AsRef<Bool8>(&NativePtr->AntiAliasedLines);
+        public ref Bool8 AntiAliasedFill => ref Unsafe.AsRef<Bool8>(&NativePtr->AntiAliasedFill);
         public ref float CurveTessellationTol => ref Unsafe.AsRef<float>(&NativePtr->CurveTessellationTol);
         public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 43);
         public void ScaleAllSizes(float scale_factor)

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CodeGenerator
 {
@@ -48,6 +49,11 @@ namespace CodeGenerator
             { "ImVector_ImWchar", "ImVector" },
             { "ImVector_TextRange", "ImVector" },
             { "ImVector_TextRange&", "ImVector*" },
+        };
+
+        private static readonly Dictionary<string, string> s_wellKnownFieldReplacements = new Dictionary<string, string>()
+        {
+            { "bool", "Bool8" },
         };
 
         private static readonly HashSet<string> s_customDefinedTypes = new HashSet<string>()
@@ -249,6 +255,7 @@ namespace CodeGenerator
                     foreach (TypeReference field in td.Fields)
                     {
                         string typeStr = GetTypeString(field.Type, field.IsFunctionPointer);
+
                         if (field.ArraySize != 0)
                         {
                             if (s_legalFixedTypes.Contains(typeStr))
@@ -282,11 +289,39 @@ namespace CodeGenerator
                     foreach (TypeReference field in td.Fields)
                     {
                         string typeStr = GetTypeString(field.Type, field.IsFunctionPointer);
+                        string rawType = typeStr;
+
+                        if (s_wellKnownFieldReplacements.TryGetValue(field.Type, out string wellKnownFieldType))
+                        {
+                            typeStr = wellKnownFieldType;
+                        }
+
                         if (field.ArraySize != 0)
                         {
-                            string addrTarget = s_legalFixedTypes.Contains(typeStr) ? $"NativePtr->{field.Name}" : $"&NativePtr->{field.Name}_0";
+                            string addrTarget = s_legalFixedTypes.Contains(rawType) ? $"NativePtr->{field.Name}" : $"&NativePtr->{field.Name}_0";
                             writer.WriteLine($"public RangeAccessor<{typeStr}> {field.Name} => new RangeAccessor<{typeStr}>({addrTarget}, {field.ArraySize});");
-                            // TODO
+                        }
+                        else if (typeStr.Contains("ImVector"))
+                        {
+                            string vectorElementType = GetImVectorElementType(typeStr);
+
+                            if (s_wellKnownTypes.TryGetValue(vectorElementType, out string wellKnown))
+                            {
+                                vectorElementType = wellKnown;
+                            }
+
+                            if (GetWrappedType(vectorElementType + "*", out string wrappedElementType))
+                            {
+                                writer.WriteLine($"public ImPtrVector<{wrappedElementType}> {field.Name} => new ImPtrVector<{wrappedElementType}>(NativePtr->{field.Name}, Unsafe.SizeOf<{vectorElementType}>());");
+                            }
+                            else
+                            {
+                                if (GetWrappedType(vectorElementType, out wrappedElementType))
+                                {
+                                    vectorElementType = wrappedElementType;
+                                }
+                                writer.WriteLine($"public ImVector<{vectorElementType}> {field.Name} => new ImVector<{vectorElementType}>(NativePtr->{field.Name});");
+                            }
                         }
                         else
                         {
@@ -296,9 +331,13 @@ namespace CodeGenerator
                                 {
                                     writer.WriteLine($"public {wrappedTypeName} {field.Name} => new {wrappedTypeName}(NativePtr->{field.Name});");
                                 }
+                                else if (typeStr == "byte*" && IsStringFieldName(field.Name))
+                                {
+                                    writer.WriteLine($"public NullTerminatedString {field.Name} => new NullTerminatedString(NativePtr->{field.Name});");
+                                }
                                 else
                                 {
-                                    writer.WriteLine($"public {typeStr} {field.Name} {{ get => NativePtr->{field.Name}; set => NativePtr->{field.Name} = value; }}");
+                                    writer.WriteLine($"public IntPtr {field.Name} {{ get => (IntPtr)NativePtr->{field.Name}; set => NativePtr->{field.Name} = ({typeStr})value; }}");
                                 }
                             }
                             else
@@ -485,6 +524,20 @@ namespace CodeGenerator
                 writer.PopBlock();
                 writer.PopBlock();
             }
+        }
+
+        private static bool IsStringFieldName(string name)
+        {
+            return Regex.IsMatch(name, ".*Filename.*")
+                || Regex.IsMatch(name, ".*Name");
+        }
+
+        private static string GetImVectorElementType(string typeStr)
+        {
+            int start = typeStr.IndexOf('<') + 1;
+            int end = typeStr.IndexOf('>');
+            int length = end - start;
+            return typeStr.Substring(start, length);
         }
 
         private static int GetIndex(TypeReference[] parameters, string key)

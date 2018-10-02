@@ -1,6 +1,7 @@
 using System;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace ImGuiNET
@@ -31,20 +32,20 @@ namespace ImGuiNET
         public static implicit operator ImFontAtlasPtr(ImFontAtlas* nativePtr) => new ImFontAtlasPtr(nativePtr);
         public static implicit operator ImFontAtlas* (ImFontAtlasPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImFontAtlasPtr(IntPtr nativePtr) => new ImFontAtlasPtr(nativePtr);
-        public ref byte Locked => ref Unsafe.AsRef<byte>(&NativePtr->Locked);
+        public ref Bool8 Locked => ref Unsafe.AsRef<Bool8>(&NativePtr->Locked);
         public ref ImFontAtlasFlags Flags => ref Unsafe.AsRef<ImFontAtlasFlags>(&NativePtr->Flags);
         public ref IntPtr TexID => ref Unsafe.AsRef<IntPtr>(&NativePtr->TexID);
         public ref int TexDesiredWidth => ref Unsafe.AsRef<int>(&NativePtr->TexDesiredWidth);
         public ref int TexGlyphPadding => ref Unsafe.AsRef<int>(&NativePtr->TexGlyphPadding);
-        public byte* TexPixelsAlpha8 { get => NativePtr->TexPixelsAlpha8; set => NativePtr->TexPixelsAlpha8 = value; }
-        public uint* TexPixelsRGBA32 { get => NativePtr->TexPixelsRGBA32; set => NativePtr->TexPixelsRGBA32 = value; }
+        public IntPtr TexPixelsAlpha8 { get => (IntPtr)NativePtr->TexPixelsAlpha8; set => NativePtr->TexPixelsAlpha8 = (byte*)value; }
+        public IntPtr TexPixelsRGBA32 { get => (IntPtr)NativePtr->TexPixelsRGBA32; set => NativePtr->TexPixelsRGBA32 = (uint*)value; }
         public ref int TexWidth => ref Unsafe.AsRef<int>(&NativePtr->TexWidth);
         public ref int TexHeight => ref Unsafe.AsRef<int>(&NativePtr->TexHeight);
         public ref Vector2 TexUvScale => ref Unsafe.AsRef<Vector2>(&NativePtr->TexUvScale);
         public ref Vector2 TexUvWhitePixel => ref Unsafe.AsRef<Vector2>(&NativePtr->TexUvWhitePixel);
-        public ref ImVector/*<ImFont*>*/ Fonts => ref Unsafe.AsRef<ImVector/*<ImFont*>*/>(&NativePtr->Fonts);
-        public ref ImVector/*<CustomRect>*/ CustomRects => ref Unsafe.AsRef<ImVector/*<CustomRect>*/>(&NativePtr->CustomRects);
-        public ref ImVector/*<ImFontConfig>*/ ConfigData => ref Unsafe.AsRef<ImVector/*<ImFontConfig>*/>(&NativePtr->ConfigData);
+        public ImVector<ImFontPtr> Fonts => new ImVector<ImFontPtr>(NativePtr->Fonts);
+        public ImVector<CustomRect> CustomRects => new ImVector<CustomRect>(NativePtr->CustomRects);
+        public ImPtrVector<ImFontConfigPtr> ConfigData => new ImPtrVector<ImFontConfigPtr>(NativePtr->ConfigData, Unsafe.SizeOf<ImFontConfig>());
         public RangeAccessor<int> CustomRectIds => new RangeAccessor<int>(NativePtr->CustomRectIds, 1);
         public ImFontPtr AddFontFromMemoryCompressedBase85TTF(string compressed_font_data_base85, float size_pixels)
         {
@@ -216,6 +217,7 @@ namespace ImGuiNET
             glyph_ranges = native_glyph_ranges_val;
             return new ImFontPtr(ret);
         }
+
         public ImFontPtr AddFontFromFileTTF(string filename, float size_pixels)
         {
             int filename_byteCount = Encoding.UTF8.GetByteCount(filename);

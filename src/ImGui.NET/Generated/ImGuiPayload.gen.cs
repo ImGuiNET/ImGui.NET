@@ -24,14 +24,14 @@ namespace ImGuiNET
         public static implicit operator ImGuiPayloadPtr(ImGuiPayload* nativePtr) => new ImGuiPayloadPtr(nativePtr);
         public static implicit operator ImGuiPayload* (ImGuiPayloadPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiPayloadPtr(IntPtr nativePtr) => new ImGuiPayloadPtr(nativePtr);
-        public void* Data { get => NativePtr->Data; set => NativePtr->Data = value; }
+        public IntPtr Data { get => (IntPtr)NativePtr->Data; set => NativePtr->Data = (void*)value; }
         public ref int DataSize => ref Unsafe.AsRef<int>(&NativePtr->DataSize);
         public ref uint SourceId => ref Unsafe.AsRef<uint>(&NativePtr->SourceId);
         public ref uint SourceParentId => ref Unsafe.AsRef<uint>(&NativePtr->SourceParentId);
         public ref int DataFrameCount => ref Unsafe.AsRef<int>(&NativePtr->DataFrameCount);
         public RangeAccessor<byte> DataType => new RangeAccessor<byte>(NativePtr->DataType, 33);
-        public ref byte Preview => ref Unsafe.AsRef<byte>(&NativePtr->Preview);
-        public ref byte Delivery => ref Unsafe.AsRef<byte>(&NativePtr->Delivery);
+        public ref Bool8 Preview => ref Unsafe.AsRef<Bool8>(&NativePtr->Preview);
+        public ref Bool8 Delivery => ref Unsafe.AsRef<Bool8>(&NativePtr->Delivery);
         public void Clear()
         {
             ImGuiNative.ImGuiPayload_Clear(NativePtr);

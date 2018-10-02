@@ -334,9 +334,9 @@ namespace ImGuiNET
             Vector2 mousePosition = snapshot.MousePosition;
 
             io.MousePos = mousePosition;
-            io.MouseDown[0] = snapshot.IsMouseDown(MouseButton.Left) ? (byte)1 : (byte)0;
-            io.MouseDown[1] = snapshot.IsMouseDown(MouseButton.Right) ? (byte)1 : (byte)0;
-            io.MouseDown[2] = snapshot.IsMouseDown(MouseButton.Middle) ? (byte)1 : (byte)0;
+            io.MouseDown[0] = snapshot.IsMouseDown(MouseButton.Left);
+            io.MouseDown[1] = snapshot.IsMouseDown(MouseButton.Right);
+            io.MouseDown[2] = snapshot.IsMouseDown(MouseButton.Middle);
 
             float delta = snapshot.WheelDelta;
             io.MouseWheel = delta;
@@ -354,7 +354,7 @@ namespace ImGuiNET
             for (int i = 0; i < keyEvents.Count; i++)
             {
                 KeyEvent keyEvent = keyEvents[i];
-                io.KeysDown[(int)keyEvent.Key] = keyEvent.Down ? (byte)1 : (byte)0;
+                io.KeysDown[(int)keyEvent.Key] = keyEvent.Down;
                 if (keyEvent.Key == Key.ControlLeft)
                 {
                     _controlDown = keyEvent.Down;
@@ -373,10 +373,10 @@ namespace ImGuiNET
                 }
             }
 
-            io.KeyCtrl = _controlDown ? (byte)1 : (byte)0; ;
-            io.KeyAlt = _altDown ? (byte)1 : (byte)0;
-            io.KeyShift = _shiftDown ? (byte)1 : (byte)0;
-            io.KeySuper = _winKeyDown ? (byte)1 : (byte)0;
+            io.KeyCtrl = _controlDown;
+            io.KeyAlt = _altDown;
+            io.KeyShift = _shiftDown;
+            io.KeySuper = _winKeyDown;
         }
 
         private static void SetKeyMappings()
@@ -474,7 +474,7 @@ namespace ImGuiNET
                 ImDrawListPtr cmd_list = draw_data.CmdListsRange[n];
                 for (int cmd_i = 0; cmd_i < cmd_list.CmdBuffer.Size; cmd_i++)
                 {
-                    ref ImDrawCmd pcmd = ref cmd_list.CmdBuffer.Ref<ImDrawCmd>(cmd_i);
+                    ImDrawCmdPtr pcmd = cmd_list.CmdBuffer[cmd_i];
                     if (pcmd.UserCallback != IntPtr.Zero)
                     {
                         throw new NotImplementedException();
