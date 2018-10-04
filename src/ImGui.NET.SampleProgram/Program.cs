@@ -20,6 +20,7 @@ namespace ImGuiNET
         // UI state
         private static float _f = 0.0f;
         private static int _counter = 0;
+        private static int _dragInt = 0;
         private static Vector3 _clearColor = new Vector3(0.45f, 0.55f, 0.6f);
         private static bool _showDemoWindow = true;
         private static bool _showAnotherWindow = false;
@@ -94,6 +95,8 @@ namespace ImGuiNET
                     _counter++;
                 ImGui.SameLine(0, -1);
                 ImGui.Text($"counter = {_counter}");
+
+                ImGui.DragInt("Draggable Int", ref _dragInt);
 
                 float framerate = ImGui.GetIO().Framerate;
                 ImGui.Text($"Application average {1000.0f / framerate:0.##} ms/frame ({framerate:0.#} FPS)");

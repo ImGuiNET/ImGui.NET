@@ -4,7 +4,6 @@ using System.Numerics;
 using System.Reflection;
 using System.IO;
 using Veldrid;
-using static ImGuiNET.ImGuiNative;
 using System.Runtime.CompilerServices;
 
 namespace ImGuiNET
@@ -52,7 +51,7 @@ namespace ImGuiNET
         private int _lastAssignedID = 100;
 
         /// <summary>
-        /// Constructs a new ImGuiRenderer.
+        /// Constructs a new ImGuiController.
         /// </summary>
         public ImGuiController(GraphicsDevice gd, OutputDescription outputDescription, int width, int height)
         {
@@ -291,7 +290,7 @@ namespace ImGuiNET
             if (_frameBegun)
             {
                 _frameBegun = false;
-                igRender();
+                ImGui.Render();
                 RenderImDrawData(ImGui.GetDrawData(), gd, cl);
             }
         }
@@ -303,14 +302,14 @@ namespace ImGuiNET
         {
             if (_frameBegun)
             {
-                igRender();
+                ImGui.Render();
             }
 
             SetPerFrameImGuiData(deltaSeconds);
             UpdateImGuiInput(snapshot);
 
             _frameBegun = true;
-            igNewFrame();
+            ImGui.NewFrame();
         }
 
         /// <summary>
@@ -434,13 +433,13 @@ namespace ImGuiNET
                 cl.UpdateBuffer(
                     _vertexBuffer,
                     vertexOffsetInVertices * (uint)Unsafe.SizeOf<ImDrawVert>(),
-                    (IntPtr)cmd_list.VtxBuffer.Data,
+                    cmd_list.VtxBuffer.Data,
                     (uint)(cmd_list.VtxBuffer.Size * Unsafe.SizeOf<ImDrawVert>()));
 
                 cl.UpdateBuffer(
                     _indexBuffer,
-                    indexOffsetInElements * (uint)sizeof(ushort),
-                    (IntPtr)cmd_list.IdxBuffer.Data,
+                    indexOffsetInElements * sizeof(ushort),
+                    cmd_list.IdxBuffer.Data,
                     (uint)(cmd_list.IdxBuffer.Size * sizeof(ushort)));
 
                 vertexOffsetInVertices += (uint)cmd_list.VtxBuffer.Size;

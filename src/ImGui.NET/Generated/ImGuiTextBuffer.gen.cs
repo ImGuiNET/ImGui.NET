@@ -33,10 +33,10 @@ namespace ImGuiNET
             }
             ImGuiNative.ImGuiTextBuffer_appendf(NativePtr, native_fmt);
         }
-        public byte* c_str()
+        public string c_str()
         {
             byte* ret = ImGuiNative.ImGuiTextBuffer_c_str(NativePtr);
-            return ret;
+            return Util.StringFromPtr(ret);
         }
         public void reserve(int capacity)
         {
@@ -52,15 +52,15 @@ namespace ImGuiNET
             int ret = ImGuiNative.ImGuiTextBuffer_size(NativePtr);
             return ret;
         }
-        public byte* begin()
+        public string begin()
         {
             byte* ret = ImGuiNative.ImGuiTextBuffer_begin(NativePtr);
-            return ret;
+            return Util.StringFromPtr(ret);
         }
-        public byte* end()
+        public string end()
         {
             byte* ret = ImGuiNative.ImGuiTextBuffer_end(NativePtr);
-            return ret;
+            return Util.StringFromPtr(ret);
         }
     }
 }

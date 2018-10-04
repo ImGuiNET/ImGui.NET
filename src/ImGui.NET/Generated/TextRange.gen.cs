@@ -27,15 +27,15 @@ namespace ImGuiNET
             ImGuiNative.TextRange_split(NativePtr, separator, native_out);
             @out = native_out_val;
         }
-        public byte* end()
+        public string end()
         {
             byte* ret = ImGuiNative.TextRange_end(NativePtr);
-            return ret;
+            return Util.StringFromPtr(ret);
         }
-        public byte* begin()
+        public string begin()
         {
             byte* ret = ImGuiNative.TextRange_begin(NativePtr);
-            return ret;
+            return Util.StringFromPtr(ret);
         }
         public bool empty()
         {

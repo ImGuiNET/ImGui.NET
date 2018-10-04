@@ -132,7 +132,7 @@ namespace ImGuiNET
             ImFontGlyph* ret = ImGuiNative.ImFont_FindGlyphNoFallback(NativePtr, c);
             return new ImFontGlyphPtr(ret);
         }
-        public byte* CalcWordWrapPositionA(float scale, string text, string text_end, float wrap_width)
+        public string CalcWordWrapPositionA(float scale, string text, string text_end, float wrap_width)
         {
             int text_byteCount = Encoding.UTF8.GetByteCount(text);
             byte* native_text = stackalloc byte[text_byteCount + 1];
@@ -149,7 +149,7 @@ namespace ImGuiNET
                 native_text_end[native_text_end_offset] = 0;
             }
             byte* ret = ImGuiNative.ImFont_CalcWordWrapPositionA(NativePtr, scale, native_text, native_text_end, wrap_width);
-            return ret;
+            return Util.StringFromPtr(ret);
         }
         public Vector2 CalcTextSizeA(float size, float max_width, float wrap_width, string text_begin)
         {
@@ -231,10 +231,10 @@ namespace ImGuiNET
             ImFontGlyph* ret = ImGuiNative.ImFont_FindGlyph(NativePtr, c);
             return new ImFontGlyphPtr(ret);
         }
-        public byte* GetDebugName()
+        public string GetDebugName()
         {
             byte* ret = ImGuiNative.ImFont_GetDebugName(NativePtr);
-            return ret;
+            return Util.StringFromPtr(ret);
         }
         public void BuildLookupTable()
         {

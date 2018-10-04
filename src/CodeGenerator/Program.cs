@@ -31,13 +31,14 @@ namespace CodeGenerator
             { "ImGuiID", "uint" },
             { "ImDrawIdx", "ushort" },
             { "ImDrawListSharedData", "IntPtr" },
+            { "ImDrawListSharedData*", "IntPtr" },
             { "ImU32", "uint" },
             { "ImDrawCallback", "IntPtr" },
             { "size_t", "uint" },
             { "ImGuiContext*", "IntPtr" },
-            { "float[2]", "float*" },
-            { "float[3]", "float*" },
-            { "float[4]", "float*" },
+            { "float[2]", "Vector2*" },
+            { "float[3]", "Vector3*" },
+            { "float[4]", "Vector4*" },
             { "int[2]", "int*" },
             { "int[3]", "int*" },
             { "int[4]", "int*" },
@@ -67,6 +68,7 @@ namespace CodeGenerator
         private static readonly Dictionary<string, string> s_wellKnownDefaultValues = new Dictionary<string, string>()
         {
             { "((void *)0)", "null" },
+            { "((void*)0)", "null" },
             { "ImVec2(0,0)", "new Vector2()" },
             { "ImVec2(-1,0)", "new Vector2(-1, 0)" },
             { "ImVec2(1,0)", "new Vector2(1, 0)" },
@@ -411,7 +413,7 @@ namespace CodeGenerator
                 writer.Using("System.Runtime.InteropServices");
                 writer.WriteLine(string.Empty);
                 writer.PushBlock("namespace ImGuiNET");
-                writer.PushBlock("public unsafe static partial class ImGuiNative");
+                writer.PushBlock("public static unsafe partial class ImGuiNative");
                 foreach (FunctionDefinition fd in functions)
                 {
                     foreach (OverloadDefinition overload in fd.Overloads)
@@ -475,10 +477,9 @@ namespace CodeGenerator
                 writer.Using("System.Numerics");
                 writer.Using("System.Runtime.InteropServices");
                 writer.Using("System.Text");
-                writer.Using("static ImGuiNET.ImGuiNative");
                 writer.WriteLine(string.Empty);
                 writer.PushBlock("namespace ImGuiNET");
-                writer.PushBlock("public unsafe static partial class ImGui");
+                writer.PushBlock("public static unsafe partial class ImGui");
                 foreach (FunctionDefinition fd in functions)
                 {
                     foreach (OverloadDefinition overload in fd.Overloads)
@@ -675,6 +676,12 @@ namespace CodeGenerator
                     preCallLines.Add($"byte* {nativeArgName} = &{nativeArgName}_val;");
                     postCallLines.Add($"{correctedIdentifier} = {nativeArgName}_val != 0;");
                 }
+                else if (tr.Type == "void*")
+                {
+                    string nativeArgName = "native_" + tr.Name;
+                    marshalledParameters[i] = new MarshalledParameter("IntPtr", false, nativeArgName, false);
+                    preCallLines.Add($"void* {nativeArgName} = {correctedIdentifier}.ToPointer();");
+                }
                 else if (GetWrappedType(tr.Type, out string wrappedParamType)
                     && !s_wellKnownTypes.ContainsKey(tr.Type)
                     && !s_wellKnownTypes.ContainsKey(tr.Type.Substring(0, tr.Type.Length - 1)))
@@ -684,9 +691,18 @@ namespace CodeGenerator
                     marshalledParameters[i] = new MarshalledParameter(wrappedParamType, false, nativeArgName, false);
                     preCallLines.Add($"{tr.Type} {nativeArgName} = {correctedIdentifier}.NativePtr;");
                 }
-                else if (tr.Type.EndsWith("*") && tr.Type != "void*" && !s_wellKnownTypes.ContainsKey(tr.Type))
+                else if ((tr.Type.EndsWith("*") || tr.Type.Contains("[") || tr.Type.EndsWith("&")) && tr.Type != "void*" && tr.Type != "ImGuiContext*")
                 {
-                    string nonPtrType = GetTypeString(tr.Type.Substring(0, tr.Type.Length - 1), false);
+                    string nonPtrType;
+                    if (tr.Type.Contains("["))
+                    {
+                        string wellKnown = s_wellKnownTypes[tr.Type];
+                        nonPtrType = GetTypeString(wellKnown.Substring(0, wellKnown.Length - 1), false);
+                    }
+                    else
+                    {
+                        nonPtrType = GetTypeString(tr.Type.Substring(0, tr.Type.Length - 1), false);
+                    }
                     string nativeArgName = "native_" + tr.Name;
                     bool isOutParam = tr.Name.Contains("out_");
                     string direction = isOutParam ? "out" : "ref";
@@ -718,7 +734,6 @@ namespace CodeGenerator
 
             string staticPortion = selfName == null ? "static " : string.Empty;
             writer.PushBlock($"public {staticPortion}{safeRet} {friendlyName}({invocationList})");
-
             foreach (string line in preCallLines)
             {
                 writer.WriteLine(line);
@@ -777,6 +792,14 @@ namespace CodeGenerator
                 {
                     writer.WriteLine("return ret != 0;");
                 }
+                else if (overload.ReturnType == "char*")
+                {
+                    writer.WriteLine("return Util.StringFromPtr(ret);");
+                }
+                else if (overload.ReturnType == "void*")
+                {
+                    writer.WriteLine("return (IntPtr)ret;");
+                }
                 else
                 {
                     string retVal = isWrappedType ? $"new {safeRet}(ret)" : "ret";
@@ -792,6 +815,14 @@ namespace CodeGenerator
             if (nativeRet == "bool")
             {
                 return "bool";
+            }
+            else if (nativeRet == "char*")
+            {
+                return "string";
+            }
+            else if (nativeRet == "void*")
+            {
+                return "IntPtr";
             }
 
             return GetTypeString(nativeRet, false);
@@ -859,14 +890,17 @@ namespace CodeGenerator
             if (typeName.EndsWith("**")) { pointerLevel = 2; }
             else if (typeName.EndsWith("*")) { pointerLevel = 1; }
 
-            if (s_wellKnownTypes.TryGetValue(typeName.Substring(0, typeName.Length - pointerLevel), out string typeStr))
+            if (!s_wellKnownTypes.TryGetValue(typeName, out string typeStr))
             {
-                typeStr = typeStr + new string('*', pointerLevel);
-            }
-            else if (!s_wellKnownTypes.TryGetValue(typeName, out typeStr))
-            {
-                typeStr = typeName;
-                if (isFunctionPointer) { typeStr = "IntPtr"; }
+                if (s_wellKnownTypes.TryGetValue(typeName.Substring(0, typeName.Length - pointerLevel), out typeStr))
+                {
+                    typeStr = typeStr + new string('*', pointerLevel);
+                }
+                else if (!s_wellKnownTypes.TryGetValue(typeName, out typeStr))
+                {
+                    typeStr = typeName;
+                    if (isFunctionPointer) { typeStr = "IntPtr"; }
+                }
             }
 
             return typeStr;

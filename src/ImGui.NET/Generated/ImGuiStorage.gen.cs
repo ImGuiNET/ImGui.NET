@@ -22,10 +22,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiStorage_SetFloat(NativePtr, key, val);
         }
-        public void* GetVoidPtr(uint key)
+        public IntPtr GetVoidPtr(uint key)
         {
             void* ret = ImGuiNative.ImGuiStorage_GetVoidPtr(NativePtr, key);
-            return ret;
+            return (IntPtr)ret;
         }
         public float* GetFloatRef(uint key)
         {
@@ -48,9 +48,10 @@ namespace ImGuiNET
             void** ret = ImGuiNative.ImGuiStorage_GetVoidPtrRef(NativePtr, key, default_val);
             return ret;
         }
-        public void** GetVoidPtrRef(uint key, void* default_val)
+        public void** GetVoidPtrRef(uint key, IntPtr default_val)
         {
-            void** ret = ImGuiNative.ImGuiStorage_GetVoidPtrRef(NativePtr, key, default_val);
+            void* native_default_val = default_val.ToPointer();
+            void** ret = ImGuiNative.ImGuiStorage_GetVoidPtrRef(NativePtr, key, native_default_val);
             return ret;
         }
         public byte* GetBoolRef(uint key)
@@ -76,9 +77,10 @@ namespace ImGuiNET
             int* ret = ImGuiNative.ImGuiStorage_GetIntRef(NativePtr, key, default_val);
             return ret;
         }
-        public void SetVoidPtr(uint key, void* val)
+        public void SetVoidPtr(uint key, IntPtr val)
         {
-            ImGuiNative.ImGuiStorage_SetVoidPtr(NativePtr, key, val);
+            void* native_val = val.ToPointer();
+            ImGuiNative.ImGuiStorage_SetVoidPtr(NativePtr, key, native_val);
         }
         public void BuildSortByKey()
         {

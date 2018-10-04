@@ -11,7 +11,7 @@ namespace ImGuiNET
         public ImVector/*<ImDrawIdx>*/ IdxBuffer;
         public ImVector/*<ImDrawVert>*/ VtxBuffer;
         public ImDrawListFlags Flags;
-        public IntPtr* _Data;
+        public IntPtr _Data;
         public byte* _OwnerName;
         public uint _VtxCurrentIdx;
         public ImDrawVert* _VtxWritePtr;
@@ -35,7 +35,7 @@ namespace ImGuiNET
         public ImVector<ushort> IdxBuffer => new ImVector<ushort>(NativePtr->IdxBuffer);
         public ImPtrVector<ImDrawVertPtr> VtxBuffer => new ImPtrVector<ImDrawVertPtr>(NativePtr->VtxBuffer, Unsafe.SizeOf<ImDrawVert>());
         public ref ImDrawListFlags Flags => ref Unsafe.AsRef<ImDrawListFlags>(&NativePtr->Flags);
-        public IntPtr _Data { get => (IntPtr)NativePtr->_Data; set => NativePtr->_Data = (IntPtr*)value; }
+        public ref IntPtr _Data => ref Unsafe.AsRef<IntPtr>(&NativePtr->_Data);
         public NullTerminatedString _OwnerName => new NullTerminatedString(NativePtr->_OwnerName);
         public ref uint _VtxCurrentIdx => ref Unsafe.AsRef<uint>(&NativePtr->_VtxCurrentIdx);
         public ImDrawVertPtr _VtxWritePtr => new ImDrawVertPtr(NativePtr->_VtxWritePtr);
@@ -177,9 +177,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawList_AddRect(NativePtr, a, b, col, rounding, rounding_corners_flags, thickness);
         }
-        public void AddCallback(IntPtr callback, void* callback_data)
+        public void AddCallback(IntPtr callback, IntPtr callback_data)
         {
-            ImGuiNative.ImDrawList_AddCallback(NativePtr, callback, callback_data);
+            void* native_callback_data = callback_data.ToPointer();
+            ImGuiNative.ImDrawList_AddCallback(NativePtr, callback, native_callback_data);
         }
         public void PathRect(Vector2 rect_min, Vector2 rect_max)
         {
