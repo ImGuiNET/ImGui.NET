@@ -22,10 +22,10 @@ namespace ImGuiNET
         public IntPtr e { get => (IntPtr)NativePtr->e; set => NativePtr->e = (byte*)value; }
         public void split(byte separator, ref ImVector @out)
         {
-            ImVector native_out_val = @out;
-            ImVector* native_out = &native_out_val;
-            ImGuiNative.TextRange_split(NativePtr, separator, native_out);
-            @out = native_out_val;
+            fixed (ImVector* native_out = &@out)
+            {
+                ImGuiNative.TextRange_split(NativePtr, separator, native_out);
+            }
         }
         public string end()
         {

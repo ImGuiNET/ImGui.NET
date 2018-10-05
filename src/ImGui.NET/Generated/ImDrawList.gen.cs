@@ -56,11 +56,11 @@ namespace ImGuiNET
         }
         public void AddPolyline(ref Vector2 points, int num_points, uint col, bool closed, float thickness)
         {
-            Vector2 native_points_val = points;
-            Vector2* native_points = &native_points_val;
             byte native_closed = closed ? (byte)1 : (byte)0;
-            ImGuiNative.ImDrawList_AddPolyline(NativePtr, native_points, num_points, col, native_closed, thickness);
-            points = native_points_val;
+            fixed (Vector2* native_points = &points)
+            {
+                ImGuiNative.ImDrawList_AddPolyline(NativePtr, native_points, num_points, col, native_closed, thickness);
+            }
         }
         public void PopClipRect()
         {
@@ -231,10 +231,10 @@ namespace ImGuiNET
         }
         public void AddConvexPolyFilled(ref Vector2 points, int num_points, uint col)
         {
-            Vector2 native_points_val = points;
-            Vector2* native_points = &native_points_val;
-            ImGuiNative.ImDrawList_AddConvexPolyFilled(NativePtr, native_points, num_points, col);
-            points = native_points_val;
+            fixed (Vector2* native_points = &points)
+            {
+                ImGuiNative.ImDrawList_AddConvexPolyFilled(NativePtr, native_points, num_points, col);
+            }
         }
         public void AddImageQuad(IntPtr user_texture_id, Vector2 a, Vector2 b, Vector2 c, Vector2 d)
         {
@@ -400,10 +400,10 @@ namespace ImGuiNET
                 int native_text_end_offset = Encoding.UTF8.GetBytes(text_end_ptr, text_end.Length, native_text_end, text_end_byteCount);
                 native_text_end[native_text_end_offset] = 0;
             }
-            Vector4 native_cpu_fine_clip_rect_val = cpu_fine_clip_rect;
-            Vector4* native_cpu_fine_clip_rect = &native_cpu_fine_clip_rect_val;
-            ImGuiNative.ImDrawList_AddTextFontPtr(NativePtr, native_font, font_size, pos, col, native_text_begin, native_text_end, wrap_width, native_cpu_fine_clip_rect);
-            cpu_fine_clip_rect = native_cpu_fine_clip_rect_val;
+            fixed (Vector4* native_cpu_fine_clip_rect = &cpu_fine_clip_rect)
+            {
+                ImGuiNative.ImDrawList_AddTextFontPtr(NativePtr, native_font, font_size, pos, col, native_text_begin, native_text_end, wrap_width, native_cpu_fine_clip_rect);
+            }
         }
         public void AddCircleFilled(Vector2 centre, float radius, uint col)
         {

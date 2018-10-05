@@ -54,17 +54,17 @@ namespace ImGuiNET
         }
         public void AddRanges(ref ushort ranges)
         {
-            ushort native_ranges_val = ranges;
-            ushort* native_ranges = &native_ranges_val;
-            ImGuiNative.GlyphRangesBuilder_AddRanges(NativePtr, native_ranges);
-            ranges = native_ranges_val;
+            fixed (ushort* native_ranges = &ranges)
+            {
+                ImGuiNative.GlyphRangesBuilder_AddRanges(NativePtr, native_ranges);
+            }
         }
         public void BuildRanges(out ImVector out_ranges)
         {
-            ImVector native_out_ranges_val;
-            ImVector* native_out_ranges = &native_out_ranges_val;
-            ImGuiNative.GlyphRangesBuilder_BuildRanges(NativePtr, native_out_ranges);
-            out_ranges = native_out_ranges_val;
+            fixed (ImVector* native_out_ranges = &out_ranges)
+            {
+                ImGuiNative.GlyphRangesBuilder_BuildRanges(NativePtr, native_out_ranges);
+            }
         }
         public bool GetBit(int n)
         {

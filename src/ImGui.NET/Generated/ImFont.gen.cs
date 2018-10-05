@@ -201,11 +201,11 @@ namespace ImGuiNET
                 int native_text_end_offset = Encoding.UTF8.GetBytes(text_end_ptr, text_end.Length, native_text_end, text_end_byteCount);
                 native_text_end[native_text_end_offset] = 0;
             }
-            byte* native_remaining_val = remaining;
-            byte** native_remaining = &native_remaining_val;
-            Vector2 ret = ImGuiNative.ImFont_CalcTextSizeA(NativePtr, size, max_width, wrap_width, native_text_begin, native_text_end, native_remaining);
-            remaining = native_remaining_val;
-            return ret;
+            fixed (byte** native_remaining = &remaining)
+            {
+                Vector2 ret = ImGuiNative.ImFont_CalcTextSizeA(NativePtr, size, max_width, wrap_width, native_text_begin, native_text_end, native_remaining);
+                return ret;
+            }
         }
         public bool IsLoaded()
         {
