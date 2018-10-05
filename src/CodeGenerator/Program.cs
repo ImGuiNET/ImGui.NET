@@ -554,10 +554,15 @@ namespace CodeGenerator
         private static void EmitOverload(
             CSharpCodeWriter writer,
             OverloadDefinition overload,
-            Dictionary<string, string>
-            defaultValues,
+            Dictionary<string, string> defaultValues,
             string selfName)
         {
+            if (overload.Parameters.Where(tr => tr.Name.EndsWith("_begin") || tr.Name.EndsWith("_end"))
+                .Any(tr => !defaultValues.ContainsKey(tr.Name)))
+            {
+                return;
+            }
+
             Debug.Assert(!overload.IsMemberFunction || selfName != null);
 
             string nativeRet = GetTypeString(overload.ReturnType, false);

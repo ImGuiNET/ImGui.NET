@@ -36,24 +36,6 @@ namespace ImGuiNET
             byte* native_text_end = null;
             ImGuiNative.igTextUnformatted(native_text, native_text_end);
         }
-        public static void TextUnformatted(string text, string text_end)
-        {
-            int text_byteCount = Encoding.UTF8.GetByteCount(text);
-            byte* native_text = stackalloc byte[text_byteCount + 1];
-            fixed (char* text_ptr = text)
-            {
-                int native_text_offset = Encoding.UTF8.GetBytes(text_ptr, text.Length, native_text, text_byteCount);
-                native_text[native_text_offset] = 0;
-            }
-            int text_end_byteCount = Encoding.UTF8.GetByteCount(text_end);
-            byte* native_text_end = stackalloc byte[text_end_byteCount + 1];
-            fixed (char* text_end_ptr = text_end)
-            {
-                int native_text_end_offset = Encoding.UTF8.GetBytes(text_end_ptr, text_end.Length, native_text_end, text_end_byteCount);
-                native_text_end[native_text_end_offset] = 0;
-            }
-            ImGuiNative.igTextUnformatted(native_text, native_text_end);
-        }
         public static void PopFont()
         {
             ImGuiNative.igPopFont();
@@ -2551,25 +2533,6 @@ namespace ImGuiNET
             uint ret = ImGuiNative.igGetIDStr(native_str_id);
             return ret;
         }
-        public static uint GetID(string str_id_begin, string str_id_end)
-        {
-            int str_id_begin_byteCount = Encoding.UTF8.GetByteCount(str_id_begin);
-            byte* native_str_id_begin = stackalloc byte[str_id_begin_byteCount + 1];
-            fixed (char* str_id_begin_ptr = str_id_begin)
-            {
-                int native_str_id_begin_offset = Encoding.UTF8.GetBytes(str_id_begin_ptr, str_id_begin.Length, native_str_id_begin, str_id_begin_byteCount);
-                native_str_id_begin[native_str_id_begin_offset] = 0;
-            }
-            int str_id_end_byteCount = Encoding.UTF8.GetByteCount(str_id_end);
-            byte* native_str_id_end = stackalloc byte[str_id_end_byteCount + 1];
-            fixed (char* str_id_end_ptr = str_id_end)
-            {
-                int native_str_id_end_offset = Encoding.UTF8.GetBytes(str_id_end_ptr, str_id_end.Length, native_str_id_end, str_id_end_byteCount);
-                native_str_id_end[native_str_id_end_offset] = 0;
-            }
-            uint ret = ImGuiNative.igGetIDStrStr(native_str_id_begin, native_str_id_end);
-            return ret;
-        }
         public static uint GetID(IntPtr ptr_id)
         {
             void* native_ptr_id = ptr_id.ToPointer();
@@ -3895,24 +3858,6 @@ namespace ImGuiNET
             }
             ImGuiNative.igPushIDStr(native_str_id);
         }
-        public static void PushID(string str_id_begin, string str_id_end)
-        {
-            int str_id_begin_byteCount = Encoding.UTF8.GetByteCount(str_id_begin);
-            byte* native_str_id_begin = stackalloc byte[str_id_begin_byteCount + 1];
-            fixed (char* str_id_begin_ptr = str_id_begin)
-            {
-                int native_str_id_begin_offset = Encoding.UTF8.GetBytes(str_id_begin_ptr, str_id_begin.Length, native_str_id_begin, str_id_begin_byteCount);
-                native_str_id_begin[native_str_id_begin_offset] = 0;
-            }
-            int str_id_end_byteCount = Encoding.UTF8.GetByteCount(str_id_end);
-            byte* native_str_id_end = stackalloc byte[str_id_end_byteCount + 1];
-            fixed (char* str_id_end_ptr = str_id_end)
-            {
-                int native_str_id_end_offset = Encoding.UTF8.GetBytes(str_id_end_ptr, str_id_end.Length, native_str_id_end, str_id_end_byteCount);
-                native_str_id_end[native_str_id_end_offset] = 0;
-            }
-            ImGuiNative.igPushIDRange(native_str_id_begin, native_str_id_end);
-        }
         public static void PushID(IntPtr ptr_id)
         {
             void* native_ptr_id = ptr_id.ToPointer();
@@ -4450,16 +4395,6 @@ namespace ImGuiNET
         {
             Vector2 ret = ImGuiNative.igGetMousePosOnOpeningCurrentPopup();
             return ret;
-        }
-        public static void CalcListClipping(int items_count, float items_height, out int out_items_display_start, out int out_items_display_end)
-        {
-            fixed (int* native_out_items_display_start = &out_items_display_start)
-            {
-                fixed (int* native_out_items_display_end = &out_items_display_end)
-                {
-                    ImGuiNative.igCalcListClipping(items_count, items_height, native_out_items_display_start, native_out_items_display_end);
-                }
-            }
         }
         public static void EndDragDropSource()
         {
@@ -5013,68 +4948,6 @@ namespace ImGuiNET
             byte hide_text_after_double_hash = 0;
             float wrap_width = -1.0f;
             Vector2 ret = ImGuiNative.igCalcTextSize(native_text, native_text_end, hide_text_after_double_hash, wrap_width);
-            return ret;
-        }
-        public static Vector2 CalcTextSize(string text, string text_end)
-        {
-            int text_byteCount = Encoding.UTF8.GetByteCount(text);
-            byte* native_text = stackalloc byte[text_byteCount + 1];
-            fixed (char* text_ptr = text)
-            {
-                int native_text_offset = Encoding.UTF8.GetBytes(text_ptr, text.Length, native_text, text_byteCount);
-                native_text[native_text_offset] = 0;
-            }
-            int text_end_byteCount = Encoding.UTF8.GetByteCount(text_end);
-            byte* native_text_end = stackalloc byte[text_end_byteCount + 1];
-            fixed (char* text_end_ptr = text_end)
-            {
-                int native_text_end_offset = Encoding.UTF8.GetBytes(text_end_ptr, text_end.Length, native_text_end, text_end_byteCount);
-                native_text_end[native_text_end_offset] = 0;
-            }
-            byte hide_text_after_double_hash = 0;
-            float wrap_width = -1.0f;
-            Vector2 ret = ImGuiNative.igCalcTextSize(native_text, native_text_end, hide_text_after_double_hash, wrap_width);
-            return ret;
-        }
-        public static Vector2 CalcTextSize(string text, string text_end, bool hide_text_after_double_hash)
-        {
-            int text_byteCount = Encoding.UTF8.GetByteCount(text);
-            byte* native_text = stackalloc byte[text_byteCount + 1];
-            fixed (char* text_ptr = text)
-            {
-                int native_text_offset = Encoding.UTF8.GetBytes(text_ptr, text.Length, native_text, text_byteCount);
-                native_text[native_text_offset] = 0;
-            }
-            int text_end_byteCount = Encoding.UTF8.GetByteCount(text_end);
-            byte* native_text_end = stackalloc byte[text_end_byteCount + 1];
-            fixed (char* text_end_ptr = text_end)
-            {
-                int native_text_end_offset = Encoding.UTF8.GetBytes(text_end_ptr, text_end.Length, native_text_end, text_end_byteCount);
-                native_text_end[native_text_end_offset] = 0;
-            }
-            byte native_hide_text_after_double_hash = hide_text_after_double_hash ? (byte)1 : (byte)0;
-            float wrap_width = -1.0f;
-            Vector2 ret = ImGuiNative.igCalcTextSize(native_text, native_text_end, native_hide_text_after_double_hash, wrap_width);
-            return ret;
-        }
-        public static Vector2 CalcTextSize(string text, string text_end, bool hide_text_after_double_hash, float wrap_width)
-        {
-            int text_byteCount = Encoding.UTF8.GetByteCount(text);
-            byte* native_text = stackalloc byte[text_byteCount + 1];
-            fixed (char* text_ptr = text)
-            {
-                int native_text_offset = Encoding.UTF8.GetBytes(text_ptr, text.Length, native_text, text_byteCount);
-                native_text[native_text_offset] = 0;
-            }
-            int text_end_byteCount = Encoding.UTF8.GetByteCount(text_end);
-            byte* native_text_end = stackalloc byte[text_end_byteCount + 1];
-            fixed (char* text_end_ptr = text_end)
-            {
-                int native_text_end_offset = Encoding.UTF8.GetBytes(text_end_ptr, text_end.Length, native_text_end, text_end_byteCount);
-                native_text_end[native_text_end_offset] = 0;
-            }
-            byte native_hide_text_after_double_hash = hide_text_after_double_hash ? (byte)1 : (byte)0;
-            Vector2 ret = ImGuiNative.igCalcTextSize(native_text, native_text_end, native_hide_text_after_double_hash, wrap_width);
             return ret;
         }
         public static IntPtr GetDrawListSharedData()
