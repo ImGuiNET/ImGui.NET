@@ -257,3 +257,6 @@ Session.vim
 
 # Rider/Jetbrains IDEs
 .idea
+
+# download dir
+deps/
