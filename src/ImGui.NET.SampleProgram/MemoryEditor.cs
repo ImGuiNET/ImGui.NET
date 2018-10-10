@@ -254,7 +254,7 @@ namespace ImGuiNET
             Begin(items_count, items_height);
         }
 
-        public void Begin(int count, float items_height = -1.0f)
+        public unsafe void Begin(int count, float items_height = -1.0f)
         {
             StartPosY = ImGuiNative.igGetCursorPosY();
             ItemsHeight = items_height;
@@ -263,7 +263,10 @@ namespace ImGuiNET
             DisplayEnd = DisplayStart = -1;
             if (ItemsHeight > 0.0f)
             {
-                ImGui.CalcListClipping(ItemsCount, ItemsHeight, out DisplayStart, out DisplayEnd); // calculate how many to clip/display
+                int dispStart, dispEnd;
+                ImGuiNative.igCalcListClipping(ItemsCount, ItemsHeight, &dispStart, &dispEnd);
+                DisplayStart = dispStart;
+                DisplayEnd = dispEnd;
                 if (DisplayStart > 0)
                     //SetCursorPosYAndSetupDummyPrevLine(StartPosY + DisplayStart * ItemsHeight, ItemsHeight); // advance cursor
                     ImGuiNative.igSetCursorPosY(StartPosY + DisplayStart * ItemsHeight);
