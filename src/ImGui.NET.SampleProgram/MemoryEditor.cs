@@ -145,7 +145,7 @@ namespace ImGuiNET
 
                         var flags = ImGuiInputTextFlags.CharsHexadecimal | ImGuiInputTextFlags.EnterReturnsTrue | ImGuiInputTextFlags.AutoSelectAll | ImGuiInputTextFlags.NoHorizontalScroll | ImGuiInputTextFlags.AlwaysInsertMode | ImGuiInputTextFlags.CallbackAlways;
 
-                        if (ImGui.InputText("##data", DataInput, 32, flags, callback, &cursor_pos))
+                        if (ImGui.InputText("##data", DataInput, 32, flags, callback, (IntPtr)(&cursor_pos)))
                             data_write = data_next = true;
                         else if (!DataEditingTakeFocus && !ImGui.IsItemActive())
                             DataEditingAddr = -1;
