@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>A .NET wrapper for the dear ImGui library.</Description>
+    <Description>A .NET wrapper for the Dear ImGui library.</Description>
     <AssemblyVersion>1.65.0</AssemblyVersion>
     <Authors>Eric Mellino</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
