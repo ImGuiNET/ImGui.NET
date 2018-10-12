@@ -1,5 +1,6 @@
 namespace ImGuiNET
 {
+    [System.Flags]
     public enum ImGuiWindowFlags
     {
         None = 0,

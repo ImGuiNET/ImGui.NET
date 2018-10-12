@@ -1,5 +1,6 @@
 namespace ImGuiNET
 {
+    [System.Flags]
     public enum ImDrawCornerFlags
     {
         TopLeft = 1 << 0,

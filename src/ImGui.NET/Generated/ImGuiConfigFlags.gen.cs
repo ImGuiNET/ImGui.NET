@@ -1,5 +1,6 @@
 namespace ImGuiNET
 {
+    [System.Flags]
     public enum ImGuiConfigFlags
     {
         NavEnableKeyboard = 1 << 0,

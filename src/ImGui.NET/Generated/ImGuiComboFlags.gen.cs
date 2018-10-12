@@ -1,5 +1,6 @@
 namespace ImGuiNET
 {
+    [System.Flags]
     public enum ImGuiComboFlags
     {
         None = 0,

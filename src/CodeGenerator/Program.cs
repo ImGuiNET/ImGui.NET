@@ -228,6 +228,10 @@ namespace CodeGenerator
                 using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, ed.FriendlyName + ".gen.cs")))
                 {
                     writer.PushBlock("namespace ImGuiNET");
+                    if (ed.FriendlyName.Contains("Flags"))
+                    {
+                        writer.WriteLine("[System.Flags]");
+                    }
                     writer.PushBlock($"public enum {ed.FriendlyName}");
                     foreach (EnumMember member in ed.Members)
                     {
