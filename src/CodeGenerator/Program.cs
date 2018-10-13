@@ -461,12 +461,12 @@ namespace CodeGenerator
 
                         if (isUdtVariant)
                         {
-                            writer.WriteLine($"[DllImport(\"cimgui\", EntryPoint = \"{exportedName}\")]");
+                            writer.WriteLine($"[DllImport(\"cimgui\", CallingConvention = CallingConvention.Cdecl, EntryPoint = \"{exportedName}\")]");
 
                         }
                         else
                         {
-                            writer.WriteLine("[DllImport(\"cimgui\")]");
+                            writer.WriteLine("[DllImport(\"cimgui\", CallingConvention = CallingConvention.Cdecl)]");
                         }
                         writer.WriteLine($"public static extern {ret} {methodName}({parameters});");
                     }
