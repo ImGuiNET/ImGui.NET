@@ -7,7 +7,7 @@ namespace ImGuiNET
 {
     public unsafe partial struct GlyphRangesBuilder
     {
-        public ImVector/*<unsigned char>*/ UsedChars;
+        public ImVector UsedChars;
     }
     public unsafe partial struct GlyphRangesBuilderPtr
     {

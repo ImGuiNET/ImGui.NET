@@ -1528,8 +1528,8 @@ namespace ImGuiNET
             }
             int values_offset = 0;
             byte* native_overlay_text = null;
-            float scale_min = 3.40282347e+38F;
-            float scale_max = 3.40282347e+38F;
+            float scale_min = float.MaxValue;
+            float scale_max = float.MaxValue;
             Vector2 graph_size = new Vector2();
             int stride = sizeof(float);
             fixed (float* native_values = &values)
@@ -1547,8 +1547,8 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             byte* native_overlay_text = null;
-            float scale_min = 3.40282347e+38F;
-            float scale_max = 3.40282347e+38F;
+            float scale_min = float.MaxValue;
+            float scale_max = float.MaxValue;
             Vector2 graph_size = new Vector2();
             int stride = sizeof(float);
             fixed (float* native_values = &values)
@@ -1572,8 +1572,8 @@ namespace ImGuiNET
                 int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
                 native_overlay_text[native_overlay_text_offset] = 0;
             }
-            float scale_min = 3.40282347e+38F;
-            float scale_max = 3.40282347e+38F;
+            float scale_min = float.MaxValue;
+            float scale_max = float.MaxValue;
             Vector2 graph_size = new Vector2();
             int stride = sizeof(float);
             fixed (float* native_values = &values)
@@ -1597,7 +1597,7 @@ namespace ImGuiNET
                 int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
                 native_overlay_text[native_overlay_text_offset] = 0;
             }
-            float scale_max = 3.40282347e+38F;
+            float scale_max = float.MaxValue;
             Vector2 graph_size = new Vector2();
             int stride = sizeof(float);
             fixed (float* native_values = &values)
@@ -1726,8 +1726,8 @@ namespace ImGuiNET
             }
             int values_offset = 0;
             byte* native_overlay_text = null;
-            float scale_min = 3.40282347e+38F;
-            float scale_max = 3.40282347e+38F;
+            float scale_min = float.MaxValue;
+            float scale_max = float.MaxValue;
             Vector2 graph_size = new Vector2();
             int stride = sizeof(float);
             fixed (float* native_values = &values)
@@ -1745,8 +1745,8 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             byte* native_overlay_text = null;
-            float scale_min = 3.40282347e+38F;
-            float scale_max = 3.40282347e+38F;
+            float scale_min = float.MaxValue;
+            float scale_max = float.MaxValue;
             Vector2 graph_size = new Vector2();
             int stride = sizeof(float);
             fixed (float* native_values = &values)
@@ -1770,8 +1770,8 @@ namespace ImGuiNET
                 int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
                 native_overlay_text[native_overlay_text_offset] = 0;
             }
-            float scale_min = 3.40282347e+38F;
-            float scale_max = 3.40282347e+38F;
+            float scale_min = float.MaxValue;
+            float scale_max = float.MaxValue;
             Vector2 graph_size = new Vector2();
             int stride = sizeof(float);
             fixed (float* native_values = &values)
@@ -1795,7 +1795,7 @@ namespace ImGuiNET
                 int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
                 native_overlay_text[native_overlay_text_offset] = 0;
             }
-            float scale_max = 3.40282347e+38F;
+            float scale_max = float.MaxValue;
             Vector2 graph_size = new Vector2();
             int stride = sizeof(float);
             fixed (float* native_values = &values)

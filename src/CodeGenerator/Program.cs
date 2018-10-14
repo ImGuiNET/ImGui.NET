@@ -77,6 +77,7 @@ namespace CodeGenerator
             { "ImVec4(0,0,0,0)", "new Vector4()" },
             { "ImVec4(1,1,1,1)", "new Vector4(1, 1, 1, 1)" },
             { "ImDrawCornerFlags_All", "(int)ImDrawCornerFlags.All" },
+            { "FLT_MAX", "float.MaxValue" },
         };
 
         private static readonly Dictionary<string, string> s_identifierReplacements = new Dictionary<string, string>()
@@ -145,7 +146,11 @@ namespace CodeGenerator
                 string name = jp.Name;
                 TypeReference[] fields = jp.Values().Select(v =>
                 {
-                    return new TypeReference(v["name"].ToString(), v["type"].ToString(), enums);
+                    return new TypeReference(
+                        v["name"].ToString(),
+                        v["type"].ToString(),
+                        v["template_type"]?.ToString(),
+                        enums);
                 }).ToArray();
                 return new TypeDefinition(name, fields);
             }).ToArray();
@@ -309,7 +314,7 @@ namespace CodeGenerator
                         }
                         else if (typeStr.Contains("ImVector"))
                         {
-                            string vectorElementType = GetImVectorElementType(typeStr);
+                            string vectorElementType = GetTypeString(field.TemplateType, false);
 
                             if (s_wellKnownTypes.TryGetValue(vectorElementType, out string wellKnown))
                             {
@@ -1002,13 +1007,18 @@ namespace CodeGenerator
     {
         public string Name { get; }
         public string Type { get; }
+        public string TemplateType { get; }
         public int ArraySize { get; }
         public bool IsFunctionPointer { get; }
 
         public TypeReference(string name, string type, EnumDefinition[] enums)
+            : this(name, type, null, enums) { }
+
+        public TypeReference(string name, string type, string templateType, EnumDefinition[] enums)
         {
             Name = name;
             Type = type.Replace("const", string.Empty).Trim();
+            TemplateType = templateType;
             int startBracket = name.IndexOf('[');
             if (startBracket != -1)
             {

@@ -7,8 +7,8 @@ namespace ImGuiNET
 {
     public unsafe partial struct ImDrawChannel
     {
-        public ImVector/*<ImDrawCmd>*/ CmdBuffer;
-        public ImVector/*<ImDrawIdx>*/ IdxBuffer;
+        public ImVector CmdBuffer;
+        public ImVector IdxBuffer;
     }
     public unsafe partial struct ImDrawChannelPtr
     {

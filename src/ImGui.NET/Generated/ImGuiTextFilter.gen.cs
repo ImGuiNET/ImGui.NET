@@ -8,7 +8,7 @@ namespace ImGuiNET
     public unsafe partial struct ImGuiTextFilter
     {
         public fixed byte InputBuf[256];
-        public ImVector/*<TextRange>*/ Filters;
+        public ImVector Filters;
         public int CountGrep;
     }
     public unsafe partial struct ImGuiTextFilterPtr

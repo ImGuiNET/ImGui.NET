@@ -7,7 +7,7 @@ namespace ImGuiNET
 {
     public unsafe partial struct ImGuiTextBuffer
     {
-        public ImVector/*<char>*/ Buf;
+        public ImVector Buf;
     }
     public unsafe partial struct ImGuiTextBufferPtr
     {

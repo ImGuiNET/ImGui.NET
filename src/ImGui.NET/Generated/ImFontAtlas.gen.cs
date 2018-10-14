@@ -18,9 +18,9 @@ namespace ImGuiNET
         public int TexHeight;
         public Vector2 TexUvScale;
         public Vector2 TexUvWhitePixel;
-        public ImVector/*<ImFont*>*/ Fonts;
-        public ImVector/*<CustomRect>*/ CustomRects;
-        public ImVector/*<ImFontConfig>*/ ConfigData;
+        public ImVector Fonts;
+        public ImVector CustomRects;
+        public ImVector ConfigData;
         public fixed int CustomRectIds[1];
     }
     public unsafe partial struct ImFontAtlasPtr

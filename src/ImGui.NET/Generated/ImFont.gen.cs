@@ -10,9 +10,9 @@ namespace ImGuiNET
         public float FontSize;
         public float Scale;
         public Vector2 DisplayOffset;
-        public ImVector/*<ImFontGlyph>*/ Glyphs;
-        public ImVector/*<float>*/ IndexAdvanceX;
-        public ImVector/*<unsigned short>*/ IndexLookup;
+        public ImVector Glyphs;
+        public ImVector IndexAdvanceX;
+        public ImVector IndexLookup;
         public ImFontGlyph* FallbackGlyph;
         public float FallbackAdvanceX;
         public ushort FallbackChar;

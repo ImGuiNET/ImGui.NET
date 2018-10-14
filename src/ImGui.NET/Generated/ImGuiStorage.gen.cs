@@ -7,7 +7,7 @@ namespace ImGuiNET
 {
     public unsafe partial struct ImGuiStorage
     {
-        public ImVector/*<Pair>*/ Data;
+        public ImVector Data;
     }
     public unsafe partial struct ImGuiStoragePtr
     {
