@@ -328,7 +328,7 @@ namespace ImGuiNET
 
         private void UpdateImGuiInput(InputSnapshot snapshot)
         {
-            var io = ImGui.GetIO();
+            ImGuiIOPtr io = ImGui.GetIO();
 
             Vector2 mousePosition = snapshot.MousePosition;
 
@@ -338,8 +338,6 @@ namespace ImGuiNET
             io.MouseDown[2] = snapshot.IsMouseDown(MouseButton.Middle);
 
             float delta = snapshot.WheelDelta;
-            io.MouseWheel = delta;
-
             io.MouseWheel = delta;
 
             IReadOnlyList<char> keyCharPresses = snapshot.KeyCharPresses;
