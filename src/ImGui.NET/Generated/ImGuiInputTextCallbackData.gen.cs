@@ -36,7 +36,7 @@ namespace ImGuiNET
         public IntPtr Buf { get => (IntPtr)NativePtr->Buf; set => NativePtr->Buf = (byte*)value; }
         public ref int BufTextLen => ref Unsafe.AsRef<int>(&NativePtr->BufTextLen);
         public ref int BufSize => ref Unsafe.AsRef<int>(&NativePtr->BufSize);
-        public ref Bool8 BufDirty => ref Unsafe.AsRef<Bool8>(&NativePtr->BufDirty);
+        public ref bool BufDirty => ref Unsafe.AsRef<bool>(&NativePtr->BufDirty);
         public ref int CursorPos => ref Unsafe.AsRef<int>(&NativePtr->CursorPos);
         public ref int SelectionStart => ref Unsafe.AsRef<int>(&NativePtr->SelectionStart);
         public ref int SelectionEnd => ref Unsafe.AsRef<int>(&NativePtr->SelectionEnd);

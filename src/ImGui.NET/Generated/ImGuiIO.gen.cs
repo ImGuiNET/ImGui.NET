@@ -111,15 +111,15 @@ namespace ImGuiNET
         public IntPtr UserData { get => (IntPtr)NativePtr->UserData; set => NativePtr->UserData = (void*)value; }
         public ImFontAtlasPtr Fonts => new ImFontAtlasPtr(NativePtr->Fonts);
         public ref float FontGlobalScale => ref Unsafe.AsRef<float>(&NativePtr->FontGlobalScale);
-        public ref Bool8 FontAllowUserScaling => ref Unsafe.AsRef<Bool8>(&NativePtr->FontAllowUserScaling);
+        public ref bool FontAllowUserScaling => ref Unsafe.AsRef<bool>(&NativePtr->FontAllowUserScaling);
         public ImFontPtr FontDefault => new ImFontPtr(NativePtr->FontDefault);
         public ref Vector2 DisplayFramebufferScale => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayFramebufferScale);
         public ref Vector2 DisplayVisibleMin => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayVisibleMin);
         public ref Vector2 DisplayVisibleMax => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayVisibleMax);
-        public ref Bool8 MouseDrawCursor => ref Unsafe.AsRef<Bool8>(&NativePtr->MouseDrawCursor);
-        public ref Bool8 ConfigMacOSXBehaviors => ref Unsafe.AsRef<Bool8>(&NativePtr->ConfigMacOSXBehaviors);
-        public ref Bool8 ConfigInputTextCursorBlink => ref Unsafe.AsRef<Bool8>(&NativePtr->ConfigInputTextCursorBlink);
-        public ref Bool8 ConfigResizeWindowsFromEdges => ref Unsafe.AsRef<Bool8>(&NativePtr->ConfigResizeWindowsFromEdges);
+        public ref bool MouseDrawCursor => ref Unsafe.AsRef<bool>(&NativePtr->MouseDrawCursor);
+        public ref bool ConfigMacOSXBehaviors => ref Unsafe.AsRef<bool>(&NativePtr->ConfigMacOSXBehaviors);
+        public ref bool ConfigInputTextCursorBlink => ref Unsafe.AsRef<bool>(&NativePtr->ConfigInputTextCursorBlink);
+        public ref bool ConfigResizeWindowsFromEdges => ref Unsafe.AsRef<bool>(&NativePtr->ConfigResizeWindowsFromEdges);
         public ref IntPtr GetClipboardTextFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->GetClipboardTextFn);
         public ref IntPtr SetClipboardTextFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->SetClipboardTextFn);
         public IntPtr ClipboardUserData { get => (IntPtr)NativePtr->ClipboardUserData; set => NativePtr->ClipboardUserData = (void*)value; }
@@ -127,23 +127,23 @@ namespace ImGuiNET
         public IntPtr ImeWindowHandle { get => (IntPtr)NativePtr->ImeWindowHandle; set => NativePtr->ImeWindowHandle = (void*)value; }
         public IntPtr RenderDrawListsFnUnused { get => (IntPtr)NativePtr->RenderDrawListsFnUnused; set => NativePtr->RenderDrawListsFnUnused = (void*)value; }
         public ref Vector2 MousePos => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePos);
-        public RangeAccessor<Bool8> MouseDown => new RangeAccessor<Bool8>(NativePtr->MouseDown, 5);
+        public RangeAccessor<bool> MouseDown => new RangeAccessor<bool>(NativePtr->MouseDown, 5);
         public ref float MouseWheel => ref Unsafe.AsRef<float>(&NativePtr->MouseWheel);
         public ref float MouseWheelH => ref Unsafe.AsRef<float>(&NativePtr->MouseWheelH);
-        public ref Bool8 KeyCtrl => ref Unsafe.AsRef<Bool8>(&NativePtr->KeyCtrl);
-        public ref Bool8 KeyShift => ref Unsafe.AsRef<Bool8>(&NativePtr->KeyShift);
-        public ref Bool8 KeyAlt => ref Unsafe.AsRef<Bool8>(&NativePtr->KeyAlt);
-        public ref Bool8 KeySuper => ref Unsafe.AsRef<Bool8>(&NativePtr->KeySuper);
-        public RangeAccessor<Bool8> KeysDown => new RangeAccessor<Bool8>(NativePtr->KeysDown, 512);
+        public ref bool KeyCtrl => ref Unsafe.AsRef<bool>(&NativePtr->KeyCtrl);
+        public ref bool KeyShift => ref Unsafe.AsRef<bool>(&NativePtr->KeyShift);
+        public ref bool KeyAlt => ref Unsafe.AsRef<bool>(&NativePtr->KeyAlt);
+        public ref bool KeySuper => ref Unsafe.AsRef<bool>(&NativePtr->KeySuper);
+        public RangeAccessor<bool> KeysDown => new RangeAccessor<bool>(NativePtr->KeysDown, 512);
         public RangeAccessor<ushort> InputCharacters => new RangeAccessor<ushort>(NativePtr->InputCharacters, 17);
         public RangeAccessor<float> NavInputs => new RangeAccessor<float>(NativePtr->NavInputs, 21);
-        public ref Bool8 WantCaptureMouse => ref Unsafe.AsRef<Bool8>(&NativePtr->WantCaptureMouse);
-        public ref Bool8 WantCaptureKeyboard => ref Unsafe.AsRef<Bool8>(&NativePtr->WantCaptureKeyboard);
-        public ref Bool8 WantTextInput => ref Unsafe.AsRef<Bool8>(&NativePtr->WantTextInput);
-        public ref Bool8 WantSetMousePos => ref Unsafe.AsRef<Bool8>(&NativePtr->WantSetMousePos);
-        public ref Bool8 WantSaveIniSettings => ref Unsafe.AsRef<Bool8>(&NativePtr->WantSaveIniSettings);
-        public ref Bool8 NavActive => ref Unsafe.AsRef<Bool8>(&NativePtr->NavActive);
-        public ref Bool8 NavVisible => ref Unsafe.AsRef<Bool8>(&NativePtr->NavVisible);
+        public ref bool WantCaptureMouse => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureMouse);
+        public ref bool WantCaptureKeyboard => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureKeyboard);
+        public ref bool WantTextInput => ref Unsafe.AsRef<bool>(&NativePtr->WantTextInput);
+        public ref bool WantSetMousePos => ref Unsafe.AsRef<bool>(&NativePtr->WantSetMousePos);
+        public ref bool WantSaveIniSettings => ref Unsafe.AsRef<bool>(&NativePtr->WantSaveIniSettings);
+        public ref bool NavActive => ref Unsafe.AsRef<bool>(&NativePtr->NavActive);
+        public ref bool NavVisible => ref Unsafe.AsRef<bool>(&NativePtr->NavVisible);
         public ref float Framerate => ref Unsafe.AsRef<float>(&NativePtr->Framerate);
         public ref int MetricsRenderVertices => ref Unsafe.AsRef<int>(&NativePtr->MetricsRenderVertices);
         public ref int MetricsRenderIndices => ref Unsafe.AsRef<int>(&NativePtr->MetricsRenderIndices);
@@ -154,10 +154,10 @@ namespace ImGuiNET
         public ref Vector2 MousePosPrev => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePosPrev);
         public RangeAccessor<Vector2> MouseClickedPos => new RangeAccessor<Vector2>(&NativePtr->MouseClickedPos_0, 5);
         public RangeAccessor<double> MouseClickedTime => new RangeAccessor<double>(NativePtr->MouseClickedTime, 5);
-        public RangeAccessor<Bool8> MouseClicked => new RangeAccessor<Bool8>(NativePtr->MouseClicked, 5);
-        public RangeAccessor<Bool8> MouseDoubleClicked => new RangeAccessor<Bool8>(NativePtr->MouseDoubleClicked, 5);
-        public RangeAccessor<Bool8> MouseReleased => new RangeAccessor<Bool8>(NativePtr->MouseReleased, 5);
-        public RangeAccessor<Bool8> MouseDownOwned => new RangeAccessor<Bool8>(NativePtr->MouseDownOwned, 5);
+        public RangeAccessor<bool> MouseClicked => new RangeAccessor<bool>(NativePtr->MouseClicked, 5);
+        public RangeAccessor<bool> MouseDoubleClicked => new RangeAccessor<bool>(NativePtr->MouseDoubleClicked, 5);
+        public RangeAccessor<bool> MouseReleased => new RangeAccessor<bool>(NativePtr->MouseReleased, 5);
+        public RangeAccessor<bool> MouseDownOwned => new RangeAccessor<bool>(NativePtr->MouseDownOwned, 5);
         public RangeAccessor<float> MouseDownDuration => new RangeAccessor<float>(NativePtr->MouseDownDuration, 5);
         public RangeAccessor<float> MouseDownDurationPrev => new RangeAccessor<float>(NativePtr->MouseDownDurationPrev, 5);
         public RangeAccessor<Vector2> MouseDragMaxDistanceAbs => new RangeAccessor<Vector2>(&NativePtr->MouseDragMaxDistanceAbs_0, 5);

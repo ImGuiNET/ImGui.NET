@@ -46,7 +46,7 @@ namespace ImGuiNET
         public ImFontAtlasPtr ContainerAtlas => new ImFontAtlasPtr(NativePtr->ContainerAtlas);
         public ref float Ascent => ref Unsafe.AsRef<float>(&NativePtr->Ascent);
         public ref float Descent => ref Unsafe.AsRef<float>(&NativePtr->Descent);
-        public ref Bool8 DirtyLookupTables => ref Unsafe.AsRef<Bool8>(&NativePtr->DirtyLookupTables);
+        public ref bool DirtyLookupTables => ref Unsafe.AsRef<bool>(&NativePtr->DirtyLookupTables);
         public ref int MetricsTotalSurface => ref Unsafe.AsRef<int>(&NativePtr->MetricsTotalSurface);
         public void AddRemapChar(ushort dst, ushort src)
         {

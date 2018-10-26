@@ -30,8 +30,8 @@ namespace ImGuiNET
         public ref uint SourceParentId => ref Unsafe.AsRef<uint>(&NativePtr->SourceParentId);
         public ref int DataFrameCount => ref Unsafe.AsRef<int>(&NativePtr->DataFrameCount);
         public RangeAccessor<byte> DataType => new RangeAccessor<byte>(NativePtr->DataType, 33);
-        public ref Bool8 Preview => ref Unsafe.AsRef<Bool8>(&NativePtr->Preview);
-        public ref Bool8 Delivery => ref Unsafe.AsRef<Bool8>(&NativePtr->Delivery);
+        public ref bool Preview => ref Unsafe.AsRef<bool>(&NativePtr->Preview);
+        public ref bool Delivery => ref Unsafe.AsRef<bool>(&NativePtr->Delivery);
         public void Clear()
         {
             ImGuiNative.ImGuiPayload_Clear(NativePtr);
