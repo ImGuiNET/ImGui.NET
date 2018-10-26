@@ -6,7 +6,7 @@ Included is a basic sample program that shows how to use the library, and render
 
 This wrapper is built on top of [cimgui](https://github.com/Extrawurst/cimgui), which exposes a plain C API for Dear ImGui. If you are using Windows, OSX, or a mainline Linux distribution, then the ImGui.NET NuGet package comes bundled with a pre-built native library. If you are using another operating system, then you may need to build the native library yourself; see the cimgui repo for build instructions.
 
-[![NuGet](https://img.shields.io/nuget/v/ImGui.NET.svg)](https://www.nuget.org/packages/ImGui.NET)
+[![NuGet](https://img.shields.io/nuget/v/ImGui.NET.svg)](https://www.nuget.org/packages/ImGui.NET) [![Join the chat at https://gitter.im/ImGui-NET/Lobby](https://badges.gitter.im/ImGui-NET/Lobby.svg)](https://gitter.im/ImGui-NET/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # Building
 
