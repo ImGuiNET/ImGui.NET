@@ -50,7 +50,7 @@ namespace ImGuiNET
         }
         public void** GetVoidPtrRef(uint key, IntPtr default_val)
         {
-            void* native_default_val = default_val.ToPointer();
+            void* native_default_val = (void*)default_val.ToPointer();
             void** ret = ImGuiNative.ImGuiStorage_GetVoidPtrRef(NativePtr, key, native_default_val);
             return ret;
         }
@@ -79,7 +79,7 @@ namespace ImGuiNET
         }
         public void SetVoidPtr(uint key, IntPtr val)
         {
-            void* native_val = val.ToPointer();
+            void* native_val = (void*)val.ToPointer();
             ImGuiNative.ImGuiStorage_SetVoidPtr(NativePtr, key, native_val);
         }
         public void BuildSortByKey()

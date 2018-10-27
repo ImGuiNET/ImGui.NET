@@ -179,7 +179,7 @@ namespace ImGuiNET
         }
         public void AddCallback(IntPtr callback, IntPtr callback_data)
         {
-            void* native_callback_data = callback_data.ToPointer();
+            void* native_callback_data = (void*)callback_data.ToPointer();
             ImGuiNative.ImDrawList_AddCallback(NativePtr, callback, native_callback_data);
         }
         public void PathRect(Vector2 rect_min, Vector2 rect_max)

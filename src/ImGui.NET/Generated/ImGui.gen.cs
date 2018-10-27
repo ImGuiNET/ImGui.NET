@@ -2338,7 +2338,7 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
+            void* native_v = (void*)v.ToPointer();
             void* v_min = null;
             void* v_max = null;
             byte* native_format = null;
@@ -2355,8 +2355,8 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
             void* v_max = null;
             byte* native_format = null;
             float power = 1.0f;
@@ -2372,9 +2372,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             byte* native_format = null;
             float power = 1.0f;
             byte ret = ImGuiNative.igDragScalarN(native_label, data_type, native_v, components, v_speed, native_v_min, native_v_max, native_format, power);
@@ -2389,9 +2389,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -2412,9 +2412,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -2436,7 +2436,7 @@ namespace ImGuiNET
         }
         public static void MemFree(IntPtr ptr)
         {
-            void* native_ptr = ptr.ToPointer();
+            void* native_ptr = (void*)ptr.ToPointer();
             ImGuiNative.igMemFree(native_ptr);
         }
         public static Vector2 GetFontTexUvWhitePixel()
@@ -2535,7 +2535,7 @@ namespace ImGuiNET
         }
         public static uint GetID(IntPtr ptr_id)
         {
-            void* native_ptr_id = ptr_id.ToPointer();
+            void* native_ptr_id = (void*)ptr_id.ToPointer();
             uint ret = ImGuiNative.igGetIDPtr(native_ptr_id);
             return ret;
         }
@@ -2648,7 +2648,7 @@ namespace ImGuiNET
         }
         public static void TreePush(IntPtr ptr_id)
         {
-            void* native_ptr_id = ptr_id.ToPointer();
+            void* native_ptr_id = (void*)ptr_id.ToPointer();
             ImGuiNative.igTreePushPtr(native_ptr_id);
         }
         public static void TextDisabled(string fmt)
@@ -3062,7 +3062,7 @@ namespace ImGuiNET
                 int native_type_offset = Encoding.UTF8.GetBytes(type_ptr, type.Length, native_type, type_byteCount);
                 native_type[native_type_offset] = 0;
             }
-            void* native_data = data.ToPointer();
+            void* native_data = (void*)data.ToPointer();
             ImGuiCond cond = 0;
             byte ret = ImGuiNative.igSetDragDropPayload(native_type, native_data, size, cond);
             return ret != 0;
@@ -3076,7 +3076,7 @@ namespace ImGuiNET
                 int native_type_offset = Encoding.UTF8.GetBytes(type_ptr, type.Length, native_type, type_byteCount);
                 native_type[native_type_offset] = 0;
             }
-            void* native_data = data.ToPointer();
+            void* native_data = (void*)data.ToPointer();
             byte ret = ImGuiNative.igSetDragDropPayload(native_type, native_data, size, cond);
             return ret != 0;
         }
@@ -3567,7 +3567,7 @@ namespace ImGuiNET
                 int native_buf_offset = Encoding.UTF8.GetBytes(buf_ptr, buf.Length, native_buf, buf_byteCount);
                 native_buf[native_buf_offset] = 0;
             }
-            void* native_user_data = user_data.ToPointer();
+            void* native_user_data = (void*)user_data.ToPointer();
             byte ret = ImGuiNative.igInputTextMultiline(native_label, native_buf, buf_size, size, flags, callback, native_user_data);
             return ret != 0;
         }
@@ -3860,7 +3860,7 @@ namespace ImGuiNET
         }
         public static void PushID(IntPtr ptr_id)
         {
-            void* native_ptr_id = ptr_id.ToPointer();
+            void* native_ptr_id = (void*)ptr_id.ToPointer();
             ImGuiNative.igPushIDPtr(native_ptr_id);
         }
         public static void PushID(int int_id)
@@ -4112,9 +4112,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             byte* native_format = null;
             float power = 1.0f;
             byte ret = ImGuiNative.igVSliderScalar(native_label, size, data_type, native_v, native_v_min, native_v_max, native_format, power);
@@ -4129,9 +4129,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -4152,9 +4152,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -4422,9 +4422,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             byte* native_format = null;
             float power = 1.0f;
             byte ret = ImGuiNative.igSliderScalar(native_label, data_type, native_v, native_v_min, native_v_max, native_format, power);
@@ -4439,9 +4439,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -4462,9 +4462,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -4634,7 +4634,7 @@ namespace ImGuiNET
                 int native_buf_offset = Encoding.UTF8.GetBytes(buf_ptr, buf.Length, native_buf, buf_byteCount);
                 native_buf[native_buf_offset] = 0;
             }
-            void* native_user_data = user_data.ToPointer();
+            void* native_user_data = (void*)user_data.ToPointer();
             byte ret = ImGuiNative.igInputText(native_label, native_buf, buf_size, flags, callback, native_user_data);
             return ret != 0;
         }
@@ -5588,7 +5588,7 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
+            void* native_v = (void*)v.ToPointer();
             void* step = null;
             void* step_fast = null;
             byte* native_format = null;
@@ -5605,8 +5605,8 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_step = step.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_step = (void*)step.ToPointer();
             void* step_fast = null;
             byte* native_format = null;
             ImGuiInputTextFlags extra_flags = 0;
@@ -5622,9 +5622,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_step = step.ToPointer();
-            void* native_step_fast = step_fast.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_step = (void*)step.ToPointer();
+            void* native_step_fast = (void*)step_fast.ToPointer();
             byte* native_format = null;
             ImGuiInputTextFlags extra_flags = 0;
             byte ret = ImGuiNative.igInputScalar(native_label, data_type, native_v, native_step, native_step_fast, native_format, extra_flags);
@@ -5639,9 +5639,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_step = step.ToPointer();
-            void* native_step_fast = step_fast.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_step = (void*)step.ToPointer();
+            void* native_step_fast = (void*)step_fast.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -5662,9 +5662,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_step = step.ToPointer();
-            void* native_step_fast = step_fast.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_step = (void*)step.ToPointer();
+            void* native_step_fast = (void*)step_fast.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -5951,7 +5951,7 @@ namespace ImGuiNET
         }
         public static bool TreeNodeEx(IntPtr ptr_id, ImGuiTreeNodeFlags flags, string fmt)
         {
-            void* native_ptr_id = ptr_id.ToPointer();
+            void* native_ptr_id = (void*)ptr_id.ToPointer();
             int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
             byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
             fixed (char* fmt_ptr = fmt)
@@ -6033,9 +6033,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             byte* native_format = null;
             float power = 1.0f;
             byte ret = ImGuiNative.igSliderScalarN(native_label, data_type, native_v, components, native_v_min, native_v_max, native_format, power);
@@ -6050,9 +6050,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -6073,9 +6073,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -6129,7 +6129,7 @@ namespace ImGuiNET
         }
         public static void SetNextWindowSizeConstraints(Vector2 size_min, Vector2 size_max, ImGuiSizeCallback custom_callback, IntPtr custom_callback_data)
         {
-            void* native_custom_callback_data = custom_callback_data.ToPointer();
+            void* native_custom_callback_data = (void*)custom_callback_data.ToPointer();
             ImGuiNative.igSetNextWindowSizeConstraints(size_min, size_max, custom_callback, native_custom_callback_data);
         }
         public static void Dummy(Vector2 size)
@@ -6351,7 +6351,7 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
+            void* native_v = (void*)v.ToPointer();
             void* v_min = null;
             void* v_max = null;
             byte* native_format = null;
@@ -6368,8 +6368,8 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
             void* v_max = null;
             byte* native_format = null;
             float power = 1.0f;
@@ -6385,9 +6385,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             byte* native_format = null;
             float power = 1.0f;
             byte ret = ImGuiNative.igDragScalar(native_label, data_type, native_v, v_speed, native_v_min, native_v_max, native_format, power);
@@ -6402,9 +6402,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -6425,9 +6425,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_v_min = v_min.ToPointer();
-            void* native_v_max = v_max.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_v_min = (void*)v_min.ToPointer();
+            void* native_v_max = (void*)v_max.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -6540,7 +6540,7 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
+            void* native_v = (void*)v.ToPointer();
             void* step = null;
             void* step_fast = null;
             byte* native_format = null;
@@ -6557,8 +6557,8 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_step = step.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_step = (void*)step.ToPointer();
             void* step_fast = null;
             byte* native_format = null;
             ImGuiInputTextFlags extra_flags = 0;
@@ -6574,9 +6574,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_step = step.ToPointer();
-            void* native_step_fast = step_fast.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_step = (void*)step.ToPointer();
+            void* native_step_fast = (void*)step_fast.ToPointer();
             byte* native_format = null;
             ImGuiInputTextFlags extra_flags = 0;
             byte ret = ImGuiNative.igInputScalarN(native_label, data_type, native_v, components, native_step, native_step_fast, native_format, extra_flags);
@@ -6591,9 +6591,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_step = step.ToPointer();
-            void* native_step_fast = step_fast.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_step = (void*)step.ToPointer();
+            void* native_step_fast = (void*)step_fast.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -6614,9 +6614,9 @@ namespace ImGuiNET
                 int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
                 native_label[native_label_offset] = 0;
             }
-            void* native_v = v.ToPointer();
-            void* native_step = step.ToPointer();
-            void* native_step_fast = step_fast.ToPointer();
+            void* native_v = (void*)v.ToPointer();
+            void* native_step = (void*)step.ToPointer();
+            void* native_step_fast = (void*)step_fast.ToPointer();
             int format_byteCount = Encoding.UTF8.GetByteCount(format);
             byte* native_format = stackalloc byte[format_byteCount + 1];
             fixed (char* format_ptr = format)
@@ -6660,7 +6660,7 @@ namespace ImGuiNET
         }
         public static bool TreeNode(IntPtr ptr_id, string fmt)
         {
-            void* native_ptr_id = ptr_id.ToPointer();
+            void* native_ptr_id = (void*)ptr_id.ToPointer();
             int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
             byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
             fixed (char* fmt_ptr = fmt)

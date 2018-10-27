@@ -694,11 +694,12 @@ namespace CodeGenerator
                     preCallLines.Add($"byte* {nativeArgName} = &{nativeArgName}_val;");
                     postCallLines.Add($"{correctedIdentifier} = {nativeArgName}_val != 0;");
                 }
-                else if (tr.Type == "void*")
+                else if (tr.Type == "void*" || tr.Type == "ImWchar*")
                 {
+                    string nativePtrTypeName = tr.Type == "void*" ? "void*" : "ushort*";
                     string nativeArgName = "native_" + tr.Name;
                     marshalledParameters[i] = new MarshalledParameter("IntPtr", false, nativeArgName, false);
-                    preCallLines.Add($"void* {nativeArgName} = {correctedIdentifier}.ToPointer();");
+                    preCallLines.Add($"{nativePtrTypeName} {nativeArgName} = ({nativePtrTypeName}){correctedIdentifier}.ToPointer();");
                 }
                 else if (GetWrappedType(tr.Type, out string wrappedParamType)
                     && !s_wellKnownTypes.ContainsKey(tr.Type)
@@ -795,6 +796,10 @@ namespace CodeGenerator
                 {
                     writer.WriteLine("return Util.StringFromPtr(ret);");
                 }
+                else if (overload.ReturnType == "ImWchar*")
+                {
+                    writer.WriteLine("return (IntPtr)ret;");
+                }
                 else if (overload.ReturnType == "void*")
                 {
                     writer.WriteLine("return (IntPtr)ret;");
@@ -829,7 +834,7 @@ namespace CodeGenerator
             {
                 return "string";
             }
-            else if (nativeRet == "void*")
+            else if (nativeRet == "ImWchar*" || nativeRet == "void*")
             {
                 return "IntPtr";
             }

@@ -34,12 +34,10 @@ namespace ImGuiNET
             byte* native_text_end = null;
             ImGuiNative.GlyphRangesBuilder_AddText(NativePtr, native_text, native_text_end);
         }
-        public void AddRanges(ref ushort ranges)
+        public void AddRanges(IntPtr ranges)
         {
-            fixed (ushort* native_ranges = &ranges)
-            {
-                ImGuiNative.GlyphRangesBuilder_AddRanges(NativePtr, native_ranges);
-            }
+            ushort* native_ranges = (ushort*)ranges.ToPointer();
+            ImGuiNative.GlyphRangesBuilder_AddRanges(NativePtr, native_ranges);
         }
         public void BuildRanges(out ImVector out_ranges)
         {
