@@ -14,7 +14,6 @@ namespace CodeGenerator
     {
         private static readonly Dictionary<string, string> s_wellKnownTypes = new Dictionary<string, string>()
         {
-            // { "bool", "Bool8" },
             { "bool", "byte" },
             { "unsigned char", "byte" },
             { "char", "byte" },
@@ -305,15 +304,6 @@ namespace CodeGenerator
                         if (field.ArraySize != 0)
                         {
                             string addrTarget = s_legalFixedTypes.Contains(rawType) ? $"NativePtr->{field.Name}" : $"&NativePtr->{field.Name}_0";
-
-                            if (field.Type == "bool")
-                            {
-                                // There appear to be codegen bugs on Unix when RangeAccessor<Bool8> is used which result
-                                // in values beyond the accessed range becoming corrupted.
-                                // Besides, bool is a better type to use in the first place.
-                                typeStr = "bool";
-                            }
-
                             writer.WriteLine($"public RangeAccessor<{typeStr}> {field.Name} => new RangeAccessor<{typeStr}>({addrTarget}, {field.ArraySize});");
                         }
                         else if (typeStr.Contains("ImVector"))
