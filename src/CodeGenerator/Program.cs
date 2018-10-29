@@ -101,6 +101,11 @@ namespace CodeGenerator
             "double",
         };
 
+        private static readonly HashSet<string> s_skippedFunctions = new HashSet<string>()
+        {
+            "igInputText"
+        };
+
         static void Main(string[] args)
         {
             string outputPath;
@@ -485,6 +490,8 @@ namespace CodeGenerator
                 writer.PushBlock("public static unsafe partial class ImGui");
                 foreach (FunctionDefinition fd in functions)
                 {
+                    if (s_skippedFunctions.Contains(fd.Name)) { continue; }
+
                     foreach (OverloadDefinition overload in fd.Overloads)
                     {
                         string exportedName = overload.ExportedName;

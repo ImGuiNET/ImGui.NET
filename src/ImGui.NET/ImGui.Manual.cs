@@ -56,6 +56,62 @@ namespace ImGuiNET
 
         public static bool InputText(
             string label,
+            ref string input,
+            uint maxLength) => InputText(label, ref input, maxLength, 0, null, IntPtr.Zero);
+
+        public static bool InputText(
+            string label,
+            ref string input,
+            uint maxLength,
+            ImGuiInputTextFlags flags) => InputText(label, ref input, maxLength, flags, null, IntPtr.Zero);
+
+        public static bool InputText(
+            string label,
+            ref string input,
+            uint maxLength,
+            ImGuiInputTextFlags flags,
+            ImGuiInputTextCallback callback) => InputText(label, ref input, maxLength, flags, callback, IntPtr.Zero);
+
+        public static bool InputText(
+            string label,
+            ref string input,
+            uint maxLength,
+            ImGuiInputTextFlags flags,
+            ImGuiInputTextCallback callback,
+            IntPtr user_data)
+        {
+            int labelByteCount = Encoding.UTF8.GetByteCount(label);
+            byte* labelBytes = stackalloc byte[labelByteCount];
+            fixed (char* labelPtr = label)
+            {
+                Encoding.UTF8.GetBytes(labelPtr, label.Length, labelBytes, labelByteCount);
+            }
+
+            int bytesNeeded = Encoding.UTF8.GetByteCount(input);
+            int stackBufSize = Math.Max((int)maxLength, bytesNeeded);
+            byte* bufBytes = stackalloc byte[stackBufSize];
+            fixed (char* u16Ptr = input)
+            {
+                Encoding.UTF8.GetBytes(u16Ptr, input.Length, bufBytes, stackBufSize);
+            }
+
+            byte result = ImGuiNative.igInputText(
+                labelBytes,
+                bufBytes,
+                (uint)stackBufSize,
+                flags,
+                callback,
+                user_data.ToPointer());
+            if (!Util.AreStringsEqual(input, bufBytes))
+            {
+                input = Util.StringFromPtr(bufBytes);
+            }
+
+            return result != 0;
+        }
+
+        public static bool InputText(
+            string label,
             IntPtr buf,
             uint buf_size)
         {
