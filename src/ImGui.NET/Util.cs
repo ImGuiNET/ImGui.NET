@@ -15,23 +15,14 @@ namespace ImGuiNET
             return Encoding.UTF8.GetString(ptr, characters);
         }
 
-        internal static unsafe bool AreStringsEqual(string a, byte* b)
+        internal static unsafe bool AreStringsEqual(byte* a, int aLength, byte* b)
         {
-            if (a.Length == 0) { return b[0] == 0; }
-
-            int aCount = Encoding.UTF8.GetByteCount(a);
-            byte* aBytes = stackalloc byte[aCount];
-            fixed (char* labelPtr = a)
+            for (int i = 0; i < aLength; i++)
             {
-                Encoding.UTF8.GetBytes(labelPtr, a.Length, aBytes, aCount);
+                if (a[i] != b[i]) { return false; }
             }
 
-            for (int i = 0; i < aCount; i++)
-            {
-                if (aBytes[i] != b[i]) { return false; }
-            }
-
-            if (b[aCount] != 0) { return false; }
+            if (b[aLength] != 0) { return false; }
 
             return true;
         }

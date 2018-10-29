@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace ImGuiNET
@@ -88,13 +89,16 @@ namespace ImGuiNET
                 Encoding.UTF8.GetBytes(labelPtr, label.Length, labelBytes, labelByteCount);
             }
 
-            int bytesNeeded = Encoding.UTF8.GetByteCount(input);
-            int stackBufSize = Math.Max((int)maxLength, bytesNeeded);
+            int originalByteCount = Encoding.UTF8.GetByteCount(input);
+            int stackBufSize = Math.Max((int)maxLength, originalByteCount);
             byte* bufBytes = stackalloc byte[stackBufSize];
             fixed (char* u16Ptr = input)
             {
                 Encoding.UTF8.GetBytes(u16Ptr, input.Length, bufBytes, stackBufSize);
             }
+
+            byte* originalBufBytes = stackalloc byte[originalByteCount];
+            Unsafe.CopyBlock(originalBufBytes, bufBytes, (uint)originalByteCount);
 
             byte result = ImGuiNative.igInputText(
                 labelBytes,
@@ -103,7 +107,7 @@ namespace ImGuiNET
                 flags,
                 callback,
                 user_data.ToPointer());
-            if (!Util.AreStringsEqual(input, bufBytes))
+            if (!Util.AreStringsEqual(originalBufBytes, originalByteCount, bufBytes))
             {
                 input = Util.StringFromPtr(bufBytes);
             }
@@ -148,13 +152,16 @@ namespace ImGuiNET
                 Encoding.UTF8.GetBytes(labelPtr, label.Length, labelBytes, labelByteCount);
             }
 
-            int bytesNeeded = Encoding.UTF8.GetByteCount(input);
-            int stackBufSize = Math.Max((int)maxLength, bytesNeeded);
+            int originalByteCount = Encoding.UTF8.GetByteCount(input);
+            int stackBufSize = Math.Max((int)maxLength, originalByteCount);
             byte* bufBytes = stackalloc byte[stackBufSize];
             fixed (char* u16Ptr = input)
             {
                 Encoding.UTF8.GetBytes(u16Ptr, input.Length, bufBytes, stackBufSize);
             }
+
+            byte* originalBufBytes = stackalloc byte[originalByteCount];
+            Unsafe.CopyBlock(originalBufBytes, bufBytes, (uint)originalByteCount);
 
             byte result = ImGuiNative.igInputTextMultiline(
                 labelBytes,
@@ -164,7 +171,7 @@ namespace ImGuiNET
                 flags,
                 callback,
                 user_data.ToPointer());
-            if (!Util.AreStringsEqual(input, bufBytes))
+            if (!Util.AreStringsEqual(originalBufBytes, originalByteCount, bufBytes))
             {
                 input = Util.StringFromPtr(bufBytes);
             }
