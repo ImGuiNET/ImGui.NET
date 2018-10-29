@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Text;
 
 namespace ImGuiNET
@@ -99,6 +100,67 @@ namespace ImGuiNET
                 labelBytes,
                 bufBytes,
                 (uint)stackBufSize,
+                flags,
+                callback,
+                user_data.ToPointer());
+            if (!Util.AreStringsEqual(input, bufBytes))
+            {
+                input = Util.StringFromPtr(bufBytes);
+            }
+
+            return result != 0;
+        }
+
+        public static bool InputTextMultiline(
+            string label,
+            ref string input,
+            uint maxLength,
+            Vector2 size) => InputTextMultiline(label, ref input, maxLength, size, 0, null, IntPtr.Zero);
+
+        public static bool InputTextMultiline(
+            string label,
+            ref string input,
+            uint maxLength,
+            Vector2 size,
+            ImGuiInputTextFlags flags) => InputTextMultiline(label, ref input, maxLength, size, flags, null, IntPtr.Zero);
+
+        public static bool InputTextMultiline(
+            string label,
+            ref string input,
+            uint maxLength,
+            Vector2 size,
+            ImGuiInputTextFlags flags,
+            ImGuiInputTextCallback callback) => InputTextMultiline(label, ref input, maxLength, size, flags, callback, IntPtr.Zero);
+
+        public static bool InputTextMultiline(
+            string label,
+            ref string input,
+            uint maxLength,
+            Vector2 size,
+            ImGuiInputTextFlags flags,
+            ImGuiInputTextCallback callback,
+            IntPtr user_data)
+        {
+            int labelByteCount = Encoding.UTF8.GetByteCount(label);
+            byte* labelBytes = stackalloc byte[labelByteCount];
+            fixed (char* labelPtr = label)
+            {
+                Encoding.UTF8.GetBytes(labelPtr, label.Length, labelBytes, labelByteCount);
+            }
+
+            int bytesNeeded = Encoding.UTF8.GetByteCount(input);
+            int stackBufSize = Math.Max((int)maxLength, bytesNeeded);
+            byte* bufBytes = stackalloc byte[stackBufSize];
+            fixed (char* u16Ptr = input)
+            {
+                Encoding.UTF8.GetBytes(u16Ptr, input.Length, bufBytes, stackBufSize);
+            }
+
+            byte result = ImGuiNative.igInputTextMultiline(
+                labelBytes,
+                bufBytes,
+                (uint)stackBufSize,
+                size,
                 flags,
                 callback,
                 user_data.ToPointer());

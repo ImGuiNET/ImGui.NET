@@ -103,7 +103,8 @@ namespace CodeGenerator
 
         private static readonly HashSet<string> s_skippedFunctions = new HashSet<string>()
         {
-            "igInputText"
+            "igInputText",
+            "igInputTextMultiline"
         };
 
         static void Main(string[] args)
