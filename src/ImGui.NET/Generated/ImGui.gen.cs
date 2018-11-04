@@ -26,13 +26,19 @@ namespace ImGuiNET
         }
         public static void TextUnformatted(string text)
         {
-            int text_byteCount = Encoding.UTF8.GetByteCount(text);
-            byte* native_text = stackalloc byte[text_byteCount + 1];
-            fixed (char* text_ptr = text)
+            byte* native_text;
+            if (text != null)
             {
-                int native_text_offset = Encoding.UTF8.GetBytes(text_ptr, text.Length, native_text, text_byteCount);
-                native_text[native_text_offset] = 0;
+                int text_byteCount = Encoding.UTF8.GetByteCount(text);
+                byte* native_text_stackBytes = stackalloc byte[text_byteCount + 1];
+                native_text = native_text_stackBytes;
+                fixed (char* text_ptr = text)
+                {
+                    int native_text_offset = Encoding.UTF8.GetBytes(text_ptr, text.Length, native_text, text_byteCount);
+                    native_text[native_text_offset] = 0;
+                }
             }
+            else { native_text = null; }
             byte* native_text_end = null;
             ImGuiNative.igTextUnformatted(native_text, native_text_end);
         }
@@ -42,13 +48,19 @@ namespace ImGuiNET
         }
         public static bool Combo(string label, ref int current_item, string[] items, int items_count)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int* items_byteCounts = stackalloc int[items.Length];
             int items_byteCount = 0;
             for (int i = 0; i < items.Length; i++)
@@ -85,13 +97,19 @@ namespace ImGuiNET
         }
         public static bool Combo(string label, ref int current_item, string[] items, int items_count, int popup_max_height_in_items)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int* items_byteCounts = stackalloc int[items.Length];
             int items_byteCount = 0;
             for (int i = 0; i < items.Length; i++)
@@ -127,20 +145,32 @@ namespace ImGuiNET
         }
         public static bool Combo(string label, ref int current_item, string items_separated_by_zeros)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int items_separated_by_zeros_byteCount = Encoding.UTF8.GetByteCount(items_separated_by_zeros);
-            byte* native_items_separated_by_zeros = stackalloc byte[items_separated_by_zeros_byteCount + 1];
-            fixed (char* items_separated_by_zeros_ptr = items_separated_by_zeros)
+            else { native_label = null; }
+            byte* native_items_separated_by_zeros;
+            if (items_separated_by_zeros != null)
             {
-                int native_items_separated_by_zeros_offset = Encoding.UTF8.GetBytes(items_separated_by_zeros_ptr, items_separated_by_zeros.Length, native_items_separated_by_zeros, items_separated_by_zeros_byteCount);
-                native_items_separated_by_zeros[native_items_separated_by_zeros_offset] = 0;
+                int items_separated_by_zeros_byteCount = Encoding.UTF8.GetByteCount(items_separated_by_zeros);
+                byte* native_items_separated_by_zeros_stackBytes = stackalloc byte[items_separated_by_zeros_byteCount + 1];
+                native_items_separated_by_zeros = native_items_separated_by_zeros_stackBytes;
+                fixed (char* items_separated_by_zeros_ptr = items_separated_by_zeros)
+                {
+                    int native_items_separated_by_zeros_offset = Encoding.UTF8.GetBytes(items_separated_by_zeros_ptr, items_separated_by_zeros.Length, native_items_separated_by_zeros, items_separated_by_zeros_byteCount);
+                    native_items_separated_by_zeros[native_items_separated_by_zeros_offset] = 0;
+                }
             }
+            else { native_items_separated_by_zeros = null; }
             int popup_max_height_in_items = -1;
             fixed (int* native_current_item = &current_item)
             {
@@ -150,20 +180,32 @@ namespace ImGuiNET
         }
         public static bool Combo(string label, ref int current_item, string items_separated_by_zeros, int popup_max_height_in_items)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int items_separated_by_zeros_byteCount = Encoding.UTF8.GetByteCount(items_separated_by_zeros);
-            byte* native_items_separated_by_zeros = stackalloc byte[items_separated_by_zeros_byteCount + 1];
-            fixed (char* items_separated_by_zeros_ptr = items_separated_by_zeros)
+            else { native_label = null; }
+            byte* native_items_separated_by_zeros;
+            if (items_separated_by_zeros != null)
             {
-                int native_items_separated_by_zeros_offset = Encoding.UTF8.GetBytes(items_separated_by_zeros_ptr, items_separated_by_zeros.Length, native_items_separated_by_zeros, items_separated_by_zeros_byteCount);
-                native_items_separated_by_zeros[native_items_separated_by_zeros_offset] = 0;
+                int items_separated_by_zeros_byteCount = Encoding.UTF8.GetByteCount(items_separated_by_zeros);
+                byte* native_items_separated_by_zeros_stackBytes = stackalloc byte[items_separated_by_zeros_byteCount + 1];
+                native_items_separated_by_zeros = native_items_separated_by_zeros_stackBytes;
+                fixed (char* items_separated_by_zeros_ptr = items_separated_by_zeros)
+                {
+                    int native_items_separated_by_zeros_offset = Encoding.UTF8.GetBytes(items_separated_by_zeros_ptr, items_separated_by_zeros.Length, native_items_separated_by_zeros, items_separated_by_zeros_byteCount);
+                    native_items_separated_by_zeros[native_items_separated_by_zeros_offset] = 0;
+                }
             }
+            else { native_items_separated_by_zeros = null; }
             fixed (int* native_current_item = &current_item)
             {
                 byte ret = ImGuiNative.igComboStr(native_label, native_current_item, native_items_separated_by_zeros, popup_max_height_in_items);
@@ -197,23 +239,35 @@ namespace ImGuiNET
         }
         public static bool DragFloat4(string label, ref Vector4 v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_speed = 1.0f;
             float v_min = 0.0f;
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector4* native_v = &v)
             {
@@ -223,22 +277,34 @@ namespace ImGuiNET
         }
         public static bool DragFloat4(string label, ref Vector4 v, float v_speed)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_min = 0.0f;
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector4* native_v = &v)
             {
@@ -248,21 +314,33 @@ namespace ImGuiNET
         }
         public static bool DragFloat4(string label, ref Vector4 v, float v_speed, float v_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector4* native_v = &v)
             {
@@ -272,20 +350,32 @@ namespace ImGuiNET
         }
         public static bool DragFloat4(string label, ref Vector4 v, float v_speed, float v_min, float v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector4* native_v = &v)
             {
@@ -295,20 +385,32 @@ namespace ImGuiNET
         }
         public static bool DragFloat4(string label, ref Vector4 v, float v_speed, float v_min, float v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector4* native_v = &v)
             {
@@ -318,20 +420,32 @@ namespace ImGuiNET
         }
         public static bool DragFloat4(string label, ref Vector4 v, float v_speed, float v_min, float v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (Vector4* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragFloat4(native_label, native_v, v_speed, v_min, v_max, native_format, power);
@@ -359,13 +473,19 @@ namespace ImGuiNET
         }
         public static bool DebugCheckVersionAndDataLayout(string version_str, uint sz_io, uint sz_style, uint sz_vec2, uint sz_vec4, uint sz_drawvert)
         {
-            int version_str_byteCount = Encoding.UTF8.GetByteCount(version_str);
-            byte* native_version_str = stackalloc byte[version_str_byteCount + 1];
-            fixed (char* version_str_ptr = version_str)
+            byte* native_version_str;
+            if (version_str != null)
             {
-                int native_version_str_offset = Encoding.UTF8.GetBytes(version_str_ptr, version_str.Length, native_version_str, version_str_byteCount);
-                native_version_str[native_version_str_offset] = 0;
+                int version_str_byteCount = Encoding.UTF8.GetByteCount(version_str);
+                byte* native_version_str_stackBytes = stackalloc byte[version_str_byteCount + 1];
+                native_version_str = native_version_str_stackBytes;
+                fixed (char* version_str_ptr = version_str)
+                {
+                    int native_version_str_offset = Encoding.UTF8.GetBytes(version_str_ptr, version_str.Length, native_version_str, version_str_byteCount);
+                    native_version_str[native_version_str_offset] = 0;
+                }
             }
+            else { native_version_str = null; }
             byte ret = ImGuiNative.igDebugCheckVersionAndDataLayout(native_version_str, sz_io, sz_style, sz_vec2, sz_vec4, sz_drawvert);
             return ret != 0;
         }
@@ -414,23 +534,35 @@ namespace ImGuiNET
         }
         public static bool DragFloat3(string label, ref Vector3 v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_speed = 1.0f;
             float v_min = 0.0f;
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector3* native_v = &v)
             {
@@ -440,22 +572,34 @@ namespace ImGuiNET
         }
         public static bool DragFloat3(string label, ref Vector3 v, float v_speed)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_min = 0.0f;
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector3* native_v = &v)
             {
@@ -465,21 +609,33 @@ namespace ImGuiNET
         }
         public static bool DragFloat3(string label, ref Vector3 v, float v_speed, float v_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector3* native_v = &v)
             {
@@ -489,20 +645,32 @@ namespace ImGuiNET
         }
         public static bool DragFloat3(string label, ref Vector3 v, float v_speed, float v_min, float v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector3* native_v = &v)
             {
@@ -512,20 +680,32 @@ namespace ImGuiNET
         }
         public static bool DragFloat3(string label, ref Vector3 v, float v_speed, float v_min, float v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector3* native_v = &v)
             {
@@ -535,20 +715,32 @@ namespace ImGuiNET
         }
         public static bool DragFloat3(string label, ref Vector3 v, float v_speed, float v_min, float v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (Vector3* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragFloat3(native_label, native_v, v_speed, v_min, v_max, native_format, power);
@@ -557,66 +749,102 @@ namespace ImGuiNET
         }
         public static void Value(string prefix, bool b)
         {
-            int prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
-            byte* native_prefix = stackalloc byte[prefix_byteCount + 1];
-            fixed (char* prefix_ptr = prefix)
+            byte* native_prefix;
+            if (prefix != null)
             {
-                int native_prefix_offset = Encoding.UTF8.GetBytes(prefix_ptr, prefix.Length, native_prefix, prefix_byteCount);
-                native_prefix[native_prefix_offset] = 0;
+                int prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
+                byte* native_prefix_stackBytes = stackalloc byte[prefix_byteCount + 1];
+                native_prefix = native_prefix_stackBytes;
+                fixed (char* prefix_ptr = prefix)
+                {
+                    int native_prefix_offset = Encoding.UTF8.GetBytes(prefix_ptr, prefix.Length, native_prefix, prefix_byteCount);
+                    native_prefix[native_prefix_offset] = 0;
+                }
             }
+            else { native_prefix = null; }
             byte native_b = b ? (byte)1 : (byte)0;
             ImGuiNative.igValueBool(native_prefix, native_b);
         }
         public static void Value(string prefix, int v)
         {
-            int prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
-            byte* native_prefix = stackalloc byte[prefix_byteCount + 1];
-            fixed (char* prefix_ptr = prefix)
+            byte* native_prefix;
+            if (prefix != null)
             {
-                int native_prefix_offset = Encoding.UTF8.GetBytes(prefix_ptr, prefix.Length, native_prefix, prefix_byteCount);
-                native_prefix[native_prefix_offset] = 0;
+                int prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
+                byte* native_prefix_stackBytes = stackalloc byte[prefix_byteCount + 1];
+                native_prefix = native_prefix_stackBytes;
+                fixed (char* prefix_ptr = prefix)
+                {
+                    int native_prefix_offset = Encoding.UTF8.GetBytes(prefix_ptr, prefix.Length, native_prefix, prefix_byteCount);
+                    native_prefix[native_prefix_offset] = 0;
+                }
             }
+            else { native_prefix = null; }
             ImGuiNative.igValueInt(native_prefix, v);
         }
         public static void Value(string prefix, uint v)
         {
-            int prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
-            byte* native_prefix = stackalloc byte[prefix_byteCount + 1];
-            fixed (char* prefix_ptr = prefix)
+            byte* native_prefix;
+            if (prefix != null)
             {
-                int native_prefix_offset = Encoding.UTF8.GetBytes(prefix_ptr, prefix.Length, native_prefix, prefix_byteCount);
-                native_prefix[native_prefix_offset] = 0;
+                int prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
+                byte* native_prefix_stackBytes = stackalloc byte[prefix_byteCount + 1];
+                native_prefix = native_prefix_stackBytes;
+                fixed (char* prefix_ptr = prefix)
+                {
+                    int native_prefix_offset = Encoding.UTF8.GetBytes(prefix_ptr, prefix.Length, native_prefix, prefix_byteCount);
+                    native_prefix[native_prefix_offset] = 0;
+                }
             }
+            else { native_prefix = null; }
             ImGuiNative.igValueUint(native_prefix, v);
         }
         public static void Value(string prefix, float v)
         {
-            int prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
-            byte* native_prefix = stackalloc byte[prefix_byteCount + 1];
-            fixed (char* prefix_ptr = prefix)
+            byte* native_prefix;
+            if (prefix != null)
             {
-                int native_prefix_offset = Encoding.UTF8.GetBytes(prefix_ptr, prefix.Length, native_prefix, prefix_byteCount);
-                native_prefix[native_prefix_offset] = 0;
+                int prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
+                byte* native_prefix_stackBytes = stackalloc byte[prefix_byteCount + 1];
+                native_prefix = native_prefix_stackBytes;
+                fixed (char* prefix_ptr = prefix)
+                {
+                    int native_prefix_offset = Encoding.UTF8.GetBytes(prefix_ptr, prefix.Length, native_prefix, prefix_byteCount);
+                    native_prefix[native_prefix_offset] = 0;
+                }
             }
+            else { native_prefix = null; }
             byte* native_float_format = null;
             ImGuiNative.igValueFloat(native_prefix, v, native_float_format);
         }
         public static void Value(string prefix, float v, string float_format)
         {
-            int prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
-            byte* native_prefix = stackalloc byte[prefix_byteCount + 1];
-            fixed (char* prefix_ptr = prefix)
+            byte* native_prefix;
+            if (prefix != null)
             {
-                int native_prefix_offset = Encoding.UTF8.GetBytes(prefix_ptr, prefix.Length, native_prefix, prefix_byteCount);
-                native_prefix[native_prefix_offset] = 0;
+                int prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
+                byte* native_prefix_stackBytes = stackalloc byte[prefix_byteCount + 1];
+                native_prefix = native_prefix_stackBytes;
+                fixed (char* prefix_ptr = prefix)
+                {
+                    int native_prefix_offset = Encoding.UTF8.GetBytes(prefix_ptr, prefix.Length, native_prefix, prefix_byteCount);
+                    native_prefix[native_prefix_offset] = 0;
+                }
             }
-            int float_format_byteCount = Encoding.UTF8.GetByteCount(float_format);
-            byte* native_float_format = stackalloc byte[float_format_byteCount + 1];
-            fixed (char* float_format_ptr = float_format)
+            else { native_prefix = null; }
+            byte* native_float_format;
+            if (float_format != null)
             {
-                int native_float_format_offset = Encoding.UTF8.GetBytes(float_format_ptr, float_format.Length, native_float_format, float_format_byteCount);
-                native_float_format[native_float_format_offset] = 0;
+                int float_format_byteCount = Encoding.UTF8.GetByteCount(float_format);
+                byte* native_float_format_stackBytes = stackalloc byte[float_format_byteCount + 1];
+                native_float_format = native_float_format_stackBytes;
+                fixed (char* float_format_ptr = float_format)
+                {
+                    int native_float_format_offset = Encoding.UTF8.GetBytes(float_format_ptr, float_format.Length, native_float_format, float_format_byteCount);
+                    native_float_format[native_float_format_offset] = 0;
+                }
             }
+            else { native_float_format = null; }
             ImGuiNative.igValueFloat(native_prefix, v, native_float_format);
         }
         public static Vector2 GetItemRectMax()
@@ -653,23 +881,35 @@ namespace ImGuiNET
         }
         public static bool DragIntRange2(string label, ref int v_current_min, ref int v_current_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_speed = 1.0f;
             int v_min = 0;
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte* native_format_max = null;
             fixed (int* native_v_current_min = &v_current_min)
             {
@@ -682,22 +922,34 @@ namespace ImGuiNET
         }
         public static bool DragIntRange2(string label, ref int v_current_min, ref int v_current_max, float v_speed)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int v_min = 0;
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte* native_format_max = null;
             fixed (int* native_v_current_min = &v_current_min)
             {
@@ -710,21 +962,33 @@ namespace ImGuiNET
         }
         public static bool DragIntRange2(string label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte* native_format_max = null;
             fixed (int* native_v_current_min = &v_current_min)
             {
@@ -737,20 +1001,32 @@ namespace ImGuiNET
         }
         public static bool DragIntRange2(string label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min, int v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte* native_format_max = null;
             fixed (int* native_v_current_min = &v_current_min)
             {
@@ -763,20 +1039,32 @@ namespace ImGuiNET
         }
         public static bool DragIntRange2(string label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min, int v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte* native_format_max = null;
             fixed (int* native_v_current_min = &v_current_min)
             {
@@ -789,27 +1077,45 @@ namespace ImGuiNET
         }
         public static bool DragIntRange2(string label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min, int v_max, string format, string format_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
-            int format_max_byteCount = Encoding.UTF8.GetByteCount(format_max);
-            byte* native_format_max = stackalloc byte[format_max_byteCount + 1];
-            fixed (char* format_max_ptr = format_max)
+            else { native_format = null; }
+            byte* native_format_max;
+            if (format_max != null)
             {
-                int native_format_max_offset = Encoding.UTF8.GetBytes(format_max_ptr, format_max.Length, native_format_max, format_max_byteCount);
-                native_format_max[native_format_max_offset] = 0;
+                int format_max_byteCount = Encoding.UTF8.GetByteCount(format_max);
+                byte* native_format_max_stackBytes = stackalloc byte[format_max_byteCount + 1];
+                native_format_max = native_format_max_stackBytes;
+                fixed (char* format_max_ptr = format_max)
+                {
+                    int native_format_max_offset = Encoding.UTF8.GetBytes(format_max_ptr, format_max.Length, native_format_max, format_max_byteCount);
+                    native_format_max[native_format_max_offset] = 0;
+                }
             }
+            else { native_format_max = null; }
             fixed (int* native_v_current_min = &v_current_min)
             {
                 fixed (int* native_v_current_max = &v_current_max)
@@ -834,13 +1140,19 @@ namespace ImGuiNET
         }
         public static void LoadIniSettingsFromDisk(string ini_filename)
         {
-            int ini_filename_byteCount = Encoding.UTF8.GetByteCount(ini_filename);
-            byte* native_ini_filename = stackalloc byte[ini_filename_byteCount + 1];
-            fixed (char* ini_filename_ptr = ini_filename)
+            byte* native_ini_filename;
+            if (ini_filename != null)
             {
-                int native_ini_filename_offset = Encoding.UTF8.GetBytes(ini_filename_ptr, ini_filename.Length, native_ini_filename, ini_filename_byteCount);
-                native_ini_filename[native_ini_filename_offset] = 0;
+                int ini_filename_byteCount = Encoding.UTF8.GetByteCount(ini_filename);
+                byte* native_ini_filename_stackBytes = stackalloc byte[ini_filename_byteCount + 1];
+                native_ini_filename = native_ini_filename_stackBytes;
+                fixed (char* ini_filename_ptr = ini_filename)
+                {
+                    int native_ini_filename_offset = Encoding.UTF8.GetBytes(ini_filename_ptr, ini_filename.Length, native_ini_filename, ini_filename_byteCount);
+                    native_ini_filename[native_ini_filename_offset] = 0;
+                }
             }
+            else { native_ini_filename = null; }
             ImGuiNative.igLoadIniSettingsFromDisk(native_ini_filename);
         }
         public static Vector2 GetCursorStartPos()
@@ -854,13 +1166,19 @@ namespace ImGuiNET
         }
         public static bool InputInt4(string label, ref int v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (int* native_v = &v)
             {
@@ -870,13 +1188,19 @@ namespace ImGuiNET
         }
         public static bool InputInt4(string label, ref int v, ImGuiInputTextFlags extra_flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igInputInt4(native_label, native_v, extra_flags);
@@ -895,20 +1219,32 @@ namespace ImGuiNET
         }
         public static void LabelText(string label, string fmt)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-            byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
-            fixed (char* fmt_ptr = fmt)
+            else { native_label = null; }
+            byte* native_fmt;
+            if (fmt != null)
             {
-                int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                native_fmt[native_fmt_offset] = 0;
+                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                native_fmt = native_fmt_stackBytes;
+                fixed (char* fmt_ptr = fmt)
+                {
+                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
+                    native_fmt[native_fmt_offset] = 0;
+                }
             }
+            else { native_fmt = null; }
             ImGuiNative.igLabelText(native_label, native_fmt);
         }
         public static void LogFinish()
@@ -956,13 +1292,19 @@ namespace ImGuiNET
         }
         public static bool SmallButton(string label)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte ret = ImGuiNative.igSmallButton(native_label);
             return ret != 0;
         }
@@ -975,26 +1317,38 @@ namespace ImGuiNET
         }
         public static bool OpenPopupOnItemClick(string str_id)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             int mouse_button = 1;
             byte ret = ImGuiNative.igOpenPopupOnItemClick(native_str_id, mouse_button);
             return ret != 0;
         }
         public static bool OpenPopupOnItemClick(string str_id, int mouse_button)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             byte ret = ImGuiNative.igOpenPopupOnItemClick(native_str_id, mouse_button);
             return ret != 0;
         }
@@ -1054,20 +1408,32 @@ namespace ImGuiNET
         }
         public static bool SliderFloat2(string label, ref Vector2 v, float v_min, float v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector2* native_v = &v)
             {
@@ -1077,20 +1443,32 @@ namespace ImGuiNET
         }
         public static bool SliderFloat2(string label, ref Vector2 v, float v_min, float v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector2* native_v = &v)
             {
@@ -1100,20 +1478,32 @@ namespace ImGuiNET
         }
         public static bool SliderFloat2(string label, ref Vector2 v, float v_min, float v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (Vector2* native_v = &v)
             {
                 byte ret = ImGuiNative.igSliderFloat2(native_label, native_v, v_min, v_max, native_format, power);
@@ -1122,26 +1512,38 @@ namespace ImGuiNET
         }
         public static bool RadioButton(string label, bool active)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte native_active = active ? (byte)1 : (byte)0;
             byte ret = ImGuiNative.igRadioButtonBool(native_label, native_active);
             return ret != 0;
         }
         public static bool RadioButton(string label, ref int v, int v_button)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igRadioButtonIntPtr(native_label, native_v, v_button);
@@ -1169,43 +1571,67 @@ namespace ImGuiNET
         }
         public static void LoadIniSettingsFromMemory(string ini_data)
         {
-            int ini_data_byteCount = Encoding.UTF8.GetByteCount(ini_data);
-            byte* native_ini_data = stackalloc byte[ini_data_byteCount + 1];
-            fixed (char* ini_data_ptr = ini_data)
+            byte* native_ini_data;
+            if (ini_data != null)
             {
-                int native_ini_data_offset = Encoding.UTF8.GetBytes(ini_data_ptr, ini_data.Length, native_ini_data, ini_data_byteCount);
-                native_ini_data[native_ini_data_offset] = 0;
+                int ini_data_byteCount = Encoding.UTF8.GetByteCount(ini_data);
+                byte* native_ini_data_stackBytes = stackalloc byte[ini_data_byteCount + 1];
+                native_ini_data = native_ini_data_stackBytes;
+                fixed (char* ini_data_ptr = ini_data)
+                {
+                    int native_ini_data_offset = Encoding.UTF8.GetBytes(ini_data_ptr, ini_data.Length, native_ini_data, ini_data_byteCount);
+                    native_ini_data[native_ini_data_offset] = 0;
+                }
             }
+            else { native_ini_data = null; }
             uint ini_size = 0;
             ImGuiNative.igLoadIniSettingsFromMemory(native_ini_data, ini_size);
         }
         public static void LoadIniSettingsFromMemory(string ini_data, uint ini_size)
         {
-            int ini_data_byteCount = Encoding.UTF8.GetByteCount(ini_data);
-            byte* native_ini_data = stackalloc byte[ini_data_byteCount + 1];
-            fixed (char* ini_data_ptr = ini_data)
+            byte* native_ini_data;
+            if (ini_data != null)
             {
-                int native_ini_data_offset = Encoding.UTF8.GetBytes(ini_data_ptr, ini_data.Length, native_ini_data, ini_data_byteCount);
-                native_ini_data[native_ini_data_offset] = 0;
+                int ini_data_byteCount = Encoding.UTF8.GetByteCount(ini_data);
+                byte* native_ini_data_stackBytes = stackalloc byte[ini_data_byteCount + 1];
+                native_ini_data = native_ini_data_stackBytes;
+                fixed (char* ini_data_ptr = ini_data)
+                {
+                    int native_ini_data_offset = Encoding.UTF8.GetBytes(ini_data_ptr, ini_data.Length, native_ini_data, ini_data_byteCount);
+                    native_ini_data[native_ini_data_offset] = 0;
+                }
             }
+            else { native_ini_data = null; }
             ImGuiNative.igLoadIniSettingsFromMemory(native_ini_data, ini_size);
         }
         public static bool SliderInt2(string label, ref int v, int v_min, int v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igSliderInt2(native_label, native_v, v_min, v_max, native_format);
@@ -1214,20 +1640,32 @@ namespace ImGuiNET
         }
         public static bool SliderInt2(string label, ref int v, int v_min, int v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igSliderInt2(native_label, native_v, v_min, v_max, native_format);
@@ -1245,45 +1683,69 @@ namespace ImGuiNET
         }
         public static void SetWindowSize(string name, Vector2 size)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            byte* native_name;
+            if (name != null)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                int name_byteCount = Encoding.UTF8.GetByteCount(name);
+                byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                native_name = native_name_stackBytes;
+                fixed (char* name_ptr = name)
+                {
+                    int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
+                    native_name[native_name_offset] = 0;
+                }
             }
+            else { native_name = null; }
             ImGuiCond cond = 0;
             ImGuiNative.igSetWindowSizeStr(native_name, size, cond);
         }
         public static void SetWindowSize(string name, Vector2 size, ImGuiCond cond)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            byte* native_name;
+            if (name != null)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                int name_byteCount = Encoding.UTF8.GetByteCount(name);
+                byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                native_name = native_name_stackBytes;
+                fixed (char* name_ptr = name)
+                {
+                    int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
+                    native_name[native_name_offset] = 0;
+                }
             }
+            else { native_name = null; }
             ImGuiNative.igSetWindowSizeStr(native_name, size, cond);
         }
         public static bool InputFloat(string label, ref float v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float step = 0.0f;
             float step_fast = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (float* native_v = &v)
             {
@@ -1293,21 +1755,33 @@ namespace ImGuiNET
         }
         public static bool InputFloat(string label, ref float v, float step)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float step_fast = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (float* native_v = &v)
             {
@@ -1317,20 +1791,32 @@ namespace ImGuiNET
         }
         public static bool InputFloat(string label, ref float v, float step, float step_fast)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (float* native_v = &v)
             {
@@ -1340,20 +1826,32 @@ namespace ImGuiNET
         }
         public static bool InputFloat(string label, ref float v, float step, float step_fast, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (float* native_v = &v)
             {
@@ -1363,20 +1861,32 @@ namespace ImGuiNET
         }
         public static bool InputFloat(string label, ref float v, float step, float step_fast, string format, ImGuiInputTextFlags extra_flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (float* native_v = &v)
             {
                 byte ret = ImGuiNative.igInputFloat(native_label, native_v, step, step_fast, native_format, extra_flags);
@@ -1403,13 +1913,19 @@ namespace ImGuiNET
         }
         public static bool IsPopupOpen(string str_id)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             byte ret = ImGuiNative.igIsPopupOpen(native_str_id);
             return ret != 0;
         }
@@ -1440,26 +1956,38 @@ namespace ImGuiNET
         }
         public static void SetWindowCollapsed(string name, bool collapsed)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            byte* native_name;
+            if (name != null)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                int name_byteCount = Encoding.UTF8.GetByteCount(name);
+                byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                native_name = native_name_stackBytes;
+                fixed (char* name_ptr = name)
+                {
+                    int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
+                    native_name[native_name_offset] = 0;
+                }
             }
+            else { native_name = null; }
             byte native_collapsed = collapsed ? (byte)1 : (byte)0;
             ImGuiCond cond = 0;
             ImGuiNative.igSetWindowCollapsedStr(native_name, native_collapsed, cond);
         }
         public static void SetWindowCollapsed(string name, bool collapsed, ImGuiCond cond)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            byte* native_name;
+            if (name != null)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                int name_byteCount = Encoding.UTF8.GetByteCount(name);
+                byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                native_name = native_name_stackBytes;
+                fixed (char* name_ptr = name)
+                {
+                    int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
+                    native_name[native_name_offset] = 0;
+                }
             }
+            else { native_name = null; }
             byte native_collapsed = collapsed ? (byte)1 : (byte)0;
             ImGuiNative.igSetWindowCollapsedStr(native_name, native_collapsed, cond);
         }
@@ -1483,26 +2011,38 @@ namespace ImGuiNET
         }
         public static ImGuiPayloadPtr AcceptDragDropPayload(string type)
         {
-            int type_byteCount = Encoding.UTF8.GetByteCount(type);
-            byte* native_type = stackalloc byte[type_byteCount + 1];
-            fixed (char* type_ptr = type)
+            byte* native_type;
+            if (type != null)
             {
-                int native_type_offset = Encoding.UTF8.GetBytes(type_ptr, type.Length, native_type, type_byteCount);
-                native_type[native_type_offset] = 0;
+                int type_byteCount = Encoding.UTF8.GetByteCount(type);
+                byte* native_type_stackBytes = stackalloc byte[type_byteCount + 1];
+                native_type = native_type_stackBytes;
+                fixed (char* type_ptr = type)
+                {
+                    int native_type_offset = Encoding.UTF8.GetBytes(type_ptr, type.Length, native_type, type_byteCount);
+                    native_type[native_type_offset] = 0;
+                }
             }
+            else { native_type = null; }
             ImGuiDragDropFlags flags = 0;
             ImGuiPayload* ret = ImGuiNative.igAcceptDragDropPayload(native_type, flags);
             return new ImGuiPayloadPtr(ret);
         }
         public static ImGuiPayloadPtr AcceptDragDropPayload(string type, ImGuiDragDropFlags flags)
         {
-            int type_byteCount = Encoding.UTF8.GetByteCount(type);
-            byte* native_type = stackalloc byte[type_byteCount + 1];
-            fixed (char* type_ptr = type)
+            byte* native_type;
+            if (type != null)
             {
-                int native_type_offset = Encoding.UTF8.GetBytes(type_ptr, type.Length, native_type, type_byteCount);
-                native_type[native_type_offset] = 0;
+                int type_byteCount = Encoding.UTF8.GetByteCount(type);
+                byte* native_type_stackBytes = stackalloc byte[type_byteCount + 1];
+                native_type = native_type_stackBytes;
+                fixed (char* type_ptr = type)
+                {
+                    int native_type_offset = Encoding.UTF8.GetBytes(type_ptr, type.Length, native_type, type_byteCount);
+                    native_type[native_type_offset] = 0;
+                }
             }
+            else { native_type = null; }
             ImGuiPayload* ret = ImGuiNative.igAcceptDragDropPayload(native_type, flags);
             return new ImGuiPayloadPtr(ret);
         }
@@ -1519,13 +2059,19 @@ namespace ImGuiNET
         }
         public static void PlotLines(string label, ref float values, int values_count)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int values_offset = 0;
             byte* native_overlay_text = null;
             float scale_min = float.MaxValue;
@@ -1539,13 +2085,19 @@ namespace ImGuiNET
         }
         public static void PlotLines(string label, ref float values, int values_count, int values_offset)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte* native_overlay_text = null;
             float scale_min = float.MaxValue;
             float scale_max = float.MaxValue;
@@ -1558,20 +2110,32 @@ namespace ImGuiNET
         }
         public static void PlotLines(string label, ref float values, int values_count, int values_offset, string overlay_text)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
-            byte* native_overlay_text = stackalloc byte[overlay_text_byteCount + 1];
-            fixed (char* overlay_text_ptr = overlay_text)
+            else { native_label = null; }
+            byte* native_overlay_text;
+            if (overlay_text != null)
             {
-                int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
-                native_overlay_text[native_overlay_text_offset] = 0;
+                int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
+                byte* native_overlay_text_stackBytes = stackalloc byte[overlay_text_byteCount + 1];
+                native_overlay_text = native_overlay_text_stackBytes;
+                fixed (char* overlay_text_ptr = overlay_text)
+                {
+                    int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
+                    native_overlay_text[native_overlay_text_offset] = 0;
+                }
             }
+            else { native_overlay_text = null; }
             float scale_min = float.MaxValue;
             float scale_max = float.MaxValue;
             Vector2 graph_size = new Vector2();
@@ -1583,20 +2147,32 @@ namespace ImGuiNET
         }
         public static void PlotLines(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
-            byte* native_overlay_text = stackalloc byte[overlay_text_byteCount + 1];
-            fixed (char* overlay_text_ptr = overlay_text)
+            else { native_label = null; }
+            byte* native_overlay_text;
+            if (overlay_text != null)
             {
-                int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
-                native_overlay_text[native_overlay_text_offset] = 0;
+                int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
+                byte* native_overlay_text_stackBytes = stackalloc byte[overlay_text_byteCount + 1];
+                native_overlay_text = native_overlay_text_stackBytes;
+                fixed (char* overlay_text_ptr = overlay_text)
+                {
+                    int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
+                    native_overlay_text[native_overlay_text_offset] = 0;
+                }
             }
+            else { native_overlay_text = null; }
             float scale_max = float.MaxValue;
             Vector2 graph_size = new Vector2();
             int stride = sizeof(float);
@@ -1607,20 +2183,32 @@ namespace ImGuiNET
         }
         public static void PlotLines(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
-            byte* native_overlay_text = stackalloc byte[overlay_text_byteCount + 1];
-            fixed (char* overlay_text_ptr = overlay_text)
+            else { native_label = null; }
+            byte* native_overlay_text;
+            if (overlay_text != null)
             {
-                int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
-                native_overlay_text[native_overlay_text_offset] = 0;
+                int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
+                byte* native_overlay_text_stackBytes = stackalloc byte[overlay_text_byteCount + 1];
+                native_overlay_text = native_overlay_text_stackBytes;
+                fixed (char* overlay_text_ptr = overlay_text)
+                {
+                    int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
+                    native_overlay_text[native_overlay_text_offset] = 0;
+                }
             }
+            else { native_overlay_text = null; }
             Vector2 graph_size = new Vector2();
             int stride = sizeof(float);
             fixed (float* native_values = &values)
@@ -1630,20 +2218,32 @@ namespace ImGuiNET
         }
         public static void PlotLines(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
-            byte* native_overlay_text = stackalloc byte[overlay_text_byteCount + 1];
-            fixed (char* overlay_text_ptr = overlay_text)
+            else { native_label = null; }
+            byte* native_overlay_text;
+            if (overlay_text != null)
             {
-                int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
-                native_overlay_text[native_overlay_text_offset] = 0;
+                int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
+                byte* native_overlay_text_stackBytes = stackalloc byte[overlay_text_byteCount + 1];
+                native_overlay_text = native_overlay_text_stackBytes;
+                fixed (char* overlay_text_ptr = overlay_text)
+                {
+                    int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
+                    native_overlay_text[native_overlay_text_offset] = 0;
+                }
             }
+            else { native_overlay_text = null; }
             int stride = sizeof(float);
             fixed (float* native_values = &values)
             {
@@ -1652,20 +2252,32 @@ namespace ImGuiNET
         }
         public static void PlotLines(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size, int stride)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
-            byte* native_overlay_text = stackalloc byte[overlay_text_byteCount + 1];
-            fixed (char* overlay_text_ptr = overlay_text)
+            else { native_label = null; }
+            byte* native_overlay_text;
+            if (overlay_text != null)
             {
-                int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
-                native_overlay_text[native_overlay_text_offset] = 0;
+                int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
+                byte* native_overlay_text_stackBytes = stackalloc byte[overlay_text_byteCount + 1];
+                native_overlay_text = native_overlay_text_stackBytes;
+                fixed (char* overlay_text_ptr = overlay_text)
+                {
+                    int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
+                    native_overlay_text[native_overlay_text_offset] = 0;
+                }
             }
+            else { native_overlay_text = null; }
             fixed (float* native_values = &values)
             {
                 ImGuiNative.igPlotLines(native_label, native_values, values_count, values_offset, native_overlay_text, scale_min, scale_max, graph_size, stride);
@@ -1691,13 +2303,19 @@ namespace ImGuiNET
         }
         public static bool CheckboxFlags(string label, ref uint flags, uint flags_value)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             fixed (uint* native_flags = &flags)
             {
                 byte ret = ImGuiNative.igCheckboxFlags(native_label, native_flags, flags_value);
@@ -1717,13 +2335,19 @@ namespace ImGuiNET
         }
         public static void PlotHistogram(string label, ref float values, int values_count)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int values_offset = 0;
             byte* native_overlay_text = null;
             float scale_min = float.MaxValue;
@@ -1737,13 +2361,19 @@ namespace ImGuiNET
         }
         public static void PlotHistogram(string label, ref float values, int values_count, int values_offset)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte* native_overlay_text = null;
             float scale_min = float.MaxValue;
             float scale_max = float.MaxValue;
@@ -1756,20 +2386,32 @@ namespace ImGuiNET
         }
         public static void PlotHistogram(string label, ref float values, int values_count, int values_offset, string overlay_text)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
-            byte* native_overlay_text = stackalloc byte[overlay_text_byteCount + 1];
-            fixed (char* overlay_text_ptr = overlay_text)
+            else { native_label = null; }
+            byte* native_overlay_text;
+            if (overlay_text != null)
             {
-                int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
-                native_overlay_text[native_overlay_text_offset] = 0;
+                int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
+                byte* native_overlay_text_stackBytes = stackalloc byte[overlay_text_byteCount + 1];
+                native_overlay_text = native_overlay_text_stackBytes;
+                fixed (char* overlay_text_ptr = overlay_text)
+                {
+                    int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
+                    native_overlay_text[native_overlay_text_offset] = 0;
+                }
             }
+            else { native_overlay_text = null; }
             float scale_min = float.MaxValue;
             float scale_max = float.MaxValue;
             Vector2 graph_size = new Vector2();
@@ -1781,20 +2423,32 @@ namespace ImGuiNET
         }
         public static void PlotHistogram(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
-            byte* native_overlay_text = stackalloc byte[overlay_text_byteCount + 1];
-            fixed (char* overlay_text_ptr = overlay_text)
+            else { native_label = null; }
+            byte* native_overlay_text;
+            if (overlay_text != null)
             {
-                int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
-                native_overlay_text[native_overlay_text_offset] = 0;
+                int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
+                byte* native_overlay_text_stackBytes = stackalloc byte[overlay_text_byteCount + 1];
+                native_overlay_text = native_overlay_text_stackBytes;
+                fixed (char* overlay_text_ptr = overlay_text)
+                {
+                    int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
+                    native_overlay_text[native_overlay_text_offset] = 0;
+                }
             }
+            else { native_overlay_text = null; }
             float scale_max = float.MaxValue;
             Vector2 graph_size = new Vector2();
             int stride = sizeof(float);
@@ -1805,20 +2459,32 @@ namespace ImGuiNET
         }
         public static void PlotHistogram(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
-            byte* native_overlay_text = stackalloc byte[overlay_text_byteCount + 1];
-            fixed (char* overlay_text_ptr = overlay_text)
+            else { native_label = null; }
+            byte* native_overlay_text;
+            if (overlay_text != null)
             {
-                int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
-                native_overlay_text[native_overlay_text_offset] = 0;
+                int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
+                byte* native_overlay_text_stackBytes = stackalloc byte[overlay_text_byteCount + 1];
+                native_overlay_text = native_overlay_text_stackBytes;
+                fixed (char* overlay_text_ptr = overlay_text)
+                {
+                    int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
+                    native_overlay_text[native_overlay_text_offset] = 0;
+                }
             }
+            else { native_overlay_text = null; }
             Vector2 graph_size = new Vector2();
             int stride = sizeof(float);
             fixed (float* native_values = &values)
@@ -1828,20 +2494,32 @@ namespace ImGuiNET
         }
         public static void PlotHistogram(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
-            byte* native_overlay_text = stackalloc byte[overlay_text_byteCount + 1];
-            fixed (char* overlay_text_ptr = overlay_text)
+            else { native_label = null; }
+            byte* native_overlay_text;
+            if (overlay_text != null)
             {
-                int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
-                native_overlay_text[native_overlay_text_offset] = 0;
+                int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
+                byte* native_overlay_text_stackBytes = stackalloc byte[overlay_text_byteCount + 1];
+                native_overlay_text = native_overlay_text_stackBytes;
+                fixed (char* overlay_text_ptr = overlay_text)
+                {
+                    int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
+                    native_overlay_text[native_overlay_text_offset] = 0;
+                }
             }
+            else { native_overlay_text = null; }
             int stride = sizeof(float);
             fixed (float* native_values = &values)
             {
@@ -1850,20 +2528,32 @@ namespace ImGuiNET
         }
         public static void PlotHistogram(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size, int stride)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
-            byte* native_overlay_text = stackalloc byte[overlay_text_byteCount + 1];
-            fixed (char* overlay_text_ptr = overlay_text)
+            else { native_label = null; }
+            byte* native_overlay_text;
+            if (overlay_text != null)
             {
-                int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
-                native_overlay_text[native_overlay_text_offset] = 0;
+                int overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
+                byte* native_overlay_text_stackBytes = stackalloc byte[overlay_text_byteCount + 1];
+                native_overlay_text = native_overlay_text_stackBytes;
+                fixed (char* overlay_text_ptr = overlay_text)
+                {
+                    int native_overlay_text_offset = Encoding.UTF8.GetBytes(overlay_text_ptr, overlay_text.Length, native_overlay_text, overlay_text_byteCount);
+                    native_overlay_text[native_overlay_text_offset] = 0;
+                }
             }
+            else { native_overlay_text = null; }
             fixed (float* native_values = &values)
             {
                 ImGuiNative.igPlotHistogramFloatPtr(native_label, native_values, values_count, values_offset, native_overlay_text, scale_min, scale_max, graph_size, stride);
@@ -1878,26 +2568,38 @@ namespace ImGuiNET
         }
         public static bool BeginPopupContextVoid(string str_id)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             int mouse_button = 1;
             byte ret = ImGuiNative.igBeginPopupContextVoid(native_str_id, mouse_button);
             return ret != 0;
         }
         public static bool BeginPopupContextVoid(string str_id, int mouse_button)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             byte ret = ImGuiNative.igBeginPopupContextVoid(native_str_id, mouse_button);
             return ret != 0;
         }
@@ -1913,13 +2615,19 @@ namespace ImGuiNET
         }
         public static bool Checkbox(string label, ref bool v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte native_v_val = v ? (byte)1 : (byte)0;
             byte* native_v = &native_v_val;
             byte ret = ImGuiNative.igCheckbox(native_label, native_v);
@@ -1937,13 +2645,19 @@ namespace ImGuiNET
         }
         public static void TextColored(Vector4 col, string fmt)
         {
-            int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-            byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
-            fixed (char* fmt_ptr = fmt)
+            byte* native_fmt;
+            if (fmt != null)
             {
-                int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                native_fmt[native_fmt_offset] = 0;
+                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                native_fmt = native_fmt_stackBytes;
+                fixed (char* fmt_ptr = fmt)
+                {
+                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
+                    native_fmt[native_fmt_offset] = 0;
+                }
             }
+            else { native_fmt = null; }
             ImGuiNative.igTextColored(col, native_fmt);
         }
         public static void LogToFile()
@@ -1959,37 +2673,55 @@ namespace ImGuiNET
         }
         public static void LogToFile(int max_depth, string filename)
         {
-            int filename_byteCount = Encoding.UTF8.GetByteCount(filename);
-            byte* native_filename = stackalloc byte[filename_byteCount + 1];
-            fixed (char* filename_ptr = filename)
+            byte* native_filename;
+            if (filename != null)
             {
-                int native_filename_offset = Encoding.UTF8.GetBytes(filename_ptr, filename.Length, native_filename, filename_byteCount);
-                native_filename[native_filename_offset] = 0;
+                int filename_byteCount = Encoding.UTF8.GetByteCount(filename);
+                byte* native_filename_stackBytes = stackalloc byte[filename_byteCount + 1];
+                native_filename = native_filename_stackBytes;
+                fixed (char* filename_ptr = filename)
+                {
+                    int native_filename_offset = Encoding.UTF8.GetBytes(filename_ptr, filename.Length, native_filename, filename_byteCount);
+                    native_filename[native_filename_offset] = 0;
+                }
             }
+            else { native_filename = null; }
             ImGuiNative.igLogToFile(max_depth, native_filename);
         }
         public static bool Button(string label)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             Vector2 size = new Vector2();
             byte ret = ImGuiNative.igButton(native_label, size);
             return ret != 0;
         }
         public static bool Button(string label, Vector2 size)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte ret = ImGuiNative.igButton(native_label, size);
             return ret != 0;
         }
@@ -2004,23 +2736,35 @@ namespace ImGuiNET
         }
         public static bool DragInt2(string label, ref int v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_speed = 1.0f;
             int v_min = 0;
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt2(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -2029,22 +2773,34 @@ namespace ImGuiNET
         }
         public static bool DragInt2(string label, ref int v, float v_speed)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int v_min = 0;
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt2(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -2053,21 +2809,33 @@ namespace ImGuiNET
         }
         public static bool DragInt2(string label, ref int v, float v_speed, int v_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt2(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -2076,20 +2844,32 @@ namespace ImGuiNET
         }
         public static bool DragInt2(string label, ref int v, float v_speed, int v_min, int v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt2(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -2098,20 +2878,32 @@ namespace ImGuiNET
         }
         public static bool DragInt2(string label, ref int v, float v_speed, int v_min, int v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt2(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -2125,13 +2917,19 @@ namespace ImGuiNET
         }
         public static bool MenuItem(string label)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte* native_shortcut = null;
             byte selected = 0;
             byte enabled = 1;
@@ -2140,20 +2938,32 @@ namespace ImGuiNET
         }
         public static bool MenuItem(string label, string shortcut)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
-            byte* native_shortcut = stackalloc byte[shortcut_byteCount + 1];
-            fixed (char* shortcut_ptr = shortcut)
+            else { native_label = null; }
+            byte* native_shortcut;
+            if (shortcut != null)
             {
-                int native_shortcut_offset = Encoding.UTF8.GetBytes(shortcut_ptr, shortcut.Length, native_shortcut, shortcut_byteCount);
-                native_shortcut[native_shortcut_offset] = 0;
+                int shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
+                byte* native_shortcut_stackBytes = stackalloc byte[shortcut_byteCount + 1];
+                native_shortcut = native_shortcut_stackBytes;
+                fixed (char* shortcut_ptr = shortcut)
+                {
+                    int native_shortcut_offset = Encoding.UTF8.GetBytes(shortcut_ptr, shortcut.Length, native_shortcut, shortcut_byteCount);
+                    native_shortcut[native_shortcut_offset] = 0;
+                }
             }
+            else { native_shortcut = null; }
             byte selected = 0;
             byte enabled = 1;
             byte ret = ImGuiNative.igMenuItemBool(native_label, native_shortcut, selected, enabled);
@@ -2161,20 +2971,32 @@ namespace ImGuiNET
         }
         public static bool MenuItem(string label, string shortcut, bool selected)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
-            byte* native_shortcut = stackalloc byte[shortcut_byteCount + 1];
-            fixed (char* shortcut_ptr = shortcut)
+            else { native_label = null; }
+            byte* native_shortcut;
+            if (shortcut != null)
             {
-                int native_shortcut_offset = Encoding.UTF8.GetBytes(shortcut_ptr, shortcut.Length, native_shortcut, shortcut_byteCount);
-                native_shortcut[native_shortcut_offset] = 0;
+                int shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
+                byte* native_shortcut_stackBytes = stackalloc byte[shortcut_byteCount + 1];
+                native_shortcut = native_shortcut_stackBytes;
+                fixed (char* shortcut_ptr = shortcut)
+                {
+                    int native_shortcut_offset = Encoding.UTF8.GetBytes(shortcut_ptr, shortcut.Length, native_shortcut, shortcut_byteCount);
+                    native_shortcut[native_shortcut_offset] = 0;
+                }
             }
+            else { native_shortcut = null; }
             byte native_selected = selected ? (byte)1 : (byte)0;
             byte enabled = 1;
             byte ret = ImGuiNative.igMenuItemBool(native_label, native_shortcut, native_selected, enabled);
@@ -2182,20 +3004,32 @@ namespace ImGuiNET
         }
         public static bool MenuItem(string label, string shortcut, bool selected, bool enabled)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
-            byte* native_shortcut = stackalloc byte[shortcut_byteCount + 1];
-            fixed (char* shortcut_ptr = shortcut)
+            else { native_label = null; }
+            byte* native_shortcut;
+            if (shortcut != null)
             {
-                int native_shortcut_offset = Encoding.UTF8.GetBytes(shortcut_ptr, shortcut.Length, native_shortcut, shortcut_byteCount);
-                native_shortcut[native_shortcut_offset] = 0;
+                int shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
+                byte* native_shortcut_stackBytes = stackalloc byte[shortcut_byteCount + 1];
+                native_shortcut = native_shortcut_stackBytes;
+                fixed (char* shortcut_ptr = shortcut)
+                {
+                    int native_shortcut_offset = Encoding.UTF8.GetBytes(shortcut_ptr, shortcut.Length, native_shortcut, shortcut_byteCount);
+                    native_shortcut[native_shortcut_offset] = 0;
+                }
             }
+            else { native_shortcut = null; }
             byte native_selected = selected ? (byte)1 : (byte)0;
             byte native_enabled = enabled ? (byte)1 : (byte)0;
             byte ret = ImGuiNative.igMenuItemBool(native_label, native_shortcut, native_selected, native_enabled);
@@ -2203,20 +3037,32 @@ namespace ImGuiNET
         }
         public static bool MenuItem(string label, string shortcut, ref bool p_selected)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
-            byte* native_shortcut = stackalloc byte[shortcut_byteCount + 1];
-            fixed (char* shortcut_ptr = shortcut)
+            else { native_label = null; }
+            byte* native_shortcut;
+            if (shortcut != null)
             {
-                int native_shortcut_offset = Encoding.UTF8.GetBytes(shortcut_ptr, shortcut.Length, native_shortcut, shortcut_byteCount);
-                native_shortcut[native_shortcut_offset] = 0;
+                int shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
+                byte* native_shortcut_stackBytes = stackalloc byte[shortcut_byteCount + 1];
+                native_shortcut = native_shortcut_stackBytes;
+                fixed (char* shortcut_ptr = shortcut)
+                {
+                    int native_shortcut_offset = Encoding.UTF8.GetBytes(shortcut_ptr, shortcut.Length, native_shortcut, shortcut_byteCount);
+                    native_shortcut[native_shortcut_offset] = 0;
+                }
             }
+            else { native_shortcut = null; }
             byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
             byte* native_p_selected = &native_p_selected_val;
             byte enabled = 1;
@@ -2226,20 +3072,32 @@ namespace ImGuiNET
         }
         public static bool MenuItem(string label, string shortcut, ref bool p_selected, bool enabled)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
-            byte* native_shortcut = stackalloc byte[shortcut_byteCount + 1];
-            fixed (char* shortcut_ptr = shortcut)
+            else { native_label = null; }
+            byte* native_shortcut;
+            if (shortcut != null)
             {
-                int native_shortcut_offset = Encoding.UTF8.GetBytes(shortcut_ptr, shortcut.Length, native_shortcut, shortcut_byteCount);
-                native_shortcut[native_shortcut_offset] = 0;
+                int shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
+                byte* native_shortcut_stackBytes = stackalloc byte[shortcut_byteCount + 1];
+                native_shortcut = native_shortcut_stackBytes;
+                fixed (char* shortcut_ptr = shortcut)
+                {
+                    int native_shortcut_offset = Encoding.UTF8.GetBytes(shortcut_ptr, shortcut.Length, native_shortcut, shortcut_byteCount);
+                    native_shortcut[native_shortcut_offset] = 0;
+                }
             }
+            else { native_shortcut = null; }
             byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
             byte* native_p_selected = &native_p_selected_val;
             byte native_enabled = enabled ? (byte)1 : (byte)0;
@@ -2249,20 +3107,32 @@ namespace ImGuiNET
         }
         public static bool SliderFloat4(string label, ref Vector4 v, float v_min, float v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector4* native_v = &v)
             {
@@ -2272,20 +3142,32 @@ namespace ImGuiNET
         }
         public static bool SliderFloat4(string label, ref Vector4 v, float v_min, float v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector4* native_v = &v)
             {
@@ -2295,20 +3177,32 @@ namespace ImGuiNET
         }
         public static bool SliderFloat4(string label, ref Vector4 v, float v_min, float v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (Vector4* native_v = &v)
             {
                 byte ret = ImGuiNative.igSliderFloat4(native_label, native_v, v_min, v_max, native_format, power);
@@ -2331,13 +3225,19 @@ namespace ImGuiNET
         }
         public static bool DragScalarN(string label, ImGuiDataType data_type, IntPtr v, int components, float v_speed)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* v_min = null;
             void* v_max = null;
@@ -2348,13 +3248,19 @@ namespace ImGuiNET
         }
         public static bool DragScalarN(string label, ImGuiDataType data_type, IntPtr v, int components, float v_speed, IntPtr v_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* v_max = null;
@@ -2365,13 +3271,19 @@ namespace ImGuiNET
         }
         public static bool DragScalarN(string label, ImGuiDataType data_type, IntPtr v, int components, float v_speed, IntPtr v_min, IntPtr v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
@@ -2382,46 +3294,70 @@ namespace ImGuiNET
         }
         public static bool DragScalarN(string label, ImGuiDataType data_type, IntPtr v, int components, float v_speed, IntPtr v_min, IntPtr v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             byte ret = ImGuiNative.igDragScalarN(native_label, data_type, native_v, components, v_speed, native_v_min, native_v_max, native_format, power);
             return ret != 0;
         }
         public static bool DragScalarN(string label, ImGuiDataType data_type, IntPtr v, int components, float v_speed, IntPtr v_min, IntPtr v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte ret = ImGuiNative.igDragScalarN(native_label, data_type, native_v, components, v_speed, native_v_min, native_v_max, native_format, power);
             return ret != 0;
         }
@@ -2468,13 +3404,19 @@ namespace ImGuiNET
         }
         public static void ProgressBar(float fraction, Vector2 size_arg, string overlay)
         {
-            int overlay_byteCount = Encoding.UTF8.GetByteCount(overlay);
-            byte* native_overlay = stackalloc byte[overlay_byteCount + 1];
-            fixed (char* overlay_ptr = overlay)
+            byte* native_overlay;
+            if (overlay != null)
             {
-                int native_overlay_offset = Encoding.UTF8.GetBytes(overlay_ptr, overlay.Length, native_overlay, overlay_byteCount);
-                native_overlay[native_overlay_offset] = 0;
+                int overlay_byteCount = Encoding.UTF8.GetByteCount(overlay);
+                byte* native_overlay_stackBytes = stackalloc byte[overlay_byteCount + 1];
+                native_overlay = native_overlay_stackBytes;
+                fixed (char* overlay_ptr = overlay)
+                {
+                    int native_overlay_offset = Encoding.UTF8.GetBytes(overlay_ptr, overlay.Length, native_overlay, overlay_byteCount);
+                    native_overlay[native_overlay_offset] = 0;
+                }
             }
+            else { native_overlay = null; }
             ImGuiNative.igProgressBar(fraction, size_arg, native_overlay);
         }
         public static void SetNextWindowBgAlpha(float alpha)
@@ -2483,26 +3425,38 @@ namespace ImGuiNET
         }
         public static bool BeginPopup(string str_id)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             ImGuiWindowFlags flags = 0;
             byte ret = ImGuiNative.igBeginPopup(native_str_id, flags);
             return ret != 0;
         }
         public static bool BeginPopup(string str_id, ImGuiWindowFlags flags)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             byte ret = ImGuiNative.igBeginPopup(native_str_id, flags);
             return ret != 0;
         }
@@ -2523,13 +3477,19 @@ namespace ImGuiNET
         }
         public static uint GetID(string str_id)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             uint ret = ImGuiNative.igGetIDStr(native_str_id);
             return ret;
         }
@@ -2541,51 +3501,75 @@ namespace ImGuiNET
         }
         public static bool ListBoxHeader(string label)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             Vector2 size = new Vector2();
             byte ret = ImGuiNative.igListBoxHeaderVec2(native_label, size);
             return ret != 0;
         }
         public static bool ListBoxHeader(string label, Vector2 size)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte ret = ImGuiNative.igListBoxHeaderVec2(native_label, size);
             return ret != 0;
         }
         public static bool ListBoxHeader(string label, int items_count)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int height_in_items = -1;
             byte ret = ImGuiNative.igListBoxHeaderInt(native_label, items_count, height_in_items);
             return ret != 0;
         }
         public static bool ListBoxHeader(string label, int items_count, int height_in_items)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte ret = ImGuiNative.igListBoxHeaderInt(native_label, items_count, height_in_items);
             return ret != 0;
         }
@@ -2601,24 +3585,36 @@ namespace ImGuiNET
         }
         public static void LogText(string fmt)
         {
-            int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-            byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
-            fixed (char* fmt_ptr = fmt)
+            byte* native_fmt;
+            if (fmt != null)
             {
-                int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                native_fmt[native_fmt_offset] = 0;
+                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                native_fmt = native_fmt_stackBytes;
+                fixed (char* fmt_ptr = fmt)
+                {
+                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
+                    native_fmt[native_fmt_offset] = 0;
+                }
             }
+            else { native_fmt = null; }
             ImGuiNative.igLogText(native_fmt);
         }
         public static void TextWrapped(string fmt)
         {
-            int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-            byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
-            fixed (char* fmt_ptr = fmt)
+            byte* native_fmt;
+            if (fmt != null)
             {
-                int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                native_fmt[native_fmt_offset] = 0;
+                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                native_fmt = native_fmt_stackBytes;
+                fixed (char* fmt_ptr = fmt)
+                {
+                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
+                    native_fmt[native_fmt_offset] = 0;
+                }
             }
+            else { native_fmt = null; }
             ImGuiNative.igTextWrapped(native_fmt);
         }
         public static void EndGroup()
@@ -2632,13 +3628,19 @@ namespace ImGuiNET
         }
         public static void TreePush(string str_id)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             ImGuiNative.igTreePushStr(native_str_id);
         }
         public static void TreePush()
@@ -2653,13 +3655,19 @@ namespace ImGuiNET
         }
         public static void TextDisabled(string fmt)
         {
-            int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-            byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
-            fixed (char* fmt_ptr = fmt)
+            byte* native_fmt;
+            if (fmt != null)
             {
-                int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                native_fmt[native_fmt_offset] = 0;
+                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                native_fmt = native_fmt_stackBytes;
+                fixed (char* fmt_ptr = fmt)
+                {
+                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
+                    native_fmt[native_fmt_offset] = 0;
+                }
             }
+            else { native_fmt = null; }
             ImGuiNative.igTextDisabled(native_fmt);
         }
         public static void SetNextTreeNodeOpen(bool is_open)
@@ -2689,23 +3697,35 @@ namespace ImGuiNET
         }
         public static bool DragInt4(string label, ref int v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_speed = 1.0f;
             int v_min = 0;
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt4(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -2714,22 +3734,34 @@ namespace ImGuiNET
         }
         public static bool DragInt4(string label, ref int v, float v_speed)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int v_min = 0;
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt4(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -2738,21 +3770,33 @@ namespace ImGuiNET
         }
         public static bool DragInt4(string label, ref int v, float v_speed, int v_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt4(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -2761,20 +3805,32 @@ namespace ImGuiNET
         }
         public static bool DragInt4(string label, ref int v, float v_speed, int v_min, int v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt4(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -2783,20 +3839,32 @@ namespace ImGuiNET
         }
         public static bool DragInt4(string label, ref int v, float v_speed, int v_min, int v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt4(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -2813,13 +3881,19 @@ namespace ImGuiNET
         }
         public static bool BeginPopupModal(string name)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            byte* native_name;
+            if (name != null)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                int name_byteCount = Encoding.UTF8.GetByteCount(name);
+                byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                native_name = native_name_stackBytes;
+                fixed (char* name_ptr = name)
+                {
+                    int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
+                    native_name[native_name_offset] = 0;
+                }
             }
+            else { native_name = null; }
             byte* p_open = null;
             ImGuiWindowFlags flags = 0;
             byte ret = ImGuiNative.igBeginPopupModal(native_name, p_open, flags);
@@ -2827,13 +3901,19 @@ namespace ImGuiNET
         }
         public static bool BeginPopupModal(string name, ref bool p_open)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            byte* native_name;
+            if (name != null)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                int name_byteCount = Encoding.UTF8.GetByteCount(name);
+                byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                native_name = native_name_stackBytes;
+                fixed (char* name_ptr = name)
+                {
+                    int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
+                    native_name[native_name_offset] = 0;
+                }
             }
+            else { native_name = null; }
             byte native_p_open_val = p_open ? (byte)1 : (byte)0;
             byte* native_p_open = &native_p_open_val;
             ImGuiWindowFlags flags = 0;
@@ -2843,13 +3923,19 @@ namespace ImGuiNET
         }
         public static bool BeginPopupModal(string name, ref bool p_open, ImGuiWindowFlags flags)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            byte* native_name;
+            if (name != null)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                int name_byteCount = Encoding.UTF8.GetByteCount(name);
+                byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                native_name = native_name_stackBytes;
+                fixed (char* name_ptr = name)
+                {
+                    int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
+                    native_name[native_name_offset] = 0;
+                }
             }
+            else { native_name = null; }
             byte native_p_open_val = p_open ? (byte)1 : (byte)0;
             byte* native_p_open = &native_p_open_val;
             byte ret = ImGuiNative.igBeginPopupModal(native_name, native_p_open, flags);
@@ -2858,20 +3944,32 @@ namespace ImGuiNET
         }
         public static bool SliderInt4(string label, ref int v, int v_min, int v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igSliderInt4(native_label, native_v, v_min, v_max, native_format);
@@ -2880,20 +3978,32 @@ namespace ImGuiNET
         }
         public static bool SliderInt4(string label, ref int v, int v_min, int v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igSliderInt4(native_label, native_v, v_min, v_max, native_format);
@@ -2941,13 +4051,19 @@ namespace ImGuiNET
         }
         public static bool BeginChild(string str_id)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             Vector2 size = new Vector2();
             byte border = 0;
             ImGuiWindowFlags flags = 0;
@@ -2956,13 +4072,19 @@ namespace ImGuiNET
         }
         public static bool BeginChild(string str_id, Vector2 size)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             byte border = 0;
             ImGuiWindowFlags flags = 0;
             byte ret = ImGuiNative.igBeginChild(native_str_id, size, border, flags);
@@ -2970,13 +4092,19 @@ namespace ImGuiNET
         }
         public static bool BeginChild(string str_id, Vector2 size, bool border)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             byte native_border = border ? (byte)1 : (byte)0;
             ImGuiWindowFlags flags = 0;
             byte ret = ImGuiNative.igBeginChild(native_str_id, size, native_border, flags);
@@ -2984,13 +4112,19 @@ namespace ImGuiNET
         }
         public static bool BeginChild(string str_id, Vector2 size, bool border, ImGuiWindowFlags flags)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             byte native_border = border ? (byte)1 : (byte)0;
             byte ret = ImGuiNative.igBeginChild(native_str_id, size, native_border, flags);
             return ret != 0;
@@ -3055,13 +4189,19 @@ namespace ImGuiNET
         }
         public static bool SetDragDropPayload(string type, IntPtr data, uint size)
         {
-            int type_byteCount = Encoding.UTF8.GetByteCount(type);
-            byte* native_type = stackalloc byte[type_byteCount + 1];
-            fixed (char* type_ptr = type)
+            byte* native_type;
+            if (type != null)
             {
-                int native_type_offset = Encoding.UTF8.GetBytes(type_ptr, type.Length, native_type, type_byteCount);
-                native_type[native_type_offset] = 0;
+                int type_byteCount = Encoding.UTF8.GetByteCount(type);
+                byte* native_type_stackBytes = stackalloc byte[type_byteCount + 1];
+                native_type = native_type_stackBytes;
+                fixed (char* type_ptr = type)
+                {
+                    int native_type_offset = Encoding.UTF8.GetBytes(type_ptr, type.Length, native_type, type_byteCount);
+                    native_type[native_type_offset] = 0;
+                }
             }
+            else { native_type = null; }
             void* native_data = (void*)data.ToPointer();
             ImGuiCond cond = 0;
             byte ret = ImGuiNative.igSetDragDropPayload(native_type, native_data, size, cond);
@@ -3069,13 +4209,19 @@ namespace ImGuiNET
         }
         public static bool SetDragDropPayload(string type, IntPtr data, uint size, ImGuiCond cond)
         {
-            int type_byteCount = Encoding.UTF8.GetByteCount(type);
-            byte* native_type = stackalloc byte[type_byteCount + 1];
-            fixed (char* type_ptr = type)
+            byte* native_type;
+            if (type != null)
             {
-                int native_type_offset = Encoding.UTF8.GetBytes(type_ptr, type.Length, native_type, type_byteCount);
-                native_type[native_type_offset] = 0;
+                int type_byteCount = Encoding.UTF8.GetByteCount(type);
+                byte* native_type_stackBytes = stackalloc byte[type_byteCount + 1];
+                native_type = native_type_stackBytes;
+                fixed (char* type_ptr = type)
+                {
+                    int native_type_offset = Encoding.UTF8.GetBytes(type_ptr, type.Length, native_type, type_byteCount);
+                    native_type[native_type_offset] = 0;
+                }
             }
+            else { native_type = null; }
             void* native_data = (void*)data.ToPointer();
             byte ret = ImGuiNative.igSetDragDropPayload(native_type, native_data, size, cond);
             return ret != 0;
@@ -3098,13 +4244,19 @@ namespace ImGuiNET
         }
         public static bool ColorButton(string desc_id, Vector4 col)
         {
-            int desc_id_byteCount = Encoding.UTF8.GetByteCount(desc_id);
-            byte* native_desc_id = stackalloc byte[desc_id_byteCount + 1];
-            fixed (char* desc_id_ptr = desc_id)
+            byte* native_desc_id;
+            if (desc_id != null)
             {
-                int native_desc_id_offset = Encoding.UTF8.GetBytes(desc_id_ptr, desc_id.Length, native_desc_id, desc_id_byteCount);
-                native_desc_id[native_desc_id_offset] = 0;
+                int desc_id_byteCount = Encoding.UTF8.GetByteCount(desc_id);
+                byte* native_desc_id_stackBytes = stackalloc byte[desc_id_byteCount + 1];
+                native_desc_id = native_desc_id_stackBytes;
+                fixed (char* desc_id_ptr = desc_id)
+                {
+                    int native_desc_id_offset = Encoding.UTF8.GetBytes(desc_id_ptr, desc_id.Length, native_desc_id, desc_id_byteCount);
+                    native_desc_id[native_desc_id_offset] = 0;
+                }
             }
+            else { native_desc_id = null; }
             ImGuiColorEditFlags flags = 0;
             Vector2 size = new Vector2();
             byte ret = ImGuiNative.igColorButton(native_desc_id, col, flags, size);
@@ -3112,26 +4264,38 @@ namespace ImGuiNET
         }
         public static bool ColorButton(string desc_id, Vector4 col, ImGuiColorEditFlags flags)
         {
-            int desc_id_byteCount = Encoding.UTF8.GetByteCount(desc_id);
-            byte* native_desc_id = stackalloc byte[desc_id_byteCount + 1];
-            fixed (char* desc_id_ptr = desc_id)
+            byte* native_desc_id;
+            if (desc_id != null)
             {
-                int native_desc_id_offset = Encoding.UTF8.GetBytes(desc_id_ptr, desc_id.Length, native_desc_id, desc_id_byteCount);
-                native_desc_id[native_desc_id_offset] = 0;
+                int desc_id_byteCount = Encoding.UTF8.GetByteCount(desc_id);
+                byte* native_desc_id_stackBytes = stackalloc byte[desc_id_byteCount + 1];
+                native_desc_id = native_desc_id_stackBytes;
+                fixed (char* desc_id_ptr = desc_id)
+                {
+                    int native_desc_id_offset = Encoding.UTF8.GetBytes(desc_id_ptr, desc_id.Length, native_desc_id, desc_id_byteCount);
+                    native_desc_id[native_desc_id_offset] = 0;
+                }
             }
+            else { native_desc_id = null; }
             Vector2 size = new Vector2();
             byte ret = ImGuiNative.igColorButton(native_desc_id, col, flags, size);
             return ret != 0;
         }
         public static bool ColorButton(string desc_id, Vector4 col, ImGuiColorEditFlags flags, Vector2 size)
         {
-            int desc_id_byteCount = Encoding.UTF8.GetByteCount(desc_id);
-            byte* native_desc_id = stackalloc byte[desc_id_byteCount + 1];
-            fixed (char* desc_id_ptr = desc_id)
+            byte* native_desc_id;
+            if (desc_id != null)
             {
-                int native_desc_id_offset = Encoding.UTF8.GetBytes(desc_id_ptr, desc_id.Length, native_desc_id, desc_id_byteCount);
-                native_desc_id[native_desc_id_offset] = 0;
+                int desc_id_byteCount = Encoding.UTF8.GetByteCount(desc_id);
+                byte* native_desc_id_stackBytes = stackalloc byte[desc_id_byteCount + 1];
+                native_desc_id = native_desc_id_stackBytes;
+                fixed (char* desc_id_ptr = desc_id)
+                {
+                    int native_desc_id_offset = Encoding.UTF8.GetBytes(desc_id_ptr, desc_id.Length, native_desc_id, desc_id_byteCount);
+                    native_desc_id[native_desc_id_offset] = 0;
+                }
             }
+            else { native_desc_id = null; }
             byte ret = ImGuiNative.igColorButton(native_desc_id, col, flags, size);
             return ret != 0;
         }
@@ -3142,13 +4306,19 @@ namespace ImGuiNET
         }
         public static void SetClipboardText(string text)
         {
-            int text_byteCount = Encoding.UTF8.GetByteCount(text);
-            byte* native_text = stackalloc byte[text_byteCount + 1];
-            fixed (char* text_ptr = text)
+            byte* native_text;
+            if (text != null)
             {
-                int native_text_offset = Encoding.UTF8.GetBytes(text_ptr, text.Length, native_text, text_byteCount);
-                native_text[native_text_offset] = 0;
+                int text_byteCount = Encoding.UTF8.GetByteCount(text);
+                byte* native_text_stackBytes = stackalloc byte[text_byteCount + 1];
+                native_text = native_text_stackBytes;
+                fixed (char* text_ptr = text)
+                {
+                    int native_text_offset = Encoding.UTF8.GetBytes(text_ptr, text.Length, native_text, text_byteCount);
+                    native_text[native_text_offset] = 0;
+                }
             }
+            else { native_text = null; }
             ImGuiNative.igSetClipboardText(native_text);
         }
         public static bool IsWindowCollapsed()
@@ -3158,13 +4328,19 @@ namespace ImGuiNET
         }
         public static void ShowFontSelector(string label)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             ImGuiNative.igShowFontSelector(native_label);
         }
         public static void SetNextWindowFocus()
@@ -3188,13 +4364,19 @@ namespace ImGuiNET
         }
         public static bool Begin(string name)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            byte* native_name;
+            if (name != null)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                int name_byteCount = Encoding.UTF8.GetByteCount(name);
+                byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                native_name = native_name_stackBytes;
+                fixed (char* name_ptr = name)
+                {
+                    int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
+                    native_name[native_name_offset] = 0;
+                }
             }
+            else { native_name = null; }
             byte* p_open = null;
             ImGuiWindowFlags flags = 0;
             byte ret = ImGuiNative.igBegin(native_name, p_open, flags);
@@ -3202,13 +4384,19 @@ namespace ImGuiNET
         }
         public static bool Begin(string name, ref bool p_open)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            byte* native_name;
+            if (name != null)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                int name_byteCount = Encoding.UTF8.GetByteCount(name);
+                byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                native_name = native_name_stackBytes;
+                fixed (char* name_ptr = name)
+                {
+                    int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
+                    native_name[native_name_offset] = 0;
+                }
             }
+            else { native_name = null; }
             byte native_p_open_val = p_open ? (byte)1 : (byte)0;
             byte* native_p_open = &native_p_open_val;
             ImGuiWindowFlags flags = 0;
@@ -3218,13 +4406,19 @@ namespace ImGuiNET
         }
         public static bool Begin(string name, ref bool p_open, ImGuiWindowFlags flags)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            byte* native_name;
+            if (name != null)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                int name_byteCount = Encoding.UTF8.GetByteCount(name);
+                byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                native_name = native_name_stackBytes;
+                fixed (char* name_ptr = name)
+                {
+                    int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
+                    native_name[native_name_offset] = 0;
+                }
             }
+            else { native_name = null; }
             byte native_p_open_val = p_open ? (byte)1 : (byte)0;
             byte* native_p_open = &native_p_open_val;
             byte ret = ImGuiNative.igBegin(native_name, native_p_open, flags);
@@ -3233,13 +4427,19 @@ namespace ImGuiNET
         }
         public static bool ColorEdit3(string label, ref Vector3 col)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             ImGuiColorEditFlags flags = 0;
             fixed (Vector3* native_col = &col)
             {
@@ -3249,13 +4449,19 @@ namespace ImGuiNET
         }
         public static bool ColorEdit3(string label, ref Vector3 col, ImGuiColorEditFlags flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             fixed (Vector3* native_col = &col)
             {
                 byte ret = ImGuiNative.igColorEdit3(native_label, native_col, flags);
@@ -3264,20 +4470,32 @@ namespace ImGuiNET
         }
         public static bool InputFloat2(string label, ref Vector2 v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (Vector2* native_v = &v)
             {
@@ -3287,20 +4505,32 @@ namespace ImGuiNET
         }
         public static bool InputFloat2(string label, ref Vector2 v, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (Vector2* native_v = &v)
             {
@@ -3310,20 +4540,32 @@ namespace ImGuiNET
         }
         public static bool InputFloat2(string label, ref Vector2 v, string format, ImGuiInputTextFlags extra_flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (Vector2* native_v = &v)
             {
                 byte ret = ImGuiNative.igInputFloat2(native_label, native_v, native_format, extra_flags);
@@ -3346,22 +4588,34 @@ namespace ImGuiNET
         }
         public static bool InputDouble(string label, ref double v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             double step = 0.0f;
             double step_fast = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.6f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.6f")
+            byte* native_format;
+            if ("%.6f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.6f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.6f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.6f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.6f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (double* native_v = &v)
             {
@@ -3371,21 +4625,33 @@ namespace ImGuiNET
         }
         public static bool InputDouble(string label, ref double v, double step)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             double step_fast = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.6f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.6f")
+            byte* native_format;
+            if ("%.6f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.6f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.6f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.6f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.6f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (double* native_v = &v)
             {
@@ -3395,20 +4661,32 @@ namespace ImGuiNET
         }
         public static bool InputDouble(string label, ref double v, double step, double step_fast)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.6f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.6f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.6f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.6f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.6f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.6f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.6f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (double* native_v = &v)
             {
@@ -3418,20 +4696,32 @@ namespace ImGuiNET
         }
         public static bool InputDouble(string label, ref double v, double step, double step_fast, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (double* native_v = &v)
             {
@@ -3441,20 +4731,32 @@ namespace ImGuiNET
         }
         public static bool InputDouble(string label, ref double v, double step, double step_fast, string format, ImGuiInputTextFlags extra_flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (double* native_v = &v)
             {
                 byte ret = ImGuiNative.igInputDouble(native_label, native_v, step, step_fast, native_format, extra_flags);
@@ -3467,13 +4769,19 @@ namespace ImGuiNET
         }
         public static bool Selectable(string label)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte selected = 0;
             ImGuiSelectableFlags flags = 0;
             Vector2 size = new Vector2();
@@ -3482,13 +4790,19 @@ namespace ImGuiNET
         }
         public static bool Selectable(string label, bool selected)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte native_selected = selected ? (byte)1 : (byte)0;
             ImGuiSelectableFlags flags = 0;
             Vector2 size = new Vector2();
@@ -3497,13 +4811,19 @@ namespace ImGuiNET
         }
         public static bool Selectable(string label, bool selected, ImGuiSelectableFlags flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte native_selected = selected ? (byte)1 : (byte)0;
             Vector2 size = new Vector2();
             byte ret = ImGuiNative.igSelectable(native_label, native_selected, flags, size);
@@ -3511,26 +4831,38 @@ namespace ImGuiNET
         }
         public static bool Selectable(string label, bool selected, ImGuiSelectableFlags flags, Vector2 size)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte native_selected = selected ? (byte)1 : (byte)0;
             byte ret = ImGuiNative.igSelectable(native_label, native_selected, flags, size);
             return ret != 0;
         }
         public static bool Selectable(string label, ref bool p_selected)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
             byte* native_p_selected = &native_p_selected_val;
             ImGuiSelectableFlags flags = 0;
@@ -3541,13 +4873,19 @@ namespace ImGuiNET
         }
         public static bool Selectable(string label, ref bool p_selected, ImGuiSelectableFlags flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
             byte* native_p_selected = &native_p_selected_val;
             Vector2 size = new Vector2();
@@ -3557,13 +4895,19 @@ namespace ImGuiNET
         }
         public static bool Selectable(string label, ref bool p_selected, ImGuiSelectableFlags flags, Vector2 size)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
             byte* native_p_selected = &native_p_selected_val;
             byte ret = ImGuiNative.igSelectableBoolPtr(native_label, native_p_selected, flags, size);
@@ -3572,13 +4916,19 @@ namespace ImGuiNET
         }
         public static bool ListBox(string label, ref int current_item, string[] items, int items_count)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int* items_byteCounts = stackalloc int[items.Length];
             int items_byteCount = 0;
             for (int i = 0; i < items.Length; i++)
@@ -3615,13 +4965,19 @@ namespace ImGuiNET
         }
         public static bool ListBox(string label, ref int current_item, string[] items, int items_count, int height_in_items)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int* items_byteCounts = stackalloc int[items.Length];
             int items_byteCount = 0;
             for (int i = 0; i < items.Length; i++)
@@ -3662,20 +5018,32 @@ namespace ImGuiNET
         }
         public static bool InputFloat4(string label, ref Vector4 v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (Vector4* native_v = &v)
             {
@@ -3685,20 +5053,32 @@ namespace ImGuiNET
         }
         public static bool InputFloat4(string label, ref Vector4 v, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (Vector4* native_v = &v)
             {
@@ -3708,20 +5088,32 @@ namespace ImGuiNET
         }
         public static bool InputFloat4(string label, ref Vector4 v, string format, ImGuiInputTextFlags extra_flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (Vector4* native_v = &v)
             {
                 byte ret = ImGuiNative.igInputFloat4(native_label, native_v, native_format, extra_flags);
@@ -3743,13 +5135,19 @@ namespace ImGuiNET
         }
         public static void PushID(string str_id)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             ImGuiNative.igPushIDStr(native_str_id);
         }
         public static void PushID(IntPtr ptr_id)
@@ -3776,13 +5174,19 @@ namespace ImGuiNET
         }
         public static void Text(string fmt)
         {
-            int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-            byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
-            fixed (char* fmt_ptr = fmt)
+            byte* native_fmt;
+            if (fmt != null)
             {
-                int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                native_fmt[native_fmt_offset] = 0;
+                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                native_fmt = native_fmt_stackBytes;
+                fixed (char* fmt_ptr = fmt)
+                {
+                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
+                    native_fmt[native_fmt_offset] = 0;
+                }
             }
+            else { native_fmt = null; }
             ImGuiNative.igText(native_fmt);
         }
         public static float GetTextLineHeightWithSpacing()
@@ -3796,23 +5200,35 @@ namespace ImGuiNET
         }
         public static bool DragInt(string label, ref int v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_speed = 1.0f;
             int v_min = 0;
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -3821,22 +5237,34 @@ namespace ImGuiNET
         }
         public static bool DragInt(string label, ref int v, float v_speed)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int v_min = 0;
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -3845,21 +5273,33 @@ namespace ImGuiNET
         }
         public static bool DragInt(string label, ref int v, float v_speed, int v_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -3868,20 +5308,32 @@ namespace ImGuiNET
         }
         public static bool DragInt(string label, ref int v, float v_speed, int v_min, int v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -3890,20 +5342,32 @@ namespace ImGuiNET
         }
         public static bool DragInt(string label, ref int v, float v_speed, int v_min, int v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -3912,20 +5376,32 @@ namespace ImGuiNET
         }
         public static bool SliderFloat(string label, ref float v, float v_min, float v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (float* native_v = &v)
             {
@@ -3935,20 +5411,32 @@ namespace ImGuiNET
         }
         public static bool SliderFloat(string label, ref float v, float v_min, float v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (float* native_v = &v)
             {
@@ -3958,20 +5446,32 @@ namespace ImGuiNET
         }
         public static bool SliderFloat(string label, ref float v, float v_min, float v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (float* native_v = &v)
             {
                 byte ret = ImGuiNative.igSliderFloat(native_label, native_v, v_min, v_max, native_format, power);
@@ -3999,13 +5499,19 @@ namespace ImGuiNET
         }
         public static bool VSliderScalar(string label, Vector2 size, ImGuiDataType data_type, IntPtr v, IntPtr v_min, IntPtr v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
@@ -4016,46 +5522,70 @@ namespace ImGuiNET
         }
         public static bool VSliderScalar(string label, Vector2 size, ImGuiDataType data_type, IntPtr v, IntPtr v_min, IntPtr v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             byte ret = ImGuiNative.igVSliderScalar(native_label, size, data_type, native_v, native_v_min, native_v_max, native_format, power);
             return ret != 0;
         }
         public static bool VSliderScalar(string label, Vector2 size, ImGuiDataType data_type, IntPtr v, IntPtr v_min, IntPtr v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte ret = ImGuiNative.igVSliderScalar(native_label, size, data_type, native_v, native_v_min, native_v_max, native_format, power);
             return ret != 0;
         }
@@ -4071,20 +5601,32 @@ namespace ImGuiNET
         }
         public static bool SliderFloat3(string label, ref Vector3 v, float v_min, float v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector3* native_v = &v)
             {
@@ -4094,20 +5636,32 @@ namespace ImGuiNET
         }
         public static bool SliderFloat3(string label, ref Vector3 v, float v_min, float v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector3* native_v = &v)
             {
@@ -4117,20 +5671,32 @@ namespace ImGuiNET
         }
         public static bool SliderFloat3(string label, ref Vector3 v, float v_min, float v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (Vector3* native_v = &v)
             {
                 byte ret = ImGuiNative.igSliderFloat3(native_label, native_v, v_min, v_max, native_format, power);
@@ -4139,23 +5705,35 @@ namespace ImGuiNET
         }
         public static bool DragFloat(string label, ref float v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_speed = 1.0f;
             float v_min = 0.0f;
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (float* native_v = &v)
             {
@@ -4165,22 +5743,34 @@ namespace ImGuiNET
         }
         public static bool DragFloat(string label, ref float v, float v_speed)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_min = 0.0f;
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (float* native_v = &v)
             {
@@ -4190,21 +5780,33 @@ namespace ImGuiNET
         }
         public static bool DragFloat(string label, ref float v, float v_speed, float v_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (float* native_v = &v)
             {
@@ -4214,20 +5816,32 @@ namespace ImGuiNET
         }
         public static bool DragFloat(string label, ref float v, float v_speed, float v_min, float v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (float* native_v = &v)
             {
@@ -4237,20 +5851,32 @@ namespace ImGuiNET
         }
         public static bool DragFloat(string label, ref float v, float v_speed, float v_min, float v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (float* native_v = &v)
             {
@@ -4260,20 +5886,32 @@ namespace ImGuiNET
         }
         public static bool DragFloat(string label, ref float v, float v_speed, float v_min, float v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (float* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragFloat(native_label, native_v, v_speed, v_min, v_max, native_format, power);
@@ -4309,13 +5947,19 @@ namespace ImGuiNET
         }
         public static bool SliderScalar(string label, ImGuiDataType data_type, IntPtr v, IntPtr v_min, IntPtr v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
@@ -4326,110 +5970,170 @@ namespace ImGuiNET
         }
         public static bool SliderScalar(string label, ImGuiDataType data_type, IntPtr v, IntPtr v_min, IntPtr v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             byte ret = ImGuiNative.igSliderScalar(native_label, data_type, native_v, native_v_min, native_v_max, native_format, power);
             return ret != 0;
         }
         public static bool SliderScalar(string label, ImGuiDataType data_type, IntPtr v, IntPtr v_min, IntPtr v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte ret = ImGuiNative.igSliderScalar(native_label, data_type, native_v, native_v_min, native_v_max, native_format, power);
             return ret != 0;
         }
         public static bool BeginCombo(string label, string preview_value)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int preview_value_byteCount = Encoding.UTF8.GetByteCount(preview_value);
-            byte* native_preview_value = stackalloc byte[preview_value_byteCount + 1];
-            fixed (char* preview_value_ptr = preview_value)
+            else { native_label = null; }
+            byte* native_preview_value;
+            if (preview_value != null)
             {
-                int native_preview_value_offset = Encoding.UTF8.GetBytes(preview_value_ptr, preview_value.Length, native_preview_value, preview_value_byteCount);
-                native_preview_value[native_preview_value_offset] = 0;
+                int preview_value_byteCount = Encoding.UTF8.GetByteCount(preview_value);
+                byte* native_preview_value_stackBytes = stackalloc byte[preview_value_byteCount + 1];
+                native_preview_value = native_preview_value_stackBytes;
+                fixed (char* preview_value_ptr = preview_value)
+                {
+                    int native_preview_value_offset = Encoding.UTF8.GetBytes(preview_value_ptr, preview_value.Length, native_preview_value, preview_value_byteCount);
+                    native_preview_value[native_preview_value_offset] = 0;
+                }
             }
+            else { native_preview_value = null; }
             ImGuiComboFlags flags = 0;
             byte ret = ImGuiNative.igBeginCombo(native_label, native_preview_value, flags);
             return ret != 0;
         }
         public static bool BeginCombo(string label, string preview_value, ImGuiComboFlags flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int preview_value_byteCount = Encoding.UTF8.GetByteCount(preview_value);
-            byte* native_preview_value = stackalloc byte[preview_value_byteCount + 1];
-            fixed (char* preview_value_ptr = preview_value)
+            else { native_label = null; }
+            byte* native_preview_value;
+            if (preview_value != null)
             {
-                int native_preview_value_offset = Encoding.UTF8.GetBytes(preview_value_ptr, preview_value.Length, native_preview_value, preview_value_byteCount);
-                native_preview_value[native_preview_value_offset] = 0;
+                int preview_value_byteCount = Encoding.UTF8.GetByteCount(preview_value);
+                byte* native_preview_value_stackBytes = stackalloc byte[preview_value_byteCount + 1];
+                native_preview_value = native_preview_value_stackBytes;
+                fixed (char* preview_value_ptr = preview_value)
+                {
+                    int native_preview_value_offset = Encoding.UTF8.GetBytes(preview_value_ptr, preview_value.Length, native_preview_value, preview_value_byteCount);
+                    native_preview_value[native_preview_value_offset] = 0;
+                }
             }
+            else { native_preview_value = null; }
             byte ret = ImGuiNative.igBeginCombo(native_label, native_preview_value, flags);
             return ret != 0;
         }
         public static bool BeginMenu(string label)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte enabled = 1;
             byte ret = ImGuiNative.igBeginMenu(native_label, enabled);
             return ret != 0;
         }
         public static bool BeginMenu(string label, bool enabled)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte native_enabled = enabled ? (byte)1 : (byte)0;
             byte ret = ImGuiNative.igBeginMenu(native_label, native_enabled);
             return ret != 0;
@@ -4451,13 +6155,19 @@ namespace ImGuiNET
         }
         public static bool InputInt3(string label, ref int v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (int* native_v = &v)
             {
@@ -4467,13 +6177,19 @@ namespace ImGuiNET
         }
         public static bool InputInt3(string label, ref int v, ImGuiInputTextFlags extra_flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igInputInt3(native_label, native_v, extra_flags);
@@ -4492,13 +6208,19 @@ namespace ImGuiNET
         }
         public static bool InputInt(string label, ref int v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int step = 1;
             int step_fast = 100;
             ImGuiInputTextFlags extra_flags = 0;
@@ -4510,13 +6232,19 @@ namespace ImGuiNET
         }
         public static bool InputInt(string label, ref int v, int step)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int step_fast = 100;
             ImGuiInputTextFlags extra_flags = 0;
             fixed (int* native_v = &v)
@@ -4527,13 +6255,19 @@ namespace ImGuiNET
         }
         public static bool InputInt(string label, ref int v, int step, int step_fast)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (int* native_v = &v)
             {
@@ -4543,13 +6277,19 @@ namespace ImGuiNET
         }
         public static bool InputInt(string label, ref int v, int step, int step_fast, ImGuiInputTextFlags extra_flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igInputInt(native_label, native_v, step, step_fast, extra_flags);
@@ -4562,20 +6302,32 @@ namespace ImGuiNET
         }
         public static bool SliderInt(string label, ref int v, int v_min, int v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igSliderInt(native_label, native_v, v_min, v_max, native_format);
@@ -4584,20 +6336,32 @@ namespace ImGuiNET
         }
         public static bool SliderInt(string label, ref int v, int v_min, int v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igSliderInt(native_label, native_v, v_min, v_max, native_format);
@@ -4621,23 +6385,35 @@ namespace ImGuiNET
         }
         public static bool DragInt3(string label, ref int v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_speed = 1.0f;
             int v_min = 0;
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt3(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -4646,22 +6422,34 @@ namespace ImGuiNET
         }
         public static bool DragInt3(string label, ref int v, float v_speed)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int v_min = 0;
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt3(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -4670,21 +6458,33 @@ namespace ImGuiNET
         }
         public static bool DragInt3(string label, ref int v, float v_speed, int v_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             int v_max = 0;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt3(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -4693,20 +6493,32 @@ namespace ImGuiNET
         }
         public static bool DragInt3(string label, ref int v, float v_speed, int v_min, int v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt3(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -4715,20 +6527,32 @@ namespace ImGuiNET
         }
         public static bool DragInt3(string label, ref int v, float v_speed, int v_min, int v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragInt3(native_label, native_v, v_speed, v_min, v_max, native_format);
@@ -4737,24 +6561,36 @@ namespace ImGuiNET
         }
         public static void OpenPopup(string str_id)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             ImGuiNative.igOpenPopup(native_str_id);
         }
         public static Vector2 CalcTextSize(string text)
         {
-            int text_byteCount = Encoding.UTF8.GetByteCount(text);
-            byte* native_text = stackalloc byte[text_byteCount + 1];
-            fixed (char* text_ptr = text)
+            byte* native_text;
+            if (text != null)
             {
-                int native_text_offset = Encoding.UTF8.GetBytes(text_ptr, text.Length, native_text, text_byteCount);
-                native_text[native_text_offset] = 0;
+                int text_byteCount = Encoding.UTF8.GetByteCount(text);
+                byte* native_text_stackBytes = stackalloc byte[text_byteCount + 1];
+                native_text = native_text_stackBytes;
+                fixed (char* text_ptr = text)
+                {
+                    int native_text_offset = Encoding.UTF8.GetBytes(text_ptr, text.Length, native_text, text_byteCount);
+                    native_text[native_text_offset] = 0;
+                }
             }
+            else { native_text = null; }
             byte* native_text_end = null;
             byte hide_text_after_double_hash = 0;
             float wrap_width = -1.0f;
@@ -4781,25 +6617,37 @@ namespace ImGuiNET
         }
         public static void Columns(int count, string id)
         {
-            int id_byteCount = Encoding.UTF8.GetByteCount(id);
-            byte* native_id = stackalloc byte[id_byteCount + 1];
-            fixed (char* id_ptr = id)
+            byte* native_id;
+            if (id != null)
             {
-                int native_id_offset = Encoding.UTF8.GetBytes(id_ptr, id.Length, native_id, id_byteCount);
-                native_id[native_id_offset] = 0;
+                int id_byteCount = Encoding.UTF8.GetByteCount(id);
+                byte* native_id_stackBytes = stackalloc byte[id_byteCount + 1];
+                native_id = native_id_stackBytes;
+                fixed (char* id_ptr = id)
+                {
+                    int native_id_offset = Encoding.UTF8.GetBytes(id_ptr, id.Length, native_id, id_byteCount);
+                    native_id[native_id_offset] = 0;
+                }
             }
+            else { native_id = null; }
             byte border = 1;
             ImGuiNative.igColumns(count, native_id, border);
         }
         public static void Columns(int count, string id, bool border)
         {
-            int id_byteCount = Encoding.UTF8.GetByteCount(id);
-            byte* native_id = stackalloc byte[id_byteCount + 1];
-            fixed (char* id_ptr = id)
+            byte* native_id;
+            if (id != null)
             {
-                int native_id_offset = Encoding.UTF8.GetBytes(id_ptr, id.Length, native_id, id_byteCount);
-                native_id[native_id_offset] = 0;
+                int id_byteCount = Encoding.UTF8.GetByteCount(id);
+                byte* native_id_stackBytes = stackalloc byte[id_byteCount + 1];
+                native_id = native_id_stackBytes;
+                fixed (char* id_ptr = id)
+                {
+                    int native_id_offset = Encoding.UTF8.GetBytes(id_ptr, id.Length, native_id, id_byteCount);
+                    native_id[native_id_offset] = 0;
+                }
             }
+            else { native_id = null; }
             byte native_border = border ? (byte)1 : (byte)0;
             ImGuiNative.igColumns(count, native_id, native_border);
         }
@@ -4815,13 +6663,19 @@ namespace ImGuiNET
         }
         public static bool ColorPicker3(string label, ref Vector3 col)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             ImGuiColorEditFlags flags = 0;
             fixed (Vector3* native_col = &col)
             {
@@ -4831,13 +6685,19 @@ namespace ImGuiNET
         }
         public static bool ColorPicker3(string label, ref Vector3 col, ImGuiColorEditFlags flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             fixed (Vector3* native_col = &col)
             {
                 byte ret = ImGuiNative.igColorPicker3(native_label, native_col, flags);
@@ -4862,13 +6722,19 @@ namespace ImGuiNET
         }
         public static void SaveIniSettingsToDisk(string ini_filename)
         {
-            int ini_filename_byteCount = Encoding.UTF8.GetByteCount(ini_filename);
-            byte* native_ini_filename = stackalloc byte[ini_filename_byteCount + 1];
-            fixed (char* ini_filename_ptr = ini_filename)
+            byte* native_ini_filename;
+            if (ini_filename != null)
             {
-                int native_ini_filename_offset = Encoding.UTF8.GetBytes(ini_filename_ptr, ini_filename.Length, native_ini_filename, ini_filename_byteCount);
-                native_ini_filename[native_ini_filename_offset] = 0;
+                int ini_filename_byteCount = Encoding.UTF8.GetByteCount(ini_filename);
+                byte* native_ini_filename_stackBytes = stackalloc byte[ini_filename_byteCount + 1];
+                native_ini_filename = native_ini_filename_stackBytes;
+                fixed (char* ini_filename_ptr = ini_filename)
+                {
+                    int native_ini_filename_offset = Encoding.UTF8.GetBytes(ini_filename_ptr, ini_filename.Length, native_ini_filename, ini_filename_byteCount);
+                    native_ini_filename[native_ini_filename_offset] = 0;
+                }
             }
+            else { native_ini_filename = null; }
             ImGuiNative.igSaveIniSettingsToDisk(native_ini_filename);
         }
         public static string GetClipboardText()
@@ -4933,13 +6799,19 @@ namespace ImGuiNET
         }
         public static void SetWindowFocus(string name)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            byte* native_name;
+            if (name != null)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                int name_byteCount = Encoding.UTF8.GetByteCount(name);
+                byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                native_name = native_name_stackBytes;
+                fixed (char* name_ptr = name)
+                {
+                    int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
+                    native_name[native_name_offset] = 0;
+                }
             }
+            else { native_name = null; }
             ImGuiNative.igSetWindowFocusStr(native_name);
         }
         public static void ColorConvertHSVtoRGB(float h, float s, float v, out float out_r, out float out_g, out float out_b)
@@ -4957,20 +6829,32 @@ namespace ImGuiNET
         }
         public static bool VSliderFloat(string label, Vector2 size, ref float v, float v_min, float v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (float* native_v = &v)
             {
@@ -4980,20 +6864,32 @@ namespace ImGuiNET
         }
         public static bool VSliderFloat(string label, Vector2 size, ref float v, float v_min, float v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (float* native_v = &v)
             {
@@ -5003,20 +6899,32 @@ namespace ImGuiNET
         }
         public static bool VSliderFloat(string label, Vector2 size, ref float v, float v_min, float v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (float* native_v = &v)
             {
                 byte ret = ImGuiNative.igVSliderFloat(native_label, size, native_v, v_min, v_max, native_format, power);
@@ -5121,38 +7029,56 @@ namespace ImGuiNET
         }
         public static bool CollapsingHeader(string label)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             ImGuiTreeNodeFlags flags = 0;
             byte ret = ImGuiNative.igCollapsingHeader(native_label, flags);
             return ret != 0;
         }
         public static bool CollapsingHeader(string label, ImGuiTreeNodeFlags flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte ret = ImGuiNative.igCollapsingHeader(native_label, flags);
             return ret != 0;
         }
         public static bool CollapsingHeader(string label, ref bool p_open)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte native_p_open_val = p_open ? (byte)1 : (byte)0;
             byte* native_p_open = &native_p_open_val;
             ImGuiTreeNodeFlags flags = 0;
@@ -5162,13 +7088,19 @@ namespace ImGuiNET
         }
         public static bool CollapsingHeader(string label, ref bool p_open, ImGuiTreeNodeFlags flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte native_p_open_val = p_open ? (byte)1 : (byte)0;
             byte* native_p_open = &native_p_open_val;
             byte ret = ImGuiNative.igCollapsingHeaderBoolPtr(native_label, native_p_open, flags);
@@ -5177,23 +7109,35 @@ namespace ImGuiNET
         }
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_speed = 1.0f;
             float v_min = 0.0f;
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte* native_format_max = null;
             float power = 1.0f;
             fixed (float* native_v_current_min = &v_current_min)
@@ -5207,22 +7151,34 @@ namespace ImGuiNET
         }
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max, float v_speed)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_min = 0.0f;
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte* native_format_max = null;
             float power = 1.0f;
             fixed (float* native_v_current_min = &v_current_min)
@@ -5236,21 +7192,33 @@ namespace ImGuiNET
         }
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte* native_format_max = null;
             float power = 1.0f;
             fixed (float* native_v_current_min = &v_current_min)
@@ -5264,20 +7232,32 @@ namespace ImGuiNET
         }
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min, float v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte* native_format_max = null;
             float power = 1.0f;
             fixed (float* native_v_current_min = &v_current_min)
@@ -5291,20 +7271,32 @@ namespace ImGuiNET
         }
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min, float v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte* native_format_max = null;
             float power = 1.0f;
             fixed (float* native_v_current_min = &v_current_min)
@@ -5318,27 +7310,45 @@ namespace ImGuiNET
         }
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min, float v_max, string format, string format_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
-            int format_max_byteCount = Encoding.UTF8.GetByteCount(format_max);
-            byte* native_format_max = stackalloc byte[format_max_byteCount + 1];
-            fixed (char* format_max_ptr = format_max)
+            else { native_format = null; }
+            byte* native_format_max;
+            if (format_max != null)
             {
-                int native_format_max_offset = Encoding.UTF8.GetBytes(format_max_ptr, format_max.Length, native_format_max, format_max_byteCount);
-                native_format_max[native_format_max_offset] = 0;
+                int format_max_byteCount = Encoding.UTF8.GetByteCount(format_max);
+                byte* native_format_max_stackBytes = stackalloc byte[format_max_byteCount + 1];
+                native_format_max = native_format_max_stackBytes;
+                fixed (char* format_max_ptr = format_max)
+                {
+                    int native_format_max_offset = Encoding.UTF8.GetBytes(format_max_ptr, format_max.Length, native_format_max, format_max_byteCount);
+                    native_format_max[native_format_max_offset] = 0;
+                }
             }
+            else { native_format_max = null; }
             float power = 1.0f;
             fixed (float* native_v_current_min = &v_current_min)
             {
@@ -5351,27 +7361,45 @@ namespace ImGuiNET
         }
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min, float v_max, string format, string format_max, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
-            int format_max_byteCount = Encoding.UTF8.GetByteCount(format_max);
-            byte* native_format_max = stackalloc byte[format_max_byteCount + 1];
-            fixed (char* format_max_ptr = format_max)
+            else { native_format = null; }
+            byte* native_format_max;
+            if (format_max != null)
             {
-                int native_format_max_offset = Encoding.UTF8.GetBytes(format_max_ptr, format_max.Length, native_format_max, format_max_byteCount);
-                native_format_max[native_format_max_offset] = 0;
+                int format_max_byteCount = Encoding.UTF8.GetByteCount(format_max);
+                byte* native_format_max_stackBytes = stackalloc byte[format_max_byteCount + 1];
+                native_format_max = native_format_max_stackBytes;
+                fixed (char* format_max_ptr = format_max)
+                {
+                    int native_format_max_offset = Encoding.UTF8.GetBytes(format_max_ptr, format_max.Length, native_format_max, format_max_byteCount);
+                    native_format_max[native_format_max_offset] = 0;
+                }
             }
+            else { native_format_max = null; }
             fixed (float* native_v_current_min = &v_current_min)
             {
                 fixed (float* native_v_current_max = &v_current_max)
@@ -5392,13 +7420,19 @@ namespace ImGuiNET
         }
         public static bool InputScalar(string label, ImGuiDataType data_type, IntPtr v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* step = null;
             void* step_fast = null;
@@ -5409,13 +7443,19 @@ namespace ImGuiNET
         }
         public static bool InputScalar(string label, ImGuiDataType data_type, IntPtr v, IntPtr step)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_step = (void*)step.ToPointer();
             void* step_fast = null;
@@ -5426,13 +7466,19 @@ namespace ImGuiNET
         }
         public static bool InputScalar(string label, ImGuiDataType data_type, IntPtr v, IntPtr step, IntPtr step_fast)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_step = (void*)step.ToPointer();
             void* native_step_fast = (void*)step_fast.ToPointer();
@@ -5443,46 +7489,70 @@ namespace ImGuiNET
         }
         public static bool InputScalar(string label, ImGuiDataType data_type, IntPtr v, IntPtr step, IntPtr step_fast, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_step = (void*)step.ToPointer();
             void* native_step_fast = (void*)step_fast.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             byte ret = ImGuiNative.igInputScalar(native_label, data_type, native_v, native_step, native_step_fast, native_format, extra_flags);
             return ret != 0;
         }
         public static bool InputScalar(string label, ImGuiDataType data_type, IntPtr v, IntPtr step, IntPtr step_fast, string format, ImGuiInputTextFlags extra_flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_step = (void*)step.ToPointer();
             void* native_step_fast = (void*)step_fast.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte ret = ImGuiNative.igInputScalar(native_label, data_type, native_v, native_step, native_step_fast, native_format, extra_flags);
             return ret != 0;
         }
@@ -5526,26 +7596,38 @@ namespace ImGuiNET
         }
         public static bool BeginPopupContextItem(string str_id)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             int mouse_button = 1;
             byte ret = ImGuiNative.igBeginPopupContextItem(native_str_id, mouse_button);
             return ret != 0;
         }
         public static bool BeginPopupContextItem(string str_id, int mouse_button)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             byte ret = ImGuiNative.igBeginPopupContextItem(native_str_id, mouse_button);
             return ret != 0;
         }
@@ -5560,13 +7642,19 @@ namespace ImGuiNET
         }
         public static bool ArrowButton(string str_id, ImGuiDir dir)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             byte ret = ImGuiNative.igArrowButton(native_str_id, dir);
             return ret != 0;
         }
@@ -5600,25 +7688,37 @@ namespace ImGuiNET
         }
         public static void SetWindowPos(string name, Vector2 pos)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            byte* native_name;
+            if (name != null)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                int name_byteCount = Encoding.UTF8.GetByteCount(name);
+                byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                native_name = native_name_stackBytes;
+                fixed (char* name_ptr = name)
+                {
+                    int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
+                    native_name[native_name_offset] = 0;
+                }
             }
+            else { native_name = null; }
             ImGuiCond cond = 0;
             ImGuiNative.igSetWindowPosStr(native_name, pos, cond);
         }
         public static void SetWindowPos(string name, Vector2 pos, ImGuiCond cond)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            byte* native_name;
+            if (name != null)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                int name_byteCount = Encoding.UTF8.GetByteCount(name);
+                byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                native_name = native_name_stackBytes;
+                fixed (char* name_ptr = name)
+                {
+                    int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
+                    native_name[native_name_offset] = 0;
+                }
             }
+            else { native_name = null; }
             ImGuiNative.igSetWindowPosStr(native_name, pos, cond);
         }
         public static void SetKeyboardFocusHere()
@@ -5670,13 +7770,19 @@ namespace ImGuiNET
         }
         public static bool SliderAngle(string label, ref float v_rad)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_degrees_min = -360.0f;
             float v_degrees_max = +360.0f;
             fixed (float* native_v_rad = &v_rad)
@@ -5687,13 +7793,19 @@ namespace ImGuiNET
         }
         public static bool SliderAngle(string label, ref float v_rad, float v_degrees_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_degrees_max = +360.0f;
             fixed (float* native_v_rad = &v_rad)
             {
@@ -5703,13 +7815,19 @@ namespace ImGuiNET
         }
         public static bool SliderAngle(string label, ref float v_rad, float v_degrees_min, float v_degrees_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             fixed (float* native_v_rad = &v_rad)
             {
                 byte ret = ImGuiNative.igSliderAngle(native_label, native_v_rad, v_degrees_min, v_degrees_max);
@@ -5718,58 +7836,88 @@ namespace ImGuiNET
         }
         public static bool TreeNodeEx(string label)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             ImGuiTreeNodeFlags flags = 0;
             byte ret = ImGuiNative.igTreeNodeExStr(native_label, flags);
             return ret != 0;
         }
         public static bool TreeNodeEx(string label, ImGuiTreeNodeFlags flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte ret = ImGuiNative.igTreeNodeExStr(native_label, flags);
             return ret != 0;
         }
         public static bool TreeNodeEx(string str_id, ImGuiTreeNodeFlags flags, string fmt)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
-            int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-            byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
-            fixed (char* fmt_ptr = fmt)
+            else { native_str_id = null; }
+            byte* native_fmt;
+            if (fmt != null)
             {
-                int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                native_fmt[native_fmt_offset] = 0;
+                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                native_fmt = native_fmt_stackBytes;
+                fixed (char* fmt_ptr = fmt)
+                {
+                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
+                    native_fmt[native_fmt_offset] = 0;
+                }
             }
+            else { native_fmt = null; }
             byte ret = ImGuiNative.igTreeNodeExStrStr(native_str_id, flags, native_fmt);
             return ret != 0;
         }
         public static bool TreeNodeEx(IntPtr ptr_id, ImGuiTreeNodeFlags flags, string fmt)
         {
             void* native_ptr_id = (void*)ptr_id.ToPointer();
-            int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-            byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
-            fixed (char* fmt_ptr = fmt)
+            byte* native_fmt;
+            if (fmt != null)
             {
-                int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                native_fmt[native_fmt_offset] = 0;
+                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                native_fmt = native_fmt_stackBytes;
+                fixed (char* fmt_ptr = fmt)
+                {
+                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
+                    native_fmt[native_fmt_offset] = 0;
+                }
             }
+            else { native_fmt = null; }
             byte ret = ImGuiNative.igTreeNodeExPtr(native_ptr_id, flags, native_fmt);
             return ret != 0;
         }
@@ -5789,20 +7937,32 @@ namespace ImGuiNET
         }
         public static bool SliderInt3(string label, ref int v, int v_min, int v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igSliderInt3(native_label, native_v, v_min, v_max, native_format);
@@ -5811,20 +7971,32 @@ namespace ImGuiNET
         }
         public static bool SliderInt3(string label, ref int v, int v_min, int v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igSliderInt3(native_label, native_v, v_min, v_max, native_format);
@@ -5837,13 +8009,19 @@ namespace ImGuiNET
         }
         public static bool SliderScalarN(string label, ImGuiDataType data_type, IntPtr v, int components, IntPtr v_min, IntPtr v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
@@ -5854,46 +8032,70 @@ namespace ImGuiNET
         }
         public static bool SliderScalarN(string label, ImGuiDataType data_type, IntPtr v, int components, IntPtr v_min, IntPtr v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             byte ret = ImGuiNative.igSliderScalarN(native_label, data_type, native_v, components, native_v_min, native_v_max, native_format, power);
             return ret != 0;
         }
         public static bool SliderScalarN(string label, ImGuiDataType data_type, IntPtr v, int components, IntPtr v_min, IntPtr v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte ret = ImGuiNative.igSliderScalarN(native_label, data_type, native_v, components, native_v_min, native_v_max, native_format, power);
             return ret != 0;
         }
@@ -5949,20 +8151,32 @@ namespace ImGuiNET
         }
         public static bool VSliderInt(string label, Vector2 size, ref int v, int v_min, int v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%d");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%d")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%d" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%d");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%d")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%d".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igVSliderInt(native_label, size, native_v, v_min, v_max, native_format);
@@ -5971,20 +8185,32 @@ namespace ImGuiNET
         }
         public static bool VSliderInt(string label, Vector2 size, ref int v, int v_min, int v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igVSliderInt(native_label, size, native_v, v_min, v_max, native_format);
@@ -5993,24 +8219,36 @@ namespace ImGuiNET
         }
         public static void BulletText(string fmt)
         {
-            int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-            byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
-            fixed (char* fmt_ptr = fmt)
+            byte* native_fmt;
+            if (fmt != null)
             {
-                int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                native_fmt[native_fmt_offset] = 0;
+                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                native_fmt = native_fmt_stackBytes;
+                fixed (char* fmt_ptr = fmt)
+                {
+                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
+                    native_fmt[native_fmt_offset] = 0;
+                }
             }
+            else { native_fmt = null; }
             ImGuiNative.igBulletText(native_fmt);
         }
         public static bool ColorEdit4(string label, ref Vector4 col)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             ImGuiColorEditFlags flags = 0;
             fixed (Vector4* native_col = &col)
             {
@@ -6020,13 +8258,19 @@ namespace ImGuiNET
         }
         public static bool ColorEdit4(string label, ref Vector4 col, ImGuiColorEditFlags flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             fixed (Vector4* native_col = &col)
             {
                 byte ret = ImGuiNative.igColorEdit4(native_label, native_col, flags);
@@ -6035,13 +8279,19 @@ namespace ImGuiNET
         }
         public static bool ColorPicker4(string label, ref Vector4 col)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             ImGuiColorEditFlags flags = 0;
             float* ref_col = null;
             fixed (Vector4* native_col = &col)
@@ -6052,13 +8302,19 @@ namespace ImGuiNET
         }
         public static bool ColorPicker4(string label, ref Vector4 col, ImGuiColorEditFlags flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float* ref_col = null;
             fixed (Vector4* native_col = &col)
             {
@@ -6068,13 +8324,19 @@ namespace ImGuiNET
         }
         public static bool ColorPicker4(string label, ref Vector4 col, ImGuiColorEditFlags flags, ref float ref_col)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             fixed (Vector4* native_col = &col)
             {
                 fixed (float* native_ref_col = &ref_col)
@@ -6086,13 +8348,19 @@ namespace ImGuiNET
         }
         public static bool InvisibleButton(string str_id, Vector2 size)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             byte ret = ImGuiNative.igInvisibleButton(native_str_id, size);
             return ret != 0;
         }
@@ -6115,13 +8383,19 @@ namespace ImGuiNET
         }
         public static bool BeginPopupContextWindow(string str_id)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             int mouse_button = 1;
             byte also_over_items = 1;
             byte ret = ImGuiNative.igBeginPopupContextWindow(native_str_id, mouse_button, also_over_items);
@@ -6129,39 +8403,57 @@ namespace ImGuiNET
         }
         public static bool BeginPopupContextWindow(string str_id, int mouse_button)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             byte also_over_items = 1;
             byte ret = ImGuiNative.igBeginPopupContextWindow(native_str_id, mouse_button, also_over_items);
             return ret != 0;
         }
         public static bool BeginPopupContextWindow(string str_id, int mouse_button, bool also_over_items)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
+            else { native_str_id = null; }
             byte native_also_over_items = also_over_items ? (byte)1 : (byte)0;
             byte ret = ImGuiNative.igBeginPopupContextWindow(native_str_id, mouse_button, native_also_over_items);
             return ret != 0;
         }
         public static bool DragScalar(string label, ImGuiDataType data_type, IntPtr v, float v_speed)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* v_min = null;
             void* v_max = null;
@@ -6172,13 +8464,19 @@ namespace ImGuiNET
         }
         public static bool DragScalar(string label, ImGuiDataType data_type, IntPtr v, float v_speed, IntPtr v_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* v_max = null;
@@ -6189,13 +8487,19 @@ namespace ImGuiNET
         }
         public static bool DragScalar(string label, ImGuiDataType data_type, IntPtr v, float v_speed, IntPtr v_min, IntPtr v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
@@ -6206,46 +8510,70 @@ namespace ImGuiNET
         }
         public static bool DragScalar(string label, ImGuiDataType data_type, IntPtr v, float v_speed, IntPtr v_min, IntPtr v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             byte ret = ImGuiNative.igDragScalar(native_label, data_type, native_v, v_speed, native_v_min, native_v_max, native_format, power);
             return ret != 0;
         }
         public static bool DragScalar(string label, ImGuiDataType data_type, IntPtr v, float v_speed, IntPtr v_min, IntPtr v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_v_min = (void*)v_min.ToPointer();
             void* native_v_max = (void*)v_max.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte ret = ImGuiNative.igDragScalar(native_label, data_type, native_v, v_speed, native_v_min, native_v_max, native_format, power);
             return ret != 0;
         }
@@ -6275,13 +8603,19 @@ namespace ImGuiNET
         }
         public static bool InputInt2(string label, ref int v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (int* native_v = &v)
             {
@@ -6291,13 +8625,19 @@ namespace ImGuiNET
         }
         public static bool InputInt2(string label, ref int v, ImGuiInputTextFlags extra_flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             fixed (int* native_v = &v)
             {
                 byte ret = ImGuiNative.igInputInt2(native_label, native_v, extra_flags);
@@ -6332,25 +8672,37 @@ namespace ImGuiNET
         }
         public static bool ShowStyleSelector(string label)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte ret = ImGuiNative.igShowStyleSelector(native_label);
             return ret != 0;
         }
         public static bool InputScalarN(string label, ImGuiDataType data_type, IntPtr v, int components)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* step = null;
             void* step_fast = null;
@@ -6361,13 +8713,19 @@ namespace ImGuiNET
         }
         public static bool InputScalarN(string label, ImGuiDataType data_type, IntPtr v, int components, IntPtr step)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_step = (void*)step.ToPointer();
             void* step_fast = null;
@@ -6378,13 +8736,19 @@ namespace ImGuiNET
         }
         public static bool InputScalarN(string label, ImGuiDataType data_type, IntPtr v, int components, IntPtr step, IntPtr step_fast)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_step = (void*)step.ToPointer();
             void* native_step_fast = (void*)step_fast.ToPointer();
@@ -6395,90 +8759,138 @@ namespace ImGuiNET
         }
         public static bool InputScalarN(string label, ImGuiDataType data_type, IntPtr v, int components, IntPtr step, IntPtr step_fast, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_step = (void*)step.ToPointer();
             void* native_step_fast = (void*)step_fast.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             byte ret = ImGuiNative.igInputScalarN(native_label, data_type, native_v, components, native_step, native_step_fast, native_format, extra_flags);
             return ret != 0;
         }
         public static bool InputScalarN(string label, ImGuiDataType data_type, IntPtr v, int components, IntPtr step, IntPtr step_fast, string format, ImGuiInputTextFlags extra_flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             void* native_v = (void*)v.ToPointer();
             void* native_step = (void*)step.ToPointer();
             void* native_step_fast = (void*)step_fast.ToPointer();
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             byte ret = ImGuiNative.igInputScalarN(native_label, data_type, native_v, components, native_step, native_step_fast, native_format, extra_flags);
             return ret != 0;
         }
         public static bool TreeNode(string label)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             byte ret = ImGuiNative.igTreeNodeStr(native_label);
             return ret != 0;
         }
         public static bool TreeNode(string str_id, string fmt)
         {
-            int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
-            byte* native_str_id = stackalloc byte[str_id_byteCount + 1];
-            fixed (char* str_id_ptr = str_id)
+            byte* native_str_id;
+            if (str_id != null)
             {
-                int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
-                native_str_id[native_str_id_offset] = 0;
+                int str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
+                byte* native_str_id_stackBytes = stackalloc byte[str_id_byteCount + 1];
+                native_str_id = native_str_id_stackBytes;
+                fixed (char* str_id_ptr = str_id)
+                {
+                    int native_str_id_offset = Encoding.UTF8.GetBytes(str_id_ptr, str_id.Length, native_str_id, str_id_byteCount);
+                    native_str_id[native_str_id_offset] = 0;
+                }
             }
-            int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-            byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
-            fixed (char* fmt_ptr = fmt)
+            else { native_str_id = null; }
+            byte* native_fmt;
+            if (fmt != null)
             {
-                int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                native_fmt[native_fmt_offset] = 0;
+                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                native_fmt = native_fmt_stackBytes;
+                fixed (char* fmt_ptr = fmt)
+                {
+                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
+                    native_fmt[native_fmt_offset] = 0;
+                }
             }
+            else { native_fmt = null; }
             byte ret = ImGuiNative.igTreeNodeStrStr(native_str_id, native_fmt);
             return ret != 0;
         }
         public static bool TreeNode(IntPtr ptr_id, string fmt)
         {
             void* native_ptr_id = (void*)ptr_id.ToPointer();
-            int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-            byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
-            fixed (char* fmt_ptr = fmt)
+            byte* native_fmt;
+            if (fmt != null)
             {
-                int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                native_fmt[native_fmt_offset] = 0;
+                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                native_fmt = native_fmt_stackBytes;
+                fixed (char* fmt_ptr = fmt)
+                {
+                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
+                    native_fmt[native_fmt_offset] = 0;
+                }
             }
+            else { native_fmt = null; }
             byte ret = ImGuiNative.igTreeNodePtr(native_ptr_id, native_fmt);
             return ret != 0;
         }
@@ -6489,13 +8901,19 @@ namespace ImGuiNET
         }
         public static void SetTooltip(string fmt)
         {
-            int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-            byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
-            fixed (char* fmt_ptr = fmt)
+            byte* native_fmt;
+            if (fmt != null)
             {
-                int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                native_fmt[native_fmt_offset] = 0;
+                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                native_fmt = native_fmt_stackBytes;
+                fixed (char* fmt_ptr = fmt)
+                {
+                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
+                    native_fmt[native_fmt_offset] = 0;
+                }
             }
+            else { native_fmt = null; }
             ImGuiNative.igSetTooltip(native_fmt);
         }
         public static Vector2 GetContentRegionAvail()
@@ -6505,20 +8923,32 @@ namespace ImGuiNET
         }
         public static bool InputFloat3(string label, ref Vector3 v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (Vector3* native_v = &v)
             {
@@ -6528,20 +8958,32 @@ namespace ImGuiNET
         }
         public static bool InputFloat3(string label, ref Vector3 v, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             ImGuiInputTextFlags extra_flags = 0;
             fixed (Vector3* native_v = &v)
             {
@@ -6551,20 +8993,32 @@ namespace ImGuiNET
         }
         public static bool InputFloat3(string label, ref Vector3 v, string format, ImGuiInputTextFlags extra_flags)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (Vector3* native_v = &v)
             {
                 byte ret = ImGuiNative.igInputFloat3(native_label, native_v, native_format, extra_flags);
@@ -6573,23 +9027,35 @@ namespace ImGuiNET
         }
         public static bool DragFloat2(string label, ref Vector2 v)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_speed = 1.0f;
             float v_min = 0.0f;
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector2* native_v = &v)
             {
@@ -6599,22 +9065,34 @@ namespace ImGuiNET
         }
         public static bool DragFloat2(string label, ref Vector2 v, float v_speed)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_min = 0.0f;
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector2* native_v = &v)
             {
@@ -6624,21 +9102,33 @@ namespace ImGuiNET
         }
         public static bool DragFloat2(string label, ref Vector2 v, float v_speed, float v_min)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
+            else { native_label = null; }
             float v_max = 0.0f;
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector2* native_v = &v)
             {
@@ -6648,20 +9138,32 @@ namespace ImGuiNET
         }
         public static bool DragFloat2(string label, ref Vector2 v, float v_speed, float v_min, float v_max)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = "%.3f")
+            else { native_label = null; }
+            byte* native_format;
+            if ("%.3f" != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.3f");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.3f")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.3f".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector2* native_v = &v)
             {
@@ -6671,20 +9173,32 @@ namespace ImGuiNET
         }
         public static bool DragFloat2(string label, ref Vector2 v, float v_speed, float v_min, float v_max, string format)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             float power = 1.0f;
             fixed (Vector2* native_v = &v)
             {
@@ -6694,20 +9208,32 @@ namespace ImGuiNET
         }
         public static bool DragFloat2(string label, ref Vector2 v, float v_speed, float v_min, float v_max, string format, float power)
         {
-            int label_byteCount = Encoding.UTF8.GetByteCount(label);
-            byte* native_label = stackalloc byte[label_byteCount + 1];
-            fixed (char* label_ptr = label)
+            byte* native_label;
+            if (label != null)
             {
-                int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
-                native_label[native_label_offset] = 0;
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
             }
-            int format_byteCount = Encoding.UTF8.GetByteCount(format);
-            byte* native_format = stackalloc byte[format_byteCount + 1];
-            fixed (char* format_ptr = format)
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
             {
-                int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
-                native_format[native_format_offset] = 0;
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             }
+            else { native_format = null; }
             fixed (Vector2* native_v = &v)
             {
                 byte ret = ImGuiNative.igDragFloat2(native_label, native_v, v_speed, v_min, v_max, native_format, power);

@@ -51,13 +51,19 @@ namespace ImGuiNET
         }
         public void InsertChars(int pos, string text)
         {
-            int text_byteCount = Encoding.UTF8.GetByteCount(text);
-            byte* native_text = stackalloc byte[text_byteCount + 1];
-            fixed (char* text_ptr = text)
+            byte* native_text;
+            if (text != null)
             {
-                int native_text_offset = Encoding.UTF8.GetBytes(text_ptr, text.Length, native_text, text_byteCount);
-                native_text[native_text_offset] = 0;
+                int text_byteCount = Encoding.UTF8.GetByteCount(text);
+                byte* native_text_stackBytes = stackalloc byte[text_byteCount + 1];
+                native_text = native_text_stackBytes;
+                fixed (char* text_ptr = text)
+                {
+                    int native_text_offset = Encoding.UTF8.GetBytes(text_ptr, text.Length, native_text, text_byteCount);
+                    native_text[native_text_offset] = 0;
+                }
             }
+            else { native_text = null; }
             byte* native_text_end = null;
             ImGuiNative.ImGuiInputTextCallbackData_InsertChars(NativePtr, pos, native_text, native_text_end);
         }

@@ -48,13 +48,19 @@ namespace ImGuiNET
         public RangeAccessor<int> CustomRectIds => new RangeAccessor<int>(NativePtr->CustomRectIds, 1);
         public ImFontPtr AddFontFromMemoryCompressedBase85TTF(string compressed_font_data_base85, float size_pixels)
         {
-            int compressed_font_data_base85_byteCount = Encoding.UTF8.GetByteCount(compressed_font_data_base85);
-            byte* native_compressed_font_data_base85 = stackalloc byte[compressed_font_data_base85_byteCount + 1];
-            fixed (char* compressed_font_data_base85_ptr = compressed_font_data_base85)
+            byte* native_compressed_font_data_base85;
+            if (compressed_font_data_base85 != null)
             {
-                int native_compressed_font_data_base85_offset = Encoding.UTF8.GetBytes(compressed_font_data_base85_ptr, compressed_font_data_base85.Length, native_compressed_font_data_base85, compressed_font_data_base85_byteCount);
-                native_compressed_font_data_base85[native_compressed_font_data_base85_offset] = 0;
+                int compressed_font_data_base85_byteCount = Encoding.UTF8.GetByteCount(compressed_font_data_base85);
+                byte* native_compressed_font_data_base85_stackBytes = stackalloc byte[compressed_font_data_base85_byteCount + 1];
+                native_compressed_font_data_base85 = native_compressed_font_data_base85_stackBytes;
+                fixed (char* compressed_font_data_base85_ptr = compressed_font_data_base85)
+                {
+                    int native_compressed_font_data_base85_offset = Encoding.UTF8.GetBytes(compressed_font_data_base85_ptr, compressed_font_data_base85.Length, native_compressed_font_data_base85, compressed_font_data_base85_byteCount);
+                    native_compressed_font_data_base85[native_compressed_font_data_base85_offset] = 0;
+                }
             }
+            else { native_compressed_font_data_base85 = null; }
             ImFontConfig* font_cfg = null;
             ushort* glyph_ranges = null;
             ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(NativePtr, native_compressed_font_data_base85, size_pixels, font_cfg, glyph_ranges);
@@ -62,13 +68,19 @@ namespace ImGuiNET
         }
         public ImFontPtr AddFontFromMemoryCompressedBase85TTF(string compressed_font_data_base85, float size_pixels, ImFontConfigPtr font_cfg)
         {
-            int compressed_font_data_base85_byteCount = Encoding.UTF8.GetByteCount(compressed_font_data_base85);
-            byte* native_compressed_font_data_base85 = stackalloc byte[compressed_font_data_base85_byteCount + 1];
-            fixed (char* compressed_font_data_base85_ptr = compressed_font_data_base85)
+            byte* native_compressed_font_data_base85;
+            if (compressed_font_data_base85 != null)
             {
-                int native_compressed_font_data_base85_offset = Encoding.UTF8.GetBytes(compressed_font_data_base85_ptr, compressed_font_data_base85.Length, native_compressed_font_data_base85, compressed_font_data_base85_byteCount);
-                native_compressed_font_data_base85[native_compressed_font_data_base85_offset] = 0;
+                int compressed_font_data_base85_byteCount = Encoding.UTF8.GetByteCount(compressed_font_data_base85);
+                byte* native_compressed_font_data_base85_stackBytes = stackalloc byte[compressed_font_data_base85_byteCount + 1];
+                native_compressed_font_data_base85 = native_compressed_font_data_base85_stackBytes;
+                fixed (char* compressed_font_data_base85_ptr = compressed_font_data_base85)
+                {
+                    int native_compressed_font_data_base85_offset = Encoding.UTF8.GetBytes(compressed_font_data_base85_ptr, compressed_font_data_base85.Length, native_compressed_font_data_base85, compressed_font_data_base85_byteCount);
+                    native_compressed_font_data_base85[native_compressed_font_data_base85_offset] = 0;
+                }
             }
+            else { native_compressed_font_data_base85 = null; }
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* glyph_ranges = null;
             ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(NativePtr, native_compressed_font_data_base85, size_pixels, native_font_cfg, glyph_ranges);
@@ -76,13 +88,19 @@ namespace ImGuiNET
         }
         public ImFontPtr AddFontFromMemoryCompressedBase85TTF(string compressed_font_data_base85, float size_pixels, ImFontConfigPtr font_cfg, IntPtr glyph_ranges)
         {
-            int compressed_font_data_base85_byteCount = Encoding.UTF8.GetByteCount(compressed_font_data_base85);
-            byte* native_compressed_font_data_base85 = stackalloc byte[compressed_font_data_base85_byteCount + 1];
-            fixed (char* compressed_font_data_base85_ptr = compressed_font_data_base85)
+            byte* native_compressed_font_data_base85;
+            if (compressed_font_data_base85 != null)
             {
-                int native_compressed_font_data_base85_offset = Encoding.UTF8.GetBytes(compressed_font_data_base85_ptr, compressed_font_data_base85.Length, native_compressed_font_data_base85, compressed_font_data_base85_byteCount);
-                native_compressed_font_data_base85[native_compressed_font_data_base85_offset] = 0;
+                int compressed_font_data_base85_byteCount = Encoding.UTF8.GetByteCount(compressed_font_data_base85);
+                byte* native_compressed_font_data_base85_stackBytes = stackalloc byte[compressed_font_data_base85_byteCount + 1];
+                native_compressed_font_data_base85 = native_compressed_font_data_base85_stackBytes;
+                fixed (char* compressed_font_data_base85_ptr = compressed_font_data_base85)
+                {
+                    int native_compressed_font_data_base85_offset = Encoding.UTF8.GetBytes(compressed_font_data_base85_ptr, compressed_font_data_base85.Length, native_compressed_font_data_base85, compressed_font_data_base85_byteCount);
+                    native_compressed_font_data_base85[native_compressed_font_data_base85_offset] = 0;
+                }
             }
+            else { native_compressed_font_data_base85 = null; }
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* native_glyph_ranges = (ushort*)glyph_ranges.ToPointer();
             ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(NativePtr, native_compressed_font_data_base85, size_pixels, native_font_cfg, native_glyph_ranges);
@@ -218,13 +236,19 @@ namespace ImGuiNET
         }
         public ImFontPtr AddFontFromFileTTF(string filename, float size_pixels)
         {
-            int filename_byteCount = Encoding.UTF8.GetByteCount(filename);
-            byte* native_filename = stackalloc byte[filename_byteCount + 1];
-            fixed (char* filename_ptr = filename)
+            byte* native_filename;
+            if (filename != null)
             {
-                int native_filename_offset = Encoding.UTF8.GetBytes(filename_ptr, filename.Length, native_filename, filename_byteCount);
-                native_filename[native_filename_offset] = 0;
+                int filename_byteCount = Encoding.UTF8.GetByteCount(filename);
+                byte* native_filename_stackBytes = stackalloc byte[filename_byteCount + 1];
+                native_filename = native_filename_stackBytes;
+                fixed (char* filename_ptr = filename)
+                {
+                    int native_filename_offset = Encoding.UTF8.GetBytes(filename_ptr, filename.Length, native_filename, filename_byteCount);
+                    native_filename[native_filename_offset] = 0;
+                }
             }
+            else { native_filename = null; }
             ImFontConfig* font_cfg = null;
             ushort* glyph_ranges = null;
             ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromFileTTF(NativePtr, native_filename, size_pixels, font_cfg, glyph_ranges);
@@ -232,13 +256,19 @@ namespace ImGuiNET
         }
         public ImFontPtr AddFontFromFileTTF(string filename, float size_pixels, ImFontConfigPtr font_cfg)
         {
-            int filename_byteCount = Encoding.UTF8.GetByteCount(filename);
-            byte* native_filename = stackalloc byte[filename_byteCount + 1];
-            fixed (char* filename_ptr = filename)
+            byte* native_filename;
+            if (filename != null)
             {
-                int native_filename_offset = Encoding.UTF8.GetBytes(filename_ptr, filename.Length, native_filename, filename_byteCount);
-                native_filename[native_filename_offset] = 0;
+                int filename_byteCount = Encoding.UTF8.GetByteCount(filename);
+                byte* native_filename_stackBytes = stackalloc byte[filename_byteCount + 1];
+                native_filename = native_filename_stackBytes;
+                fixed (char* filename_ptr = filename)
+                {
+                    int native_filename_offset = Encoding.UTF8.GetBytes(filename_ptr, filename.Length, native_filename, filename_byteCount);
+                    native_filename[native_filename_offset] = 0;
+                }
             }
+            else { native_filename = null; }
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* glyph_ranges = null;
             ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromFileTTF(NativePtr, native_filename, size_pixels, native_font_cfg, glyph_ranges);
@@ -246,13 +276,19 @@ namespace ImGuiNET
         }
         public ImFontPtr AddFontFromFileTTF(string filename, float size_pixels, ImFontConfigPtr font_cfg, IntPtr glyph_ranges)
         {
-            int filename_byteCount = Encoding.UTF8.GetByteCount(filename);
-            byte* native_filename = stackalloc byte[filename_byteCount + 1];
-            fixed (char* filename_ptr = filename)
+            byte* native_filename;
+            if (filename != null)
             {
-                int native_filename_offset = Encoding.UTF8.GetBytes(filename_ptr, filename.Length, native_filename, filename_byteCount);
-                native_filename[native_filename_offset] = 0;
+                int filename_byteCount = Encoding.UTF8.GetByteCount(filename);
+                byte* native_filename_stackBytes = stackalloc byte[filename_byteCount + 1];
+                native_filename = native_filename_stackBytes;
+                fixed (char* filename_ptr = filename)
+                {
+                    int native_filename_offset = Encoding.UTF8.GetBytes(filename_ptr, filename.Length, native_filename, filename_byteCount);
+                    native_filename[native_filename_offset] = 0;
+                }
             }
+            else { native_filename = null; }
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* native_glyph_ranges = (ushort*)glyph_ranges.ToPointer();
             ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromFileTTF(NativePtr, native_filename, size_pixels, native_font_cfg, native_glyph_ranges);

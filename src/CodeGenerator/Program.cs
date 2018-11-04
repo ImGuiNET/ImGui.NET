@@ -623,13 +623,19 @@ namespace CodeGenerator
                     }
                     else
                     {
-                        preCallLines.Add($"int {correctedIdentifier}_byteCount = Encoding.UTF8.GetByteCount({textToEncode});");
-                        preCallLines.Add($"byte* {nativeArgName} = stackalloc byte[{correctedIdentifier}_byteCount + 1];");
-                        preCallLines.Add($"fixed (char* {correctedIdentifier}_ptr = {textToEncode})");
+                        preCallLines.Add($"byte* {nativeArgName};");
+                        preCallLines.Add($"if ({textToEncode} != null)");
                         preCallLines.Add("{");
-                        preCallLines.Add($"    int {nativeArgName}_offset = Encoding.UTF8.GetBytes({correctedIdentifier}_ptr, {textToEncode}.Length, {nativeArgName}, {correctedIdentifier}_byteCount);");
-                        preCallLines.Add($"    {nativeArgName}[{nativeArgName}_offset] = 0;");
+                        preCallLines.Add($"    int {correctedIdentifier}_byteCount = Encoding.UTF8.GetByteCount({textToEncode});");
+                        preCallLines.Add($"    byte* {nativeArgName}_stackBytes = stackalloc byte[{correctedIdentifier}_byteCount + 1];");
+                        preCallLines.Add($"    {nativeArgName} = {nativeArgName}_stackBytes;");
+                        preCallLines.Add($"    fixed (char* {correctedIdentifier}_ptr = {textToEncode})");
+                        preCallLines.Add("    {");
+                        preCallLines.Add($"        int {nativeArgName}_offset = Encoding.UTF8.GetBytes({correctedIdentifier}_ptr, {textToEncode}.Length, {nativeArgName}, {correctedIdentifier}_byteCount);");
+                        preCallLines.Add($"        {nativeArgName}[{nativeArgName}_offset] = 0;");
+                        preCallLines.Add("    }");
                         preCallLines.Add("}");
+                        preCallLines.Add($"else {{ {nativeArgName} = null; }}");
                     }
                 }
                 else if (tr.Type == "char* []")

@@ -43,13 +43,19 @@ namespace ImGuiNET
         }
         public bool IsDataType(string type)
         {
-            int type_byteCount = Encoding.UTF8.GetByteCount(type);
-            byte* native_type = stackalloc byte[type_byteCount + 1];
-            fixed (char* type_ptr = type)
+            byte* native_type;
+            if (type != null)
             {
-                int native_type_offset = Encoding.UTF8.GetBytes(type_ptr, type.Length, native_type, type_byteCount);
-                native_type[native_type_offset] = 0;
+                int type_byteCount = Encoding.UTF8.GetByteCount(type);
+                byte* native_type_stackBytes = stackalloc byte[type_byteCount + 1];
+                native_type = native_type_stackBytes;
+                fixed (char* type_ptr = type)
+                {
+                    int native_type_offset = Encoding.UTF8.GetBytes(type_ptr, type.Length, native_type, type_byteCount);
+                    native_type[native_type_offset] = 0;
+                }
             }
+            else { native_type = null; }
             byte ret = ImGuiNative.ImGuiPayload_IsDataType(NativePtr, native_type);
             return ret != 0;
         }

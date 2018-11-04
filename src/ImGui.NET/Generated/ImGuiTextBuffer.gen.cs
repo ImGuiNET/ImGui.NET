@@ -24,13 +24,19 @@ namespace ImGuiNET
         }
         public void appendf(string fmt)
         {
-            int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-            byte* native_fmt = stackalloc byte[fmt_byteCount + 1];
-            fixed (char* fmt_ptr = fmt)
+            byte* native_fmt;
+            if (fmt != null)
             {
-                int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                native_fmt[native_fmt_offset] = 0;
+                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                native_fmt = native_fmt_stackBytes;
+                fixed (char* fmt_ptr = fmt)
+                {
+                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
+                    native_fmt[native_fmt_offset] = 0;
+                }
             }
+            else { native_fmt = null; }
             ImGuiNative.ImGuiTextBuffer_appendf(NativePtr, native_fmt);
         }
         public string c_str()
