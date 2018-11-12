@@ -44,11 +44,6 @@ namespace CodeGenerator
             { "float&", "float*" },
             { "ImVec2[2]", "Vector2*" },
             { "char* []", "byte**" },
-
-            // TODO: These shouldn't exist
-            { "ImVector_ImWchar", "ImVector" },
-            { "ImVector_TextRange", "ImVector" },
-            { "ImVector_TextRange&", "ImVector*" },
         };
 
         private static readonly Dictionary<string, string> s_wellKnownFieldReplacements = new Dictionary<string, string>()
@@ -170,7 +165,8 @@ namespace CodeGenerator
                 {
                     string ov_cimguiname = val["ov_cimguiname"]?.ToString();
                     string cimguiname = val["cimguiname"].ToString();
-                    string friendlyName = val["funcname"].ToString();
+                    string friendlyName = val["funcname"]?.ToString();
+                    if (friendlyName == null) { return null; }
 
                     string exportedName = ov_cimguiname;
                     if (exportedName == null)
@@ -191,10 +187,6 @@ namespace CodeGenerator
                     }
 
                     List<TypeReference> parameters = new List<TypeReference>();
-                    if (selfTypeName != null)
-                    {
-                        parameters.Add(new TypeReference("self", selfTypeName + "*", enums));
-                    }
 
                     foreach (JToken p in val["argsT"])
                     {
@@ -624,8 +616,11 @@ namespace CodeGenerator
                     else
                     {
                         preCallLines.Add($"byte* {nativeArgName};");
-                        preCallLines.Add($"if ({textToEncode} != null)");
-                        preCallLines.Add("{");
+                        if (!hasDefault)
+                        {
+                            preCallLines.Add($"if ({textToEncode} != null)");
+                            preCallLines.Add("{");
+                        }
                         preCallLines.Add($"    int {correctedIdentifier}_byteCount = Encoding.UTF8.GetByteCount({textToEncode});");
                         preCallLines.Add($"    byte* {nativeArgName}_stackBytes = stackalloc byte[{correctedIdentifier}_byteCount + 1];");
                         preCallLines.Add($"    {nativeArgName} = {nativeArgName}_stackBytes;");
@@ -634,8 +629,11 @@ namespace CodeGenerator
                         preCallLines.Add($"        int {nativeArgName}_offset = Encoding.UTF8.GetBytes({correctedIdentifier}_ptr, {textToEncode}.Length, {nativeArgName}, {correctedIdentifier}_byteCount);");
                         preCallLines.Add($"        {nativeArgName}[{nativeArgName}_offset] = 0;");
                         preCallLines.Add("    }");
-                        preCallLines.Add("}");
-                        preCallLines.Add($"else {{ {nativeArgName} = null; }}");
+                        if (!hasDefault)
+                        {
+                            preCallLines.Add("}");
+                            preCallLines.Add($"else {{ {nativeArgName} = null; }}");
+                        }
                     }
                 }
                 else if (tr.Type == "char* []")
@@ -727,7 +725,7 @@ namespace CodeGenerator
                         nonPtrType = GetTypeString(tr.Type.Substring(0, tr.Type.Length - 1), false);
                     }
                     string nativeArgName = "native_" + tr.Name;
-                    bool isOutParam = tr.Name.Contains("out_");
+                    bool isOutParam = tr.Name.Contains("out_") || tr.Name == "out";
                     string direction = isOutParam ? "out" : "ref";
                     marshalledParameters[i] = new MarshalledParameter($"{direction} {nonPtrType}", true, nativeArgName, false);
                     marshalledParameters[i].PinTarget = CorrectIdentifier(tr.Name);
@@ -853,7 +851,7 @@ namespace CodeGenerator
 
         private static bool GetWrappedType(string nativeType, out string wrappedType)
         {
-            if (nativeType.StartsWith("Im") && nativeType.EndsWith("*"))
+            if (nativeType.StartsWith("Im") && nativeType.EndsWith("*") && !nativeType.StartsWith("ImVector"))
             {
                 int pointerLevel = nativeType.Length - nativeType.IndexOf('*');
                 if (pointerLevel > 1)
@@ -1031,6 +1029,20 @@ namespace CodeGenerator
         {
             Name = name;
             Type = type.Replace("const", string.Empty).Trim();
+
+
+            if (Type.StartsWith("ImVector_"))
+            {
+                if (Type.EndsWith("*"))
+                {
+                    Type = "ImVector*";
+                }
+                else
+                {
+                    Type = "ImVector";
+                }
+            }
+
             TemplateType = templateType;
             int startBracket = name.IndexOf('[');
             if (startBracket != -1)

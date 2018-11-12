@@ -18,6 +18,18 @@ namespace ImGuiNET
         public static implicit operator ImGuiStorage* (ImGuiStoragePtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiStoragePtr(IntPtr nativePtr) => new ImGuiStoragePtr(nativePtr);
         public ImVector<Pair> Data => new ImVector<Pair>(NativePtr->Data);
+        public void** GetVoidPtrRef(uint key)
+        {
+            void* default_val = null;
+            void** ret = ImGuiNative.ImGuiStorage_GetVoidPtrRef(NativePtr, key, default_val);
+            return ret;
+        }
+        public void** GetVoidPtrRef(uint key, IntPtr default_val)
+        {
+            void* native_default_val = (void*)default_val.ToPointer();
+            void** ret = ImGuiNative.ImGuiStorage_GetVoidPtrRef(NativePtr, key, native_default_val);
+            return ret;
+        }
         public void SetFloat(uint key, float val)
         {
             ImGuiNative.ImGuiStorage_SetFloat(NativePtr, key, val);
@@ -41,18 +53,6 @@ namespace ImGuiNET
         public void SetAllInt(int val)
         {
             ImGuiNative.ImGuiStorage_SetAllInt(NativePtr, val);
-        }
-        public void** GetVoidPtrRef(uint key)
-        {
-            void* default_val = null;
-            void** ret = ImGuiNative.ImGuiStorage_GetVoidPtrRef(NativePtr, key, default_val);
-            return ret;
-        }
-        public void** GetVoidPtrRef(uint key, IntPtr default_val)
-        {
-            void* native_default_val = (void*)default_val.ToPointer();
-            void** ret = ImGuiNative.ImGuiStorage_GetVoidPtrRef(NativePtr, key, native_default_val);
-            return ret;
         }
         public byte* GetBoolRef(uint key)
         {

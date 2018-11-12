@@ -29,8 +29,6 @@ namespace ImGuiNET
         public bool Draw()
         {
             byte* native_label;
-            if ("Filter(inc,-exc)" != null)
-            {
                 int label_byteCount = Encoding.UTF8.GetByteCount("Filter(inc,-exc)");
                 byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
                 native_label = native_label_stackBytes;
@@ -39,8 +37,6 @@ namespace ImGuiNET
                     int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, "Filter(inc,-exc)".Length, native_label, label_byteCount);
                     native_label[native_label_offset] = 0;
                 }
-            }
-            else { native_label = null; }
             float width = 0.0f;
             byte ret = ImGuiNative.ImGuiTextFilter_Draw(NativePtr, native_label, width);
             return ret != 0;

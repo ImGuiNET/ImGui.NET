@@ -18,6 +18,11 @@ namespace ImGuiNET
         public static implicit operator ImGuiTextBuffer* (ImGuiTextBufferPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiTextBufferPtr(IntPtr nativePtr) => new ImGuiTextBufferPtr(nativePtr);
         public ImVector<byte> Buf => new ImVector<byte>(NativePtr->Buf);
+        public bool empty()
+        {
+            byte ret = ImGuiNative.ImGuiTextBuffer_empty(NativePtr);
+            return ret != 0;
+        }
         public void clear()
         {
             ImGuiNative.ImGuiTextBuffer_clear(NativePtr);
@@ -47,11 +52,6 @@ namespace ImGuiNET
         public void reserve(int capacity)
         {
             ImGuiNative.ImGuiTextBuffer_reserve(NativePtr, capacity);
-        }
-        public bool empty()
-        {
-            byte ret = ImGuiNative.ImGuiTextBuffer_empty(NativePtr);
-            return ret != 0;
         }
         public int size()
         {

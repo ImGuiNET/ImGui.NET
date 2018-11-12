@@ -46,6 +46,10 @@ namespace ImGuiNET
         public ImVector<CustomRect> CustomRects => new ImVector<CustomRect>(NativePtr->CustomRects);
         public ImPtrVector<ImFontConfigPtr> ConfigData => new ImPtrVector<ImFontConfigPtr>(NativePtr->ConfigData, Unsafe.SizeOf<ImFontConfig>());
         public RangeAccessor<int> CustomRectIds => new RangeAccessor<int>(NativePtr->CustomRectIds, 1);
+        public void ClearFonts()
+        {
+            ImGuiNative.ImFontAtlas_ClearFonts(NativePtr);
+        }
         public ImFontPtr AddFontFromMemoryCompressedBase85TTF(string compressed_font_data_base85, float size_pixels)
         {
             byte* native_compressed_font_data_base85;
@@ -177,10 +181,6 @@ namespace ImGuiNET
         public void ClearTexData()
         {
             ImGuiNative.ImFontAtlas_ClearTexData(NativePtr);
-        }
-        public void ClearFonts()
-        {
-            ImGuiNative.ImFontAtlas_ClearFonts(NativePtr);
         }
         public void Clear()
         {

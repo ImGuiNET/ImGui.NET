@@ -54,6 +54,15 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawList_ChannelsSplit(NativePtr, channels_count);
         }
+        public void AddQuad(Vector2 a, Vector2 b, Vector2 c, Vector2 d, uint col)
+        {
+            float thickness = 1.0f;
+            ImGuiNative.ImDrawList_AddQuad(NativePtr, a, b, c, d, col, thickness);
+        }
+        public void AddQuad(Vector2 a, Vector2 b, Vector2 c, Vector2 d, uint col, float thickness)
+        {
+            ImGuiNative.ImDrawList_AddQuad(NativePtr, a, b, c, d, col, thickness);
+        }
         public void AddPolyline(ref Vector2 points, int num_points, uint col, bool closed, float thickness)
         {
             byte native_closed = closed ? (byte)1 : (byte)0;
@@ -136,15 +145,6 @@ namespace ImGuiNET
         public void PrimRect(Vector2 a, Vector2 b, uint col)
         {
             ImGuiNative.ImDrawList_PrimRect(NativePtr, a, b, col);
-        }
-        public void AddQuad(Vector2 a, Vector2 b, Vector2 c, Vector2 d, uint col)
-        {
-            float thickness = 1.0f;
-            ImGuiNative.ImDrawList_AddQuad(NativePtr, a, b, c, d, col, thickness);
-        }
-        public void AddQuad(Vector2 a, Vector2 b, Vector2 c, Vector2 d, uint col, float thickness)
-        {
-            ImGuiNative.ImDrawList_AddQuad(NativePtr, a, b, c, d, col, thickness);
         }
         public void ClearFreeMemory()
         {

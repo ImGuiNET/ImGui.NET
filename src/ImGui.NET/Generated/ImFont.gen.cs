@@ -48,6 +48,10 @@ namespace ImGuiNET
         public ref float Descent => ref Unsafe.AsRef<float>(&NativePtr->Descent);
         public ref bool DirtyLookupTables => ref Unsafe.AsRef<bool>(&NativePtr->DirtyLookupTables);
         public ref int MetricsTotalSurface => ref Unsafe.AsRef<int>(&NativePtr->MetricsTotalSurface);
+        public void GrowIndex(int new_size)
+        {
+            ImGuiNative.ImFont_GrowIndex(NativePtr, new_size);
+        }
         public void AddRemapChar(ushort dst, ushort src)
         {
             byte overwrite_dst = 1;
@@ -61,10 +65,6 @@ namespace ImGuiNET
         public void AddGlyph(ushort c, float x0, float y0, float x1, float y1, float u0, float v0, float u1, float v1, float advance_x)
         {
             ImGuiNative.ImFont_AddGlyph(NativePtr, c, x0, y0, x1, y1, u0, v0, u1, v1, advance_x);
-        }
-        public void GrowIndex(int new_size)
-        {
-            ImGuiNative.ImFont_GrowIndex(NativePtr, new_size);
         }
         public ImFontGlyphPtr FindGlyphNoFallback(ushort c)
         {
