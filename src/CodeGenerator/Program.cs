@@ -660,8 +660,8 @@ namespace CodeGenerator
                     preCallLines.Add($"    fixed (char* sPtr = s)");
                     preCallLines.Add("    {");
                     preCallLines.Add($"        offset += Encoding.UTF8.GetBytes(sPtr, s.Length, {nativeArgName}_data + offset, {correctedIdentifier}_byteCounts[i]);");
-                    preCallLines.Add($"        offset += 1;");
                     preCallLines.Add($"        {nativeArgName}_data[offset] = 0;");
+                    preCallLines.Add($"        offset += 1;");
                     preCallLines.Add("    }");
                     preCallLines.Add("}");
 

@@ -77,8 +77,8 @@ namespace ImGuiNET
                 fixed (char* sPtr = s)
                 {
                     offset += Encoding.UTF8.GetBytes(sPtr, s.Length, native_items_data + offset, items_byteCounts[i]);
-                    offset += 1;
                     native_items_data[offset] = 0;
+                    offset += 1;
                 }
             }
             byte** native_items = stackalloc byte*[items.Length];
@@ -126,8 +126,8 @@ namespace ImGuiNET
                 fixed (char* sPtr = s)
                 {
                     offset += Encoding.UTF8.GetBytes(sPtr, s.Length, native_items_data + offset, items_byteCounts[i]);
-                    offset += 1;
                     native_items_data[offset] = 0;
+                    offset += 1;
                 }
             }
             byte** native_items = stackalloc byte*[items.Length];
@@ -4901,8 +4901,8 @@ namespace ImGuiNET
                 fixed (char* sPtr = s)
                 {
                     offset += Encoding.UTF8.GetBytes(sPtr, s.Length, native_items_data + offset, items_byteCounts[i]);
-                    offset += 1;
                     native_items_data[offset] = 0;
+                    offset += 1;
                 }
             }
             byte** native_items = stackalloc byte*[items.Length];
@@ -4950,8 +4950,8 @@ namespace ImGuiNET
                 fixed (char* sPtr = s)
                 {
                     offset += Encoding.UTF8.GetBytes(sPtr, s.Length, native_items_data + offset, items_byteCounts[i]);
-                    offset += 1;
                     native_items_data[offset] = 0;
+                    offset += 1;
                 }
             }
             byte** native_items = stackalloc byte*[items.Length];
