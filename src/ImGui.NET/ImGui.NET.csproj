@@ -8,7 +8,7 @@
     <DebugType>portable</DebugType>
     <AssemblyName>ImGui.NET</AssemblyName>
     <PackageId>ImGui.NET</PackageId>
-    <PackagePrereleaseIdentifier>-beta3</PackagePrereleaseIdentifier>
+    <PackagePrereleaseIdentifier>-beta4</PackagePrereleaseIdentifier>
     <PackageVersion>$(AssemblyVersion)$(PackagePrereleaseIdentifier)</PackageVersion>
     <PackageTags>ImGui ImGui.NET Immediate Mode GUI</PackageTags>
     <PackageProjectUrl>https://github.com/mellinoe/imgui.net</PackageProjectUrl>
