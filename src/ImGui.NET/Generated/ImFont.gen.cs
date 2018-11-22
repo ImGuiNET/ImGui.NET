@@ -48,9 +48,9 @@ namespace ImGuiNET
         public ref float Descent => ref Unsafe.AsRef<float>(&NativePtr->Descent);
         public ref bool DirtyLookupTables => ref Unsafe.AsRef<bool>(&NativePtr->DirtyLookupTables);
         public ref int MetricsTotalSurface => ref Unsafe.AsRef<int>(&NativePtr->MetricsTotalSurface);
-        public void GrowIndex(int new_size)
+        public void AddGlyph(ushort c, float x0, float y0, float x1, float y1, float u0, float v0, float u1, float v1, float advance_x)
         {
-            ImGuiNative.ImFont_GrowIndex(NativePtr, new_size);
+            ImGuiNative.ImFont_AddGlyph(NativePtr, c, x0, y0, x1, y1, u0, v0, u1, v1, advance_x);
         }
         public void AddRemapChar(ushort dst, ushort src)
         {
@@ -62,44 +62,6 @@ namespace ImGuiNET
             byte native_overwrite_dst = overwrite_dst ? (byte)1 : (byte)0;
             ImGuiNative.ImFont_AddRemapChar(NativePtr, dst, src, native_overwrite_dst);
         }
-        public void AddGlyph(ushort c, float x0, float y0, float x1, float y1, float u0, float v0, float u1, float v1, float advance_x)
-        {
-            ImGuiNative.ImFont_AddGlyph(NativePtr, c, x0, y0, x1, y1, u0, v0, u1, v1, advance_x);
-        }
-        public ImFontGlyphPtr FindGlyphNoFallback(ushort c)
-        {
-            ImFontGlyph* ret = ImGuiNative.ImFont_FindGlyphNoFallback(NativePtr, c);
-            return new ImFontGlyphPtr(ret);
-        }
-        public bool IsLoaded()
-        {
-            byte ret = ImGuiNative.ImFont_IsLoaded(NativePtr);
-            return ret != 0;
-        }
-        public float GetCharAdvance(ushort c)
-        {
-            float ret = ImGuiNative.ImFont_GetCharAdvance(NativePtr, c);
-            return ret;
-        }
-        public void SetFallbackChar(ushort c)
-        {
-            ImGuiNative.ImFont_SetFallbackChar(NativePtr, c);
-        }
-        public void RenderChar(ImDrawListPtr draw_list, float size, Vector2 pos, uint col, ushort c)
-        {
-            ImDrawList* native_draw_list = draw_list.NativePtr;
-            ImGuiNative.ImFont_RenderChar(NativePtr, native_draw_list, size, pos, col, c);
-        }
-        public ImFontGlyphPtr FindGlyph(ushort c)
-        {
-            ImFontGlyph* ret = ImGuiNative.ImFont_FindGlyph(NativePtr, c);
-            return new ImFontGlyphPtr(ret);
-        }
-        public string GetDebugName()
-        {
-            byte* ret = ImGuiNative.ImFont_GetDebugName(NativePtr);
-            return Util.StringFromPtr(ret);
-        }
         public void BuildLookupTable()
         {
             ImGuiNative.ImFont_BuildLookupTable(NativePtr);
@@ -107,6 +69,44 @@ namespace ImGuiNET
         public void ClearOutputData()
         {
             ImGuiNative.ImFont_ClearOutputData(NativePtr);
+        }
+        public ImFontGlyphPtr FindGlyph(ushort c)
+        {
+            ImFontGlyph* ret = ImGuiNative.ImFont_FindGlyph(NativePtr, c);
+            return new ImFontGlyphPtr(ret);
+        }
+        public ImFontGlyphPtr FindGlyphNoFallback(ushort c)
+        {
+            ImFontGlyph* ret = ImGuiNative.ImFont_FindGlyphNoFallback(NativePtr, c);
+            return new ImFontGlyphPtr(ret);
+        }
+        public float GetCharAdvance(ushort c)
+        {
+            float ret = ImGuiNative.ImFont_GetCharAdvance(NativePtr, c);
+            return ret;
+        }
+        public string GetDebugName()
+        {
+            byte* ret = ImGuiNative.ImFont_GetDebugName(NativePtr);
+            return Util.StringFromPtr(ret);
+        }
+        public void GrowIndex(int new_size)
+        {
+            ImGuiNative.ImFont_GrowIndex(NativePtr, new_size);
+        }
+        public bool IsLoaded()
+        {
+            byte ret = ImGuiNative.ImFont_IsLoaded(NativePtr);
+            return ret != 0;
+        }
+        public void RenderChar(ImDrawListPtr draw_list, float size, Vector2 pos, uint col, ushort c)
+        {
+            ImDrawList* native_draw_list = draw_list.NativePtr;
+            ImGuiNative.ImFont_RenderChar(NativePtr, native_draw_list, size, pos, col, c);
+        }
+        public void SetFallbackChar(ushort c)
+        {
+            ImGuiNative.ImFont_SetFallbackChar(NativePtr, c);
         }
     }
 }

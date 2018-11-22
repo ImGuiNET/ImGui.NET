@@ -26,6 +26,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiTextFilter_Build(NativePtr);
         }
+        public void Clear()
+        {
+            ImGuiNative.ImGuiTextFilter_Clear(NativePtr);
+        }
         public bool Draw()
         {
             byte* native_label;
@@ -82,10 +86,6 @@ namespace ImGuiNET
         {
             byte ret = ImGuiNative.ImGuiTextFilter_IsActive(NativePtr);
             return ret != 0;
-        }
-        public void Clear()
-        {
-            ImGuiNative.ImGuiTextFilter_Clear(NativePtr);
         }
         public bool PassFilter(string text)
         {

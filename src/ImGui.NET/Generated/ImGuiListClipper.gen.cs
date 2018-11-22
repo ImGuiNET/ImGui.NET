@@ -28,10 +28,6 @@ namespace ImGuiNET
         public ref int StepNo => ref Unsafe.AsRef<int>(&NativePtr->StepNo);
         public ref int DisplayStart => ref Unsafe.AsRef<int>(&NativePtr->DisplayStart);
         public ref int DisplayEnd => ref Unsafe.AsRef<int>(&NativePtr->DisplayEnd);
-        public void End()
-        {
-            ImGuiNative.ImGuiListClipper_End(NativePtr);
-        }
         public void Begin(int items_count)
         {
             float items_height = -1.0f;
@@ -40,6 +36,10 @@ namespace ImGuiNET
         public void Begin(int items_count, float items_height)
         {
             ImGuiNative.ImGuiListClipper_Begin(NativePtr, items_count, items_height);
+        }
+        public void End()
+        {
+            ImGuiNative.ImGuiListClipper_End(NativePtr);
         }
         public bool Step()
         {

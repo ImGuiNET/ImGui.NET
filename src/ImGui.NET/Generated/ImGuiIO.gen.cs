@@ -166,6 +166,10 @@ namespace ImGuiNET
         public RangeAccessor<float> KeysDownDurationPrev => new RangeAccessor<float>(NativePtr->KeysDownDurationPrev, 512);
         public RangeAccessor<float> NavInputsDownDuration => new RangeAccessor<float>(NativePtr->NavInputsDownDuration, 21);
         public RangeAccessor<float> NavInputsDownDurationPrev => new RangeAccessor<float>(NativePtr->NavInputsDownDurationPrev, 21);
+        public void AddInputCharacter(ushort c)
+        {
+            ImGuiNative.ImGuiIO_AddInputCharacter(NativePtr, c);
+        }
         public void AddInputCharactersUTF8(string utf8_chars)
         {
             byte* native_utf8_chars;
@@ -186,10 +190,6 @@ namespace ImGuiNET
         public void ClearInputCharacters()
         {
             ImGuiNative.ImGuiIO_ClearInputCharacters(NativePtr);
-        }
-        public void AddInputCharacter(ushort c)
-        {
-            ImGuiNative.ImGuiIO_AddInputCharacter(NativePtr, c);
         }
     }
 }

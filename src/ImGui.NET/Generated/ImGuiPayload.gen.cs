@@ -36,11 +36,6 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiPayload_Clear(NativePtr);
         }
-        public bool IsPreview()
-        {
-            byte ret = ImGuiNative.ImGuiPayload_IsPreview(NativePtr);
-            return ret != 0;
-        }
         public bool IsDataType(string type)
         {
             byte* native_type;
@@ -62,6 +57,11 @@ namespace ImGuiNET
         public bool IsDelivery()
         {
             byte ret = ImGuiNative.ImGuiPayload_IsDelivery(NativePtr);
+            return ret != 0;
+        }
+        public bool IsPreview()
+        {
+            byte ret = ImGuiNative.ImGuiPayload_IsPreview(NativePtr);
             return ret != 0;
         }
     }

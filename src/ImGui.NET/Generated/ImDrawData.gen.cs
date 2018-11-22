@@ -30,17 +30,17 @@ namespace ImGuiNET
         public ref int TotalVtxCount => ref Unsafe.AsRef<int>(&NativePtr->TotalVtxCount);
         public ref Vector2 DisplayPos => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayPos);
         public ref Vector2 DisplaySize => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplaySize);
-        public void ScaleClipRects(Vector2 sc)
+        public void Clear()
         {
-            ImGuiNative.ImDrawData_ScaleClipRects(NativePtr, sc);
+            ImGuiNative.ImDrawData_Clear(NativePtr);
         }
         public void DeIndexAllBuffers()
         {
             ImGuiNative.ImDrawData_DeIndexAllBuffers(NativePtr);
         }
-        public void Clear()
+        public void ScaleClipRects(Vector2 sc)
         {
-            ImGuiNative.ImDrawData_Clear(NativePtr);
+            ImGuiNative.ImDrawData_ScaleClipRects(NativePtr, sc);
         }
     }
 }

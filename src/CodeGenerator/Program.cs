@@ -218,7 +218,7 @@ namespace CodeGenerator
                 }).Where(od => od != null).ToArray();
 
                 return new FunctionDefinition(name, overloads);
-            }).ToArray();
+            }).OrderBy(fd => fd.Name).ToArray();
 
             foreach (EnumDefinition ed in enums)
             {

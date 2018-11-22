@@ -18,9 +18,14 @@ namespace ImGuiNET
         public static implicit operator GlyphRangesBuilder* (GlyphRangesBuilderPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator GlyphRangesBuilderPtr(IntPtr nativePtr) => new GlyphRangesBuilderPtr(nativePtr);
         public ImVector<byte> UsedChars => new ImVector<byte>(NativePtr->UsedChars);
-        public void SetBit(int n)
+        public void AddChar(ushort c)
         {
-            ImGuiNative.GlyphRangesBuilder_SetBit(NativePtr, n);
+            ImGuiNative.GlyphRangesBuilder_AddChar(NativePtr, c);
+        }
+        public void AddRanges(IntPtr ranges)
+        {
+            ushort* native_ranges = (ushort*)ranges.ToPointer();
+            ImGuiNative.GlyphRangesBuilder_AddRanges(NativePtr, native_ranges);
         }
         public void AddText(string text)
         {
@@ -40,11 +45,6 @@ namespace ImGuiNET
             byte* native_text_end = null;
             ImGuiNative.GlyphRangesBuilder_AddText(NativePtr, native_text, native_text_end);
         }
-        public void AddRanges(IntPtr ranges)
-        {
-            ushort* native_ranges = (ushort*)ranges.ToPointer();
-            ImGuiNative.GlyphRangesBuilder_AddRanges(NativePtr, native_ranges);
-        }
         public void BuildRanges(out ImVector out_ranges)
         {
             fixed (ImVector* native_out_ranges = &out_ranges)
@@ -57,9 +57,9 @@ namespace ImGuiNET
             byte ret = ImGuiNative.GlyphRangesBuilder_GetBit(NativePtr, n);
             return ret != 0;
         }
-        public void AddChar(ushort c)
+        public void SetBit(int n)
         {
-            ImGuiNative.GlyphRangesBuilder_AddChar(NativePtr, c);
+            ImGuiNative.GlyphRangesBuilder_SetBit(NativePtr, n);
         }
     }
 }

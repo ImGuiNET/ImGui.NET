@@ -18,15 +18,6 @@ namespace ImGuiNET
         public static implicit operator ImGuiTextBuffer* (ImGuiTextBufferPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiTextBufferPtr(IntPtr nativePtr) => new ImGuiTextBufferPtr(nativePtr);
         public ImVector<byte> Buf => new ImVector<byte>(NativePtr->Buf);
-        public bool empty()
-        {
-            byte ret = ImGuiNative.ImGuiTextBuffer_empty(NativePtr);
-            return ret != 0;
-        }
-        public void clear()
-        {
-            ImGuiNative.ImGuiTextBuffer_clear(NativePtr);
-        }
         public void appendf(string fmt)
         {
             byte* native_fmt;
@@ -44,9 +35,28 @@ namespace ImGuiNET
             else { native_fmt = null; }
             ImGuiNative.ImGuiTextBuffer_appendf(NativePtr, native_fmt);
         }
+        public string begin()
+        {
+            byte* ret = ImGuiNative.ImGuiTextBuffer_begin(NativePtr);
+            return Util.StringFromPtr(ret);
+        }
         public string c_str()
         {
             byte* ret = ImGuiNative.ImGuiTextBuffer_c_str(NativePtr);
+            return Util.StringFromPtr(ret);
+        }
+        public void clear()
+        {
+            ImGuiNative.ImGuiTextBuffer_clear(NativePtr);
+        }
+        public bool empty()
+        {
+            byte ret = ImGuiNative.ImGuiTextBuffer_empty(NativePtr);
+            return ret != 0;
+        }
+        public string end()
+        {
+            byte* ret = ImGuiNative.ImGuiTextBuffer_end(NativePtr);
             return Util.StringFromPtr(ret);
         }
         public void reserve(int capacity)
@@ -57,16 +67,6 @@ namespace ImGuiNET
         {
             int ret = ImGuiNative.ImGuiTextBuffer_size(NativePtr);
             return ret;
-        }
-        public string begin()
-        {
-            byte* ret = ImGuiNative.ImGuiTextBuffer_begin(NativePtr);
-            return Util.StringFromPtr(ret);
-        }
-        public string end()
-        {
-            byte* ret = ImGuiNative.ImGuiTextBuffer_end(NativePtr);
-            return Util.StringFromPtr(ret);
         }
     }
 }

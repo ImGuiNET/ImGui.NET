@@ -20,18 +20,6 @@ namespace ImGuiNET
         public static implicit operator TextRangePtr(IntPtr nativePtr) => new TextRangePtr(nativePtr);
         public IntPtr b { get => (IntPtr)NativePtr->b; set => NativePtr->b = (byte*)value; }
         public IntPtr e { get => (IntPtr)NativePtr->e; set => NativePtr->e = (byte*)value; }
-        public void split(byte separator, out ImVector @out)
-        {
-            fixed (ImVector* native_out = &@out)
-            {
-                ImGuiNative.TextRange_split(NativePtr, separator, native_out);
-            }
-        }
-        public string end()
-        {
-            byte* ret = ImGuiNative.TextRange_end(NativePtr);
-            return Util.StringFromPtr(ret);
-        }
         public string begin()
         {
             byte* ret = ImGuiNative.TextRange_begin(NativePtr);
@@ -41,6 +29,18 @@ namespace ImGuiNET
         {
             byte ret = ImGuiNative.TextRange_empty(NativePtr);
             return ret != 0;
+        }
+        public string end()
+        {
+            byte* ret = ImGuiNative.TextRange_end(NativePtr);
+            return Util.StringFromPtr(ret);
+        }
+        public void split(byte separator, out ImVector @out)
+        {
+            fixed (ImVector* native_out = &@out)
+            {
+                ImGuiNative.TextRange_split(NativePtr, separator, native_out);
+            }
         }
     }
 }
