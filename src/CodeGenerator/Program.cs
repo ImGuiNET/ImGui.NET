@@ -146,12 +146,14 @@ namespace CodeGenerator
                 string name = jp.Name;
                 TypeReference[] fields = jp.Values().Select(v =>
                 {
+                    if (v["type"].ToString().Contains("static")) { return null; }
+
                     return new TypeReference(
                         v["name"].ToString(),
                         v["type"].ToString(),
                         v["template_type"]?.ToString(),
                         enums);
-                }).ToArray();
+                }).Where(tr => tr != null).ToArray();
                 return new TypeDefinition(name, fields);
             }).ToArray();
 
