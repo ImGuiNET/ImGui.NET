@@ -3799,6 +3799,11 @@ namespace ImGuiNET
             Vector2 ret = ImGuiNative.igGetCursorStartPos();
             return ret;
         }
+        public static ImGuiPayloadPtr GetDragDropPayload()
+        {
+            ImGuiPayload* ret = ImGuiNative.igGetDragDropPayload();
+            return new ImGuiPayloadPtr(ret);
+        }
         public static ImDrawDataPtr GetDrawData()
         {
             ImDrawData* ret = ImGuiNative.igGetDrawData();
@@ -7132,14 +7137,14 @@ namespace ImGuiNET
         {
             ImGuiNative.igSetScrollFromPosY(pos_y, center_y_ratio);
         }
-        public static void SetScrollHere()
+        public static void SetScrollHereY()
         {
             float center_y_ratio = 0.5f;
-            ImGuiNative.igSetScrollHere(center_y_ratio);
+            ImGuiNative.igSetScrollHereY(center_y_ratio);
         }
-        public static void SetScrollHere(float center_y_ratio)
+        public static void SetScrollHereY(float center_y_ratio)
         {
-            ImGuiNative.igSetScrollHere(center_y_ratio);
+            ImGuiNative.igSetScrollHereY(center_y_ratio);
         }
         public static void SetScrollX(float scroll_x)
         {
@@ -7422,9 +7427,18 @@ namespace ImGuiNET
             else { native_label = null; }
             float v_degrees_min = -360.0f;
             float v_degrees_max = +360.0f;
+            byte* native_format;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.0f deg");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.0f deg")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.0f deg".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             fixed (float* native_v_rad = &v_rad)
             {
-                byte ret = ImGuiNative.igSliderAngle(native_label, native_v_rad, v_degrees_min, v_degrees_max);
+                byte ret = ImGuiNative.igSliderAngle(native_label, native_v_rad, v_degrees_min, v_degrees_max, native_format);
                 return ret != 0;
             }
         }
@@ -7444,9 +7458,18 @@ namespace ImGuiNET
             }
             else { native_label = null; }
             float v_degrees_max = +360.0f;
+            byte* native_format;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.0f deg");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.0f deg")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.0f deg".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             fixed (float* native_v_rad = &v_rad)
             {
-                byte ret = ImGuiNative.igSliderAngle(native_label, native_v_rad, v_degrees_min, v_degrees_max);
+                byte ret = ImGuiNative.igSliderAngle(native_label, native_v_rad, v_degrees_min, v_degrees_max, native_format);
                 return ret != 0;
             }
         }
@@ -7465,9 +7488,52 @@ namespace ImGuiNET
                 }
             }
             else { native_label = null; }
+            byte* native_format;
+                int format_byteCount = Encoding.UTF8.GetByteCount("%.0f deg");
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = "%.0f deg")
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, "%.0f deg".Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
             fixed (float* native_v_rad = &v_rad)
             {
-                byte ret = ImGuiNative.igSliderAngle(native_label, native_v_rad, v_degrees_min, v_degrees_max);
+                byte ret = ImGuiNative.igSliderAngle(native_label, native_v_rad, v_degrees_min, v_degrees_max, native_format);
+                return ret != 0;
+            }
+        }
+        public static bool SliderAngle(string label, ref float v_rad, float v_degrees_min, float v_degrees_max, string format)
+        {
+            byte* native_label;
+            if (label != null)
+            {
+                int label_byteCount = Encoding.UTF8.GetByteCount(label);
+                byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                native_label = native_label_stackBytes;
+                fixed (char* label_ptr = label)
+                {
+                    int native_label_offset = Encoding.UTF8.GetBytes(label_ptr, label.Length, native_label, label_byteCount);
+                    native_label[native_label_offset] = 0;
+                }
+            }
+            else { native_label = null; }
+            byte* native_format;
+            if (format != null)
+            {
+                int format_byteCount = Encoding.UTF8.GetByteCount(format);
+                byte* native_format_stackBytes = stackalloc byte[format_byteCount + 1];
+                native_format = native_format_stackBytes;
+                fixed (char* format_ptr = format)
+                {
+                    int native_format_offset = Encoding.UTF8.GetBytes(format_ptr, format.Length, native_format, format_byteCount);
+                    native_format[native_format_offset] = 0;
+                }
+            }
+            else { native_format = null; }
+            fixed (float* native_v_rad = &v_rad)
+            {
+                byte ret = ImGuiNative.igSliderAngle(native_label, native_v_rad, v_degrees_min, v_degrees_max, native_format);
                 return ret != 0;
             }
         }

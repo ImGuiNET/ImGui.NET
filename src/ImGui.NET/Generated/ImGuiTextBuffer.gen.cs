@@ -8,6 +8,7 @@ namespace ImGuiNET
     public unsafe partial struct ImGuiTextBuffer
     {
         public ImVector Buf;
+        public static char EmptyString_0;
     }
     public unsafe partial struct ImGuiTextBufferPtr
     {
@@ -18,6 +19,7 @@ namespace ImGuiNET
         public static implicit operator ImGuiTextBuffer* (ImGuiTextBufferPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiTextBufferPtr(IntPtr nativePtr) => new ImGuiTextBufferPtr(nativePtr);
         public ImVector<byte> Buf => new ImVector<byte>(NativePtr->Buf);
+        public RangeAccessor<static char> EmptyString => new RangeAccessor<static char>(&NativePtr->EmptyString_0, 1);
         public void appendf(string fmt)
         {
             byte* native_fmt;

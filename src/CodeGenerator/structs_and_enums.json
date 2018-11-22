@@ -495,13 +495,18 @@
         "value": "1 << 6"
       },
       {
+        "calc_value": 128,
+        "name": "ImGuiWindowFlags_NoBackground",
+        "value": "1 << 7"
+      },
+      {
         "calc_value": 256,
         "name": "ImGuiWindowFlags_NoSavedSettings",
         "value": "1 << 8"
       },
       {
         "calc_value": 512,
-        "name": "ImGuiWindowFlags_NoInputs",
+        "name": "ImGuiWindowFlags_NoMouseInputs",
         "value": "1 << 9"
       },
       {
@@ -553,6 +558,16 @@
         "calc_value": 786432,
         "name": "ImGuiWindowFlags_NoNav",
         "value": "ImGuiWindowFlags_NoNavInputs | ImGuiWindowFlags_NoNavFocus"
+      },
+      {
+        "calc_value": 43,
+        "name": "ImGuiWindowFlags_NoDecoration",
+        "value": "ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoCollapse"
+      },
+      {
+        "calc_value": 786944,
+        "name": "ImGuiWindowFlags_NoInputs",
+        "value": "ImGuiWindowFlags_NoMouseInputs | ImGuiWindowFlags_NoNavInputs | ImGuiWindowFlags_NoNavFocus"
       },
       {
         "calc_value": 8388608,
@@ -1608,8 +1623,8 @@
         "name": "IndexAdvanceX"
       },
       {
-        "type": "ImVector_unsigned_short",
-        "template_type": "unsigned short",
+        "type": "ImVector_ImWchar",
+        "template_type": "ImWchar",
         "name": "IndexLookup"
       },
       {
@@ -1963,6 +1978,11 @@
         "type": "ImVector_char",
         "template_type": "char",
         "name": "Buf"
+      },
+      {
+        "type": "static char",
+        "size": 1,
+        "name": "EmptyString[1]"
       }
     ],
     "ImGuiStyle": [
