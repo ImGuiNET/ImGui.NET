@@ -4,7 +4,7 @@
     {
         public static void Main(string[] args)
         {
-            new SampleGame().Run();
+            using (var game = new SampleGame()) game.Run();
         }
     }
 }
