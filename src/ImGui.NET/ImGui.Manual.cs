@@ -44,7 +44,7 @@ namespace ImGuiNET
         {
 
             int labelByteCount = Encoding.UTF8.GetByteCount(label);
-            byte* labelBytes = stackalloc byte[labelByteCount];
+            byte* labelBytes = stackalloc byte[labelByteCount + 1];
             fixed (char* labelPtr = label)
             {
                 Encoding.UTF8.GetBytes(labelPtr, label.Length, labelBytes, labelByteCount);
@@ -83,7 +83,7 @@ namespace ImGuiNET
             IntPtr user_data)
         {
             int labelByteCount = Encoding.UTF8.GetByteCount(label);
-            byte* labelBytes = stackalloc byte[labelByteCount];
+            byte* labelBytes = stackalloc byte[labelByteCount + 1];
             fixed (char* labelPtr = label)
             {
                 Encoding.UTF8.GetBytes(labelPtr, label.Length, labelBytes, labelByteCount);
@@ -146,7 +146,7 @@ namespace ImGuiNET
             IntPtr user_data)
         {
             int labelByteCount = Encoding.UTF8.GetByteCount(label);
-            byte* labelBytes = stackalloc byte[labelByteCount];
+            byte* labelBytes = stackalloc byte[labelByteCount + 1];
             fixed (char* labelPtr = label)
             {
                 Encoding.UTF8.GetBytes(labelPtr, label.Length, labelBytes, labelByteCount);
@@ -216,7 +216,7 @@ namespace ImGuiNET
         {
 
             int labelByteCount = Encoding.UTF8.GetByteCount(label);
-            byte* labelBytes = stackalloc byte[labelByteCount];
+            byte* labelBytes = stackalloc byte[labelByteCount + 1];
             fixed (char* labelPtr = label)
             {
                 Encoding.UTF8.GetBytes(labelPtr, label.Length, labelBytes, labelByteCount);
