@@ -618,24 +618,35 @@ namespace CodeGenerator
                     else
                     {
                         preCallLines.Add($"byte* {nativeArgName};");
+                        preCallLines.Add($"int {correctedIdentifier}_byteCount = 0;");
                         if (!hasDefault)
                         {
                             preCallLines.Add($"if ({textToEncode} != null)");
                             preCallLines.Add("{");
                         }
-                        preCallLines.Add($"    int {correctedIdentifier}_byteCount = Encoding.UTF8.GetByteCount({textToEncode});");
-                        preCallLines.Add($"    byte* {nativeArgName}_stackBytes = stackalloc byte[{correctedIdentifier}_byteCount + 1];");
-                        preCallLines.Add($"    {nativeArgName} = {nativeArgName}_stackBytes;");
-                        preCallLines.Add($"    fixed (char* {correctedIdentifier}_ptr = {textToEncode})");
-                        preCallLines.Add("    {");
-                        preCallLines.Add($"        int {nativeArgName}_offset = Encoding.UTF8.GetBytes({correctedIdentifier}_ptr, {textToEncode}.Length, {nativeArgName}, {correctedIdentifier}_byteCount);");
-                        preCallLines.Add($"        {nativeArgName}[{nativeArgName}_offset] = 0;");
-                        preCallLines.Add("    }");
+                        preCallLines.Add($"    {correctedIdentifier}_byteCount = Encoding.UTF8.GetByteCount({textToEncode});");
+                        preCallLines.Add($"    if ({correctedIdentifier}_byteCount > Util.StackAllocationSizeLimit)");
+                        preCallLines.Add($"    {{");
+                        preCallLines.Add($"        {nativeArgName} = Util.Allocate({correctedIdentifier}_byteCount + 1);");
+                        preCallLines.Add($"    }}");
+                        preCallLines.Add($"    else");
+                        preCallLines.Add($"    {{");
+                        preCallLines.Add($"        byte* {nativeArgName}_stackBytes = stackalloc byte[{correctedIdentifier}_byteCount + 1];");
+                        preCallLines.Add($"        {nativeArgName} = {nativeArgName}_stackBytes;");
+                        preCallLines.Add($"    }}");
+                        preCallLines.Add($"    int {nativeArgName}_offset = Util.GetUtf8({textToEncode}, {nativeArgName}, {correctedIdentifier}_byteCount);");
+                        preCallLines.Add($"    {nativeArgName}[{nativeArgName}_offset] = 0;");
+                        
                         if (!hasDefault)
                         {
                             preCallLines.Add("}");
                             preCallLines.Add($"else {{ {nativeArgName} = null; }}");
                         }
+
+                        postCallLines.Add($"if ({correctedIdentifier}_byteCount > Util.StackAllocationSizeLimit)");
+                        postCallLines.Add($"{{");
+                        postCallLines.Add($"    Util.Free({nativeArgName});");
+                        postCallLines.Add($"}}");
                     }
                 }
                 else if (tr.Type == "char* []")

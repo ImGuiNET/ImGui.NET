@@ -173,19 +173,28 @@ namespace ImGuiNET
         public void AddInputCharactersUTF8(string utf8_chars)
         {
             byte* native_utf8_chars;
+            int utf8_chars_byteCount = 0;
             if (utf8_chars != null)
             {
-                int utf8_chars_byteCount = Encoding.UTF8.GetByteCount(utf8_chars);
-                byte* native_utf8_chars_stackBytes = stackalloc byte[utf8_chars_byteCount + 1];
-                native_utf8_chars = native_utf8_chars_stackBytes;
-                fixed (char* utf8_chars_ptr = utf8_chars)
+                utf8_chars_byteCount = Encoding.UTF8.GetByteCount(utf8_chars);
+                if (utf8_chars_byteCount > Util.StackAllocationSizeLimit)
                 {
-                    int native_utf8_chars_offset = Encoding.UTF8.GetBytes(utf8_chars_ptr, utf8_chars.Length, native_utf8_chars, utf8_chars_byteCount);
-                    native_utf8_chars[native_utf8_chars_offset] = 0;
+                    native_utf8_chars = Util.Allocate(utf8_chars_byteCount + 1);
                 }
+                else
+                {
+                    byte* native_utf8_chars_stackBytes = stackalloc byte[utf8_chars_byteCount + 1];
+                    native_utf8_chars = native_utf8_chars_stackBytes;
+                }
+                int native_utf8_chars_offset = Util.GetUtf8(utf8_chars, native_utf8_chars, utf8_chars_byteCount);
+                native_utf8_chars[native_utf8_chars_offset] = 0;
             }
             else { native_utf8_chars = null; }
             ImGuiNative.ImGuiIO_AddInputCharactersUTF8(NativePtr, native_utf8_chars);
+            if (utf8_chars_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_utf8_chars);
+            }
         }
         public void ClearInputCharacters()
         {

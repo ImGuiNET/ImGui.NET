@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace ImGuiNET
@@ -42,18 +43,31 @@ namespace ImGuiNET
             ImGuiInputTextCallback callback,
             IntPtr user_data)
         {
-
-            int labelByteCount = Encoding.UTF8.GetByteCount(label);
-            byte* labelBytes = stackalloc byte[labelByteCount + 1];
-            fixed (char* labelPtr = label)
+            int utf8LabelByteCount = Encoding.UTF8.GetByteCount(label);
+            byte* utf8LabelBytes;
+            if (utf8LabelByteCount > Util.StackAllocationSizeLimit)
             {
-                Encoding.UTF8.GetBytes(labelPtr, label.Length, labelBytes, labelByteCount);
+                utf8LabelBytes = Util.Allocate(utf8LabelByteCount + 1);
             }
+            else
+            {
+                byte* stackPtr = stackalloc byte[utf8LabelByteCount + 1];
+                utf8LabelBytes = stackPtr;
+            }
+            Util.GetUtf8(label, utf8LabelBytes, utf8LabelByteCount);
 
+            bool ret;
             fixed (byte* bufPtr = buf)
             {
-                return ImGuiNative.igInputText(labelBytes, bufPtr, buf_size, flags, callback, user_data.ToPointer()) != 0;
+                ret = ImGuiNative.igInputText(utf8LabelBytes, bufPtr, buf_size, flags, callback, user_data.ToPointer()) != 0;
             }
+
+            if (utf8LabelByteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(utf8LabelBytes);
+            }
+
+            return ret;
         }
 
         public static bool InputText(
@@ -82,34 +96,61 @@ namespace ImGuiNET
             ImGuiInputTextCallback callback,
             IntPtr user_data)
         {
-            int labelByteCount = Encoding.UTF8.GetByteCount(label);
-            byte* labelBytes = stackalloc byte[labelByteCount + 1];
-            fixed (char* labelPtr = label)
+            int utf8LabelByteCount = Encoding.UTF8.GetByteCount(label);
+            byte* utf8LabelBytes;
+            if (utf8LabelByteCount > Util.StackAllocationSizeLimit)
             {
-                Encoding.UTF8.GetBytes(labelPtr, label.Length, labelBytes, labelByteCount);
+                utf8LabelBytes = Util.Allocate(utf8LabelByteCount + 1);
             }
-
-            int originalByteCount = Encoding.UTF8.GetByteCount(input);
-            int stackBufSize = Math.Max((int)maxLength, originalByteCount);
-            byte* bufBytes = stackalloc byte[stackBufSize];
-            fixed (char* u16Ptr = input)
+            else
             {
-                Encoding.UTF8.GetBytes(u16Ptr, input.Length, bufBytes, stackBufSize);
+                byte* stackPtr = stackalloc byte[utf8LabelByteCount + 1];
+                utf8LabelBytes = stackPtr;
             }
+            Util.GetUtf8(label, utf8LabelBytes, utf8LabelByteCount);
 
-            byte* originalBufBytes = stackalloc byte[originalByteCount];
-            Unsafe.CopyBlock(originalBufBytes, bufBytes, (uint)originalByteCount);
+            int utf8InputByteCount = Encoding.UTF8.GetByteCount(input);
+            int inputBufSize = Math.Max((int)maxLength + 1, utf8InputByteCount + 1);
+
+            byte* utf8InputBytes;
+            byte* originalUtf8InputBytes;
+            if (inputBufSize > Util.StackAllocationSizeLimit)
+            {
+                utf8InputBytes = Util.Allocate(inputBufSize);
+                originalUtf8InputBytes = Util.Allocate(inputBufSize);
+            }
+            else
+            {
+                byte* inputStackBytes = stackalloc byte[inputBufSize];
+                utf8InputBytes = inputStackBytes;
+                byte* originalInputStackBytes = stackalloc byte[inputBufSize];
+                originalUtf8InputBytes = originalInputStackBytes;
+            }
+            Util.GetUtf8(input, utf8InputBytes, inputBufSize);
+            uint clearBytesCount = (uint)(inputBufSize - utf8InputByteCount);
+            Unsafe.InitBlockUnaligned(utf8InputBytes + utf8InputByteCount + 1, 0, clearBytesCount);
+            Unsafe.CopyBlock(originalUtf8InputBytes, utf8InputBytes, (uint)inputBufSize);
 
             byte result = ImGuiNative.igInputText(
-                labelBytes,
-                bufBytes,
-                (uint)stackBufSize,
+                utf8LabelBytes,
+                utf8InputBytes,
+                (uint)inputBufSize,
                 flags,
                 callback,
                 user_data.ToPointer());
-            if (!Util.AreStringsEqual(originalBufBytes, originalByteCount, bufBytes))
+            if (!Util.AreStringsEqual(originalUtf8InputBytes, inputBufSize, utf8InputBytes))
             {
-                input = Util.StringFromPtr(bufBytes);
+                input = Util.StringFromPtr(utf8InputBytes);
+            }
+
+            if (utf8LabelByteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(utf8LabelBytes);
+            }
+            if (inputBufSize > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(utf8InputBytes);
+                Util.Free(originalUtf8InputBytes);
             }
 
             return result != 0;
@@ -145,35 +186,62 @@ namespace ImGuiNET
             ImGuiInputTextCallback callback,
             IntPtr user_data)
         {
-            int labelByteCount = Encoding.UTF8.GetByteCount(label);
-            byte* labelBytes = stackalloc byte[labelByteCount + 1];
-            fixed (char* labelPtr = label)
+            int utf8LabelByteCount = Encoding.UTF8.GetByteCount(label);
+            byte* utf8LabelBytes;
+            if (utf8LabelByteCount > Util.StackAllocationSizeLimit)
             {
-                Encoding.UTF8.GetBytes(labelPtr, label.Length, labelBytes, labelByteCount);
+                utf8LabelBytes = Util.Allocate(utf8LabelByteCount + 1);
             }
-
-            int originalByteCount = Encoding.UTF8.GetByteCount(input);
-            int stackBufSize = Math.Max((int)maxLength, originalByteCount);
-            byte* bufBytes = stackalloc byte[stackBufSize];
-            fixed (char* u16Ptr = input)
+            else
             {
-                Encoding.UTF8.GetBytes(u16Ptr, input.Length, bufBytes, stackBufSize);
+                byte* stackPtr = stackalloc byte[utf8LabelByteCount + 1];
+                utf8LabelBytes = stackPtr;
             }
+            Util.GetUtf8(label, utf8LabelBytes, utf8LabelByteCount);
 
-            byte* originalBufBytes = stackalloc byte[originalByteCount];
-            Unsafe.CopyBlock(originalBufBytes, bufBytes, (uint)originalByteCount);
+            int utf8InputByteCount = Encoding.UTF8.GetByteCount(input);
+            int inputBufSize = Math.Max((int)maxLength + 1, utf8InputByteCount + 1);
+
+            byte* utf8InputBytes;
+            byte* originalUtf8InputBytes;
+            if (inputBufSize > Util.StackAllocationSizeLimit)
+            {
+                utf8InputBytes = Util.Allocate(inputBufSize);
+                originalUtf8InputBytes = Util.Allocate(inputBufSize);
+            }
+            else
+            {
+                byte* inputStackBytes = stackalloc byte[inputBufSize];
+                utf8InputBytes = inputStackBytes;
+                byte* originalInputStackBytes = stackalloc byte[inputBufSize];
+                originalUtf8InputBytes = originalInputStackBytes;
+            }
+            Util.GetUtf8(input, utf8InputBytes, inputBufSize);
+            uint clearBytesCount = (uint)(inputBufSize - utf8InputByteCount);
+            Unsafe.InitBlockUnaligned(utf8InputBytes + utf8InputByteCount + 1, 0, clearBytesCount);
+            Unsafe.CopyBlock(originalUtf8InputBytes, utf8InputBytes, (uint)inputBufSize);
 
             byte result = ImGuiNative.igInputTextMultiline(
-                labelBytes,
-                bufBytes,
-                (uint)stackBufSize,
+                utf8LabelBytes,
+                utf8InputBytes,
+                (uint)inputBufSize,
                 size,
                 flags,
                 callback,
                 user_data.ToPointer());
-            if (!Util.AreStringsEqual(originalBufBytes, originalByteCount, bufBytes))
+            if (!Util.AreStringsEqual(originalUtf8InputBytes, inputBufSize, utf8InputBytes))
             {
-                input = Util.StringFromPtr(bufBytes);
+                input = Util.StringFromPtr(utf8InputBytes);
+            }
+
+            if (utf8LabelByteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(utf8LabelBytes);
+            }
+            if (inputBufSize > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(utf8InputBytes);
+                Util.Free(originalUtf8InputBytes);
             }
 
             return result != 0;
@@ -214,28 +282,52 @@ namespace ImGuiNET
             ImGuiInputTextCallback callback,
             IntPtr user_data)
         {
-
-            int labelByteCount = Encoding.UTF8.GetByteCount(label);
-            byte* labelBytes = stackalloc byte[labelByteCount + 1];
-            fixed (char* labelPtr = label)
+            int utf8LabelByteCount = Encoding.UTF8.GetByteCount(label);
+            byte* utf8LabelBytes;
+            if (utf8LabelByteCount > Util.StackAllocationSizeLimit)
             {
-                Encoding.UTF8.GetBytes(labelPtr, label.Length, labelBytes, labelByteCount);
+                utf8LabelBytes = Util.Allocate(utf8LabelByteCount + 1);
+            }
+            else
+            {
+                byte* stackPtr = stackalloc byte[utf8LabelByteCount + 1];
+                utf8LabelBytes = stackPtr;
+            }
+            Util.GetUtf8(label, utf8LabelBytes, utf8LabelByteCount);
+
+            bool ret = ImGuiNative.igInputText(utf8LabelBytes, (byte*)buf.ToPointer(), buf_size, flags, callback, user_data.ToPointer()) != 0;
+
+            if (utf8LabelByteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(utf8LabelBytes);
             }
 
-            return ImGuiNative.igInputText(labelBytes, (byte*)buf.ToPointer(), buf_size, flags, callback, user_data.ToPointer()) != 0;
+            return ret;
         }
 
         public static bool Begin(string name, ImGuiWindowFlags flags)
         {
-            int name_byteCount = Encoding.UTF8.GetByteCount(name);
-            byte* native_name = stackalloc byte[name_byteCount + 1];
-            fixed (char* name_ptr = name)
+            int utf8NameByteCount = Encoding.UTF8.GetByteCount(name);
+            byte* utf8NameBytes;
+            if (utf8NameByteCount > Util.StackAllocationSizeLimit)
             {
-                int native_name_offset = Encoding.UTF8.GetBytes(name_ptr, name.Length, native_name, name_byteCount);
-                native_name[native_name_offset] = 0;
+                utf8NameBytes = Util.Allocate(utf8NameByteCount + 1);
             }
+            else
+            {
+                byte* stackPtr = stackalloc byte[utf8NameByteCount + 1];
+                utf8NameBytes = stackPtr;
+            }
+            Util.GetUtf8(name, utf8NameBytes, utf8NameByteCount);
+
             byte* p_open = null;
-            byte ret = ImGuiNative.igBegin(native_name, p_open, flags);
+            byte ret = ImGuiNative.igBegin(utf8NameBytes, p_open, flags);
+
+            if (utf8NameByteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(utf8NameBytes);
+            }
+
             return ret != 0;
         }
 

@@ -30,20 +30,29 @@ namespace ImGuiNET
         public void AddText(string text)
         {
             byte* native_text;
+            int text_byteCount = 0;
             if (text != null)
             {
-                int text_byteCount = Encoding.UTF8.GetByteCount(text);
-                byte* native_text_stackBytes = stackalloc byte[text_byteCount + 1];
-                native_text = native_text_stackBytes;
-                fixed (char* text_ptr = text)
+                text_byteCount = Encoding.UTF8.GetByteCount(text);
+                if (text_byteCount > Util.StackAllocationSizeLimit)
                 {
-                    int native_text_offset = Encoding.UTF8.GetBytes(text_ptr, text.Length, native_text, text_byteCount);
-                    native_text[native_text_offset] = 0;
+                    native_text = Util.Allocate(text_byteCount + 1);
                 }
+                else
+                {
+                    byte* native_text_stackBytes = stackalloc byte[text_byteCount + 1];
+                    native_text = native_text_stackBytes;
+                }
+                int native_text_offset = Util.GetUtf8(text, native_text, text_byteCount);
+                native_text[native_text_offset] = 0;
             }
             else { native_text = null; }
             byte* native_text_end = null;
             ImGuiNative.GlyphRangesBuilder_AddText(NativePtr, native_text, native_text_end);
+            if (text_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_text);
+            }
         }
         public void BuildRanges(out ImVector out_ranges)
         {

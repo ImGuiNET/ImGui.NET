@@ -21,19 +21,28 @@ namespace ImGuiNET
         public void appendf(string fmt)
         {
             byte* native_fmt;
+            int fmt_byteCount = 0;
             if (fmt != null)
             {
-                int fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
-                byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
-                native_fmt = native_fmt_stackBytes;
-                fixed (char* fmt_ptr = fmt)
+                fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                if (fmt_byteCount > Util.StackAllocationSizeLimit)
                 {
-                    int native_fmt_offset = Encoding.UTF8.GetBytes(fmt_ptr, fmt.Length, native_fmt, fmt_byteCount);
-                    native_fmt[native_fmt_offset] = 0;
+                    native_fmt = Util.Allocate(fmt_byteCount + 1);
                 }
+                else
+                {
+                    byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                    native_fmt = native_fmt_stackBytes;
+                }
+                int native_fmt_offset = Util.GetUtf8(fmt, native_fmt, fmt_byteCount);
+                native_fmt[native_fmt_offset] = 0;
             }
             else { native_fmt = null; }
             ImGuiNative.ImGuiTextBuffer_appendf(NativePtr, native_fmt);
+            if (fmt_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_fmt);
+            }
         }
         public string begin()
         {
