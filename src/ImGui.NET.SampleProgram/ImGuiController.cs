@@ -356,8 +356,8 @@ namespace ImGuiNET
             }
 
             io.MouseDown[0] = leftPressed || snapshot.IsMouseDown(MouseButton.Left);
-            io.MouseDown[1] = middlePressed || snapshot.IsMouseDown(MouseButton.Right);
-            io.MouseDown[2] = rightPressed || snapshot.IsMouseDown(MouseButton.Middle);
+            io.MouseDown[1] = rightPressed || snapshot.IsMouseDown(MouseButton.Right);
+            io.MouseDown[2] = middlePressed || snapshot.IsMouseDown(MouseButton.Middle);
             io.MousePos = mousePosition;
             io.MouseWheel = snapshot.WheelDelta;
 
