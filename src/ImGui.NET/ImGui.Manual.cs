@@ -128,7 +128,7 @@ namespace ImGuiNET
             }
             Util.GetUtf8(input, utf8InputBytes, inputBufSize);
             uint clearBytesCount = (uint)(inputBufSize - utf8InputByteCount);
-            Unsafe.InitBlockUnaligned(utf8InputBytes + utf8InputByteCount + 1, 0, clearBytesCount);
+            Unsafe.InitBlockUnaligned(utf8InputBytes + utf8InputByteCount, 0, clearBytesCount);
             Unsafe.CopyBlock(originalUtf8InputBytes, utf8InputBytes, (uint)inputBufSize);
 
             byte result = ImGuiNative.igInputText(
@@ -218,7 +218,7 @@ namespace ImGuiNET
             }
             Util.GetUtf8(input, utf8InputBytes, inputBufSize);
             uint clearBytesCount = (uint)(inputBufSize - utf8InputByteCount);
-            Unsafe.InitBlockUnaligned(utf8InputBytes + utf8InputByteCount + 1, 0, clearBytesCount);
+            Unsafe.InitBlockUnaligned(utf8InputBytes + utf8InputByteCount, 0, clearBytesCount);
             Unsafe.CopyBlock(originalUtf8InputBytes, utf8InputBytes, (uint)inputBufSize);
 
             byte result = ImGuiNative.igInputTextMultiline(
