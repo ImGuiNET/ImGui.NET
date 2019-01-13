@@ -22,7 +22,8 @@ namespace ImGuiNET
         ScrollbarRounding = 17,
         GrabMinSize = 18,
         GrabRounding = 19,
-        ButtonTextAlign = 20,
-        COUNT = 21,
+        TabRounding = 20,
+        ButtonTextAlign = 21,
+        COUNT = 22,
     }
 }

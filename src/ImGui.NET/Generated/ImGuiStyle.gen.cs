@@ -29,6 +29,8 @@ namespace ImGuiNET
         public float ScrollbarRounding;
         public float GrabMinSize;
         public float GrabRounding;
+        public float TabRounding;
+        public float TabBorderSize;
         public Vector2 ButtonTextAlign;
         public Vector2 DisplayWindowPadding;
         public Vector2 DisplaySafeAreaPadding;
@@ -79,6 +81,13 @@ namespace ImGuiNET
         public Vector4 Colors_40;
         public Vector4 Colors_41;
         public Vector4 Colors_42;
+        public Vector4 Colors_43;
+        public Vector4 Colors_44;
+        public Vector4 Colors_45;
+        public Vector4 Colors_46;
+        public Vector4 Colors_47;
+        public Vector4 Colors_48;
+        public Vector4 Colors_49;
     }
     public unsafe partial struct ImGuiStylePtr
     {
@@ -110,6 +119,8 @@ namespace ImGuiNET
         public ref float ScrollbarRounding => ref Unsafe.AsRef<float>(&NativePtr->ScrollbarRounding);
         public ref float GrabMinSize => ref Unsafe.AsRef<float>(&NativePtr->GrabMinSize);
         public ref float GrabRounding => ref Unsafe.AsRef<float>(&NativePtr->GrabRounding);
+        public ref float TabRounding => ref Unsafe.AsRef<float>(&NativePtr->TabRounding);
+        public ref float TabBorderSize => ref Unsafe.AsRef<float>(&NativePtr->TabBorderSize);
         public ref Vector2 ButtonTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->ButtonTextAlign);
         public ref Vector2 DisplayWindowPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayWindowPadding);
         public ref Vector2 DisplaySafeAreaPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplaySafeAreaPadding);
@@ -117,7 +128,7 @@ namespace ImGuiNET
         public ref bool AntiAliasedLines => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedLines);
         public ref bool AntiAliasedFill => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedFill);
         public ref float CurveTessellationTol => ref Unsafe.AsRef<float>(&NativePtr->CurveTessellationTol);
-        public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 43);
+        public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 50);
         public void ScaleAllSizes(float scale_factor)
         {
             ImGuiNative.ImGuiStyle_ScaleAllSizes(NativePtr, scale_factor);

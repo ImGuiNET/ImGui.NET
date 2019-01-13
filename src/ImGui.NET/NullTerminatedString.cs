@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace ImGuiNET
 {
@@ -6,6 +7,7 @@ namespace ImGuiNET
     {
         public readonly byte* Data;
 
+        public NullTerminatedString(IntPtr data) : this((byte*)data) { }
         public NullTerminatedString(byte* data)
         {
             Data = data;
@@ -13,6 +15,8 @@ namespace ImGuiNET
 
         public override string ToString()
         {
+            if (Data == null) { return null; }
+
             int length = 0;
             byte* ptr = Data;
             while (*ptr != 0)

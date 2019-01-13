@@ -27,6 +27,8 @@ namespace ImGuiNET
         private static bool _showMemoryEditor = false;
         private static byte[] _memoryEditorData;
 
+        private static string _testInput = "TestInputDefaultValue";
+
         static void SetThing(out float i, float val) { i = val; }
 
         static void Main(string[] args)
@@ -35,6 +37,7 @@ namespace ImGuiNET
             VeldridStartup.CreateWindowAndGraphicsDevice(
                 new WindowCreateInfo(50, 50, 1280, 720, WindowState.Normal, "ImGui.NET Sample Program"),
                 new GraphicsDeviceOptions(true, null, true),
+                GraphicsBackend.Direct3D11,
                 out _window,
                 out _gd);
             _window.Resized += () =>
@@ -43,7 +46,7 @@ namespace ImGuiNET
                 _controller.WindowResized(_window.Width, _window.Height);
             };
             _cl = _gd.ResourceFactory.CreateCommandList();
-            _controller = new ImGuiController(_gd, _gd.MainSwapchain.Framebuffer.OutputDescription, _window.Width, _window.Height);
+            _controller = new ImGuiController(_gd, _window, _gd.MainSwapchain.Framebuffer.OutputDescription, _window.Width, _window.Height);
             _memoryEditor = new MemoryEditor();
             Random random = new Random();
             _memoryEditorData = Enumerable.Range(0, 1024).Select(i => (byte)random.Next(255)).ToArray();
@@ -64,6 +67,7 @@ namespace ImGuiNET
                 _cl.End();
                 _gd.SubmitCommands(_cl);
                 _gd.SwapBuffers(_gd.MainSwapchain);
+                _controller.SwapExtraWindows(_gd);
             }
 
             // Clean up Veldrid resources
@@ -85,7 +89,13 @@ namespace ImGuiNET
                 ImGui.SliderFloat("float", ref _f, 0, 1, _f.ToString("0.000"), 1);  // Edit 1 float using a slider from 0.0f to 1.0f    
                 //ImGui.ColorEdit3("clear color", ref _clearColor);                   // Edit 3 floats representing a color
 
+                if (ImGui.InputTextMultiline("TestLabel", ref _testInput, ushort.MaxValue, new Vector2(200, 200)))
+                {
+
+                }
+
                 ImGui.Text($"Mouse position: {ImGui.GetMousePos()}");
+                ImGui.Text($"Mouse down: {ImGui.GetIO().MouseDown[0]}");
 
                 ImGui.Checkbox("Demo Window", ref _showDemoWindow);                 // Edit bools storing our windows open/close state
                 ImGui.Checkbox("Another Window", ref _showAnotherWindow);

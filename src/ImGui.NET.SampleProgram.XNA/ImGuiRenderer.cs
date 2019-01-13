@@ -197,6 +197,7 @@ namespace ImGuiNET.SampleProgram.XNA
 
             // MonoGame-specific //////////////////////
             var offset = .5f;
+            offset = 0f;
             ///////////////////////////////////////////
 
             // FNA-specific ///////////////////////////
