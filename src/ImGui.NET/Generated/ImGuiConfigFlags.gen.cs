@@ -3,6 +3,7 @@ namespace ImGuiNET
     [System.Flags]
     public enum ImGuiConfigFlags
     {
+        None = 0,
         NavEnableKeyboard = 1 << 0,
         NavEnableGamepad = 1 << 1,
         NavEnableSetMousePos = 1 << 2,

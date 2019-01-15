@@ -26,6 +26,8 @@ namespace ImGuiNET
         private static bool _showAnotherWindow = false;
         private static bool _showMemoryEditor = false;
         private static byte[] _memoryEditorData;
+        private static uint s_tab_bar_flags = (uint)ImGuiTabBarFlags.Reorderable;
+        static bool[] s_opened = { true, true, true, true }; // Persistent user state
 
         static void SetThing(out float i, float val) { i = val; }
 
@@ -118,6 +120,75 @@ namespace ImGuiNET
                 // Here we just want to make the demo initial state a bit more friendly!
                 ImGui.SetNextWindowPos(new Vector2(650, 20), ImGuiCond.FirstUseEver);
                 ImGui.ShowDemoWindow(ref _showDemoWindow);
+            }
+
+            if (ImGui.TreeNode("Tabs"))
+            {
+                if (ImGui.TreeNode("Basic"))
+                {
+                    ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags.None;
+                    if (ImGui.BeginTabBar("MyTabBar", tab_bar_flags))
+                    {
+                        if (ImGui.BeginTabItem("Avocado"))
+                        {
+                            ImGui.Text("This is the Avocado tab!\nblah blah blah blah blah");
+                            ImGui.EndTabItem();
+                        }
+                        if (ImGui.BeginTabItem("Broccoli"))
+                        {
+                            ImGui.Text("This is the Broccoli tab!\nblah blah blah blah blah");
+                            ImGui.EndTabItem();
+                        }
+                        if (ImGui.BeginTabItem("Cucumber"))
+                        {
+                            ImGui.Text("This is the Cucumber tab!\nblah blah blah blah blah");
+                            ImGui.EndTabItem();
+                        }
+                        ImGui.EndTabBar();
+                    }
+                    ImGui.Separator();
+                    ImGui.TreePop();
+                }
+
+                if (ImGui.TreeNode("Advanced & Close Button"))
+                {
+                    // Expose a couple of the available flags. In most cases you may just call BeginTabBar() with no flags (0).
+                    ImGui.CheckboxFlags("ImGuiTabBarFlags_Reorderable", ref s_tab_bar_flags, (uint)ImGuiTabBarFlags.Reorderable);
+                    ImGui.CheckboxFlags("ImGuiTabBarFlags_AutoSelectNewTabs", ref s_tab_bar_flags, (uint)ImGuiTabBarFlags.AutoSelectNewTabs);
+                    ImGui.CheckboxFlags("ImGuiTabBarFlags_NoCloseWithMiddleMouseButton", ref s_tab_bar_flags, (uint)ImGuiTabBarFlags.NoCloseWithMiddleMouseButton);
+                    if ((s_tab_bar_flags & (uint)ImGuiTabBarFlags.FittingPolicyMask) == 0)
+                        s_tab_bar_flags |= (uint)ImGuiTabBarFlags.FittingPolicyDefault;
+                    if (ImGui.CheckboxFlags("ImGuiTabBarFlags_FittingPolicyResizeDown", ref s_tab_bar_flags, (uint)ImGuiTabBarFlags.FittingPolicyResizeDown))
+                s_tab_bar_flags &= ~((uint)ImGuiTabBarFlags.FittingPolicyMask ^ (uint)ImGuiTabBarFlags.FittingPolicyResizeDown);
+                    if (ImGui.CheckboxFlags("ImGuiTabBarFlags_FittingPolicyScroll", ref s_tab_bar_flags, (uint)ImGuiTabBarFlags.FittingPolicyScroll))
+                s_tab_bar_flags &= ~((uint)ImGuiTabBarFlags.FittingPolicyMask ^ (uint)ImGuiTabBarFlags.FittingPolicyScroll);
+
+                    // Tab Bar
+                    string[] names = { "Artichoke", "Beetroot", "Celery", "Daikon" };
+
+                    for (int n = 0; n < s_opened.Length; n++)
+                    {
+                        if (n > 0) { ImGui.SameLine(); }
+                        ImGui.Checkbox(names[n], ref s_opened[n]);
+                    }
+
+                    // Passing a bool* to BeginTabItem() is similar to passing one to Begin(): the underlying bool will be set to false when the tab is closed.
+                    if (ImGui.BeginTabBar("MyTabBar", (ImGuiTabBarFlags)s_tab_bar_flags))
+                    {
+                        for (int n = 0; n < s_opened.Length; n++)
+                            if (s_opened[n] && ImGui.BeginTabItem(names[n], ref s_opened[n]))
+                            {
+                                ImGui.Text($"This is the {names[n]} tab!");
+                                if ((n & 1) != 0)
+                                    ImGui.Text("I am an odd tab.");
+                                ImGui.EndTabItem();
+                            }
+                        ImGui.EndTabBar();
+                    }
+                    ImGui.Separator();
+                    ImGui.TreePop();
+                }
+                ImGui.TreePop();
             }
 
             ImGuiIOPtr io = ImGui.GetIO();

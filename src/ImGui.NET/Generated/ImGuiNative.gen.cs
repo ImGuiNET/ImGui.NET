@@ -11,20 +11,6 @@ namespace ImGuiNET
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte CustomRect_IsPacked(CustomRect* self);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GlyphRangesBuilder_AddChar(GlyphRangesBuilder* self, ushort c);
-        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GlyphRangesBuilder_AddRanges(GlyphRangesBuilder* self, ushort* ranges);
-        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GlyphRangesBuilder_AddText(GlyphRangesBuilder* self, byte* text, byte* text_end);
-        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GlyphRangesBuilder_BuildRanges(GlyphRangesBuilder* self, ImVector* out_ranges);
-        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte GlyphRangesBuilder_GetBit(GlyphRangesBuilder* self, int n);
-        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GlyphRangesBuilder_GlyphRangesBuilder();
-        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void GlyphRangesBuilder_SetBit(GlyphRangesBuilder* self, int n);
-        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern ImGuiPayload* igAcceptDragDropPayload(byte* type, ImGuiDragDropFlags flags);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igAlignTextToFramePadding();
@@ -63,6 +49,10 @@ namespace ImGuiNET
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte igBeginPopupModal(byte* name, byte* p_open, ImGuiWindowFlags flags);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern byte igBeginTabBar(byte* str_id, ImGuiTabBarFlags flags);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern byte igBeginTabItem(byte* label, byte* p_open, ImGuiTabItemFlags flags);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igBeginTooltip();
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igBullet();
@@ -77,9 +67,9 @@ namespace ImGuiNET
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl, EntryPoint = "igCalcTextSize_nonUDT2")]
         public static extern Vector2 igCalcTextSize(byte* text, byte* text_end, byte hide_text_after_double_hash, float wrap_width);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igCaptureKeyboardFromApp(byte capture);
+        public static extern void igCaptureKeyboardFromApp(byte want_capture_keyboard_value);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igCaptureMouseFromApp(byte capture);
+        public static extern void igCaptureMouseFromApp(byte want_capture_mouse_value);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte igCheckbox(byte* label, byte* v);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
@@ -170,6 +160,10 @@ namespace ImGuiNET
         public static extern void igEndMenuBar();
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igEndPopup();
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void igEndTabBar();
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void igEndTabItem();
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igEndTooltip();
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
@@ -301,27 +295,27 @@ namespace ImGuiNET
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igIndent(float indent_w);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte igInputDouble(byte* label, double* v, double step, double step_fast, byte* format, ImGuiInputTextFlags extra_flags);
+        public static extern byte igInputDouble(byte* label, double* v, double step, double step_fast, byte* format, ImGuiInputTextFlags flags);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte igInputFloat(byte* label, float* v, float step, float step_fast, byte* format, ImGuiInputTextFlags extra_flags);
+        public static extern byte igInputFloat(byte* label, float* v, float step, float step_fast, byte* format, ImGuiInputTextFlags flags);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte igInputFloat2(byte* label, Vector2* v, byte* format, ImGuiInputTextFlags extra_flags);
+        public static extern byte igInputFloat2(byte* label, Vector2* v, byte* format, ImGuiInputTextFlags flags);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte igInputFloat3(byte* label, Vector3* v, byte* format, ImGuiInputTextFlags extra_flags);
+        public static extern byte igInputFloat3(byte* label, Vector3* v, byte* format, ImGuiInputTextFlags flags);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte igInputFloat4(byte* label, Vector4* v, byte* format, ImGuiInputTextFlags extra_flags);
+        public static extern byte igInputFloat4(byte* label, Vector4* v, byte* format, ImGuiInputTextFlags flags);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte igInputInt(byte* label, int* v, int step, int step_fast, ImGuiInputTextFlags extra_flags);
+        public static extern byte igInputInt(byte* label, int* v, int step, int step_fast, ImGuiInputTextFlags flags);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte igInputInt2(byte* label, int* v, ImGuiInputTextFlags extra_flags);
+        public static extern byte igInputInt2(byte* label, int* v, ImGuiInputTextFlags flags);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte igInputInt3(byte* label, int* v, ImGuiInputTextFlags extra_flags);
+        public static extern byte igInputInt3(byte* label, int* v, ImGuiInputTextFlags flags);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte igInputInt4(byte* label, int* v, ImGuiInputTextFlags extra_flags);
+        public static extern byte igInputInt4(byte* label, int* v, ImGuiInputTextFlags flags);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte igInputScalar(byte* label, ImGuiDataType data_type, void* v, void* step, void* step_fast, byte* format, ImGuiInputTextFlags extra_flags);
+        public static extern byte igInputScalar(byte* label, ImGuiDataType data_type, void* v, void* step, void* step_fast, byte* format, ImGuiInputTextFlags flags);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte igInputScalarN(byte* label, ImGuiDataType data_type, void* v, int components, void* step, void* step_fast, byte* format, ImGuiInputTextFlags extra_flags);
+        public static extern byte igInputScalarN(byte* label, ImGuiDataType data_type, void* v, int components, void* step, void* step_fast, byte* format, ImGuiInputTextFlags flags);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte igInputText(byte* label, byte* buf, uint buf_size, ImGuiInputTextFlags flags, ImGuiInputTextCallback callback, void* user_data);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
@@ -481,7 +475,7 @@ namespace ImGuiNET
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igPushStyleVarVec2(ImGuiStyleVar idx, Vector2 val);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igPushTextWrapPos(float wrap_pos_x);
+        public static extern void igPushTextWrapPos(float wrap_local_pos_x);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte igRadioButtonBool(byte* label, byte active);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
@@ -491,7 +485,7 @@ namespace ImGuiNET
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igResetMouseDragDelta(int button);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igSameLine(float pos_x, float spacing_w);
+        public static extern void igSameLine(float local_pos_x, float spacing_w);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igSaveIniSettingsToDisk(byte* ini_filename);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
@@ -515,11 +509,11 @@ namespace ImGuiNET
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igSetCursorPos(Vector2 local_pos);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igSetCursorPosX(float x);
+        public static extern void igSetCursorPosX(float local_x);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igSetCursorPosY(float y);
+        public static extern void igSetCursorPosY(float local_y);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igSetCursorScreenPos(Vector2 screen_pos);
+        public static extern void igSetCursorScreenPos(Vector2 pos);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte igSetDragDropPayload(byte* type, void* data, uint size, ImGuiCond cond);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
@@ -547,7 +541,7 @@ namespace ImGuiNET
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igSetNextWindowSizeConstraints(Vector2 size_min, Vector2 size_max, ImGuiSizeCallback custom_callback, void* custom_callback_data);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igSetScrollFromPosY(float pos_y, float center_y_ratio);
+        public static extern void igSetScrollFromPosY(float local_y, float center_y_ratio);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igSetScrollHereY(float center_y_ratio);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
@@ -556,6 +550,8 @@ namespace ImGuiNET
         public static extern void igSetScrollY(float scroll_y);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igSetStateStorage(ImGuiStorage* storage);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void igSetTabItemClosed(byte* tab_or_docked_window_label);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igSetTooltip(byte* fmt);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
@@ -576,6 +572,8 @@ namespace ImGuiNET
         public static extern void igSetWindowSizeVec2(Vector2 size, ImGuiCond cond);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igSetWindowSizeStr(byte* name, Vector2 size, ImGuiCond cond);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void igShowAboutWindow(byte* p_open);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igShowDemoWindow(byte* p_open);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
@@ -885,6 +883,20 @@ namespace ImGuiNET
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImFontConfig_ImFontConfig();
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImFontGlyphRangesBuilder_AddChar(ImFontGlyphRangesBuilder* self, ushort c);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImFontGlyphRangesBuilder_AddRanges(ImFontGlyphRangesBuilder* self, ushort* ranges);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImFontGlyphRangesBuilder_AddText(ImFontGlyphRangesBuilder* self, byte* text, byte* text_end);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImFontGlyphRangesBuilder_BuildRanges(ImFontGlyphRangesBuilder* self, ImVector* out_ranges);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern byte ImFontGlyphRangesBuilder_GetBit(ImFontGlyphRangesBuilder* self, int n);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder();
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImFontGlyphRangesBuilder_SetBit(ImFontGlyphRangesBuilder* self, int n);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImGuiInputTextCallbackData_DeleteChars(ImGuiInputTextCallbackData* self, int pos, int bytes_count);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte ImGuiInputTextCallbackData_HasSelection(ImGuiInputTextCallbackData* self);
@@ -895,7 +907,7 @@ namespace ImGuiNET
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImGuiIO_AddInputCharacter(ImGuiIO* self, ushort c);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImGuiIO_AddInputCharactersUTF8(ImGuiIO* self, byte* utf8_chars);
+        public static extern void ImGuiIO_AddInputCharactersUTF8(ImGuiIO* self, byte* str);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImGuiIO_ClearInputCharacters(ImGuiIO* self);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]

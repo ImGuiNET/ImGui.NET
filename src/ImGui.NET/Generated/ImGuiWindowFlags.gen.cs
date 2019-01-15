@@ -23,6 +23,7 @@ namespace ImGuiNET
         AlwaysUseWindowPadding = 1 << 16,
         NoNavInputs = 1 << 18,
         NoNavFocus = 1 << 19,
+        UnsavedDocument = 1 << 20,
         NoNav = NoNavInputs | NoNavFocus,
         NoDecoration = NoTitleBar | NoResize | NoScrollbar | NoCollapse,
         NoInputs = NoMouseInputs | NoNavInputs | NoNavFocus,

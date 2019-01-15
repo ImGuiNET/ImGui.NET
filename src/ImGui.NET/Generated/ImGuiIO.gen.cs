@@ -31,7 +31,13 @@ namespace ImGuiNET
         public byte MouseDrawCursor;
         public byte ConfigMacOSXBehaviors;
         public byte ConfigInputTextCursorBlink;
-        public byte ConfigResizeWindowsFromEdges;
+        public byte ConfigWindowsResizeFromEdges;
+        public byte ConfigWindowsMoveFromTitleBarOnly;
+        public byte* BackendPlatformName;
+        public byte* BackendRendererName;
+        public void* BackendPlatformUserData;
+        public void* BackendRendererUserData;
+        public void* BackendLanguageUserData;
         public IntPtr GetClipboardTextFn;
         public IntPtr SetClipboardTextFn;
         public void* ClipboardUserData;
@@ -47,7 +53,6 @@ namespace ImGuiNET
         public byte KeyAlt;
         public byte KeySuper;
         public fixed byte KeysDown[512];
-        public fixed ushort InputCharacters[17];
         public fixed float NavInputs[21];
         public byte WantCaptureMouse;
         public byte WantCaptureKeyboard;
@@ -86,6 +91,7 @@ namespace ImGuiNET
         public fixed float KeysDownDurationPrev[512];
         public fixed float NavInputsDownDuration[21];
         public fixed float NavInputsDownDurationPrev[21];
+        public ImVector InputQueueCharacters;
     }
     public unsafe partial struct ImGuiIOPtr
     {
@@ -119,7 +125,13 @@ namespace ImGuiNET
         public ref bool MouseDrawCursor => ref Unsafe.AsRef<bool>(&NativePtr->MouseDrawCursor);
         public ref bool ConfigMacOSXBehaviors => ref Unsafe.AsRef<bool>(&NativePtr->ConfigMacOSXBehaviors);
         public ref bool ConfigInputTextCursorBlink => ref Unsafe.AsRef<bool>(&NativePtr->ConfigInputTextCursorBlink);
-        public ref bool ConfigResizeWindowsFromEdges => ref Unsafe.AsRef<bool>(&NativePtr->ConfigResizeWindowsFromEdges);
+        public ref bool ConfigWindowsResizeFromEdges => ref Unsafe.AsRef<bool>(&NativePtr->ConfigWindowsResizeFromEdges);
+        public ref bool ConfigWindowsMoveFromTitleBarOnly => ref Unsafe.AsRef<bool>(&NativePtr->ConfigWindowsMoveFromTitleBarOnly);
+        public NullTerminatedString BackendPlatformName => new NullTerminatedString(NativePtr->BackendPlatformName);
+        public NullTerminatedString BackendRendererName => new NullTerminatedString(NativePtr->BackendRendererName);
+        public IntPtr BackendPlatformUserData { get => (IntPtr)NativePtr->BackendPlatformUserData; set => NativePtr->BackendPlatformUserData = (void*)value; }
+        public IntPtr BackendRendererUserData { get => (IntPtr)NativePtr->BackendRendererUserData; set => NativePtr->BackendRendererUserData = (void*)value; }
+        public IntPtr BackendLanguageUserData { get => (IntPtr)NativePtr->BackendLanguageUserData; set => NativePtr->BackendLanguageUserData = (void*)value; }
         public ref IntPtr GetClipboardTextFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->GetClipboardTextFn);
         public ref IntPtr SetClipboardTextFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->SetClipboardTextFn);
         public IntPtr ClipboardUserData { get => (IntPtr)NativePtr->ClipboardUserData; set => NativePtr->ClipboardUserData = (void*)value; }
@@ -135,7 +147,6 @@ namespace ImGuiNET
         public ref bool KeyAlt => ref Unsafe.AsRef<bool>(&NativePtr->KeyAlt);
         public ref bool KeySuper => ref Unsafe.AsRef<bool>(&NativePtr->KeySuper);
         public RangeAccessor<bool> KeysDown => new RangeAccessor<bool>(NativePtr->KeysDown, 512);
-        public RangeAccessor<ushort> InputCharacters => new RangeAccessor<ushort>(NativePtr->InputCharacters, 17);
         public RangeAccessor<float> NavInputs => new RangeAccessor<float>(NativePtr->NavInputs, 21);
         public ref bool WantCaptureMouse => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureMouse);
         public ref bool WantCaptureKeyboard => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureKeyboard);
@@ -166,34 +177,35 @@ namespace ImGuiNET
         public RangeAccessor<float> KeysDownDurationPrev => new RangeAccessor<float>(NativePtr->KeysDownDurationPrev, 512);
         public RangeAccessor<float> NavInputsDownDuration => new RangeAccessor<float>(NativePtr->NavInputsDownDuration, 21);
         public RangeAccessor<float> NavInputsDownDurationPrev => new RangeAccessor<float>(NativePtr->NavInputsDownDurationPrev, 21);
+        public ImVector<ushort> InputQueueCharacters => new ImVector<ushort>(NativePtr->InputQueueCharacters);
         public void AddInputCharacter(ushort c)
         {
             ImGuiNative.ImGuiIO_AddInputCharacter(NativePtr, c);
         }
-        public void AddInputCharactersUTF8(string utf8_chars)
+        public void AddInputCharactersUTF8(string str)
         {
-            byte* native_utf8_chars;
-            int utf8_chars_byteCount = 0;
-            if (utf8_chars != null)
+            byte* native_str;
+            int str_byteCount = 0;
+            if (str != null)
             {
-                utf8_chars_byteCount = Encoding.UTF8.GetByteCount(utf8_chars);
-                if (utf8_chars_byteCount > Util.StackAllocationSizeLimit)
+                str_byteCount = Encoding.UTF8.GetByteCount(str);
+                if (str_byteCount > Util.StackAllocationSizeLimit)
                 {
-                    native_utf8_chars = Util.Allocate(utf8_chars_byteCount + 1);
+                    native_str = Util.Allocate(str_byteCount + 1);
                 }
                 else
                 {
-                    byte* native_utf8_chars_stackBytes = stackalloc byte[utf8_chars_byteCount + 1];
-                    native_utf8_chars = native_utf8_chars_stackBytes;
+                    byte* native_str_stackBytes = stackalloc byte[str_byteCount + 1];
+                    native_str = native_str_stackBytes;
                 }
-                int native_utf8_chars_offset = Util.GetUtf8(utf8_chars, native_utf8_chars, utf8_chars_byteCount);
-                native_utf8_chars[native_utf8_chars_offset] = 0;
+                int native_str_offset = Util.GetUtf8(str, native_str, str_byteCount);
+                native_str[native_str_offset] = 0;
             }
-            else { native_utf8_chars = null; }
-            ImGuiNative.ImGuiIO_AddInputCharactersUTF8(NativePtr, native_utf8_chars);
-            if (utf8_chars_byteCount > Util.StackAllocationSizeLimit)
+            else { native_str = null; }
+            ImGuiNative.ImGuiIO_AddInputCharactersUTF8(NativePtr, native_str);
+            if (str_byteCount > Util.StackAllocationSizeLimit)
             {
-                Util.Free(native_utf8_chars);
+                Util.Free(native_str);
             }
         }
         public void ClearInputCharacters()

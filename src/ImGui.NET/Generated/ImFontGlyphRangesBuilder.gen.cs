@@ -5,27 +5,27 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe partial struct GlyphRangesBuilder
+    public unsafe partial struct ImFontGlyphRangesBuilder
     {
         public ImVector UsedChars;
     }
-    public unsafe partial struct GlyphRangesBuilderPtr
+    public unsafe partial struct ImFontGlyphRangesBuilderPtr
     {
-        public GlyphRangesBuilder* NativePtr { get; }
-        public GlyphRangesBuilderPtr(GlyphRangesBuilder* nativePtr) => NativePtr = nativePtr;
-        public GlyphRangesBuilderPtr(IntPtr nativePtr) => NativePtr = (GlyphRangesBuilder*)nativePtr;
-        public static implicit operator GlyphRangesBuilderPtr(GlyphRangesBuilder* nativePtr) => new GlyphRangesBuilderPtr(nativePtr);
-        public static implicit operator GlyphRangesBuilder* (GlyphRangesBuilderPtr wrappedPtr) => wrappedPtr.NativePtr;
-        public static implicit operator GlyphRangesBuilderPtr(IntPtr nativePtr) => new GlyphRangesBuilderPtr(nativePtr);
-        public ImVector<byte> UsedChars => new ImVector<byte>(NativePtr->UsedChars);
+        public ImFontGlyphRangesBuilder* NativePtr { get; }
+        public ImFontGlyphRangesBuilderPtr(ImFontGlyphRangesBuilder* nativePtr) => NativePtr = nativePtr;
+        public ImFontGlyphRangesBuilderPtr(IntPtr nativePtr) => NativePtr = (ImFontGlyphRangesBuilder*)nativePtr;
+        public static implicit operator ImFontGlyphRangesBuilderPtr(ImFontGlyphRangesBuilder* nativePtr) => new ImFontGlyphRangesBuilderPtr(nativePtr);
+        public static implicit operator ImFontGlyphRangesBuilder* (ImFontGlyphRangesBuilderPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImFontGlyphRangesBuilderPtr(IntPtr nativePtr) => new ImFontGlyphRangesBuilderPtr(nativePtr);
+        public ImVector<int> UsedChars => new ImVector<int>(NativePtr->UsedChars);
         public void AddChar(ushort c)
         {
-            ImGuiNative.GlyphRangesBuilder_AddChar(NativePtr, c);
+            ImGuiNative.ImFontGlyphRangesBuilder_AddChar(NativePtr, c);
         }
         public void AddRanges(IntPtr ranges)
         {
             ushort* native_ranges = (ushort*)ranges.ToPointer();
-            ImGuiNative.GlyphRangesBuilder_AddRanges(NativePtr, native_ranges);
+            ImGuiNative.ImFontGlyphRangesBuilder_AddRanges(NativePtr, native_ranges);
         }
         public void AddText(string text)
         {
@@ -48,7 +48,7 @@ namespace ImGuiNET
             }
             else { native_text = null; }
             byte* native_text_end = null;
-            ImGuiNative.GlyphRangesBuilder_AddText(NativePtr, native_text, native_text_end);
+            ImGuiNative.ImFontGlyphRangesBuilder_AddText(NativePtr, native_text, native_text_end);
             if (text_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_text);
@@ -58,17 +58,17 @@ namespace ImGuiNET
         {
             fixed (ImVector* native_out_ranges = &out_ranges)
             {
-                ImGuiNative.GlyphRangesBuilder_BuildRanges(NativePtr, native_out_ranges);
+                ImGuiNative.ImFontGlyphRangesBuilder_BuildRanges(NativePtr, native_out_ranges);
             }
         }
         public bool GetBit(int n)
         {
-            byte ret = ImGuiNative.GlyphRangesBuilder_GetBit(NativePtr, n);
+            byte ret = ImGuiNative.ImFontGlyphRangesBuilder_GetBit(NativePtr, n);
             return ret != 0;
         }
         public void SetBit(int n)
         {
-            ImGuiNative.GlyphRangesBuilder_SetBit(NativePtr, n);
+            ImGuiNative.ImFontGlyphRangesBuilder_SetBit(NativePtr, n);
         }
     }
 }
