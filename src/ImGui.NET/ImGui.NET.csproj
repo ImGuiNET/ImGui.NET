@@ -33,7 +33,7 @@
       <PackagePath>runtimes/linux-x64/native</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="..\..\deps\cimgui\osx-x64\cimgui.dylib">
+    <Content Include="..\..\deps\cimgui\osx-x64\libcimgui.dylib">
       <PackagePath>runtimes/osx-x64/native</PackagePath>
       <Pack>true</Pack>
     </Content>
