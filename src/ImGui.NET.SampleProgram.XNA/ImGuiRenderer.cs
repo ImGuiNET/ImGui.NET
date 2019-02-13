@@ -179,7 +179,7 @@ namespace ImGuiNET.SampleProgram.XNA
             //{
             //    if (c == '\t') return;
 
-            //    ImGui.AddInputCharacter(c);
+            //    ImGui.GetIO().AddInputCharacter(c);
             //};
             ///////////////////////////////////////////
 
