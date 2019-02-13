@@ -37,12 +37,11 @@ namespace ImGuiNET.SampleProgram.XNA
 
         protected override void LoadContent()
         {
-			// Texture loading example
+            // Texture loading example
 
 			// First, load the texture as a Texture2D (can also be done using the XNA/FNA content pipeline)
 			_xnaTexture = CreateTexture(GraphicsDevice, 300, 150, pixel =>
 			{
-				//Console.WriteLine( pixel );
 				var red = (pixel % 300) / 2;
 				return new Color(red, 1, 1);
 			});
