@@ -25,6 +25,10 @@ namespace ImGuiNET
             byte* ret = ImGuiNative.TextRange_begin(NativePtr);
             return Util.StringFromPtr(ret);
         }
+        public void Destroy()
+        {
+            ImGuiNative.TextRange_destroy(NativePtr);
+        }
         public bool empty()
         {
             byte ret = ImGuiNative.TextRange_empty(NativePtr);

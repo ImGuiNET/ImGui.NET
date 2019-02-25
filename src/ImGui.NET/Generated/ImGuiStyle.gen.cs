@@ -127,6 +127,10 @@ namespace ImGuiNET
         public ref bool AntiAliasedFill => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedFill);
         public ref float CurveTessellationTol => ref Unsafe.AsRef<float>(&NativePtr->CurveTessellationTol);
         public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 48);
+        public void Destroy()
+        {
+            ImGuiNative.ImGuiStyle_destroy(NativePtr);
+        }
         public void ScaleAllSizes(float scale_factor)
         {
             ImGuiNative.ImGuiStyle_ScaleAllSizes(NativePtr, scale_factor);

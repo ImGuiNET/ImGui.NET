@@ -338,6 +338,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImFontAtlas_ClearTexData(NativePtr);
         }
+        public void Destroy()
+        {
+            ImGuiNative.ImFontAtlas_destroy(NativePtr);
+        }
         public CustomRect* GetCustomRectByIndex(int index)
         {
             CustomRect* ret = ImGuiNative.ImFontAtlas_GetCustomRectByIndex(NativePtr, index);

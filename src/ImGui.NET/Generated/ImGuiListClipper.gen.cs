@@ -37,6 +37,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiListClipper_Begin(NativePtr, items_count, items_height);
         }
+        public void Destroy()
+        {
+            ImGuiNative.ImGuiListClipper_destroy(NativePtr);
+        }
         public void End()
         {
             ImGuiNative.ImGuiListClipper_End(NativePtr);

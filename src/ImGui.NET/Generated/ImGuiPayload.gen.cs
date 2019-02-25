@@ -36,6 +36,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiPayload_Clear(NativePtr);
         }
+        public void Destroy()
+        {
+            ImGuiNative.ImGuiPayload_destroy(NativePtr);
+        }
         public bool IsDataType(string type)
         {
             byte* native_type;

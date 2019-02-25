@@ -52,5 +52,9 @@ namespace ImGuiNET
         public ref float RasterizerMultiply => ref Unsafe.AsRef<float>(&NativePtr->RasterizerMultiply);
         public RangeAccessor<byte> Name => new RangeAccessor<byte>(NativePtr->Name, 40);
         public ImFontPtr DstFont => new ImFontPtr(NativePtr->DstFont);
+        public void Destroy()
+        {
+            ImGuiNative.ImFontConfig_destroy(NativePtr);
+        }
     }
 }

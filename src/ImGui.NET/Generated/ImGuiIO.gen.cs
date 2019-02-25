@@ -212,5 +212,9 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiIO_ClearInputCharacters(NativePtr);
         }
+        public void Destroy()
+        {
+            ImGuiNative.ImGuiIO_destroy(NativePtr);
+        }
     }
 }

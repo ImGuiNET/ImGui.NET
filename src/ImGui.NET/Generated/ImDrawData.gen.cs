@@ -38,6 +38,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawData_DeIndexAllBuffers(NativePtr);
         }
+        public void Destroy()
+        {
+            ImGuiNative.ImDrawData_destroy(NativePtr);
+        }
         public void ScaleClipRects(Vector2 sc)
         {
             ImGuiNative.ImDrawData_ScaleClipRects(NativePtr, sc);

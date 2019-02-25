@@ -58,6 +58,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiTextBuffer_clear(NativePtr);
         }
+        public void Destroy()
+        {
+            ImGuiNative.ImGuiTextBuffer_destroy(NativePtr);
+        }
         public bool empty()
         {
             byte ret = ImGuiNative.ImGuiTextBuffer_empty(NativePtr);

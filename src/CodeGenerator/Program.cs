@@ -168,6 +168,10 @@ namespace CodeGenerator
                     string ov_cimguiname = val["ov_cimguiname"]?.ToString();
                     string cimguiname = val["cimguiname"].ToString();
                     string friendlyName = val["funcname"]?.ToString();
+                    if (cimguiname.EndsWith("_destroy"))
+                    {
+                        friendlyName = "Destroy";
+                    }
                     if (friendlyName == null) { return null; }
 
                     string exportedName = ov_cimguiname;
@@ -208,6 +212,7 @@ namespace CodeGenerator
 
                     string structName = val["stname"].ToString();
                     bool isConstructor = val.Value<bool>("constructor");
+                    bool isDestructor = val.Value<bool>("destructor");
                     if (isConstructor)
                     {
                         returnType = structName + "*";
@@ -221,7 +226,8 @@ namespace CodeGenerator
                         returnType,
                         structName,
                         comment,
-                        isConstructor);
+                        isConstructor,
+                        isDestructor);
                 }).Where(od => od != null).ToArray();
 
                 return new FunctionDefinition(name, overloads);
@@ -1134,6 +1140,7 @@ namespace CodeGenerator
         public bool IsMemberFunction { get; }
         public string Comment { get; }
         public bool IsConstructor { get; }
+        public bool IsDestructor { get; }
 
         public OverloadDefinition(
             string exportedName,
@@ -1143,7 +1150,8 @@ namespace CodeGenerator
             string returnType,
             string structName,
             string comment,
-            bool isConstructor)
+            bool isConstructor,
+            bool isDestructor)
         {
             ExportedName = exportedName;
             FriendlyName = friendlyName;
@@ -1154,6 +1162,7 @@ namespace CodeGenerator
             IsMemberFunction = structName != "ImGui";
             Comment = comment;
             IsConstructor = isConstructor;
+            IsDestructor = isDestructor;
         }
     }
 

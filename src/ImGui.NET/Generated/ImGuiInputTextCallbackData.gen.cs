@@ -44,6 +44,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiInputTextCallbackData_DeleteChars(NativePtr, pos, bytes_count);
         }
+        public void Destroy()
+        {
+            ImGuiNative.ImGuiInputTextCallbackData_destroy(NativePtr);
+        }
         public bool HasSelection()
         {
             byte ret = ImGuiNative.ImGuiInputTextCallbackData_HasSelection(NativePtr);

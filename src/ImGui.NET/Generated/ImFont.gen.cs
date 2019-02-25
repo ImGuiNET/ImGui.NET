@@ -70,6 +70,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImFont_ClearOutputData(NativePtr);
         }
+        public void Destroy()
+        {
+            ImGuiNative.ImFont_destroy(NativePtr);
+        }
         public ImFontGlyphPtr FindGlyph(ushort c)
         {
             ImFontGlyph* ret = ImGuiNative.ImFont_FindGlyph(NativePtr, c);

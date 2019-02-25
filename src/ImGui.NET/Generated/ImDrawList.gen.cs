@@ -274,6 +274,10 @@ namespace ImGuiNET
             ImDrawList* ret = ImGuiNative.ImDrawList_CloneOutput(NativePtr);
             return new ImDrawListPtr(ret);
         }
+        public void Destroy()
+        {
+            ImGuiNative.ImDrawList_destroy(NativePtr);
+        }
         public Vector2 GetClipRectMax()
         {
             Vector2 ret = ImGuiNative.ImDrawList_GetClipRectMax(NativePtr);

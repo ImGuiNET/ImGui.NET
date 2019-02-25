@@ -61,6 +61,10 @@ namespace ImGuiNET
                 ImGuiNative.ImFontGlyphRangesBuilder_BuildRanges(NativePtr, native_out_ranges);
             }
         }
+        public void Destroy()
+        {
+            ImGuiNative.ImFontGlyphRangesBuilder_destroy(NativePtr);
+        }
         public bool GetBit(int n)
         {
             byte ret = ImGuiNative.ImFontGlyphRangesBuilder_GetBit(NativePtr, n);

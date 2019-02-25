@@ -32,6 +32,10 @@ namespace ImGuiNET
         public ref float GlyphAdvanceX => ref Unsafe.AsRef<float>(&NativePtr->GlyphAdvanceX);
         public ref Vector2 GlyphOffset => ref Unsafe.AsRef<Vector2>(&NativePtr->GlyphOffset);
         public ImFontPtr Font => new ImFontPtr(NativePtr->Font);
+        public void Destroy()
+        {
+            ImGuiNative.CustomRect_destroy(NativePtr);
+        }
         public bool IsPacked()
         {
             byte ret = ImGuiNative.CustomRect_IsPacked(NativePtr);

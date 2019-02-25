@@ -30,6 +30,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiTextFilter_Clear(NativePtr);
         }
+        public void Destroy()
+        {
+            ImGuiNative.ImGuiTextFilter_destroy(NativePtr);
+        }
         public bool Draw()
         {
             byte* native_label;
