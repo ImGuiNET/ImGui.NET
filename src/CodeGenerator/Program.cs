@@ -207,6 +207,11 @@ namespace CodeGenerator
                     string comment = null;
 
                     string structName = val["stname"].ToString();
+                    bool isConstructor = val.Value<bool>("constructor");
+                    if (isConstructor)
+                    {
+                        returnType = structName + "*";
+                    }
 
                     return new OverloadDefinition(
                         exportedName,
@@ -216,7 +221,7 @@ namespace CodeGenerator
                         returnType,
                         structName,
                         comment,
-                        enums);
+                        isConstructor);
                 }).Where(od => od != null).ToArray();
 
                 return new FunctionDefinition(name, overloads);
@@ -361,8 +366,10 @@ namespace CodeGenerator
                                 continue;
                             }
 
-                            if (overload.FriendlyName == overload.StructName)
+                            if (overload.IsConstructor)
                             {
+                                // TODO: Emit a static function on the type that invokes the native constructor.
+                                // Also, add a "Dispose" function or similar.
                                 continue;
                             }
 
@@ -636,7 +643,7 @@ namespace CodeGenerator
                         preCallLines.Add($"    }}");
                         preCallLines.Add($"    int {nativeArgName}_offset = Util.GetUtf8({textToEncode}, {nativeArgName}, {correctedIdentifier}_byteCount);");
                         preCallLines.Add($"    {nativeArgName}[{nativeArgName}_offset] = 0;");
-                        
+
                         if (!hasDefault)
                         {
                             preCallLines.Add("}");
@@ -1126,6 +1133,7 @@ namespace CodeGenerator
         public string StructName { get; }
         public bool IsMemberFunction { get; }
         public string Comment { get; }
+        public bool IsConstructor { get; }
 
         public OverloadDefinition(
             string exportedName,
@@ -1135,7 +1143,7 @@ namespace CodeGenerator
             string returnType,
             string structName,
             string comment,
-            EnumDefinition[] enums)
+            bool isConstructor)
         {
             ExportedName = exportedName;
             FriendlyName = friendlyName;
@@ -1145,6 +1153,7 @@ namespace CodeGenerator
             StructName = structName;
             IsMemberFunction = structName != "ImGui";
             Comment = comment;
+            IsConstructor = isConstructor;
         }
     }
 
