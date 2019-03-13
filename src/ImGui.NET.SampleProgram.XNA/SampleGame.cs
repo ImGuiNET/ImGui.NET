@@ -39,11 +39,15 @@ namespace ImGuiNET.SampleProgram.XNA
         {
             // Texture loading example
 
-            // First, load the texture as a Texture2D (can also be done using the XNA/FNA content pipeline)
-            _xnaTexture = Texture2D.FromStream(GraphicsDevice, GenerateImage(300, 150));
+			// First, load the texture as a Texture2D (can also be done using the XNA/FNA content pipeline)
+			_xnaTexture = CreateTexture(GraphicsDevice, 300, 150, pixel =>
+			{
+				var red = (pixel % 300) / 2;
+				return new Color(red, 1, 1);
+			});
 
-            // Then, bind it to an ImGui-friendly pointer, that we can use during regular ImGui.** calls (see below)
-            _imGuiTexture = _imGuiRenderer.BindTexture(_xnaTexture);
+			// Then, bind it to an ImGui-friendly pointer, that we can use during regular ImGui.** calls (see below)
+			_imGuiTexture = _imGuiRenderer.BindTexture(_xnaTexture);
 
             base.LoadContent();
         }
@@ -107,28 +111,23 @@ namespace ImGuiNET.SampleProgram.XNA
             }
         }
 
-        private static Stream GenerateImage(int width, int height)
-        {
-            var stream = new MemoryStream();
-            var random = new Random(42);
+		public static Texture2D CreateTexture(GraphicsDevice device, int width, int height, Func<int, Color> paint)
+		{
+			//initialize a texture
+			var texture = new Texture2D(device, width, height);
 
-            var bmp = new System.Drawing.Bitmap(width, height);
-            var graphics = System.Drawing.Graphics.FromImage(bmp);
-            graphics.Clear(System.Drawing.Color.Black);
+			//the array holds the color for each pixel in the texture
+			Color[] data = new Color[width * height];
+			for(var pixel = 0; pixel < data.Length; pixel++)
+			{
+				//the function applies the color according to the specified pixel
+				data[pixel] = paint( pixel );
+			}
 
-            for (int i = 0; i < 100; i++)
-            {
-                var size = random.Next(10, 50);
-                var pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255)), random.Next(1, 4));
+			//set the color
+			texture.SetData( data );
 
-                graphics.DrawEllipse(pen, random.Next(0, width), random.Next(0, height), size, size);
-            }
-
-            bmp.Save(stream, System.Drawing.Imaging.ImageFormat.Bmp);
-
-            stream.Position = 0;
-
-            return stream;
-        }
-    }
+			return texture;
+		}
+	}
 }

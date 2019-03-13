@@ -436,6 +436,7 @@ namespace CodeGenerator
                     {
                         string exportedName = overload.ExportedName;
                         if (exportedName.Contains("~")) { continue; }
+                        if (exportedName.Contains("ImVector_")) { continue; }
                         if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
 
                         string ret = GetTypeString(overload.ReturnType, false);
@@ -1159,7 +1160,7 @@ namespace CodeGenerator
             DefaultValues = defaultValues;
             ReturnType = returnType.Replace("const", string.Empty).Replace("inline", string.Empty).Trim();
             StructName = structName;
-            IsMemberFunction = structName != "ImGui";
+            IsMemberFunction = !string.IsNullOrEmpty(structName);
             Comment = comment;
             IsConstructor = isConstructor;
             IsDestructor = isDestructor;

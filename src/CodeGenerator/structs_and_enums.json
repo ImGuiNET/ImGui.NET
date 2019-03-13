@@ -1326,8 +1326,13 @@
       },
       {
         "calc_value": 22,
-        "name": "ImGuiStyleVar_COUNT",
+        "name": "ImGuiStyleVar_SelectableTextAlign",
         "value": 22
+      },
+      {
+        "calc_value": 23,
+        "name": "ImGuiStyleVar_COUNT",
+        "value": 23
       }
     ],
     "ImGuiTabBarFlags_": [
@@ -1348,12 +1353,12 @@
       },
       {
         "calc_value": 4,
-        "name": "ImGuiTabBarFlags_NoCloseWithMiddleMouseButton",
+        "name": "ImGuiTabBarFlags_TabListPopupButton",
         "value": "1 << 2"
       },
       {
         "calc_value": 8,
-        "name": "ImGuiTabBarFlags_NoTabListPopupButton",
+        "name": "ImGuiTabBarFlags_NoCloseWithMiddleMouseButton",
         "value": "1 << 3"
       },
       {
@@ -1742,6 +1747,10 @@
       {
         "name": "DisplaySize",
         "type": "ImVec2"
+      },
+      {
+        "name": "FramebufferScale",
+        "type": "ImVec2"
       }
     ],
     "ImDrawList": [
@@ -1829,26 +1838,17 @@
     ],
     "ImFont": [
       {
-        "name": "FontSize",
-        "type": "float"
-      },
-      {
-        "name": "Scale",
-        "type": "float"
-      },
-      {
-        "name": "DisplayOffset",
-        "type": "ImVec2"
-      },
-      {
-        "name": "Glyphs",
-        "template_type": "ImFontGlyph",
-        "type": "ImVector_ImFontGlyph"
-      },
-      {
         "name": "IndexAdvanceX",
         "template_type": "float",
         "type": "ImVector_float"
+      },
+      {
+        "name": "FallbackAdvanceX",
+        "type": "float"
+      },
+      {
+        "name": "FontSize",
+        "type": "float"
       },
       {
         "name": "IndexLookup",
@@ -1856,28 +1856,37 @@
         "type": "ImVector_ImWchar"
       },
       {
+        "name": "Glyphs",
+        "template_type": "ImFontGlyph",
+        "type": "ImVector_ImFontGlyph"
+      },
+      {
         "name": "FallbackGlyph",
         "type": "const ImFontGlyph*"
       },
       {
-        "name": "FallbackAdvanceX",
-        "type": "float"
+        "name": "DisplayOffset",
+        "type": "ImVec2"
       },
       {
-        "name": "FallbackChar",
-        "type": "ImWchar"
+        "name": "ContainerAtlas",
+        "type": "ImFontAtlas*"
+      },
+      {
+        "name": "ConfigData",
+        "type": "const ImFontConfig*"
       },
       {
         "name": "ConfigDataCount",
         "type": "short"
       },
       {
-        "name": "ConfigData",
-        "type": "ImFontConfig*"
+        "name": "FallbackChar",
+        "type": "ImWchar"
       },
       {
-        "name": "ContainerAtlas",
-        "type": "ImFontAtlas*"
+        "name": "Scale",
+        "type": "float"
       },
       {
         "name": "Ascent",
@@ -1888,12 +1897,12 @@
         "type": "float"
       },
       {
-        "name": "DirtyLookupTables",
-        "type": "bool"
-      },
-      {
         "name": "MetricsTotalSurface",
         "type": "int"
+      },
+      {
+        "name": "DirtyLookupTables",
+        "type": "bool"
       }
     ],
     "ImFontAtlas": [
@@ -2162,14 +2171,6 @@
       },
       {
         "name": "DisplayFramebufferScale",
-        "type": "ImVec2"
-      },
-      {
-        "name": "DisplayVisibleMin",
-        "type": "ImVec2"
-      },
-      {
-        "name": "DisplayVisibleMax",
         "type": "ImVec2"
       },
       {
@@ -2659,6 +2660,10 @@
         "type": "ImVec2"
       },
       {
+        "name": "SelectableTextAlign",
+        "type": "ImVec2"
+      },
+      {
         "name": "DisplayWindowPadding",
         "type": "ImVec2"
       },
@@ -2739,15 +2744,14 @@
         "type": "float"
       }
     ],
-    "ImVector": [],
     "Pair": [
       {
         "name": "key",
         "type": "ImGuiID"
       },
       {
-        "name": "}",
-        "type": "union { int val_i; float val_f; void* val_p;"
+        "name": "",
+        "type": "union { int val_i; float val_f; void* val_p;}"
       }
     ],
     "TextRange": [

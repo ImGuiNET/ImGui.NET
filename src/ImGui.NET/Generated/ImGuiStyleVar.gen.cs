@@ -24,6 +24,7 @@ namespace ImGuiNET
         GrabRounding = 19,
         TabRounding = 20,
         ButtonTextAlign = 21,
-        COUNT = 22,
+        SelectableTextAlign = 22,
+        COUNT = 23,
     }
 }

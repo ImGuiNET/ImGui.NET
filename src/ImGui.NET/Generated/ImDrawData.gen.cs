@@ -14,6 +14,7 @@ namespace ImGuiNET
         public int TotalVtxCount;
         public Vector2 DisplayPos;
         public Vector2 DisplaySize;
+        public Vector2 FramebufferScale;
     }
     public unsafe partial struct ImDrawDataPtr
     {
@@ -30,6 +31,7 @@ namespace ImGuiNET
         public ref int TotalVtxCount => ref Unsafe.AsRef<int>(&NativePtr->TotalVtxCount);
         public ref Vector2 DisplayPos => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayPos);
         public ref Vector2 DisplaySize => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplaySize);
+        public ref Vector2 FramebufferScale => ref Unsafe.AsRef<Vector2>(&NativePtr->FramebufferScale);
         public void Clear()
         {
             ImGuiNative.ImDrawData_Clear(NativePtr);
@@ -42,9 +44,9 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawData_destroy(NativePtr);
         }
-        public void ScaleClipRects(Vector2 sc)
+        public void ScaleClipRects(Vector2 fb_scale)
         {
-            ImGuiNative.ImDrawData_ScaleClipRects(NativePtr, sc);
+            ImGuiNative.ImDrawData_ScaleClipRects(NativePtr, fb_scale);
         }
     }
 }

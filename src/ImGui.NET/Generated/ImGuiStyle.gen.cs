@@ -32,6 +32,7 @@ namespace ImGuiNET
         public float TabRounding;
         public float TabBorderSize;
         public Vector2 ButtonTextAlign;
+        public Vector2 SelectableTextAlign;
         public Vector2 DisplayWindowPadding;
         public Vector2 DisplaySafeAreaPadding;
         public float MouseCursorScale;
@@ -120,6 +121,7 @@ namespace ImGuiNET
         public ref float TabRounding => ref Unsafe.AsRef<float>(&NativePtr->TabRounding);
         public ref float TabBorderSize => ref Unsafe.AsRef<float>(&NativePtr->TabBorderSize);
         public ref Vector2 ButtonTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->ButtonTextAlign);
+        public ref Vector2 SelectableTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->SelectableTextAlign);
         public ref Vector2 DisplayWindowPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayWindowPadding);
         public ref Vector2 DisplaySafeAreaPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplaySafeAreaPadding);
         public ref float MouseCursorScale => ref Unsafe.AsRef<float>(&NativePtr->MouseCursorScale);
