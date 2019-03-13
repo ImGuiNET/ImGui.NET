@@ -30,11 +30,15 @@
       <Pack>true</Pack>
     </Content>
     <Content Include="..\..\deps\cimgui\linux-x64\cimgui.so">
-      <PackagePath>runtimes/linux-x64/native</PackagePath>
+      <PackagePath>runtimes/linux-x64/native/libcimgui.so</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="..\..\deps\cimgui\osx-x64\libcimgui.dylib">
-      <PackagePath>runtimes/osx-x64/native</PackagePath>
+    <Content Include="..\..\deps\cimgui\osx-x64\cimgui.dylib">
+      <PackagePath>runtimes/osx-x64/native/libcimgui.dylib</PackagePath>
+      <Pack>true</Pack>
+    </Content>
+    <Content Include="build\net40\ImGui.NET.targets">
+      <PackagePath>build/net40/ImGui.NET.targets</PackagePath>
       <Pack>true</Pack>
     </Content>
   </ItemGroup>
