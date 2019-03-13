@@ -7727,6 +7727,11 @@ namespace ImGuiNET
             byte ret = ImGuiNative.igIsAnyMouseDown();
             return ret != 0;
         }
+        public static bool IsItemActivated()
+        {
+            byte ret = ImGuiNative.igIsItemActivated();
+            return ret != 0;
+        }
         public static bool IsItemActive()
         {
             byte ret = ImGuiNative.igIsItemActive();
