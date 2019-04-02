@@ -29,5 +29,5 @@ https://github.com/ocornut/imgui
 
 See the [official screenshot thread](https://github.com/ocornut/imgui/issues/123) for examples of many different kinds of interfaces created with Dear ImGui.
 
-https://github.com/Extrawurst/cimgui
+https://github.com/cimgui/cimgui
 > This is a thin c-api wrapper for the excellent C++ intermediate gui imgui. This library is intended as a intermediate layer to be able to use imgui from other languages that can interface with C .

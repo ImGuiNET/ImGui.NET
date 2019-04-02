@@ -5559,6 +5559,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igEndTooltip();
         }
+        public static ImDrawListPtr GetBackgroundDrawList()
+        {
+            ImDrawList* ret = ImGuiNative.igGetBackgroundDrawList();
+            return new ImDrawListPtr(ret);
+        }
         public static string GetClipboardText()
         {
             byte* ret = ImGuiNative.igGetClipboardText();
@@ -5692,6 +5697,11 @@ namespace ImGuiNET
             Vector2 ret = ImGuiNative.igGetFontTexUvWhitePixel();
             return ret;
         }
+        public static ImDrawListPtr GetForegroundDrawList()
+        {
+            ImDrawList* ret = ImGuiNative.igGetForegroundDrawList();
+            return new ImDrawListPtr(ret);
+        }
         public static int GetFrameCount()
         {
             int ret = ImGuiNative.igGetFrameCount();
@@ -5802,11 +5812,6 @@ namespace ImGuiNET
         {
             Vector2 ret = ImGuiNative.igGetMousePosOnOpeningCurrentPopup();
             return ret;
-        }
-        public static ImDrawListPtr GetOverlayDrawList()
-        {
-            ImDrawList* ret = ImGuiNative.igGetOverlayDrawList();
-            return new ImDrawListPtr(ret);
         }
         public static float GetScrollMaxX()
         {
@@ -7680,6 +7685,297 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+        public static bool InputTextWithHint(string label, string hint, string buf, uint buf_size)
+        {
+            byte* native_label;
+            int label_byteCount = 0;
+            if (label != null)
+            {
+                label_byteCount = Encoding.UTF8.GetByteCount(label);
+                if (label_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label = Util.Allocate(label_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                    native_label = native_label_stackBytes;
+                }
+                int native_label_offset = Util.GetUtf8(label, native_label, label_byteCount);
+                native_label[native_label_offset] = 0;
+            }
+            else { native_label = null; }
+            byte* native_hint;
+            int hint_byteCount = 0;
+            if (hint != null)
+            {
+                hint_byteCount = Encoding.UTF8.GetByteCount(hint);
+                if (hint_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_hint = Util.Allocate(hint_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_hint_stackBytes = stackalloc byte[hint_byteCount + 1];
+                    native_hint = native_hint_stackBytes;
+                }
+                int native_hint_offset = Util.GetUtf8(hint, native_hint, hint_byteCount);
+                native_hint[native_hint_offset] = 0;
+            }
+            else { native_hint = null; }
+            byte* native_buf;
+            int buf_byteCount = 0;
+            if (buf != null)
+            {
+                buf_byteCount = Encoding.UTF8.GetByteCount(buf);
+                if (buf_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_buf = Util.Allocate(buf_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_buf_stackBytes = stackalloc byte[buf_byteCount + 1];
+                    native_buf = native_buf_stackBytes;
+                }
+                int native_buf_offset = Util.GetUtf8(buf, native_buf, buf_byteCount);
+                native_buf[native_buf_offset] = 0;
+            }
+            else { native_buf = null; }
+            ImGuiInputTextFlags flags = 0;
+            ImGuiInputTextCallback callback = null;
+            void* user_data = null;
+            byte ret = ImGuiNative.igInputTextWithHint(native_label, native_hint, native_buf, buf_size, flags, callback, user_data);
+            if (label_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_label);
+            }
+            if (hint_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_hint);
+            }
+            if (buf_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_buf);
+            }
+            return ret != 0;
+        }
+        public static bool InputTextWithHint(string label, string hint, string buf, uint buf_size, ImGuiInputTextFlags flags)
+        {
+            byte* native_label;
+            int label_byteCount = 0;
+            if (label != null)
+            {
+                label_byteCount = Encoding.UTF8.GetByteCount(label);
+                if (label_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label = Util.Allocate(label_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                    native_label = native_label_stackBytes;
+                }
+                int native_label_offset = Util.GetUtf8(label, native_label, label_byteCount);
+                native_label[native_label_offset] = 0;
+            }
+            else { native_label = null; }
+            byte* native_hint;
+            int hint_byteCount = 0;
+            if (hint != null)
+            {
+                hint_byteCount = Encoding.UTF8.GetByteCount(hint);
+                if (hint_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_hint = Util.Allocate(hint_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_hint_stackBytes = stackalloc byte[hint_byteCount + 1];
+                    native_hint = native_hint_stackBytes;
+                }
+                int native_hint_offset = Util.GetUtf8(hint, native_hint, hint_byteCount);
+                native_hint[native_hint_offset] = 0;
+            }
+            else { native_hint = null; }
+            byte* native_buf;
+            int buf_byteCount = 0;
+            if (buf != null)
+            {
+                buf_byteCount = Encoding.UTF8.GetByteCount(buf);
+                if (buf_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_buf = Util.Allocate(buf_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_buf_stackBytes = stackalloc byte[buf_byteCount + 1];
+                    native_buf = native_buf_stackBytes;
+                }
+                int native_buf_offset = Util.GetUtf8(buf, native_buf, buf_byteCount);
+                native_buf[native_buf_offset] = 0;
+            }
+            else { native_buf = null; }
+            ImGuiInputTextCallback callback = null;
+            void* user_data = null;
+            byte ret = ImGuiNative.igInputTextWithHint(native_label, native_hint, native_buf, buf_size, flags, callback, user_data);
+            if (label_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_label);
+            }
+            if (hint_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_hint);
+            }
+            if (buf_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_buf);
+            }
+            return ret != 0;
+        }
+        public static bool InputTextWithHint(string label, string hint, string buf, uint buf_size, ImGuiInputTextFlags flags, ImGuiInputTextCallback callback)
+        {
+            byte* native_label;
+            int label_byteCount = 0;
+            if (label != null)
+            {
+                label_byteCount = Encoding.UTF8.GetByteCount(label);
+                if (label_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label = Util.Allocate(label_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                    native_label = native_label_stackBytes;
+                }
+                int native_label_offset = Util.GetUtf8(label, native_label, label_byteCount);
+                native_label[native_label_offset] = 0;
+            }
+            else { native_label = null; }
+            byte* native_hint;
+            int hint_byteCount = 0;
+            if (hint != null)
+            {
+                hint_byteCount = Encoding.UTF8.GetByteCount(hint);
+                if (hint_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_hint = Util.Allocate(hint_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_hint_stackBytes = stackalloc byte[hint_byteCount + 1];
+                    native_hint = native_hint_stackBytes;
+                }
+                int native_hint_offset = Util.GetUtf8(hint, native_hint, hint_byteCount);
+                native_hint[native_hint_offset] = 0;
+            }
+            else { native_hint = null; }
+            byte* native_buf;
+            int buf_byteCount = 0;
+            if (buf != null)
+            {
+                buf_byteCount = Encoding.UTF8.GetByteCount(buf);
+                if (buf_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_buf = Util.Allocate(buf_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_buf_stackBytes = stackalloc byte[buf_byteCount + 1];
+                    native_buf = native_buf_stackBytes;
+                }
+                int native_buf_offset = Util.GetUtf8(buf, native_buf, buf_byteCount);
+                native_buf[native_buf_offset] = 0;
+            }
+            else { native_buf = null; }
+            void* user_data = null;
+            byte ret = ImGuiNative.igInputTextWithHint(native_label, native_hint, native_buf, buf_size, flags, callback, user_data);
+            if (label_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_label);
+            }
+            if (hint_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_hint);
+            }
+            if (buf_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_buf);
+            }
+            return ret != 0;
+        }
+        public static bool InputTextWithHint(string label, string hint, string buf, uint buf_size, ImGuiInputTextFlags flags, ImGuiInputTextCallback callback, IntPtr user_data)
+        {
+            byte* native_label;
+            int label_byteCount = 0;
+            if (label != null)
+            {
+                label_byteCount = Encoding.UTF8.GetByteCount(label);
+                if (label_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label = Util.Allocate(label_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                    native_label = native_label_stackBytes;
+                }
+                int native_label_offset = Util.GetUtf8(label, native_label, label_byteCount);
+                native_label[native_label_offset] = 0;
+            }
+            else { native_label = null; }
+            byte* native_hint;
+            int hint_byteCount = 0;
+            if (hint != null)
+            {
+                hint_byteCount = Encoding.UTF8.GetByteCount(hint);
+                if (hint_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_hint = Util.Allocate(hint_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_hint_stackBytes = stackalloc byte[hint_byteCount + 1];
+                    native_hint = native_hint_stackBytes;
+                }
+                int native_hint_offset = Util.GetUtf8(hint, native_hint, hint_byteCount);
+                native_hint[native_hint_offset] = 0;
+            }
+            else { native_hint = null; }
+            byte* native_buf;
+            int buf_byteCount = 0;
+            if (buf != null)
+            {
+                buf_byteCount = Encoding.UTF8.GetByteCount(buf);
+                if (buf_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_buf = Util.Allocate(buf_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_buf_stackBytes = stackalloc byte[buf_byteCount + 1];
+                    native_buf = native_buf_stackBytes;
+                }
+                int native_buf_offset = Util.GetUtf8(buf, native_buf, buf_byteCount);
+                native_buf[native_buf_offset] = 0;
+            }
+            else { native_buf = null; }
+            void* native_user_data = (void*)user_data.ToPointer();
+            byte ret = ImGuiNative.igInputTextWithHint(native_label, native_hint, native_buf, buf_size, flags, callback, native_user_data);
+            if (label_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_label);
+            }
+            if (hint_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_hint);
+            }
+            if (buf_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_buf);
+            }
+            return ret != 0;
+        }
         public static bool InvisibleButton(string str_id, Vector2 size)
         {
             byte* native_str_id;
@@ -8338,25 +8634,25 @@ namespace ImGuiNET
         }
         public static void LogToClipboard()
         {
-            int max_depth = -1;
-            ImGuiNative.igLogToClipboard(max_depth);
+            int auto_open_depth = -1;
+            ImGuiNative.igLogToClipboard(auto_open_depth);
         }
-        public static void LogToClipboard(int max_depth)
+        public static void LogToClipboard(int auto_open_depth)
         {
-            ImGuiNative.igLogToClipboard(max_depth);
+            ImGuiNative.igLogToClipboard(auto_open_depth);
         }
         public static void LogToFile()
         {
-            int max_depth = -1;
+            int auto_open_depth = -1;
             byte* native_filename = null;
-            ImGuiNative.igLogToFile(max_depth, native_filename);
+            ImGuiNative.igLogToFile(auto_open_depth, native_filename);
         }
-        public static void LogToFile(int max_depth)
+        public static void LogToFile(int auto_open_depth)
         {
             byte* native_filename = null;
-            ImGuiNative.igLogToFile(max_depth, native_filename);
+            ImGuiNative.igLogToFile(auto_open_depth, native_filename);
         }
-        public static void LogToFile(int max_depth, string filename)
+        public static void LogToFile(int auto_open_depth, string filename)
         {
             byte* native_filename;
             int filename_byteCount = 0;
@@ -8376,7 +8672,7 @@ namespace ImGuiNET
                 native_filename[native_filename_offset] = 0;
             }
             else { native_filename = null; }
-            ImGuiNative.igLogToFile(max_depth, native_filename);
+            ImGuiNative.igLogToFile(auto_open_depth, native_filename);
             if (filename_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_filename);
@@ -8384,12 +8680,12 @@ namespace ImGuiNET
         }
         public static void LogToTTY()
         {
-            int max_depth = -1;
-            ImGuiNative.igLogToTTY(max_depth);
+            int auto_open_depth = -1;
+            ImGuiNative.igLogToTTY(auto_open_depth);
         }
-        public static void LogToTTY(int max_depth)
+        public static void LogToTTY(int auto_open_depth)
         {
-            ImGuiNative.igLogToTTY(max_depth);
+            ImGuiNative.igLogToTTY(auto_open_depth);
         }
         public static IntPtr MemAlloc(uint size)
         {
@@ -10023,7 +10319,7 @@ namespace ImGuiNET
         {
             ImGuiNative.igSetCursorScreenPos(pos);
         }
-        public static bool SetDragDropPayload(string type, IntPtr data, uint size)
+        public static bool SetDragDropPayload(string type, IntPtr data, uint sz)
         {
             byte* native_type;
             int type_byteCount = 0;
@@ -10045,14 +10341,14 @@ namespace ImGuiNET
             else { native_type = null; }
             void* native_data = (void*)data.ToPointer();
             ImGuiCond cond = 0;
-            byte ret = ImGuiNative.igSetDragDropPayload(native_type, native_data, size, cond);
+            byte ret = ImGuiNative.igSetDragDropPayload(native_type, native_data, sz, cond);
             if (type_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_type);
             }
             return ret != 0;
         }
-        public static bool SetDragDropPayload(string type, IntPtr data, uint size, ImGuiCond cond)
+        public static bool SetDragDropPayload(string type, IntPtr data, uint sz, ImGuiCond cond)
         {
             byte* native_type;
             int type_byteCount = 0;
@@ -10073,7 +10369,7 @@ namespace ImGuiNET
             }
             else { native_type = null; }
             void* native_data = (void*)data.ToPointer();
-            byte ret = ImGuiNative.igSetDragDropPayload(native_type, native_data, size, cond);
+            byte ret = ImGuiNative.igSetDragDropPayload(native_type, native_data, sz, cond);
             if (type_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_type);

@@ -382,6 +382,11 @@ namespace ImGuiNET
             ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesThai(NativePtr);
             return (IntPtr)ret;
         }
+        public IntPtr GetGlyphRangesVietnamese()
+        {
+            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesVietnamese(NativePtr);
+            return (IntPtr)ret;
+        }
         public bool GetMouseCursorTexData(ImGuiMouseCursor cursor, out Vector2 out_offset, out Vector2 out_size, out Vector2 out_uv_border, out Vector2 out_uv_fill)
         {
             fixed (Vector2* native_out_offset = &out_offset)

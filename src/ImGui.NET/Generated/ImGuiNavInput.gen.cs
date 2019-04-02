@@ -19,11 +19,12 @@ namespace ImGuiNET
         TweakSlow = 14,
         TweakFast = 15,
         KeyMenu = 16,
-        KeyLeft = 17,
-        KeyRight = 18,
-        KeyUp = 19,
-        KeyDown = 20,
-        COUNT = 21,
+        KeyTab = 17,
+        KeyLeft = 18,
+        KeyRight = 19,
+        KeyUp = 20,
+        KeyDown = 21,
+        COUNT = 22,
         InternalStart = KeyMenu,
     }
 }

@@ -635,7 +635,7 @@
   ],
   "ImDrawList_AddConvexPolyFilled": [
     {
-      "args": "(ImDrawList* self,const ImVec2* points,const int num_points,ImU32 col)",
+      "args": "(ImDrawList* self,const ImVec2* points,int num_points,ImU32 col)",
       "argsT": [
         {
           "name": "self",
@@ -647,21 +647,21 @@
         },
         {
           "name": "num_points",
-          "type": "const int"
+          "type": "int"
         },
         {
           "name": "col",
           "type": "ImU32"
         }
       ],
-      "argsoriginal": "(const ImVec2* points,const int num_points,ImU32 col)",
+      "argsoriginal": "(const ImVec2* points,int num_points,ImU32 col)",
       "call_args": "(points,num_points,col)",
       "cimguiname": "ImDrawList_AddConvexPolyFilled",
       "defaults": [],
       "funcname": "AddConvexPolyFilled",
       "ov_cimguiname": "ImDrawList_AddConvexPolyFilled",
       "ret": "void",
-      "signature": "(const ImVec2*,const int,ImU32)",
+      "signature": "(const ImVec2*,int,ImU32)",
       "stname": "ImDrawList"
     }
   ],
@@ -893,7 +893,7 @@
   ],
   "ImDrawList_AddPolyline": [
     {
-      "args": "(ImDrawList* self,const ImVec2* points,const int num_points,ImU32 col,bool closed,float thickness)",
+      "args": "(ImDrawList* self,const ImVec2* points,int num_points,ImU32 col,bool closed,float thickness)",
       "argsT": [
         {
           "name": "self",
@@ -905,7 +905,7 @@
         },
         {
           "name": "num_points",
-          "type": "const int"
+          "type": "int"
         },
         {
           "name": "col",
@@ -920,14 +920,14 @@
           "type": "float"
         }
       ],
-      "argsoriginal": "(const ImVec2* points,const int num_points,ImU32 col,bool closed,float thickness)",
+      "argsoriginal": "(const ImVec2* points,int num_points,ImU32 col,bool closed,float thickness)",
       "call_args": "(points,num_points,col,closed,thickness)",
       "cimguiname": "ImDrawList_AddPolyline",
       "defaults": [],
       "funcname": "AddPolyline",
       "ov_cimguiname": "ImDrawList_AddPolyline",
       "ret": "void",
-      "signature": "(const ImVec2*,const int,ImU32,bool,float)",
+      "signature": "(const ImVec2*,int,ImU32,bool,float)",
       "stname": "ImDrawList"
     }
   ],
@@ -2881,6 +2881,26 @@
       "defaults": [],
       "funcname": "GetGlyphRangesThai",
       "ov_cimguiname": "ImFontAtlas_GetGlyphRangesThai",
+      "ret": "const ImWchar*",
+      "signature": "()",
+      "stname": "ImFontAtlas"
+    }
+  ],
+  "ImFontAtlas_GetGlyphRangesVietnamese": [
+    {
+      "args": "(ImFontAtlas* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImFontAtlas*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "ImFontAtlas_GetGlyphRangesVietnamese",
+      "defaults": [],
+      "funcname": "GetGlyphRangesVietnamese",
+      "ov_cimguiname": "ImFontAtlas_GetGlyphRangesVietnamese",
       "ret": "const ImWchar*",
       "signature": "()",
       "stname": "ImFontAtlas"
@@ -19442,6 +19462,22 @@
       "stname": ""
     }
   ],
+  "igGetBackgroundDrawList": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "igGetBackgroundDrawList",
+      "defaults": [],
+      "funcname": "GetBackgroundDrawList",
+      "namespace": "ImGui",
+      "ov_cimguiname": "igGetBackgroundDrawList",
+      "ret": "ImDrawList*",
+      "signature": "()",
+      "stname": ""
+    }
+  ],
   "igGetClipboardText": [
     {
       "args": "()",
@@ -20057,6 +20093,22 @@
       "stname": ""
     }
   ],
+  "igGetForegroundDrawList": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "igGetForegroundDrawList",
+      "defaults": [],
+      "funcname": "GetForegroundDrawList",
+      "namespace": "ImGui",
+      "ov_cimguiname": "igGetForegroundDrawList",
+      "ret": "ImDrawList*",
+      "signature": "()",
+      "stname": ""
+    }
+  ],
   "igGetFrameCount": [
     {
       "args": "()",
@@ -20594,22 +20646,6 @@
       "ov_cimguiname": "igGetMousePosOnOpeningCurrentPopup_nonUDT2",
       "ret": "ImVec2_Simple",
       "retorig": "ImVec2",
-      "signature": "()",
-      "stname": ""
-    }
-  ],
-  "igGetOverlayDrawList": [
-    {
-      "args": "()",
-      "argsT": [],
-      "argsoriginal": "()",
-      "call_args": "()",
-      "cimguiname": "igGetOverlayDrawList",
-      "defaults": [],
-      "funcname": "GetOverlayDrawList",
-      "namespace": "ImGui",
-      "ov_cimguiname": "igGetOverlayDrawList",
-      "ret": "ImDrawList*",
       "signature": "()",
       "stname": ""
     }
@@ -21759,6 +21795,55 @@
       "stname": ""
     }
   ],
+  "igInputTextWithHint": [
+    {
+      "args": "(const char* label,const char* hint,char* buf,size_t buf_size,ImGuiInputTextFlags flags,ImGuiInputTextCallback callback,void* user_data)",
+      "argsT": [
+        {
+          "name": "label",
+          "type": "const char*"
+        },
+        {
+          "name": "hint",
+          "type": "const char*"
+        },
+        {
+          "name": "buf",
+          "type": "char*"
+        },
+        {
+          "name": "buf_size",
+          "type": "size_t"
+        },
+        {
+          "name": "flags",
+          "type": "ImGuiInputTextFlags"
+        },
+        {
+          "name": "callback",
+          "type": "ImGuiInputTextCallback"
+        },
+        {
+          "name": "user_data",
+          "type": "void*"
+        }
+      ],
+      "argsoriginal": "(const char* label,const char* hint,char* buf,size_t buf_size,ImGuiInputTextFlags flags=0,ImGuiInputTextCallback callback=((void*)0),void* user_data=((void*)0))",
+      "call_args": "(label,hint,buf,buf_size,flags,callback,user_data)",
+      "cimguiname": "igInputTextWithHint",
+      "defaults": {
+        "callback": "((void*)0)",
+        "flags": "0",
+        "user_data": "((void*)0)"
+      },
+      "funcname": "InputTextWithHint",
+      "namespace": "ImGui",
+      "ov_cimguiname": "igInputTextWithHint",
+      "ret": "bool",
+      "signature": "(const char*,const char*,char*,size_t,ImGuiInputTextFlags,ImGuiInputTextCallback,void*)",
+      "stname": ""
+    }
+  ],
   "igInvisibleButton": [
     {
       "args": "(const char* str_id,const ImVec2 size)",
@@ -22712,18 +22797,18 @@
   ],
   "igLogToClipboard": [
     {
-      "args": "(int max_depth)",
+      "args": "(int auto_open_depth)",
       "argsT": [
         {
-          "name": "max_depth",
+          "name": "auto_open_depth",
           "type": "int"
         }
       ],
-      "argsoriginal": "(int max_depth=-1)",
-      "call_args": "(max_depth)",
+      "argsoriginal": "(int auto_open_depth=-1)",
+      "call_args": "(auto_open_depth)",
       "cimguiname": "igLogToClipboard",
       "defaults": {
-        "max_depth": "-1"
+        "auto_open_depth": "-1"
       },
       "funcname": "LogToClipboard",
       "namespace": "ImGui",
@@ -22735,10 +22820,10 @@
   ],
   "igLogToFile": [
     {
-      "args": "(int max_depth,const char* filename)",
+      "args": "(int auto_open_depth,const char* filename)",
       "argsT": [
         {
-          "name": "max_depth",
+          "name": "auto_open_depth",
           "type": "int"
         },
         {
@@ -22746,12 +22831,12 @@
           "type": "const char*"
         }
       ],
-      "argsoriginal": "(int max_depth=-1,const char* filename=((void*)0))",
-      "call_args": "(max_depth,filename)",
+      "argsoriginal": "(int auto_open_depth=-1,const char* filename=((void*)0))",
+      "call_args": "(auto_open_depth,filename)",
       "cimguiname": "igLogToFile",
       "defaults": {
-        "filename": "((void*)0)",
-        "max_depth": "-1"
+        "auto_open_depth": "-1",
+        "filename": "((void*)0)"
       },
       "funcname": "LogToFile",
       "namespace": "ImGui",
@@ -22763,18 +22848,18 @@
   ],
   "igLogToTTY": [
     {
-      "args": "(int max_depth)",
+      "args": "(int auto_open_depth)",
       "argsT": [
         {
-          "name": "max_depth",
+          "name": "auto_open_depth",
           "type": "int"
         }
       ],
-      "argsoriginal": "(int max_depth=-1)",
-      "call_args": "(max_depth)",
+      "argsoriginal": "(int auto_open_depth=-1)",
+      "call_args": "(auto_open_depth)",
       "cimguiname": "igLogToTTY",
       "defaults": {
-        "max_depth": "-1"
+        "auto_open_depth": "-1"
       },
       "funcname": "LogToTTY",
       "namespace": "ImGui",
@@ -24219,7 +24304,7 @@
   ],
   "igSetDragDropPayload": [
     {
-      "args": "(const char* type,const void* data,size_t size,ImGuiCond cond)",
+      "args": "(const char* type,const void* data,size_t sz,ImGuiCond cond)",
       "argsT": [
         {
           "name": "type",
@@ -24230,7 +24315,7 @@
           "type": "const void*"
         },
         {
-          "name": "size",
+          "name": "sz",
           "type": "size_t"
         },
         {
@@ -24238,8 +24323,8 @@
           "type": "ImGuiCond"
         }
       ],
-      "argsoriginal": "(const char* type,const void* data,size_t size,ImGuiCond cond=0)",
-      "call_args": "(type,data,size,cond)",
+      "argsoriginal": "(const char* type,const void* data,size_t sz,ImGuiCond cond=0)",
+      "call_args": "(type,data,sz,cond)",
       "cimguiname": "igSetDragDropPayload",
       "defaults": {
         "cond": "0"
