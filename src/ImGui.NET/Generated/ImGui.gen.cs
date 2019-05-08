@@ -2052,7 +2052,7 @@ namespace ImGuiNET
             IntPtr ret = ImGuiNative.igCreateContext(native_shared_font_atlas);
             return ret;
         }
-        public static bool DebugCheckVersionAndDataLayout(string version_str, uint sz_io, uint sz_style, uint sz_vec2, uint sz_vec4, uint sz_drawvert)
+        public static bool DebugCheckVersionAndDataLayout(string version_str, uint sz_io, uint sz_style, uint sz_vec2, uint sz_vec4, uint sz_drawvert, uint sz_drawidx)
         {
             byte* native_version_str;
             int version_str_byteCount = 0;
@@ -2072,7 +2072,7 @@ namespace ImGuiNET
                 native_version_str[native_version_str_offset] = 0;
             }
             else { native_version_str = null; }
-            byte ret = ImGuiNative.igDebugCheckVersionAndDataLayout(native_version_str, sz_io, sz_style, sz_vec2, sz_vec4, sz_drawvert);
+            byte ret = ImGuiNative.igDebugCheckVersionAndDataLayout(native_version_str, sz_io, sz_style, sz_vec2, sz_vec4, sz_drawvert, sz_drawidx);
             if (version_str_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_version_str);
@@ -5625,11 +5625,6 @@ namespace ImGuiNET
         public static Vector2 GetContentRegionAvail()
         {
             Vector2 ret = ImGuiNative.igGetContentRegionAvail();
-            return ret;
-        }
-        public static float GetContentRegionAvailWidth()
-        {
-            float ret = ImGuiNative.igGetContentRegionAvailWidth();
             return ret;
         }
         public static Vector2 GetContentRegionMax()
@@ -9994,18 +9989,18 @@ namespace ImGuiNET
         }
         public static void SameLine()
         {
-            float local_pos_x = 0.0f;
-            float spacing_w = -1.0f;
-            ImGuiNative.igSameLine(local_pos_x, spacing_w);
+            float offset_from_start_x = 0.0f;
+            float spacing = -1.0f;
+            ImGuiNative.igSameLine(offset_from_start_x, spacing);
         }
-        public static void SameLine(float local_pos_x)
+        public static void SameLine(float offset_from_start_x)
         {
-            float spacing_w = -1.0f;
-            ImGuiNative.igSameLine(local_pos_x, spacing_w);
+            float spacing = -1.0f;
+            ImGuiNative.igSameLine(offset_from_start_x, spacing);
         }
-        public static void SameLine(float local_pos_x, float spacing_w)
+        public static void SameLine(float offset_from_start_x, float spacing)
         {
-            ImGuiNative.igSameLine(local_pos_x, spacing_w);
+            ImGuiNative.igSameLine(offset_from_start_x, spacing);
         }
         public static void SaveIniSettingsToDisk(string ini_filename)
         {
@@ -10396,6 +10391,10 @@ namespace ImGuiNET
         public static void SetMouseCursor(ImGuiMouseCursor type)
         {
             ImGuiNative.igSetMouseCursor(type);
+        }
+        public static void SetNextItemWidth(float item_width)
+        {
+            ImGuiNative.igSetNextItemWidth(item_width);
         }
         public static void SetNextTreeNodeOpen(bool is_open)
         {

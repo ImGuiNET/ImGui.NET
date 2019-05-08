@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace CodeGenerator
 {
-    class Program
+    internal static class Program
     {
         private static readonly Dictionary<string, string> s_wellKnownTypes = new Dictionary<string, string>()
         {

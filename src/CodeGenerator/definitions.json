@@ -718,11 +718,11 @@
           "type": "ImU32"
         }
       ],
-      "argsoriginal": "(ImTextureID user_texture_id,const ImVec2& a,const ImVec2& b,const ImVec2& uv_a=ImVec2(0,0),const ImVec2& uv_b=ImVec2(1,1),ImU32 col=0xFFFFFFFF)",
+      "argsoriginal": "(ImTextureID user_texture_id,const ImVec2& a,const ImVec2& b,const ImVec2& uv_a=ImVec2(0,0),const ImVec2& uv_b=ImVec2(1,1),ImU32 col=(((ImU32)(255)<<24)|((ImU32)(255)<<16)|((ImU32)(255)<<8)|((ImU32)(255)<<0)))",
       "call_args": "(user_texture_id,a,b,uv_a,uv_b,col)",
       "cimguiname": "ImDrawList_AddImage",
       "defaults": {
-        "col": "0xFFFFFFFF",
+        "col": "(((ImU32)(255)<<24)|((ImU32)(255)<<16)|((ImU32)(255)<<8)|((ImU32)(255)<<0))",
         "uv_a": "ImVec2(0,0)",
         "uv_b": "ImVec2(1,1)"
       },
@@ -782,11 +782,11 @@
           "type": "ImU32"
         }
       ],
-      "argsoriginal": "(ImTextureID user_texture_id,const ImVec2& a,const ImVec2& b,const ImVec2& c,const ImVec2& d,const ImVec2& uv_a=ImVec2(0,0),const ImVec2& uv_b=ImVec2(1,0),const ImVec2& uv_c=ImVec2(1,1),const ImVec2& uv_d=ImVec2(0,1),ImU32 col=0xFFFFFFFF)",
+      "argsoriginal": "(ImTextureID user_texture_id,const ImVec2& a,const ImVec2& b,const ImVec2& c,const ImVec2& d,const ImVec2& uv_a=ImVec2(0,0),const ImVec2& uv_b=ImVec2(1,0),const ImVec2& uv_c=ImVec2(1,1),const ImVec2& uv_d=ImVec2(0,1),ImU32 col=(((ImU32)(255)<<24)|((ImU32)(255)<<16)|((ImU32)(255)<<8)|((ImU32)(255)<<0)))",
       "call_args": "(user_texture_id,a,b,c,d,uv_a,uv_b,uv_c,uv_d,col)",
       "cimguiname": "ImDrawList_AddImageQuad",
       "defaults": {
-        "col": "0xFFFFFFFF",
+        "col": "(((ImU32)(255)<<24)|((ImU32)(255)<<16)|((ImU32)(255)<<8)|((ImU32)(255)<<0))",
         "uv_a": "ImVec2(0,0)",
         "uv_b": "ImVec2(1,0)",
         "uv_c": "ImVec2(1,1)",
@@ -18524,7 +18524,7 @@
   ],
   "igDebugCheckVersionAndDataLayout": [
     {
-      "args": "(const char* version_str,size_t sz_io,size_t sz_style,size_t sz_vec2,size_t sz_vec4,size_t sz_drawvert)",
+      "args": "(const char* version_str,size_t sz_io,size_t sz_style,size_t sz_vec2,size_t sz_vec4,size_t sz_drawvert,size_t sz_drawidx)",
       "argsT": [
         {
           "name": "version_str",
@@ -18549,17 +18549,21 @@
         {
           "name": "sz_drawvert",
           "type": "size_t"
+        },
+        {
+          "name": "sz_drawidx",
+          "type": "size_t"
         }
       ],
-      "argsoriginal": "(const char* version_str,size_t sz_io,size_t sz_style,size_t sz_vec2,size_t sz_vec4,size_t sz_drawvert)",
-      "call_args": "(version_str,sz_io,sz_style,sz_vec2,sz_vec4,sz_drawvert)",
+      "argsoriginal": "(const char* version_str,size_t sz_io,size_t sz_style,size_t sz_vec2,size_t sz_vec4,size_t sz_drawvert,size_t sz_drawidx)",
+      "call_args": "(version_str,sz_io,sz_style,sz_vec2,sz_vec4,sz_drawvert,sz_drawidx)",
       "cimguiname": "igDebugCheckVersionAndDataLayout",
       "defaults": [],
       "funcname": "DebugCheckVersionAndDataLayout",
       "namespace": "ImGui",
       "ov_cimguiname": "igDebugCheckVersionAndDataLayout",
       "ret": "bool",
-      "signature": "(const char*,size_t,size_t,size_t,size_t,size_t)",
+      "signature": "(const char*,size_t,size_t,size_t,size_t,size_t,size_t)",
       "stname": ""
     }
   ],
@@ -19685,22 +19689,6 @@
       "ov_cimguiname": "igGetContentRegionAvail_nonUDT2",
       "ret": "ImVec2_Simple",
       "retorig": "ImVec2",
-      "signature": "()",
-      "stname": ""
-    }
-  ],
-  "igGetContentRegionAvailWidth": [
-    {
-      "args": "()",
-      "argsT": [],
-      "argsoriginal": "()",
-      "call_args": "()",
-      "cimguiname": "igGetContentRegionAvailWidth",
-      "defaults": [],
-      "funcname": "GetContentRegionAvailWidth",
-      "namespace": "ImGui",
-      "ov_cimguiname": "igGetContentRegionAvailWidth",
-      "ret": "float",
       "signature": "()",
       "stname": ""
     }
@@ -23913,23 +23901,23 @@
   ],
   "igSameLine": [
     {
-      "args": "(float local_pos_x,float spacing_w)",
+      "args": "(float offset_from_start_x,float spacing)",
       "argsT": [
         {
-          "name": "local_pos_x",
+          "name": "offset_from_start_x",
           "type": "float"
         },
         {
-          "name": "spacing_w",
+          "name": "spacing",
           "type": "float"
         }
       ],
-      "argsoriginal": "(float local_pos_x=0.0f,float spacing_w=-1.0f)",
-      "call_args": "(local_pos_x,spacing_w)",
+      "argsoriginal": "(float offset_from_start_x=0.0f,float spacing=-1.0f)",
+      "call_args": "(offset_from_start_x,spacing)",
       "cimguiname": "igSameLine",
       "defaults": {
-        "local_pos_x": "0.0f",
-        "spacing_w": "-1.0f"
+        "offset_from_start_x": "0.0f",
+        "spacing": "-1.0f"
       },
       "funcname": "SameLine",
       "namespace": "ImGui",
@@ -24410,6 +24398,27 @@
       "ov_cimguiname": "igSetMouseCursor",
       "ret": "void",
       "signature": "(ImGuiMouseCursor)",
+      "stname": ""
+    }
+  ],
+  "igSetNextItemWidth": [
+    {
+      "args": "(float item_width)",
+      "argsT": [
+        {
+          "name": "item_width",
+          "type": "float"
+        }
+      ],
+      "argsoriginal": "(float item_width)",
+      "call_args": "(item_width)",
+      "cimguiname": "igSetNextItemWidth",
+      "defaults": [],
+      "funcname": "SetNextItemWidth",
+      "namespace": "ImGui",
+      "ov_cimguiname": "igSetNextItemWidth",
+      "ret": "void",
+      "signature": "(float)",
       "stname": ""
     }
   ],
