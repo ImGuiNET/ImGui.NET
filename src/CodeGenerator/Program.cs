@@ -72,6 +72,7 @@ namespace CodeGenerator
             { "ImVec4(1,1,1,1)", "new Vector4(1, 1, 1, 1)" },
             { "ImDrawCornerFlags_All", "(int)ImDrawCornerFlags.All" },
             { "FLT_MAX", "float.MaxValue" },
+            { "(((ImU32)(255)<<24)|((ImU32)(255)<<16)|((ImU32)(255)<<8)|((ImU32)(255)<<0))", "0xFFFFFFFF" }
         };
 
         private static readonly Dictionary<string, string> s_identifierReplacements = new Dictionary<string, string>()
