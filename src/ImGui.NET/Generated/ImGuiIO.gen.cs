@@ -176,7 +176,7 @@ namespace ImGuiNET
         public RangeAccessor<float> NavInputsDownDuration => new RangeAccessor<float>(NativePtr->NavInputsDownDuration, 22);
         public RangeAccessor<float> NavInputsDownDurationPrev => new RangeAccessor<float>(NativePtr->NavInputsDownDurationPrev, 22);
         public ImVector<ushort> InputQueueCharacters => new ImVector<ushort>(NativePtr->InputQueueCharacters);
-        public void AddInputCharacter(ushort c)
+        public void AddInputCharacter(uint c)
         {
             ImGuiNative.ImGuiIO_AddInputCharacter(NativePtr, c);
         }

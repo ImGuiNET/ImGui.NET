@@ -7,8 +7,8 @@ namespace ImGuiNET
 {
     public unsafe partial struct ImDrawChannel
     {
-        public ImVector CmdBuffer;
-        public ImVector IdxBuffer;
+        public ImVector _CmdBuffer;
+        public ImVector _IdxBuffer;
     }
     public unsafe partial struct ImDrawChannelPtr
     {
@@ -18,7 +18,7 @@ namespace ImGuiNET
         public static implicit operator ImDrawChannelPtr(ImDrawChannel* nativePtr) => new ImDrawChannelPtr(nativePtr);
         public static implicit operator ImDrawChannel* (ImDrawChannelPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImDrawChannelPtr(IntPtr nativePtr) => new ImDrawChannelPtr(nativePtr);
-        public ImPtrVector<ImDrawCmdPtr> CmdBuffer => new ImPtrVector<ImDrawCmdPtr>(NativePtr->CmdBuffer, Unsafe.SizeOf<ImDrawCmd>());
-        public ImVector<ushort> IdxBuffer => new ImVector<ushort>(NativePtr->IdxBuffer);
+        public ImPtrVector<ImDrawCmdPtr> _CmdBuffer => new ImPtrVector<ImDrawCmdPtr>(NativePtr->_CmdBuffer, Unsafe.SizeOf<ImDrawCmd>());
+        public ImVector<ushort> _IdxBuffer => new ImVector<ushort>(NativePtr->_IdxBuffer);
     }
 }

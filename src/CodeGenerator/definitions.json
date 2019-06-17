@@ -474,6 +474,160 @@
       "stname": "ImDrawData"
     }
   ],
+  "ImDrawListSplitter_Clear": [
+    {
+      "args": "(ImDrawListSplitter* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImDrawListSplitter*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "ImDrawListSplitter_Clear",
+      "defaults": [],
+      "funcname": "Clear",
+      "ov_cimguiname": "ImDrawListSplitter_Clear",
+      "ret": "void",
+      "signature": "()",
+      "stname": "ImDrawListSplitter"
+    }
+  ],
+  "ImDrawListSplitter_ClearFreeMemory": [
+    {
+      "args": "(ImDrawListSplitter* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImDrawListSplitter*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "ImDrawListSplitter_ClearFreeMemory",
+      "defaults": [],
+      "funcname": "ClearFreeMemory",
+      "ov_cimguiname": "ImDrawListSplitter_ClearFreeMemory",
+      "ret": "void",
+      "signature": "()",
+      "stname": "ImDrawListSplitter"
+    }
+  ],
+  "ImDrawListSplitter_ImDrawListSplitter": [
+    {
+      "args": "()",
+      "argsT": [],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "ImDrawListSplitter_ImDrawListSplitter",
+      "constructor": true,
+      "defaults": [],
+      "funcname": "ImDrawListSplitter",
+      "ov_cimguiname": "ImDrawListSplitter_ImDrawListSplitter",
+      "signature": "()",
+      "stname": "ImDrawListSplitter"
+    }
+  ],
+  "ImDrawListSplitter_Merge": [
+    {
+      "args": "(ImDrawListSplitter* self,ImDrawList* draw_list)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImDrawListSplitter*"
+        },
+        {
+          "name": "draw_list",
+          "type": "ImDrawList*"
+        }
+      ],
+      "argsoriginal": "(ImDrawList* draw_list)",
+      "call_args": "(draw_list)",
+      "cimguiname": "ImDrawListSplitter_Merge",
+      "defaults": [],
+      "funcname": "Merge",
+      "ov_cimguiname": "ImDrawListSplitter_Merge",
+      "ret": "void",
+      "signature": "(ImDrawList*)",
+      "stname": "ImDrawListSplitter"
+    }
+  ],
+  "ImDrawListSplitter_SetCurrentChannel": [
+    {
+      "args": "(ImDrawListSplitter* self,ImDrawList* draw_list,int channel_idx)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImDrawListSplitter*"
+        },
+        {
+          "name": "draw_list",
+          "type": "ImDrawList*"
+        },
+        {
+          "name": "channel_idx",
+          "type": "int"
+        }
+      ],
+      "argsoriginal": "(ImDrawList* draw_list,int channel_idx)",
+      "call_args": "(draw_list,channel_idx)",
+      "cimguiname": "ImDrawListSplitter_SetCurrentChannel",
+      "defaults": [],
+      "funcname": "SetCurrentChannel",
+      "ov_cimguiname": "ImDrawListSplitter_SetCurrentChannel",
+      "ret": "void",
+      "signature": "(ImDrawList*,int)",
+      "stname": "ImDrawListSplitter"
+    }
+  ],
+  "ImDrawListSplitter_Split": [
+    {
+      "args": "(ImDrawListSplitter* self,ImDrawList* draw_list,int count)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImDrawListSplitter*"
+        },
+        {
+          "name": "draw_list",
+          "type": "ImDrawList*"
+        },
+        {
+          "name": "count",
+          "type": "int"
+        }
+      ],
+      "argsoriginal": "(ImDrawList* draw_list,int count)",
+      "call_args": "(draw_list,count)",
+      "cimguiname": "ImDrawListSplitter_Split",
+      "defaults": [],
+      "funcname": "Split",
+      "ov_cimguiname": "ImDrawListSplitter_Split",
+      "ret": "void",
+      "signature": "(ImDrawList*,int)",
+      "stname": "ImDrawListSplitter"
+    }
+  ],
+  "ImDrawListSplitter_destroy": [
+    {
+      "args": "(ImDrawListSplitter* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImDrawListSplitter*"
+        }
+      ],
+      "call_args": "(self)",
+      "cimguiname": "ImDrawListSplitter_destroy",
+      "defaults": [],
+      "destructor": true,
+      "ov_cimguiname": "ImDrawListSplitter_destroy",
+      "ret": "void",
+      "signature": "(ImDrawListSplitter*)",
+      "stname": "ImDrawListSplitter"
+    }
+  ],
   "ImDrawList_AddBezierCurve": [
     {
       "args": "(ImDrawList* self,const ImVec2 pos0,const ImVec2 cp0,const ImVec2 cp1,const ImVec2 pos1,ImU32 col,float thickness,int num_segments)",
@@ -1344,19 +1498,19 @@
   ],
   "ImDrawList_ChannelsSetCurrent": [
     {
-      "args": "(ImDrawList* self,int channel_index)",
+      "args": "(ImDrawList* self,int n)",
       "argsT": [
         {
           "name": "self",
           "type": "ImDrawList*"
         },
         {
-          "name": "channel_index",
+          "name": "n",
           "type": "int"
         }
       ],
-      "argsoriginal": "(int channel_index)",
-      "call_args": "(channel_index)",
+      "argsoriginal": "(int n)",
+      "call_args": "(n)",
       "cimguiname": "ImDrawList_ChannelsSetCurrent",
       "defaults": [],
       "funcname": "ChannelsSetCurrent",
@@ -1368,19 +1522,19 @@
   ],
   "ImDrawList_ChannelsSplit": [
     {
-      "args": "(ImDrawList* self,int channels_count)",
+      "args": "(ImDrawList* self,int count)",
       "argsT": [
         {
           "name": "self",
           "type": "ImDrawList*"
         },
         {
-          "name": "channels_count",
+          "name": "count",
           "type": "int"
         }
       ],
-      "argsoriginal": "(int channels_count)",
-      "call_args": "(channels_count)",
+      "argsoriginal": "(int count)",
+      "call_args": "(count)",
       "cimguiname": "ImDrawList_ChannelsSplit",
       "defaults": [],
       "funcname": "ChannelsSplit",
@@ -3236,6 +3390,26 @@
       "stname": "ImFontGlyphRangesBuilder"
     }
   ],
+  "ImFontGlyphRangesBuilder_Clear": [
+    {
+      "args": "(ImFontGlyphRangesBuilder* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImFontGlyphRangesBuilder*"
+        }
+      ],
+      "argsoriginal": "()",
+      "call_args": "()",
+      "cimguiname": "ImFontGlyphRangesBuilder_Clear",
+      "defaults": [],
+      "funcname": "Clear",
+      "ov_cimguiname": "ImFontGlyphRangesBuilder_Clear",
+      "ret": "void",
+      "signature": "()",
+      "stname": "ImFontGlyphRangesBuilder"
+    }
+  ],
   "ImFontGlyphRangesBuilder_GetBit": [
     {
       "args": "(ImFontGlyphRangesBuilder* self,int n)",
@@ -3927,7 +4101,7 @@
   ],
   "ImGuiIO_AddInputCharacter": [
     {
-      "args": "(ImGuiIO* self,ImWchar c)",
+      "args": "(ImGuiIO* self,unsigned int c)",
       "argsT": [
         {
           "name": "self",
@@ -3935,17 +4109,17 @@
         },
         {
           "name": "c",
-          "type": "ImWchar"
+          "type": "unsigned int"
         }
       ],
-      "argsoriginal": "(ImWchar c)",
+      "argsoriginal": "(unsigned int c)",
       "call_args": "(c)",
       "cimguiname": "ImGuiIO_AddInputCharacter",
       "defaults": [],
       "funcname": "AddInputCharacter",
       "ov_cimguiname": "ImGuiIO_AddInputCharacter",
       "ret": "void",
-      "signature": "(ImWchar)",
+      "signature": "(unsigned int)",
       "stname": "ImGuiIO"
     }
   ],
@@ -11043,6 +11217,630 @@
       "templatedgen": true
     }
   ],
+  "ImVector_ImU32_ImVector_ImU32": [
+    {
+      "args": "()",
+      "argsT": [],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_ImVector_ImU32",
+      "constructor": true,
+      "defaults": [],
+      "funcname": "ImVector_ImU32",
+      "ov_cimguiname": "ImVector_ImU32_ImVector_ImU32",
+      "signature": "()",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    },
+    {
+      "args": "(const ImVector_ImU32 src)",
+      "argsT": [
+        {
+          "name": "src",
+          "type": "const ImVector_ImU32"
+        }
+      ],
+      "call_args": "(src)",
+      "cimguiname": "ImVector_ImU32_ImVector_ImU32",
+      "constructor": true,
+      "defaults": [],
+      "funcname": "ImVector_ImU32",
+      "ov_cimguiname": "ImVector_ImU32_ImVector_ImU32Vector",
+      "signature": "(const ImVector)",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32__grow_capacity": [
+    {
+      "args": "(const ImVector_ImU32* self,int sz)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "const ImVector_ImU32*"
+        },
+        {
+          "name": "sz",
+          "type": "int"
+        }
+      ],
+      "call_args": "(sz)",
+      "cimguiname": "ImVector_ImU32__grow_capacity",
+      "defaults": [],
+      "funcname": "_grow_capacity",
+      "ov_cimguiname": "ImVector_ImU32__grow_capacity",
+      "ret": "int",
+      "signature": "(int)const",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_back": [
+    {
+      "args": "(ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_back",
+      "defaults": [],
+      "funcname": "back",
+      "ov_cimguiname": "ImVector_ImU32_back",
+      "ret": "ImU32*",
+      "retref": "&",
+      "signature": "()",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    },
+    {
+      "args": "(const ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "const ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_back",
+      "defaults": [],
+      "funcname": "back",
+      "ov_cimguiname": "ImVector_ImU32_back_const",
+      "ret": "ImU32 const *",
+      "retref": "&",
+      "signature": "()const",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_begin": [
+    {
+      "args": "(ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_begin",
+      "defaults": [],
+      "funcname": "begin",
+      "ov_cimguiname": "ImVector_ImU32_begin",
+      "ret": "ImU32*",
+      "signature": "()",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    },
+    {
+      "args": "(const ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "const ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_begin",
+      "defaults": [],
+      "funcname": "begin",
+      "ov_cimguiname": "ImVector_ImU32_begin_const",
+      "ret": "ImU32 const *",
+      "signature": "()const",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_capacity": [
+    {
+      "args": "(const ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "const ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_capacity",
+      "defaults": [],
+      "funcname": "capacity",
+      "ov_cimguiname": "ImVector_ImU32_capacity",
+      "ret": "int",
+      "signature": "()const",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_clear": [
+    {
+      "args": "(ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_clear",
+      "defaults": [],
+      "funcname": "clear",
+      "ov_cimguiname": "ImVector_ImU32_clear",
+      "ret": "void",
+      "signature": "()",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_destroy": [
+    {
+      "args": "(ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        }
+      ],
+      "call_args": "(self)",
+      "cimguiname": "ImVector_ImU32_destroy",
+      "defaults": [],
+      "destructor": true,
+      "ov_cimguiname": "ImVector_ImU32_destroy",
+      "ret": "void",
+      "signature": "(ImVector_ImU32*)",
+      "stname": "ImVector_ImU32"
+    }
+  ],
+  "ImVector_ImU32_empty": [
+    {
+      "args": "(const ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "const ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_empty",
+      "defaults": [],
+      "funcname": "empty",
+      "ov_cimguiname": "ImVector_ImU32_empty",
+      "ret": "bool",
+      "signature": "()const",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_end": [
+    {
+      "args": "(ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_end",
+      "defaults": [],
+      "funcname": "end",
+      "ov_cimguiname": "ImVector_ImU32_end",
+      "ret": "ImU32*",
+      "signature": "()",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    },
+    {
+      "args": "(const ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "const ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_end",
+      "defaults": [],
+      "funcname": "end",
+      "ov_cimguiname": "ImVector_ImU32_end_const",
+      "ret": "ImU32 const *",
+      "signature": "()const",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_erase": [
+    {
+      "args": "(ImVector_ImU32* self,ImU32 const * it)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        },
+        {
+          "name": "it",
+          "type": "ImU32 const *"
+        }
+      ],
+      "call_args": "(it)",
+      "cimguiname": "ImVector_ImU32_erase",
+      "defaults": [],
+      "funcname": "erase",
+      "ov_cimguiname": "ImVector_ImU32_erase",
+      "ret": "ImU32*",
+      "signature": "(const ImU32*)",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    },
+    {
+      "args": "(ImVector_ImU32* self,ImU32 const * it,ImU32 const * it_last)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        },
+        {
+          "name": "it",
+          "type": "ImU32 const *"
+        },
+        {
+          "name": "it_last",
+          "type": "ImU32 const *"
+        }
+      ],
+      "call_args": "(it,it_last)",
+      "cimguiname": "ImVector_ImU32_erase",
+      "defaults": [],
+      "funcname": "erase",
+      "ov_cimguiname": "ImVector_ImU32_eraseTPtr",
+      "ret": "ImU32*",
+      "signature": "(const ImU32*,const ImU32*)",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_erase_unsorted": [
+    {
+      "args": "(ImVector_ImU32* self,ImU32 const * it)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        },
+        {
+          "name": "it",
+          "type": "ImU32 const *"
+        }
+      ],
+      "call_args": "(it)",
+      "cimguiname": "ImVector_ImU32_erase_unsorted",
+      "defaults": [],
+      "funcname": "erase_unsorted",
+      "ov_cimguiname": "ImVector_ImU32_erase_unsorted",
+      "ret": "ImU32*",
+      "signature": "(const ImU32*)",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_front": [
+    {
+      "args": "(ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_front",
+      "defaults": [],
+      "funcname": "front",
+      "ov_cimguiname": "ImVector_ImU32_front",
+      "ret": "ImU32*",
+      "retref": "&",
+      "signature": "()",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    },
+    {
+      "args": "(const ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "const ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_front",
+      "defaults": [],
+      "funcname": "front",
+      "ov_cimguiname": "ImVector_ImU32_front_const",
+      "ret": "ImU32 const *",
+      "retref": "&",
+      "signature": "()const",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_index_from_ptr": [
+    {
+      "args": "(const ImVector_ImU32* self,ImU32 const * it)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "const ImVector_ImU32*"
+        },
+        {
+          "name": "it",
+          "type": "ImU32 const *"
+        }
+      ],
+      "call_args": "(it)",
+      "cimguiname": "ImVector_ImU32_index_from_ptr",
+      "defaults": [],
+      "funcname": "index_from_ptr",
+      "ov_cimguiname": "ImVector_ImU32_index_from_ptr",
+      "ret": "int",
+      "signature": "(const ImU32*)const",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_insert": [
+    {
+      "args": "(ImVector_ImU32* self,ImU32 const * it,const ImU32 v)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        },
+        {
+          "name": "it",
+          "type": "ImU32 const *"
+        },
+        {
+          "name": "v",
+          "type": "const ImU32"
+        }
+      ],
+      "call_args": "(it,v)",
+      "cimguiname": "ImVector_ImU32_insert",
+      "defaults": [],
+      "funcname": "insert",
+      "ov_cimguiname": "ImVector_ImU32_insert",
+      "ret": "ImU32*",
+      "signature": "(const ImU32*,const ImU32)",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_pop_back": [
+    {
+      "args": "(ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_pop_back",
+      "defaults": [],
+      "funcname": "pop_back",
+      "ov_cimguiname": "ImVector_ImU32_pop_back",
+      "ret": "void",
+      "signature": "()",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_push_back": [
+    {
+      "args": "(ImVector_ImU32* self,const ImU32 v)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        },
+        {
+          "name": "v",
+          "type": "const ImU32"
+        }
+      ],
+      "call_args": "(v)",
+      "cimguiname": "ImVector_ImU32_push_back",
+      "defaults": [],
+      "funcname": "push_back",
+      "ov_cimguiname": "ImVector_ImU32_push_back",
+      "ret": "void",
+      "signature": "(const ImU32)",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_push_front": [
+    {
+      "args": "(ImVector_ImU32* self,const ImU32 v)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        },
+        {
+          "name": "v",
+          "type": "const ImU32"
+        }
+      ],
+      "call_args": "(v)",
+      "cimguiname": "ImVector_ImU32_push_front",
+      "defaults": [],
+      "funcname": "push_front",
+      "ov_cimguiname": "ImVector_ImU32_push_front",
+      "ret": "void",
+      "signature": "(const ImU32)",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_reserve": [
+    {
+      "args": "(ImVector_ImU32* self,int new_capacity)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        },
+        {
+          "name": "new_capacity",
+          "type": "int"
+        }
+      ],
+      "call_args": "(new_capacity)",
+      "cimguiname": "ImVector_ImU32_reserve",
+      "defaults": [],
+      "funcname": "reserve",
+      "ov_cimguiname": "ImVector_ImU32_reserve",
+      "ret": "void",
+      "signature": "(int)",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_resize": [
+    {
+      "args": "(ImVector_ImU32* self,int new_size)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        },
+        {
+          "name": "new_size",
+          "type": "int"
+        }
+      ],
+      "call_args": "(new_size)",
+      "cimguiname": "ImVector_ImU32_resize",
+      "defaults": [],
+      "funcname": "resize",
+      "ov_cimguiname": "ImVector_ImU32_resize",
+      "ret": "void",
+      "signature": "(int)",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    },
+    {
+      "args": "(ImVector_ImU32* self,int new_size,const ImU32 v)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        },
+        {
+          "name": "new_size",
+          "type": "int"
+        },
+        {
+          "name": "v",
+          "type": "const ImU32"
+        }
+      ],
+      "call_args": "(new_size,v)",
+      "cimguiname": "ImVector_ImU32_resize",
+      "defaults": [],
+      "funcname": "resize",
+      "ov_cimguiname": "ImVector_ImU32_resizeT",
+      "ret": "void",
+      "signature": "(int,const ImU32)",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_size": [
+    {
+      "args": "(const ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "const ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_size",
+      "defaults": [],
+      "funcname": "size",
+      "ov_cimguiname": "ImVector_ImU32_size",
+      "ret": "int",
+      "signature": "()const",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_size_in_bytes": [
+    {
+      "args": "(const ImVector_ImU32* self)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "const ImVector_ImU32*"
+        }
+      ],
+      "call_args": "()",
+      "cimguiname": "ImVector_ImU32_size_in_bytes",
+      "defaults": [],
+      "funcname": "size_in_bytes",
+      "ov_cimguiname": "ImVector_ImU32_size_in_bytes",
+      "ret": "int",
+      "signature": "()const",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
+  "ImVector_ImU32_swap": [
+    {
+      "args": "(ImVector_ImU32* self,ImVector_ImU32 rhs)",
+      "argsT": [
+        {
+          "name": "self",
+          "type": "ImVector_ImU32*"
+        },
+        {
+          "name": "rhs",
+          "type": "ImVector_ImU32&"
+        }
+      ],
+      "call_args": "(rhs)",
+      "cimguiname": "ImVector_ImU32_swap",
+      "defaults": [],
+      "funcname": "swap",
+      "ov_cimguiname": "ImVector_ImU32_swap",
+      "ret": "void",
+      "signature": "(ImVector)",
+      "stname": "ImVector_ImU32",
+      "templatedgen": true
+    }
+  ],
   "ImVector_ImVec2_ImVector_ImVec2": [
     {
       "args": "()",
@@ -15919,654 +16717,6 @@
       "signature": "(const T*,const T)",
       "stname": "ImVector",
       "templated": true
-    }
-  ],
-  "ImVector_int_ImVector_int": [
-    {
-      "args": "()",
-      "argsT": [],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_ImVector_int",
-      "constructor": true,
-      "defaults": [],
-      "funcname": "ImVector_int",
-      "ov_cimguiname": "ImVector_int_ImVector_int",
-      "signature": "()",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    },
-    {
-      "args": "(const ImVector_int src)",
-      "argsT": [
-        {
-          "name": "src",
-          "type": "const ImVector_int"
-        }
-      ],
-      "call_args": "(src)",
-      "cimguiname": "ImVector_int_ImVector_int",
-      "constructor": true,
-      "defaults": [],
-      "funcname": "ImVector_int",
-      "ov_cimguiname": "ImVector_int_ImVector_intVector",
-      "signature": "(const ImVector)",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int__grow_capacity": [
-    {
-      "args": "(const ImVector_int* self,int sz)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "const ImVector_int*"
-        },
-        {
-          "name": "sz",
-          "type": "int"
-        }
-      ],
-      "call_args": "(sz)",
-      "cimguiname": "ImVector_int__grow_capacity",
-      "defaults": [],
-      "funcname": "_grow_capacity",
-      "ov_cimguiname": "ImVector_int__grow_capacity",
-      "ret": "int",
-      "signature": "(int)const",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_back": [
-    {
-      "args": "(ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_back",
-      "defaults": [],
-      "funcname": "back",
-      "ov_cimguiname": "ImVector_int_back",
-      "ret": "int*",
-      "retref": "&",
-      "signature": "()",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    },
-    {
-      "args": "(const ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "const ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_back",
-      "defaults": [],
-      "funcname": "back",
-      "ov_cimguiname": "ImVector_int_back_const",
-      "ret": "int const *",
-      "retref": "&",
-      "signature": "()const",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_begin": [
-    {
-      "args": "(ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_begin",
-      "defaults": [],
-      "funcname": "begin",
-      "ov_cimguiname": "ImVector_int_begin",
-      "ret": "int*",
-      "signature": "()",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    },
-    {
-      "args": "(const ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "const ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_begin",
-      "defaults": [],
-      "funcname": "begin",
-      "ov_cimguiname": "ImVector_int_begin_const",
-      "ret": "int const *",
-      "signature": "()const",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_capacity": [
-    {
-      "args": "(const ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "const ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_capacity",
-      "defaults": [],
-      "funcname": "capacity",
-      "ov_cimguiname": "ImVector_int_capacity",
-      "ret": "int",
-      "signature": "()const",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_clear": [
-    {
-      "args": "(ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_clear",
-      "defaults": [],
-      "funcname": "clear",
-      "ov_cimguiname": "ImVector_int_clear",
-      "ret": "void",
-      "signature": "()",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_contains": [
-    {
-      "args": "(const ImVector_int* self,const int v)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "const ImVector_int*"
-        },
-        {
-          "name": "v",
-          "type": "const int"
-        }
-      ],
-      "call_args": "(v)",
-      "cimguiname": "ImVector_int_contains",
-      "defaults": [],
-      "funcname": "contains",
-      "ov_cimguiname": "ImVector_int_contains",
-      "ret": "bool",
-      "signature": "(const int)const",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_destroy": [
-    {
-      "args": "(ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        }
-      ],
-      "call_args": "(self)",
-      "cimguiname": "ImVector_int_destroy",
-      "defaults": [],
-      "destructor": true,
-      "ov_cimguiname": "ImVector_int_destroy",
-      "ret": "void",
-      "signature": "(ImVector_int*)",
-      "stname": "ImVector_int"
-    }
-  ],
-  "ImVector_int_empty": [
-    {
-      "args": "(const ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "const ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_empty",
-      "defaults": [],
-      "funcname": "empty",
-      "ov_cimguiname": "ImVector_int_empty",
-      "ret": "bool",
-      "signature": "()const",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_end": [
-    {
-      "args": "(ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_end",
-      "defaults": [],
-      "funcname": "end",
-      "ov_cimguiname": "ImVector_int_end",
-      "ret": "int*",
-      "signature": "()",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    },
-    {
-      "args": "(const ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "const ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_end",
-      "defaults": [],
-      "funcname": "end",
-      "ov_cimguiname": "ImVector_int_end_const",
-      "ret": "int const *",
-      "signature": "()const",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_erase": [
-    {
-      "args": "(ImVector_int* self,int const * it)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        },
-        {
-          "name": "it",
-          "type": "int const *"
-        }
-      ],
-      "call_args": "(it)",
-      "cimguiname": "ImVector_int_erase",
-      "defaults": [],
-      "funcname": "erase",
-      "ov_cimguiname": "ImVector_int_erase",
-      "ret": "int*",
-      "signature": "(const int*)",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    },
-    {
-      "args": "(ImVector_int* self,int const * it,int const * it_last)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        },
-        {
-          "name": "it",
-          "type": "int const *"
-        },
-        {
-          "name": "it_last",
-          "type": "int const *"
-        }
-      ],
-      "call_args": "(it,it_last)",
-      "cimguiname": "ImVector_int_erase",
-      "defaults": [],
-      "funcname": "erase",
-      "ov_cimguiname": "ImVector_int_eraseTPtr",
-      "ret": "int*",
-      "signature": "(const int*,const int*)",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_erase_unsorted": [
-    {
-      "args": "(ImVector_int* self,int const * it)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        },
-        {
-          "name": "it",
-          "type": "int const *"
-        }
-      ],
-      "call_args": "(it)",
-      "cimguiname": "ImVector_int_erase_unsorted",
-      "defaults": [],
-      "funcname": "erase_unsorted",
-      "ov_cimguiname": "ImVector_int_erase_unsorted",
-      "ret": "int*",
-      "signature": "(const int*)",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_front": [
-    {
-      "args": "(ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_front",
-      "defaults": [],
-      "funcname": "front",
-      "ov_cimguiname": "ImVector_int_front",
-      "ret": "int*",
-      "retref": "&",
-      "signature": "()",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    },
-    {
-      "args": "(const ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "const ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_front",
-      "defaults": [],
-      "funcname": "front",
-      "ov_cimguiname": "ImVector_int_front_const",
-      "ret": "int const *",
-      "retref": "&",
-      "signature": "()const",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_index_from_ptr": [
-    {
-      "args": "(const ImVector_int* self,int const * it)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "const ImVector_int*"
-        },
-        {
-          "name": "it",
-          "type": "int const *"
-        }
-      ],
-      "call_args": "(it)",
-      "cimguiname": "ImVector_int_index_from_ptr",
-      "defaults": [],
-      "funcname": "index_from_ptr",
-      "ov_cimguiname": "ImVector_int_index_from_ptr",
-      "ret": "int",
-      "signature": "(const int*)const",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_insert": [
-    {
-      "args": "(ImVector_int* self,int const * it,const int v)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        },
-        {
-          "name": "it",
-          "type": "int const *"
-        },
-        {
-          "name": "v",
-          "type": "const int"
-        }
-      ],
-      "call_args": "(it,v)",
-      "cimguiname": "ImVector_int_insert",
-      "defaults": [],
-      "funcname": "insert",
-      "ov_cimguiname": "ImVector_int_insert",
-      "ret": "int*",
-      "signature": "(const int*,const int)",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_pop_back": [
-    {
-      "args": "(ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_pop_back",
-      "defaults": [],
-      "funcname": "pop_back",
-      "ov_cimguiname": "ImVector_int_pop_back",
-      "ret": "void",
-      "signature": "()",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_push_back": [
-    {
-      "args": "(ImVector_int* self,const int v)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        },
-        {
-          "name": "v",
-          "type": "const int"
-        }
-      ],
-      "call_args": "(v)",
-      "cimguiname": "ImVector_int_push_back",
-      "defaults": [],
-      "funcname": "push_back",
-      "ov_cimguiname": "ImVector_int_push_back",
-      "ret": "void",
-      "signature": "(const int)",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_push_front": [
-    {
-      "args": "(ImVector_int* self,const int v)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        },
-        {
-          "name": "v",
-          "type": "const int"
-        }
-      ],
-      "call_args": "(v)",
-      "cimguiname": "ImVector_int_push_front",
-      "defaults": [],
-      "funcname": "push_front",
-      "ov_cimguiname": "ImVector_int_push_front",
-      "ret": "void",
-      "signature": "(const int)",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_reserve": [
-    {
-      "args": "(ImVector_int* self,int new_capacity)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        },
-        {
-          "name": "new_capacity",
-          "type": "int"
-        }
-      ],
-      "call_args": "(new_capacity)",
-      "cimguiname": "ImVector_int_reserve",
-      "defaults": [],
-      "funcname": "reserve",
-      "ov_cimguiname": "ImVector_int_reserve",
-      "ret": "void",
-      "signature": "(int)",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_resize": [
-    {
-      "args": "(ImVector_int* self,int new_size)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        },
-        {
-          "name": "new_size",
-          "type": "int"
-        }
-      ],
-      "call_args": "(new_size)",
-      "cimguiname": "ImVector_int_resize",
-      "defaults": [],
-      "funcname": "resize",
-      "ov_cimguiname": "ImVector_int_resize",
-      "ret": "void",
-      "signature": "(int)",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    },
-    {
-      "args": "(ImVector_int* self,int new_size,const int v)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        },
-        {
-          "name": "new_size",
-          "type": "int"
-        },
-        {
-          "name": "v",
-          "type": "const int"
-        }
-      ],
-      "call_args": "(new_size,v)",
-      "cimguiname": "ImVector_int_resize",
-      "defaults": [],
-      "funcname": "resize",
-      "ov_cimguiname": "ImVector_int_resizeT",
-      "ret": "void",
-      "signature": "(int,const int)",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_size": [
-    {
-      "args": "(const ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "const ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_size",
-      "defaults": [],
-      "funcname": "size",
-      "ov_cimguiname": "ImVector_int_size",
-      "ret": "int",
-      "signature": "()const",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_size_in_bytes": [
-    {
-      "args": "(const ImVector_int* self)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "const ImVector_int*"
-        }
-      ],
-      "call_args": "()",
-      "cimguiname": "ImVector_int_size_in_bytes",
-      "defaults": [],
-      "funcname": "size_in_bytes",
-      "ov_cimguiname": "ImVector_int_size_in_bytes",
-      "ret": "int",
-      "signature": "()const",
-      "stname": "ImVector_int",
-      "templatedgen": true
-    }
-  ],
-  "ImVector_int_swap": [
-    {
-      "args": "(ImVector_int* self,ImVector_int rhs)",
-      "argsT": [
-        {
-          "name": "self",
-          "type": "ImVector_int*"
-        },
-        {
-          "name": "rhs",
-          "type": "ImVector_int&"
-        }
-      ],
-      "call_args": "(rhs)",
-      "cimguiname": "ImVector_int_swap",
-      "defaults": [],
-      "funcname": "swap",
-      "ov_cimguiname": "ImVector_int_swap",
-      "ret": "void",
-      "signature": "(ImVector)",
-      "stname": "ImVector_int",
-      "templatedgen": true
     }
   ],
   "ImVector_pop_back": [
@@ -24401,6 +24551,33 @@
       "stname": ""
     }
   ],
+  "igSetNextItemOpen": [
+    {
+      "args": "(bool is_open,ImGuiCond cond)",
+      "argsT": [
+        {
+          "name": "is_open",
+          "type": "bool"
+        },
+        {
+          "name": "cond",
+          "type": "ImGuiCond"
+        }
+      ],
+      "argsoriginal": "(bool is_open,ImGuiCond cond=0)",
+      "call_args": "(is_open,cond)",
+      "cimguiname": "igSetNextItemOpen",
+      "defaults": {
+        "cond": "0"
+      },
+      "funcname": "SetNextItemOpen",
+      "namespace": "ImGui",
+      "ov_cimguiname": "igSetNextItemOpen",
+      "ret": "void",
+      "signature": "(bool,ImGuiCond)",
+      "stname": ""
+    }
+  ],
   "igSetNextItemWidth": [
     {
       "args": "(float item_width)",
@@ -24419,33 +24596,6 @@
       "ov_cimguiname": "igSetNextItemWidth",
       "ret": "void",
       "signature": "(float)",
-      "stname": ""
-    }
-  ],
-  "igSetNextTreeNodeOpen": [
-    {
-      "args": "(bool is_open,ImGuiCond cond)",
-      "argsT": [
-        {
-          "name": "is_open",
-          "type": "bool"
-        },
-        {
-          "name": "cond",
-          "type": "ImGuiCond"
-        }
-      ],
-      "argsoriginal": "(bool is_open,ImGuiCond cond=0)",
-      "call_args": "(is_open,cond)",
-      "cimguiname": "igSetNextTreeNodeOpen",
-      "defaults": {
-        "cond": "0"
-      },
-      "funcname": "SetNextTreeNodeOpen",
-      "namespace": "ImGui",
-      "ov_cimguiname": "igSetNextTreeNodeOpen",
-      "ret": "void",
-      "signature": "(bool,ImGuiCond)",
       "stname": ""
     }
   ],

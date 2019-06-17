@@ -17,7 +17,7 @@ namespace ImGuiNET
         public static implicit operator ImFontGlyphRangesBuilderPtr(ImFontGlyphRangesBuilder* nativePtr) => new ImFontGlyphRangesBuilderPtr(nativePtr);
         public static implicit operator ImFontGlyphRangesBuilder* (ImFontGlyphRangesBuilderPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImFontGlyphRangesBuilderPtr(IntPtr nativePtr) => new ImFontGlyphRangesBuilderPtr(nativePtr);
-        public ImVector<int> UsedChars => new ImVector<int>(NativePtr->UsedChars);
+        public ImVector<uint> UsedChars => new ImVector<uint>(NativePtr->UsedChars);
         public void AddChar(ushort c)
         {
             ImGuiNative.ImFontGlyphRangesBuilder_AddChar(NativePtr, c);
@@ -60,6 +60,10 @@ namespace ImGuiNET
             {
                 ImGuiNative.ImFontGlyphRangesBuilder_BuildRanges(NativePtr, native_out_ranges);
             }
+        }
+        public void Clear()
+        {
+            ImGuiNative.ImFontGlyphRangesBuilder_Clear(NativePtr);
         }
         public void Destroy()
         {

@@ -24,5 +24,6 @@ namespace ImGuiNET
         CharsScientific = 1 << 17,
         CallbackResize = 1 << 18,
         Multiline = 1 << 20,
+        NoMarkEdited = 1 << 21,
     }
 }

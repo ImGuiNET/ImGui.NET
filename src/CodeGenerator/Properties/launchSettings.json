@@ -2,7 +2,7 @@
   "profiles": {
     "CodeGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "E:\\projects\\imgui.net\\src\\ImGui.NET\\Generated"
+      "commandLineArgs": "E:\\repositories\\github\\ImGui.NET\\src\\ImGui.NET\\Generated"
     }
   }
 }

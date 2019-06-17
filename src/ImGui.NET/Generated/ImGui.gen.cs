@@ -10392,20 +10392,20 @@ namespace ImGuiNET
         {
             ImGuiNative.igSetMouseCursor(type);
         }
-        public static void SetNextItemWidth(float item_width)
-        {
-            ImGuiNative.igSetNextItemWidth(item_width);
-        }
-        public static void SetNextTreeNodeOpen(bool is_open)
+        public static void SetNextItemOpen(bool is_open)
         {
             byte native_is_open = is_open ? (byte)1 : (byte)0;
             ImGuiCond cond = 0;
-            ImGuiNative.igSetNextTreeNodeOpen(native_is_open, cond);
+            ImGuiNative.igSetNextItemOpen(native_is_open, cond);
         }
-        public static void SetNextTreeNodeOpen(bool is_open, ImGuiCond cond)
+        public static void SetNextItemOpen(bool is_open, ImGuiCond cond)
         {
             byte native_is_open = is_open ? (byte)1 : (byte)0;
-            ImGuiNative.igSetNextTreeNodeOpen(native_is_open, cond);
+            ImGuiNative.igSetNextItemOpen(native_is_open, cond);
+        }
+        public static void SetNextItemWidth(float item_width)
+        {
+            ImGuiNative.igSetNextItemWidth(item_width);
         }
         public static void SetNextWindowBgAlpha(float alpha)
         {

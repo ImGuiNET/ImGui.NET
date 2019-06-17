@@ -13,15 +13,14 @@ namespace ImGuiNET
         public ImDrawListFlags Flags;
         public IntPtr _Data;
         public byte* _OwnerName;
+        public uint _VtxCurrentOffset;
         public uint _VtxCurrentIdx;
         public ImDrawVert* _VtxWritePtr;
         public ushort* _IdxWritePtr;
         public ImVector _ClipRectStack;
         public ImVector _TextureIdStack;
         public ImVector _Path;
-        public int _ChannelsCurrent;
-        public int _ChannelsCount;
-        public ImVector _Channels;
+        public ImDrawListSplitter _Splitter;
     }
     public unsafe partial struct ImDrawListPtr
     {
@@ -37,15 +36,14 @@ namespace ImGuiNET
         public ref ImDrawListFlags Flags => ref Unsafe.AsRef<ImDrawListFlags>(&NativePtr->Flags);
         public ref IntPtr _Data => ref Unsafe.AsRef<IntPtr>(&NativePtr->_Data);
         public NullTerminatedString _OwnerName => new NullTerminatedString(NativePtr->_OwnerName);
+        public ref uint _VtxCurrentOffset => ref Unsafe.AsRef<uint>(&NativePtr->_VtxCurrentOffset);
         public ref uint _VtxCurrentIdx => ref Unsafe.AsRef<uint>(&NativePtr->_VtxCurrentIdx);
         public ImDrawVertPtr _VtxWritePtr => new ImDrawVertPtr(NativePtr->_VtxWritePtr);
         public IntPtr _IdxWritePtr { get => (IntPtr)NativePtr->_IdxWritePtr; set => NativePtr->_IdxWritePtr = (ushort*)value; }
         public ImVector<Vector4> _ClipRectStack => new ImVector<Vector4>(NativePtr->_ClipRectStack);
         public ImVector<IntPtr> _TextureIdStack => new ImVector<IntPtr>(NativePtr->_TextureIdStack);
         public ImVector<Vector2> _Path => new ImVector<Vector2>(NativePtr->_Path);
-        public ref int _ChannelsCurrent => ref Unsafe.AsRef<int>(&NativePtr->_ChannelsCurrent);
-        public ref int _ChannelsCount => ref Unsafe.AsRef<int>(&NativePtr->_ChannelsCount);
-        public ImPtrVector<ImDrawChannelPtr> _Channels => new ImPtrVector<ImDrawChannelPtr>(NativePtr->_Channels, Unsafe.SizeOf<ImDrawChannel>());
+        public ref ImDrawListSplitter _Splitter => ref Unsafe.AsRef<ImDrawListSplitter>(&NativePtr->_Splitter);
         public void AddBezierCurve(Vector2 pos0, Vector2 cp0, Vector2 cp1, Vector2 pos1, uint col, float thickness)
         {
             int num_segments = 0;
@@ -253,13 +251,13 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawList_ChannelsMerge(NativePtr);
         }
-        public void ChannelsSetCurrent(int channel_index)
+        public void ChannelsSetCurrent(int n)
         {
-            ImGuiNative.ImDrawList_ChannelsSetCurrent(NativePtr, channel_index);
+            ImGuiNative.ImDrawList_ChannelsSetCurrent(NativePtr, n);
         }
-        public void ChannelsSplit(int channels_count)
+        public void ChannelsSplit(int count)
         {
-            ImGuiNative.ImDrawList_ChannelsSplit(NativePtr, channels_count);
+            ImGuiNative.ImDrawList_ChannelsSplit(NativePtr, count);
         }
         public void Clear()
         {
