@@ -140,6 +140,17 @@ namespace CodeGenerator
                 }
             }
 
+            Dictionary<string, MethodVariant> variants = new Dictionary<string, MethodVariant>();
+            foreach (var jt in variantsJson.Children())
+            {
+                JProperty jp = (JProperty)jt;
+                ParameterVariant[] methodVariants = jp.Values().Select(jv =>
+                {
+                    return new ParameterVariant(jv["name"].ToString(), jv["type"].ToString(), jv["variants"].Select(s => s.ToString()).ToArray());
+                }).ToArray();
+                variants.Add(jp.Name, new MethodVariant(jp.Name, methodVariants));
+            }
+
             EnumDefinition[] enums = typesJson["enums"].Select(jt =>
             {
                 JProperty jp = (JProperty)jt;
@@ -206,7 +217,8 @@ namespace CodeGenerator
                     List<TypeReference> parameters = new List<TypeReference>();
 
                     // find any variants that can be applied to the parameters of this method based on the method name
-                    JToken variants = variantsJson?.Children().Where(variant => ((JProperty)variant).Name == cimguiname).FirstOrDefault() ?? null;
+                    MethodVariant methodVariants = null;
+                    variants.TryGetValue(jp.Name, out methodVariants);
 
                     foreach (JToken p in val["argsT"])
                     {
@@ -214,11 +226,10 @@ namespace CodeGenerator
                         string pName = p["name"].ToString();
 
                         // if there are possible variants for this method then try to match them based on the parameter name and expected type
-                        var matchingVariant = variants?.Values().Where(v => v["name"].ToString() == pName && v["type"].ToString() == pType).FirstOrDefault() ?? null;
-                        // if there was a match to this name and type then apply those variants to this parameter
-                        string[] pVariants = matchingVariant?["variants"].Values().Select(variant => variant.ToString()).ToArray() ?? null;
+                        ParameterVariant matchingVariant = methodVariants?.Parameters.Where(pv => pv.Name == pName && pv.OriginalType == pType).FirstOrDefault() ?? null;
+                        if (matchingVariant != null) matchingVariant.Used = true;
 
-                        parameters.Add(new TypeReference(pName, pType, enums, pVariants));
+                        parameters.Add(new TypeReference(pName, pType, enums, matchingVariant?.VariantTypes));
                     }
 
                     Dictionary<string, string> defaultValues = new Dictionary<string, string>();
@@ -563,6 +574,14 @@ namespace CodeGenerator
                 }
                 writer.PopBlock();
                 writer.PopBlock();
+            }
+
+            foreach (var method in variants)
+            {
+                foreach (var variant in method.Value.Parameters)
+                {
+                    if (!variant.Used) Console.WriteLine($"Error: Variants targetting parameter {variant.Name} with type {variant.OriginalType} could not be applied to method {method.Key}.");
+                }
             }
         }
 
@@ -979,6 +998,38 @@ namespace CodeGenerator
             {
                 return identifier;
             }
+        }
+    }
+
+    class MethodVariant
+    {
+        public string Name { get; }
+
+        public ParameterVariant[] Parameters { get; }
+
+        public MethodVariant(string name, ParameterVariant[] parameters)
+        {
+            Name = name;
+            Parameters = parameters;
+        }
+    }
+
+    class ParameterVariant
+    {
+        public string Name { get; }
+
+        public string OriginalType { get; }
+
+        public string[] VariantTypes { get; }
+
+        public bool Used { get; set; }
+
+        public ParameterVariant(string name, string originalType, string[] variantTypes)
+        {
+            Name = name;
+            OriginalType = originalType;
+            VariantTypes = variantTypes;
+            Used = false;
         }
     }
 
