@@ -434,6 +434,36 @@ namespace ImGuiNET
                 }
             }
         }
+        public void GetTexDataAsAlpha8(out IntPtr out_pixels, out int out_width, out int out_height)
+        {
+            int* out_bytes_per_pixel = null;
+            fixed (IntPtr* native_out_pixels = &out_pixels)
+            {
+                fixed (int* native_out_width = &out_width)
+                {
+                    fixed (int* native_out_height = &out_height)
+                    {
+                        ImGuiNative.ImFontAtlas_GetTexDataAsAlpha8(NativePtr, native_out_pixels, native_out_width, native_out_height, out_bytes_per_pixel);
+                    }
+                }
+            }
+        }
+        public void GetTexDataAsAlpha8(out IntPtr out_pixels, out int out_width, out int out_height, out int out_bytes_per_pixel)
+        {
+            fixed (IntPtr* native_out_pixels = &out_pixels)
+            {
+                fixed (int* native_out_width = &out_width)
+                {
+                    fixed (int* native_out_height = &out_height)
+                    {
+                        fixed (int* native_out_bytes_per_pixel = &out_bytes_per_pixel)
+                        {
+                            ImGuiNative.ImFontAtlas_GetTexDataAsAlpha8(NativePtr, native_out_pixels, native_out_width, native_out_height, native_out_bytes_per_pixel);
+                        }
+                    }
+                }
+            }
+        }
         public void GetTexDataAsRGBA32(out byte* out_pixels, out int out_width, out int out_height)
         {
             int* out_bytes_per_pixel = null;
@@ -451,6 +481,36 @@ namespace ImGuiNET
         public void GetTexDataAsRGBA32(out byte* out_pixels, out int out_width, out int out_height, out int out_bytes_per_pixel)
         {
             fixed (byte** native_out_pixels = &out_pixels)
+            {
+                fixed (int* native_out_width = &out_width)
+                {
+                    fixed (int* native_out_height = &out_height)
+                    {
+                        fixed (int* native_out_bytes_per_pixel = &out_bytes_per_pixel)
+                        {
+                            ImGuiNative.ImFontAtlas_GetTexDataAsRGBA32(NativePtr, native_out_pixels, native_out_width, native_out_height, native_out_bytes_per_pixel);
+                        }
+                    }
+                }
+            }
+        }
+        public void GetTexDataAsRGBA32(out IntPtr out_pixels, out int out_width, out int out_height)
+        {
+            int* out_bytes_per_pixel = null;
+            fixed (IntPtr* native_out_pixels = &out_pixels)
+            {
+                fixed (int* native_out_width = &out_width)
+                {
+                    fixed (int* native_out_height = &out_height)
+                    {
+                        ImGuiNative.ImFontAtlas_GetTexDataAsRGBA32(NativePtr, native_out_pixels, native_out_width, native_out_height, out_bytes_per_pixel);
+                    }
+                }
+            }
+        }
+        public void GetTexDataAsRGBA32(out IntPtr out_pixels, out int out_width, out int out_height, out int out_bytes_per_pixel)
+        {
+            fixed (IntPtr* native_out_pixels = &out_pixels)
             {
                 fixed (int* native_out_width = &out_width)
                 {
