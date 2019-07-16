@@ -232,13 +232,19 @@ namespace ImGuiNET
 
         private byte[] GetEmbeddedResourceBytes(string resourceName)
         {
-            Assembly assembly = typeof(ImGuiController).Assembly;
-            using (Stream s = assembly.GetManifestResourceStream(resourceName))
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            foreach (var manifestResourceName in assembly.GetManifestResourceNames())
             {
-                byte[] ret = new byte[s.Length];
-                s.Read(ret, 0, (int)s.Length);
-                return ret;
+                if (!manifestResourceName.EndsWith(resourceName)) continue;;
+                using (Stream s = assembly.GetManifestResourceStream(manifestResourceName))
+                {
+                    byte[] ret = new byte[s.Length];
+                    s.Read(ret, 0, (int)s.Length);
+                    return ret;
+                }
             }
+
+            throw new Exception("Where Resource !!");
         }
 
         /// <summary>
