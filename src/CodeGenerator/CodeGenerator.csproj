@@ -6,15 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="variants.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="structs_and_enums.json" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="definitions.json" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="variants.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="variants.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
