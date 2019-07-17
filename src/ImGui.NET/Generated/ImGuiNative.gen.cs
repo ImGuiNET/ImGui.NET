@@ -909,7 +909,11 @@ namespace ImGuiNET
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImFontAtlas_GetTexDataAsAlpha8(ImFontAtlas* self, byte** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImFontAtlas_GetTexDataAsAlpha8(ImFontAtlas* self, IntPtr* out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImFontAtlas_GetTexDataAsRGBA32(ImFontAtlas* self, byte** out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImFontAtlas_GetTexDataAsRGBA32(ImFontAtlas* self, IntPtr* out_pixels, int* out_width, int* out_height, int* out_bytes_per_pixel);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern ImFontAtlas* ImFontAtlas_ImFontAtlas();
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]

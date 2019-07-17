@@ -130,6 +130,27 @@ namespace CodeGenerator
                 functionsJson = JObject.Load(jr);
             }
 
+            JObject variantsJson = null;
+            if (File.Exists(Path.Combine(AppContext.BaseDirectory, "variants.json")))
+            {
+                using (StreamReader fs = File.OpenText(Path.Combine(AppContext.BaseDirectory, "variants.json")))
+                using (JsonTextReader jr = new JsonTextReader(fs))
+                {
+                    variantsJson = JObject.Load(jr);
+                }
+            }
+
+            Dictionary<string, MethodVariant> variants = new Dictionary<string, MethodVariant>();
+            foreach (var jt in variantsJson.Children())
+            {
+                JProperty jp = (JProperty)jt;
+                ParameterVariant[] methodVariants = jp.Values().Select(jv =>
+                {
+                    return new ParameterVariant(jv["name"].ToString(), jv["type"].ToString(), jv["variants"].Select(s => s.ToString()).ToArray());
+                }).ToArray();
+                variants.Add(jp.Name, new MethodVariant(jp.Name, methodVariants));
+            }
+
             EnumDefinition[] enums = typesJson["enums"].Select(jt =>
             {
                 JProperty jp = (JProperty)jt;
@@ -195,11 +216,20 @@ namespace CodeGenerator
 
                     List<TypeReference> parameters = new List<TypeReference>();
 
+                    // find any variants that can be applied to the parameters of this method based on the method name
+                    MethodVariant methodVariants = null;
+                    variants.TryGetValue(jp.Name, out methodVariants);
+
                     foreach (JToken p in val["argsT"])
                     {
                         string pType = p["type"].ToString();
                         string pName = p["name"].ToString();
-                        parameters.Add(new TypeReference(pName, pType, enums));
+
+                        // if there are possible variants for this method then try to match them based on the parameter name and expected type
+                        ParameterVariant matchingVariant = methodVariants?.Parameters.Where(pv => pv.Name == pName && pv.OriginalType == pType).FirstOrDefault() ?? null;
+                        if (matchingVariant != null) matchingVariant.Used = true;
+
+                        parameters.Add(new TypeReference(pName, pType, enums, matchingVariant?.VariantTypes));
                     }
 
                     Dictionary<string, string> defaultValues = new Dictionary<string, string>();
@@ -231,7 +261,7 @@ namespace CodeGenerator
                         isDestructor);
                 }).Where(od => od != null).ToArray();
 
-                return new FunctionDefinition(name, overloads);
+                return new FunctionDefinition(name, overloads, enums);
             }).OrderBy(fd => fd.Name).ToArray();
 
             foreach (EnumDefinition ed in enums)
@@ -544,6 +574,14 @@ namespace CodeGenerator
                 }
                 writer.PopBlock();
                 writer.PopBlock();
+            }
+
+            foreach (var method in variants)
+            {
+                foreach (var variant in method.Value.Parameters)
+                {
+                    if (!variant.Used) Console.WriteLine($"Error: Variants targetting parameter {variant.Name} with type {variant.OriginalType} could not be applied to method {method.Key}.");
+                }
             }
         }
 
@@ -963,6 +1001,38 @@ namespace CodeGenerator
         }
     }
 
+    class MethodVariant
+    {
+        public string Name { get; }
+
+        public ParameterVariant[] Parameters { get; }
+
+        public MethodVariant(string name, ParameterVariant[] parameters)
+        {
+            Name = name;
+            Parameters = parameters;
+        }
+    }
+
+    class ParameterVariant
+    {
+        public string Name { get; }
+
+        public string OriginalType { get; }
+
+        public string[] VariantTypes { get; }
+
+        public bool Used { get; set; }
+
+        public ParameterVariant(string name, string originalType, string[] variantTypes)
+        {
+            Name = name;
+            OriginalType = originalType;
+            VariantTypes = variantTypes;
+            Used = false;
+        }
+    }
+
     class EnumDefinition
     {
         private readonly Dictionary<string, string> _sanitizedNames;
@@ -1049,11 +1119,18 @@ namespace CodeGenerator
         public string TemplateType { get; }
         public int ArraySize { get; }
         public bool IsFunctionPointer { get; }
+        public string[] TypeVariants { get; }
 
         public TypeReference(string name, string type, EnumDefinition[] enums)
-            : this(name, type, null, enums) { }
+            : this(name, type, null, enums, null) { }
+
+        public TypeReference(string name, string type, EnumDefinition[] enums, string[] typeVariants)
+            : this(name, type, null, enums, typeVariants) { }
 
         public TypeReference(string name, string type, string templateType, EnumDefinition[] enums)
+            : this(name, type, templateType, enums, null) { }
+
+        public TypeReference(string name, string type, string templateType, EnumDefinition[] enums, string[] typeVariants)
         {
             Name = name;
             Type = type.Replace("const", string.Empty).Trim();
@@ -1082,6 +1159,8 @@ namespace CodeGenerator
             }
 
             IsFunctionPointer = Type.IndexOf('(') != -1;
+
+            TypeVariants = typeVariants;
         }
 
         private int ParseSizeString(string sizePart, EnumDefinition[] enums)
@@ -1117,6 +1196,12 @@ namespace CodeGenerator
 
             return ret;
         }
+
+        public TypeReference WithVariant(int variantIndex, EnumDefinition[] enums)
+        {
+            if (variantIndex == 0) return this;
+            else return new TypeReference(Name, TypeVariants[variantIndex - 1], TemplateType, enums);
+        }
     }
 
     class FunctionDefinition
@@ -1124,10 +1209,63 @@ namespace CodeGenerator
         public string Name { get; }
         public OverloadDefinition[] Overloads { get; }
 
-        public FunctionDefinition(string name, OverloadDefinition[] overloads)
+        public FunctionDefinition(string name, OverloadDefinition[] overloads, EnumDefinition[] enums)
         {
             Name = name;
-            Overloads = overloads;
+            Overloads = ExpandOverloadVariants(overloads, enums);
+        }
+
+        private OverloadDefinition[] ExpandOverloadVariants(OverloadDefinition[] overloads, EnumDefinition[] enums)
+        {
+            List<OverloadDefinition> newDefinitions = new List<OverloadDefinition>();
+
+            foreach (OverloadDefinition overload in overloads)
+            {
+                bool hasVariants = false;
+                int[] variantCounts = new int[overload.Parameters.Length];
+
+                for (int i = 0; i < overload.Parameters.Length; i++)
+                {
+                    if (overload.Parameters[i].TypeVariants != null)
+                    {
+                        hasVariants = true;
+                        variantCounts[i] = overload.Parameters[i].TypeVariants.Length + 1;
+                    }
+                    else
+                    {
+                        variantCounts[i] = 1;
+                    }
+                }
+
+                if (hasVariants)
+                {
+                    int totalVariants = variantCounts[0];
+                    for (int i = 1; i < variantCounts.Length; i++) totalVariants *= variantCounts[i];
+
+                    for (int i = 0; i < totalVariants; i++)
+                    {
+                        TypeReference[] parameters = new TypeReference[overload.Parameters.Length];
+                        int div = 1;
+
+                        for (int j = 0; j < parameters.Length; j++)
+                        {
+                            int k = (i / div) % variantCounts[j];
+
+                            parameters[j] = overload.Parameters[j].WithVariant(k, enums);
+
+                            if (j > 0) div *= variantCounts[j];
+                        }
+
+                        newDefinitions.Add(overload.WithParameters(parameters));
+                    }
+                }
+                else
+                {
+                    newDefinitions.Add(overload);
+                }
+            }
+
+            return newDefinitions.ToArray();
         }
     }
 
@@ -1165,6 +1303,11 @@ namespace CodeGenerator
             Comment = comment;
             IsConstructor = isConstructor;
             IsDestructor = isDestructor;
+        }
+
+        public OverloadDefinition WithParameters(TypeReference[] parameters)
+        {
+            return new OverloadDefinition(ExportedName, FriendlyName, parameters, DefaultValues, ReturnType, StructName, Comment, IsConstructor, IsDestructor);
         }
     }
 

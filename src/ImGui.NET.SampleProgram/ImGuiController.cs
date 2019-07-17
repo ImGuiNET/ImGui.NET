@@ -244,11 +244,11 @@ namespace ImGuiNET
         /// <summary>
         /// Recreates the device texture used to render text.
         /// </summary>
-        public unsafe void RecreateFontDeviceTexture(GraphicsDevice gd)
+        public void RecreateFontDeviceTexture(GraphicsDevice gd)
         {
             ImGuiIOPtr io = ImGui.GetIO();
             // Build
-            byte* pixels;
+            IntPtr pixels;
             int width, height, bytesPerPixel;
             io.Fonts.GetTexDataAsRGBA32(out pixels, out width, out height, out bytesPerPixel);
             // Store our identifier
@@ -264,7 +264,7 @@ namespace ImGuiNET
             _fontTexture.Name = "ImGui.NET Font Texture";
             gd.UpdateTexture(
                 _fontTexture,
-                (IntPtr)pixels,
+                pixels,
                 (uint)(bytesPerPixel * width * height),
                 0,
                 0,
