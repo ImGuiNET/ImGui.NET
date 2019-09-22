@@ -61,7 +61,7 @@ namespace ImGuiNET
 
             IntPtr context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
-
+            var fonts = ImGui.GetIO().Fonts;
             ImGui.GetIO().Fonts.AddFontDefault();
 
             CreateDeviceResources(gd, outputDescription);

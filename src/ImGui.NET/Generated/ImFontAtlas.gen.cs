@@ -43,7 +43,7 @@ namespace ImGuiNET
         public ref Vector2 TexUvScale => ref Unsafe.AsRef<Vector2>(&NativePtr->TexUvScale);
         public ref Vector2 TexUvWhitePixel => ref Unsafe.AsRef<Vector2>(&NativePtr->TexUvWhitePixel);
         public ImVector<ImFontPtr> Fonts => new ImVector<ImFontPtr>(NativePtr->Fonts);
-        public ImVector<CustomRect> CustomRects => new ImVector<CustomRect>(NativePtr->CustomRects);
+        public ImPtrVector<ImFontAtlasCustomRectPtr> CustomRects => new ImPtrVector<ImFontAtlasCustomRectPtr>(NativePtr->CustomRects, Unsafe.SizeOf<ImFontAtlasCustomRect>());
         public ImPtrVector<ImFontConfigPtr> ConfigData => new ImPtrVector<ImFontConfigPtr>(NativePtr->ConfigData, Unsafe.SizeOf<ImFontConfig>());
         public RangeAccessor<int> CustomRectIds => new RangeAccessor<int>(NativePtr->CustomRectIds, 1);
         public int AddCustomRectFontGlyph(ImFontPtr font, ushort id, int width, int height, float advance_x)
@@ -309,16 +309,14 @@ namespace ImGuiNET
             byte ret = ImGuiNative.ImFontAtlas_Build(NativePtr);
             return ret != 0;
         }
-        public void CalcCustomRectUV(ref CustomRect rect, out Vector2 out_uv_min, out Vector2 out_uv_max)
+        public void CalcCustomRectUV(ImFontAtlasCustomRectPtr rect, out Vector2 out_uv_min, out Vector2 out_uv_max)
         {
-            fixed (CustomRect* native_rect = &rect)
+            ImFontAtlasCustomRect* native_rect = rect.NativePtr;
+            fixed (Vector2* native_out_uv_min = &out_uv_min)
             {
-                fixed (Vector2* native_out_uv_min = &out_uv_min)
+                fixed (Vector2* native_out_uv_max = &out_uv_max)
                 {
-                    fixed (Vector2* native_out_uv_max = &out_uv_max)
-                    {
-                        ImGuiNative.ImFontAtlas_CalcCustomRectUV(NativePtr, native_rect, native_out_uv_min, native_out_uv_max);
-                    }
+                    ImGuiNative.ImFontAtlas_CalcCustomRectUV(NativePtr, native_rect, native_out_uv_min, native_out_uv_max);
                 }
             }
         }
@@ -342,10 +340,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImFontAtlas_destroy(NativePtr);
         }
-        public CustomRect* GetCustomRectByIndex(int index)
+        public ImFontAtlasCustomRectPtr GetCustomRectByIndex(int index)
         {
-            CustomRect* ret = ImGuiNative.ImFontAtlas_GetCustomRectByIndex(NativePtr, index);
-            return ret;
+            ImFontAtlasCustomRect* ret = ImGuiNative.ImFontAtlas_GetCustomRectByIndex(NativePtr, index);
+            return new ImFontAtlasCustomRectPtr(ret);
         }
         public IntPtr GetGlyphRangesChineseFull()
         {

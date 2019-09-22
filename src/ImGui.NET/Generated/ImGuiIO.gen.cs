@@ -17,7 +17,7 @@ namespace ImGuiNET
         public float MouseDoubleClickTime;
         public float MouseDoubleClickMaxDist;
         public float MouseDragThreshold;
-        public fixed int KeyMap[21];
+        public fixed int KeyMap[22];
         public float KeyRepeatDelay;
         public float KeyRepeatRate;
         public void* UserData;
@@ -110,7 +110,7 @@ namespace ImGuiNET
         public ref float MouseDoubleClickTime => ref Unsafe.AsRef<float>(&NativePtr->MouseDoubleClickTime);
         public ref float MouseDoubleClickMaxDist => ref Unsafe.AsRef<float>(&NativePtr->MouseDoubleClickMaxDist);
         public ref float MouseDragThreshold => ref Unsafe.AsRef<float>(&NativePtr->MouseDragThreshold);
-        public RangeAccessor<int> KeyMap => new RangeAccessor<int>(NativePtr->KeyMap, 21);
+        public RangeAccessor<int> KeyMap => new RangeAccessor<int>(NativePtr->KeyMap, 22);
         public ref float KeyRepeatDelay => ref Unsafe.AsRef<float>(&NativePtr->KeyRepeatDelay);
         public ref float KeyRepeatRate => ref Unsafe.AsRef<float>(&NativePtr->KeyRepeatRate);
         public IntPtr UserData { get => (IntPtr)NativePtr->UserData; set => NativePtr->UserData = (void*)value; }

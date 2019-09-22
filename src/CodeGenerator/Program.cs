@@ -56,7 +56,7 @@ namespace CodeGenerator
             "ImVector",
             "ImVec2",
             "ImVec4",
-            "Pair",
+            "ImGuiStoragePair",
         };
 
         private static readonly Dictionary<string, string> s_wellKnownDefaultValues = new Dictionary<string, string>()
@@ -70,7 +70,7 @@ namespace CodeGenerator
             { "ImVec2(0,1)", "new Vector2(0, 1)" },
             { "ImVec4(0,0,0,0)", "new Vector4()" },
             { "ImVec4(1,1,1,1)", "new Vector4(1, 1, 1, 1)" },
-            { "ImDrawCornerFlags_All", "(int)ImDrawCornerFlags.All" },
+            { "ImDrawCornerFlags_All", "ImDrawCornerFlags.All" },
             { "FLT_MAX", "float.MaxValue" },
             { "(((ImU32)(255)<<24)|((ImU32)(255)<<16)|((ImU32)(255)<<8)|((ImU32)(255)<<0))", "0xFFFFFFFF" }
         };

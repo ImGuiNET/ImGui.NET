@@ -260,3 +260,6 @@ Session.vim
 
 # download dir
 deps/
+
+# VS Launch
+launchSettings.json

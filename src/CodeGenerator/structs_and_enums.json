@@ -2,6 +2,11 @@
   "enums": {
     "ImDrawCornerFlags_": [
       {
+        "calc_value": 0,
+        "name": "ImDrawCornerFlags_None",
+        "value": "0"
+      },
+      {
         "calc_value": 1,
         "name": "ImDrawCornerFlags_TopLeft",
         "value": "1 << 0"
@@ -1033,38 +1038,43 @@
       },
       {
         "calc_value": 15,
-        "name": "ImGuiKey_A",
+        "name": "ImGuiKey_KeyPadEnter",
         "value": 15
       },
       {
         "calc_value": 16,
-        "name": "ImGuiKey_C",
+        "name": "ImGuiKey_A",
         "value": 16
       },
       {
         "calc_value": 17,
-        "name": "ImGuiKey_V",
+        "name": "ImGuiKey_C",
         "value": 17
       },
       {
         "calc_value": 18,
-        "name": "ImGuiKey_X",
+        "name": "ImGuiKey_V",
         "value": 18
       },
       {
         "calc_value": 19,
-        "name": "ImGuiKey_Y",
+        "name": "ImGuiKey_X",
         "value": 19
       },
       {
         "calc_value": 20,
-        "name": "ImGuiKey_Z",
+        "name": "ImGuiKey_Y",
         "value": 20
       },
       {
         "calc_value": 21,
-        "name": "ImGuiKey_COUNT",
+        "name": "ImGuiKey_Z",
         "value": 21
+      },
+      {
+        "calc_value": 22,
+        "name": "ImGuiKey_COUNT",
+        "value": 22
       }
     ],
     "ImGuiMouseCursor_": [
@@ -1700,40 +1710,6 @@
     ]
   },
   "structs": {
-    "CustomRect": [
-      {
-        "name": "ID",
-        "type": "unsigned int"
-      },
-      {
-        "name": "Width",
-        "type": "unsigned short"
-      },
-      {
-        "name": "Height",
-        "type": "unsigned short"
-      },
-      {
-        "name": "X",
-        "type": "unsigned short"
-      },
-      {
-        "name": "Y",
-        "type": "unsigned short"
-      },
-      {
-        "name": "GlyphAdvanceX",
-        "type": "float"
-      },
-      {
-        "name": "GlyphOffset",
-        "type": "ImVec2"
-      },
-      {
-        "name": "Font",
-        "type": "ImFont*"
-      }
-    ],
     "ImColor": [
       {
         "name": "Value",
@@ -2030,8 +2006,8 @@
       },
       {
         "name": "CustomRects",
-        "template_type": "CustomRect",
-        "type": "ImVector_CustomRect"
+        "template_type": "ImFontAtlasCustomRect",
+        "type": "ImVector_ImFontAtlasCustomRect"
       },
       {
         "name": "ConfigData",
@@ -2042,6 +2018,40 @@
         "name": "CustomRectIds[1]",
         "size": 1,
         "type": "int"
+      }
+    ],
+    "ImFontAtlasCustomRect": [
+      {
+        "name": "ID",
+        "type": "unsigned int"
+      },
+      {
+        "name": "Width",
+        "type": "unsigned short"
+      },
+      {
+        "name": "Height",
+        "type": "unsigned short"
+      },
+      {
+        "name": "X",
+        "type": "unsigned short"
+      },
+      {
+        "name": "Y",
+        "type": "unsigned short"
+      },
+      {
+        "name": "GlyphAdvanceX",
+        "type": "float"
+      },
+      {
+        "name": "GlyphOffset",
+        "type": "ImVec2"
+      },
+      {
+        "name": "Font",
+        "type": "ImFont*"
       }
     ],
     "ImFontConfig": [
@@ -2211,7 +2221,7 @@
       },
       {
         "name": "KeyMap[ImGuiKey_COUNT]",
-        "size": 21,
+        "size": 22,
         "type": "int"
       },
       {
@@ -2632,8 +2642,18 @@
     "ImGuiStorage": [
       {
         "name": "Data",
-        "template_type": "Pair",
-        "type": "ImVector_Pair"
+        "template_type": "ImGuiStoragePair",
+        "type": "ImVector_ImGuiStoragePair"
+      }
+    ],
+    "ImGuiStoragePair": [
+      {
+        "name": "key",
+        "type": "ImGuiID"
+      },
+      {
+        "name": "",
+        "type": "union { int val_i; float val_f; void* val_p;}"
       }
     ],
     "ImGuiStyle": [
@@ -2738,6 +2758,10 @@
         "type": "float"
       },
       {
+        "name": "ColorButtonPosition",
+        "type": "ImGuiDir"
+      },
+      {
         "name": "ButtonTextAlign",
         "type": "ImVec2"
       },
@@ -2790,12 +2814,22 @@
       },
       {
         "name": "Filters",
-        "template_type": "TextRange",
-        "type": "ImVector_TextRange"
+        "template_type": "ImGuiTextRange",
+        "type": "ImVector_ImGuiTextRange"
       },
       {
         "name": "CountGrep",
         "type": "int"
+      }
+    ],
+    "ImGuiTextRange": [
+      {
+        "name": "b",
+        "type": "const char*"
+      },
+      {
+        "name": "e",
+        "type": "const char*"
       }
     ],
     "ImVec2": [
@@ -2824,26 +2858,6 @@
       {
         "name": "w",
         "type": "float"
-      }
-    ],
-    "Pair": [
-      {
-        "name": "key",
-        "type": "ImGuiID"
-      },
-      {
-        "name": "",
-        "type": "union { int val_i; float val_f; void* val_p;}"
-      }
-    ],
-    "TextRange": [
-      {
-        "name": "b",
-        "type": "const char*"
-      },
-      {
-        "name": "e",
-        "type": "const char*"
       }
     ]
   }

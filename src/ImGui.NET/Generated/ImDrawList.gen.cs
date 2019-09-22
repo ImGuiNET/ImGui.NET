@@ -156,10 +156,10 @@ namespace ImGuiNET
         }
         public void AddImageRounded(IntPtr user_texture_id, Vector2 a, Vector2 b, Vector2 uv_a, Vector2 uv_b, uint col, float rounding)
         {
-            int rounding_corners = (int)ImDrawCornerFlags.All;
+            ImDrawCornerFlags rounding_corners = ImDrawCornerFlags.All;
             ImGuiNative.ImDrawList_AddImageRounded(NativePtr, user_texture_id, a, b, uv_a, uv_b, col, rounding, rounding_corners);
         }
-        public void AddImageRounded(IntPtr user_texture_id, Vector2 a, Vector2 b, Vector2 uv_a, Vector2 uv_b, uint col, float rounding, int rounding_corners)
+        public void AddImageRounded(IntPtr user_texture_id, Vector2 a, Vector2 b, Vector2 uv_a, Vector2 uv_b, uint col, float rounding, ImDrawCornerFlags rounding_corners)
         {
             ImGuiNative.ImDrawList_AddImageRounded(NativePtr, user_texture_id, a, b, uv_a, uv_b, col, rounding, rounding_corners);
         }
@@ -196,39 +196,39 @@ namespace ImGuiNET
         public void AddRect(Vector2 a, Vector2 b, uint col)
         {
             float rounding = 0.0f;
-            int rounding_corners_flags = (int)ImDrawCornerFlags.All;
+            ImDrawCornerFlags rounding_corners = ImDrawCornerFlags.All;
             float thickness = 1.0f;
-            ImGuiNative.ImDrawList_AddRect(NativePtr, a, b, col, rounding, rounding_corners_flags, thickness);
+            ImGuiNative.ImDrawList_AddRect(NativePtr, a, b, col, rounding, rounding_corners, thickness);
         }
         public void AddRect(Vector2 a, Vector2 b, uint col, float rounding)
         {
-            int rounding_corners_flags = (int)ImDrawCornerFlags.All;
+            ImDrawCornerFlags rounding_corners = ImDrawCornerFlags.All;
             float thickness = 1.0f;
-            ImGuiNative.ImDrawList_AddRect(NativePtr, a, b, col, rounding, rounding_corners_flags, thickness);
+            ImGuiNative.ImDrawList_AddRect(NativePtr, a, b, col, rounding, rounding_corners, thickness);
         }
-        public void AddRect(Vector2 a, Vector2 b, uint col, float rounding, int rounding_corners_flags)
+        public void AddRect(Vector2 a, Vector2 b, uint col, float rounding, ImDrawCornerFlags rounding_corners)
         {
             float thickness = 1.0f;
-            ImGuiNative.ImDrawList_AddRect(NativePtr, a, b, col, rounding, rounding_corners_flags, thickness);
+            ImGuiNative.ImDrawList_AddRect(NativePtr, a, b, col, rounding, rounding_corners, thickness);
         }
-        public void AddRect(Vector2 a, Vector2 b, uint col, float rounding, int rounding_corners_flags, float thickness)
+        public void AddRect(Vector2 a, Vector2 b, uint col, float rounding, ImDrawCornerFlags rounding_corners, float thickness)
         {
-            ImGuiNative.ImDrawList_AddRect(NativePtr, a, b, col, rounding, rounding_corners_flags, thickness);
+            ImGuiNative.ImDrawList_AddRect(NativePtr, a, b, col, rounding, rounding_corners, thickness);
         }
         public void AddRectFilled(Vector2 a, Vector2 b, uint col)
         {
             float rounding = 0.0f;
-            int rounding_corners_flags = (int)ImDrawCornerFlags.All;
-            ImGuiNative.ImDrawList_AddRectFilled(NativePtr, a, b, col, rounding, rounding_corners_flags);
+            ImDrawCornerFlags rounding_corners = ImDrawCornerFlags.All;
+            ImGuiNative.ImDrawList_AddRectFilled(NativePtr, a, b, col, rounding, rounding_corners);
         }
         public void AddRectFilled(Vector2 a, Vector2 b, uint col, float rounding)
         {
-            int rounding_corners_flags = (int)ImDrawCornerFlags.All;
-            ImGuiNative.ImDrawList_AddRectFilled(NativePtr, a, b, col, rounding, rounding_corners_flags);
+            ImDrawCornerFlags rounding_corners = ImDrawCornerFlags.All;
+            ImGuiNative.ImDrawList_AddRectFilled(NativePtr, a, b, col, rounding, rounding_corners);
         }
-        public void AddRectFilled(Vector2 a, Vector2 b, uint col, float rounding, int rounding_corners_flags)
+        public void AddRectFilled(Vector2 a, Vector2 b, uint col, float rounding, ImDrawCornerFlags rounding_corners)
         {
-            ImGuiNative.ImDrawList_AddRectFilled(NativePtr, a, b, col, rounding, rounding_corners_flags);
+            ImGuiNative.ImDrawList_AddRectFilled(NativePtr, a, b, col, rounding, rounding_corners);
         }
         public void AddRectFilledMultiColor(Vector2 a, Vector2 b, uint col_upr_left, uint col_upr_right, uint col_bot_right, uint col_bot_left)
         {
@@ -327,17 +327,17 @@ namespace ImGuiNET
         public void PathRect(Vector2 rect_min, Vector2 rect_max)
         {
             float rounding = 0.0f;
-            int rounding_corners_flags = (int)ImDrawCornerFlags.All;
-            ImGuiNative.ImDrawList_PathRect(NativePtr, rect_min, rect_max, rounding, rounding_corners_flags);
+            ImDrawCornerFlags rounding_corners = ImDrawCornerFlags.All;
+            ImGuiNative.ImDrawList_PathRect(NativePtr, rect_min, rect_max, rounding, rounding_corners);
         }
         public void PathRect(Vector2 rect_min, Vector2 rect_max, float rounding)
         {
-            int rounding_corners_flags = (int)ImDrawCornerFlags.All;
-            ImGuiNative.ImDrawList_PathRect(NativePtr, rect_min, rect_max, rounding, rounding_corners_flags);
+            ImDrawCornerFlags rounding_corners = ImDrawCornerFlags.All;
+            ImGuiNative.ImDrawList_PathRect(NativePtr, rect_min, rect_max, rounding, rounding_corners);
         }
-        public void PathRect(Vector2 rect_min, Vector2 rect_max, float rounding, int rounding_corners_flags)
+        public void PathRect(Vector2 rect_min, Vector2 rect_max, float rounding, ImDrawCornerFlags rounding_corners)
         {
-            ImGuiNative.ImDrawList_PathRect(NativePtr, rect_min, rect_max, rounding, rounding_corners_flags);
+            ImGuiNative.ImDrawList_PathRect(NativePtr, rect_min, rect_max, rounding, rounding_corners);
         }
         public void PathStroke(uint col, bool closed)
         {

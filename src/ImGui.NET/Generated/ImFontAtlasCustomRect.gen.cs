@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ImGuiNET
 {
-    public unsafe partial struct CustomRect
+    public unsafe partial struct ImFontAtlasCustomRect
     {
         public uint ID;
         public ushort Width;
@@ -16,14 +16,14 @@ namespace ImGuiNET
         public Vector2 GlyphOffset;
         public ImFont* Font;
     }
-    public unsafe partial struct CustomRectPtr
+    public unsafe partial struct ImFontAtlasCustomRectPtr
     {
-        public CustomRect* NativePtr { get; }
-        public CustomRectPtr(CustomRect* nativePtr) => NativePtr = nativePtr;
-        public CustomRectPtr(IntPtr nativePtr) => NativePtr = (CustomRect*)nativePtr;
-        public static implicit operator CustomRectPtr(CustomRect* nativePtr) => new CustomRectPtr(nativePtr);
-        public static implicit operator CustomRect* (CustomRectPtr wrappedPtr) => wrappedPtr.NativePtr;
-        public static implicit operator CustomRectPtr(IntPtr nativePtr) => new CustomRectPtr(nativePtr);
+        public ImFontAtlasCustomRect* NativePtr { get; }
+        public ImFontAtlasCustomRectPtr(ImFontAtlasCustomRect* nativePtr) => NativePtr = nativePtr;
+        public ImFontAtlasCustomRectPtr(IntPtr nativePtr) => NativePtr = (ImFontAtlasCustomRect*)nativePtr;
+        public static implicit operator ImFontAtlasCustomRectPtr(ImFontAtlasCustomRect* nativePtr) => new ImFontAtlasCustomRectPtr(nativePtr);
+        public static implicit operator ImFontAtlasCustomRect* (ImFontAtlasCustomRectPtr wrappedPtr) => wrappedPtr.NativePtr;
+        public static implicit operator ImFontAtlasCustomRectPtr(IntPtr nativePtr) => new ImFontAtlasCustomRectPtr(nativePtr);
         public ref uint ID => ref Unsafe.AsRef<uint>(&NativePtr->ID);
         public ref ushort Width => ref Unsafe.AsRef<ushort>(&NativePtr->Width);
         public ref ushort Height => ref Unsafe.AsRef<ushort>(&NativePtr->Height);
@@ -34,11 +34,11 @@ namespace ImGuiNET
         public ImFontPtr Font => new ImFontPtr(NativePtr->Font);
         public void Destroy()
         {
-            ImGuiNative.CustomRect_destroy(NativePtr);
+            ImGuiNative.ImFontAtlasCustomRect_destroy(NativePtr);
         }
         public bool IsPacked()
         {
-            byte ret = ImGuiNative.CustomRect_IsPacked(NativePtr);
+            byte ret = ImGuiNative.ImFontAtlasCustomRect_IsPacked(NativePtr);
             return ret != 0;
         }
     }

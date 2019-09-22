@@ -10470,6 +10470,15 @@ namespace ImGuiNET
             void* native_custom_callback_data = (void*)custom_callback_data.ToPointer();
             ImGuiNative.igSetNextWindowSizeConstraints(size_min, size_max, custom_callback, native_custom_callback_data);
         }
+        public static void SetScrollFromPosX(float local_x)
+        {
+            float center_x_ratio = 0.5f;
+            ImGuiNative.igSetScrollFromPosX(local_x, center_x_ratio);
+        }
+        public static void SetScrollFromPosX(float local_x, float center_x_ratio)
+        {
+            ImGuiNative.igSetScrollFromPosX(local_x, center_x_ratio);
+        }
         public static void SetScrollFromPosY(float local_y)
         {
             float center_y_ratio = 0.5f;
@@ -10478,6 +10487,15 @@ namespace ImGuiNET
         public static void SetScrollFromPosY(float local_y, float center_y_ratio)
         {
             ImGuiNative.igSetScrollFromPosY(local_y, center_y_ratio);
+        }
+        public static void SetScrollHereX()
+        {
+            float center_x_ratio = 0.5f;
+            ImGuiNative.igSetScrollHereX(center_x_ratio);
+        }
+        public static void SetScrollHereX(float center_x_ratio)
+        {
+            ImGuiNative.igSetScrollHereX(center_x_ratio);
         }
         public static void SetScrollHereY()
         {
@@ -12560,10 +12578,6 @@ namespace ImGuiNET
             {
                 Util.Free(native_fmt);
             }
-        }
-        public static void TreeAdvanceToLabelPos()
-        {
-            ImGuiNative.igTreeAdvanceToLabelPos();
         }
         public static bool TreeNode(string label)
         {
