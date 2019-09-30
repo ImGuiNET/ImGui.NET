@@ -89,6 +89,8 @@ namespace ImGuiNET
         public Vector4 Colors_45;
         public Vector4 Colors_46;
         public Vector4 Colors_47;
+        public Vector4 Colors_48;
+        public Vector4 Colors_49;
     }
     public unsafe partial struct ImGuiStylePtr
     {
@@ -132,7 +134,7 @@ namespace ImGuiNET
         public ref bool AntiAliasedLines => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedLines);
         public ref bool AntiAliasedFill => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedFill);
         public ref float CurveTessellationTol => ref Unsafe.AsRef<float>(&NativePtr->CurveTessellationTol);
-        public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 48);
+        public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 50);
         public void Destroy()
         {
             ImGuiNative.ImGuiStyle_destroy(NativePtr);

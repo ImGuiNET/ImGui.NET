@@ -18,6 +18,7 @@ namespace ImGuiNET
         public ImFontConfig* ConfigData;
         public short ConfigDataCount;
         public ushort FallbackChar;
+        public ushort EllipsisChar;
         public float Scale;
         public float Ascent;
         public float Descent;
@@ -43,6 +44,7 @@ namespace ImGuiNET
         public ImFontConfigPtr ConfigData => new ImFontConfigPtr(NativePtr->ConfigData);
         public ref short ConfigDataCount => ref Unsafe.AsRef<short>(&NativePtr->ConfigDataCount);
         public ref ushort FallbackChar => ref Unsafe.AsRef<ushort>(&NativePtr->FallbackChar);
+        public ref ushort EllipsisChar => ref Unsafe.AsRef<ushort>(&NativePtr->EllipsisChar);
         public ref float Scale => ref Unsafe.AsRef<float>(&NativePtr->Scale);
         public ref float Ascent => ref Unsafe.AsRef<float>(&NativePtr->Ascent);
         public ref float Descent => ref Unsafe.AsRef<float>(&NativePtr->Descent);

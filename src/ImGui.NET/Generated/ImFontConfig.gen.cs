@@ -23,6 +23,7 @@ namespace ImGuiNET
         public byte MergeMode;
         public uint RasterizerFlags;
         public float RasterizerMultiply;
+        public ushort EllipsisChar;
         public fixed byte Name[40];
         public ImFont* DstFont;
     }
@@ -50,6 +51,7 @@ namespace ImGuiNET
         public ref bool MergeMode => ref Unsafe.AsRef<bool>(&NativePtr->MergeMode);
         public ref uint RasterizerFlags => ref Unsafe.AsRef<uint>(&NativePtr->RasterizerFlags);
         public ref float RasterizerMultiply => ref Unsafe.AsRef<float>(&NativePtr->RasterizerMultiply);
+        public ref ushort EllipsisChar => ref Unsafe.AsRef<ushort>(&NativePtr->EllipsisChar);
         public RangeAccessor<byte> Name => new RangeAccessor<byte>(NativePtr->Name, 40);
         public ImFontPtr DstFont => new ImFontPtr(NativePtr->DstFont);
         public void Destroy()
