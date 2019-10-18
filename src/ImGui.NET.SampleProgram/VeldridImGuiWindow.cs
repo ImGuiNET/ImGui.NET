@@ -59,36 +59,7 @@ namespace ImGui.NET.SampleProgram
 			_sc = _gd.ResourceFactory.CreateSwapchain(scDesc);
 			_window.Resized += () => _sc.Resize((uint)_window.Width, (uint)_window.Height);
 
-			unsafe
-			{
-				ViewportDataPtr data = new ViewportDataPtr(Marshal.AllocHGlobal(Unsafe.SizeOf<ViewportDataPtr>()));
-				vp.PlatformUserData = new HandleRef(data, (IntPtr)data.NativePtr).Handle;
-			}
 			vp.PlatformUserData = (IntPtr)_gcHandle;
-		}
-
-		public unsafe struct ViewportData
-		{
-#pragma warning disable S3459 // Unassigned members should be removed
-			public SDL_Window SdlWindowHandle;
-			public IntPtr GlContext;
-			public uint WindowID;
-			public bool WindowOwned;
-#pragma warning restore S3459 // Unassigned members should be removed
-		}
-		public unsafe struct ViewportDataPtr
-		{
-			public ViewportData* NativePtr { get; }
-			public ViewportDataPtr(ViewportData* nativePtr) => NativePtr = nativePtr;
-			public ViewportDataPtr(IntPtr nativePtr) => NativePtr = (ViewportData*)nativePtr;
-			public ref SDL_Window SdlWindowHandle => ref Unsafe.AsRef<SDL_Window>(&NativePtr->SdlWindowHandle);
-			public ref IntPtr GlContext => ref Unsafe.AsRef<IntPtr>(&NativePtr->GlContext);
-			public ref UInt32 WindowID => ref Unsafe.AsRef<UInt32>(&NativePtr->WindowID);
-			public ref bool WindowOwned => ref Unsafe.AsRef<bool>(&NativePtr->WindowOwned);
-
-			public static implicit operator ViewportDataPtr(IntPtr nativePtr) => new ViewportDataPtr(nativePtr);
-			public static implicit operator ViewportDataPtr(ViewportData* nativePtr) => new ViewportDataPtr(nativePtr);
-			public static implicit operator ViewportData*(ViewportDataPtr wrappedPtr) => wrappedPtr.NativePtr;
 		}
 
 		public VeldridImGuiWindow(GraphicsDevice gd, ImGuiViewportPtr vp, Sdl2Window window)
