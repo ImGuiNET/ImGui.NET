@@ -196,7 +196,7 @@ namespace ImGuiNET.SampleProgram.XNA
             var io = ImGui.GetIO();
 
             // MonoGame-specific //////////////////////
-            var offset = .5f;
+            var offset = _graphicsDevice.UseHalfPixelOffset ? .5f : 0f;
             ///////////////////////////////////////////
 
             // FNA-specific ///////////////////////////
