@@ -18,11 +18,12 @@ namespace ImGuiNET
         public ImFontConfig* ConfigData;
         public short ConfigDataCount;
         public ushort FallbackChar;
+        public ushort EllipsisChar;
+        public byte DirtyLookupTables;
         public float Scale;
         public float Ascent;
         public float Descent;
         public int MetricsTotalSurface;
-        public byte DirtyLookupTables;
     }
     public unsafe partial struct ImFontPtr
     {
@@ -43,11 +44,12 @@ namespace ImGuiNET
         public ImFontConfigPtr ConfigData => new ImFontConfigPtr(NativePtr->ConfigData);
         public ref short ConfigDataCount => ref Unsafe.AsRef<short>(&NativePtr->ConfigDataCount);
         public ref ushort FallbackChar => ref Unsafe.AsRef<ushort>(&NativePtr->FallbackChar);
+        public ref ushort EllipsisChar => ref Unsafe.AsRef<ushort>(&NativePtr->EllipsisChar);
+        public ref bool DirtyLookupTables => ref Unsafe.AsRef<bool>(&NativePtr->DirtyLookupTables);
         public ref float Scale => ref Unsafe.AsRef<float>(&NativePtr->Scale);
         public ref float Ascent => ref Unsafe.AsRef<float>(&NativePtr->Ascent);
         public ref float Descent => ref Unsafe.AsRef<float>(&NativePtr->Descent);
         public ref int MetricsTotalSurface => ref Unsafe.AsRef<int>(&NativePtr->MetricsTotalSurface);
-        public ref bool DirtyLookupTables => ref Unsafe.AsRef<bool>(&NativePtr->DirtyLookupTables);
         public void AddGlyph(ushort c, float x0, float y0, float x1, float y1, float u0, float v0, float u1, float v1, float advance_x)
         {
             ImGuiNative.ImFont_AddGlyph(NativePtr, c, x0, y0, x1, y1, u0, v0, u1, v1, advance_x);

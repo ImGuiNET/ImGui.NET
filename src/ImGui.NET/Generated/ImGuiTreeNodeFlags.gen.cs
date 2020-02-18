@@ -15,6 +15,8 @@ namespace ImGuiNET
         Leaf = 1 << 8,
         Bullet = 1 << 9,
         FramePadding = 1 << 10,
+        SpanAvailWidth = 1 << 11,
+        SpanFullWidth = 1 << 12,
         NavLeftJumpsBackHere = 1 << 13,
         CollapsingHeader = Framed | NoTreePushOnOpen | NoAutoOpenOnLog,
     }
