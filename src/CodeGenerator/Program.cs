@@ -962,6 +962,12 @@ namespace CodeGenerator
 
             if (defaultVal.Contains("%")) { correctedDefault = null; return false; }
 
+            if (tr.IsEnum)
+            {
+                correctedDefault = $"({tr.Type}){defaultVal}";
+                return true;
+            }
+
             correctedDefault = defaultVal;
             return true;
         }
@@ -1120,6 +1126,7 @@ namespace CodeGenerator
         public int ArraySize { get; }
         public bool IsFunctionPointer { get; }
         public string[] TypeVariants { get; }
+        public bool IsEnum { get; }
 
         public TypeReference(string name, string type, EnumDefinition[] enums)
             : this(name, type, null, enums, null) { }
@@ -1161,6 +1168,8 @@ namespace CodeGenerator
             IsFunctionPointer = Type.IndexOf('(') != -1;
 
             TypeVariants = typeVariants;
+
+            IsEnum = enums.Any(t => t.Name == type || t.FriendlyName == type);
         }
 
         private int ParseSizeString(string sizePart, EnumDefinition[] enums)
