@@ -158,6 +158,7 @@ namespace ImGuiNET.SampleProgram.XNA
             _keys.Add(io.KeyMap[(int)ImGuiKey.Backspace] = (int)Keys.Back);
             _keys.Add(io.KeyMap[(int)ImGuiKey.Enter] = (int)Keys.Enter);
             _keys.Add(io.KeyMap[(int)ImGuiKey.Escape] = (int)Keys.Escape);
+            _keys.Add(io.KeyMap[(int)ImGuiKey.Space] = (int)Keys.Space);
             _keys.Add(io.KeyMap[(int)ImGuiKey.A] = (int)Keys.A);
             _keys.Add(io.KeyMap[(int)ImGuiKey.C] = (int)Keys.C);
             _keys.Add(io.KeyMap[(int)ImGuiKey.V] = (int)Keys.V);
