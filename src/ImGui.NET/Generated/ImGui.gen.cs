@@ -7209,7 +7209,7 @@ namespace ImGuiNET
         }
         public static bool InputInt3(string label, ref int[] v)
         {
-            if (v.Length < 2)
+            if (v.Length < 3)
                 throw new ArgumentException("Invalid array size");
 
             byte* native_label;
@@ -7243,7 +7243,7 @@ namespace ImGuiNET
         }
         public static bool InputInt3(string label, ref int[] v, ImGuiInputTextFlags flags)
         {
-            if (v.Length < 2)
+            if (v.Length < 3)
                 throw new ArgumentException("Invalid array size");
 
             byte* native_label;
@@ -7276,7 +7276,7 @@ namespace ImGuiNET
         }
         public static bool InputInt4(string label, ref int[] v)
         {
-            if (v.Length < 2)
+            if (v.Length < 4)
                 throw new ArgumentException("Invalid array size");
 
             byte* native_label;
@@ -7310,7 +7310,7 @@ namespace ImGuiNET
         }
         public static bool InputInt4(string label, ref int[] v, ImGuiInputTextFlags flags)
         {
-            if (v.Length < 2)
+            if (v.Length < 4)
                 throw new ArgumentException("Invalid array size");
 
             byte* native_label;
