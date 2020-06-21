@@ -3996,8 +3996,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt2(string label, ref int v)
+        public static bool DragInt2(string label, int[] v)
         {
+            if (v.Length < 2)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4033,7 +4036,7 @@ namespace ImGuiNET
                 }
                 int native_format_offset = Util.GetUtf8("%d", native_format, format_byteCount);
                 native_format[native_format_offset] = 0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt2(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4047,8 +4050,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt2(string label, ref int v, float v_speed)
+        public static bool DragInt2(string label, ref int[] v, float v_speed)
         {
+            if (v.Length < 2)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4083,7 +4089,7 @@ namespace ImGuiNET
                 }
                 int native_format_offset = Util.GetUtf8("%d", native_format, format_byteCount);
                 native_format[native_format_offset] = 0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt2(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4097,8 +4103,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt2(string label, ref int v, float v_speed, int v_min)
+        public static bool DragInt2(string label, ref int[] v, float v_speed, int v_min)
         {
+            if (v.Length < 2)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4132,7 +4141,7 @@ namespace ImGuiNET
                 }
                 int native_format_offset = Util.GetUtf8("%d", native_format, format_byteCount);
                 native_format[native_format_offset] = 0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt2(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4146,8 +4155,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt2(string label, ref int v, float v_speed, int v_min, int v_max)
+        public static bool DragInt2(string label, ref int[] v, float v_speed, int v_min, int v_max)
         {
+            if (v.Length < 2)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4180,7 +4192,7 @@ namespace ImGuiNET
                 }
                 int native_format_offset = Util.GetUtf8("%d", native_format, format_byteCount);
                 native_format[native_format_offset] = 0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt2(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4194,8 +4206,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt2(string label, ref int v, float v_speed, int v_min, int v_max, string format)
+        public static bool DragInt2(string label, ref int[] v, float v_speed, int v_min, int v_max, string format)
         {
+            if (v.Length < 2)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4232,7 +4247,7 @@ namespace ImGuiNET
                 native_format[native_format_offset] = 0;
             }
             else { native_format = null; }
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt2(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4246,8 +4261,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt3(string label, ref int v)
+        public static bool DragInt3(string label, ref int[] v)
         {
+            if (v.Length < 3)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4283,7 +4301,7 @@ namespace ImGuiNET
                 }
                 int native_format_offset = Util.GetUtf8("%d", native_format, format_byteCount);
                 native_format[native_format_offset] = 0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt3(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4297,8 +4315,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt3(string label, ref int v, float v_speed)
+        public static bool DragInt3(string label, ref int[] v, float v_speed)
         {
+            if (v.Length < 3)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4333,7 +4354,7 @@ namespace ImGuiNET
                 }
                 int native_format_offset = Util.GetUtf8("%d", native_format, format_byteCount);
                 native_format[native_format_offset] = 0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt3(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4347,8 +4368,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt3(string label, ref int v, float v_speed, int v_min)
+        public static bool DragInt3(string label, ref int[] v, float v_speed, int v_min)
         {
+            if (v.Length < 3)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4382,7 +4406,7 @@ namespace ImGuiNET
                 }
                 int native_format_offset = Util.GetUtf8("%d", native_format, format_byteCount);
                 native_format[native_format_offset] = 0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt3(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4396,8 +4420,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt3(string label, ref int v, float v_speed, int v_min, int v_max)
+        public static bool DragInt3(string label, ref int[] v, float v_speed, int v_min, int v_max)
         {
+            if (v.Length < 3)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4430,7 +4457,7 @@ namespace ImGuiNET
                 }
                 int native_format_offset = Util.GetUtf8("%d", native_format, format_byteCount);
                 native_format[native_format_offset] = 0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt3(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4444,8 +4471,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt3(string label, ref int v, float v_speed, int v_min, int v_max, string format)
+        public static bool DragInt3(string label, ref int[] v, float v_speed, int v_min, int v_max, string format)
         {
+            if (v.Length < 3)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4482,7 +4512,7 @@ namespace ImGuiNET
                 native_format[native_format_offset] = 0;
             }
             else { native_format = null; }
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt3(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4496,8 +4526,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt4(string label, ref int v)
+        public static bool DragInt4(string label, ref int[] v)
         {
+            if (v.Length < 4)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4533,7 +4566,7 @@ namespace ImGuiNET
                 }
                 int native_format_offset = Util.GetUtf8("%d", native_format, format_byteCount);
                 native_format[native_format_offset] = 0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt4(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4547,8 +4580,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt4(string label, ref int v, float v_speed)
+        public static bool DragInt4(string label, ref int[] v, float v_speed)
         {
+            if (v.Length < 4)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4583,7 +4619,7 @@ namespace ImGuiNET
                 }
                 int native_format_offset = Util.GetUtf8("%d", native_format, format_byteCount);
                 native_format[native_format_offset] = 0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt4(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4597,8 +4633,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt4(string label, ref int v, float v_speed, int v_min)
+        public static bool DragInt4(string label, ref int[] v, float v_speed, int v_min)
         {
+            if (v.Length < 4)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4632,7 +4671,7 @@ namespace ImGuiNET
                 }
                 int native_format_offset = Util.GetUtf8("%d", native_format, format_byteCount);
                 native_format[native_format_offset] = 0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt4(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4646,8 +4685,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt4(string label, ref int v, float v_speed, int v_min, int v_max)
+        public static bool DragInt4(string label, ref int[] v, float v_speed, int v_min, int v_max)
         {
+            if (v.Length < 4)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4680,7 +4722,7 @@ namespace ImGuiNET
                 }
                 int native_format_offset = Util.GetUtf8("%d", native_format, format_byteCount);
                 native_format[native_format_offset] = 0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt4(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4694,8 +4736,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool DragInt4(string label, ref int v, float v_speed, int v_min, int v_max, string format)
+        public static bool DragInt4(string label, ref int[] v, float v_speed, int v_min, int v_max, string format)
         {
+            if (v.Length < 4)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -4732,7 +4777,7 @@ namespace ImGuiNET
                 native_format[native_format_offset] = 0;
             }
             else { native_format = null; }
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igDragInt4(native_label, native_v, v_speed, v_min, v_max, native_format);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7095,8 +7140,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool InputInt2(string label, ref int v)
+        public static bool InputInt2(string label, ref int[] v)
         {
+            if (v.Length < 2)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -7116,7 +7164,7 @@ namespace ImGuiNET
             }
             else { native_label = null; }
             ImGuiInputTextFlags flags = (ImGuiInputTextFlags)0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igInputInt2(native_label, native_v, flags);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7126,8 +7174,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool InputInt2(string label, ref int v, ImGuiInputTextFlags flags)
+        public static bool InputInt2(string label, ref int[] v, ImGuiInputTextFlags flags)
         {
+            if (v.Length < 2)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -7146,7 +7197,7 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igInputInt2(native_label, native_v, flags);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7156,8 +7207,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool InputInt3(string label, ref int v)
+        public static bool InputInt3(string label, ref int[] v)
         {
+            if (v.Length < 2)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -7177,7 +7231,7 @@ namespace ImGuiNET
             }
             else { native_label = null; }
             ImGuiInputTextFlags flags = (ImGuiInputTextFlags)0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igInputInt3(native_label, native_v, flags);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7187,8 +7241,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool InputInt3(string label, ref int v, ImGuiInputTextFlags flags)
+        public static bool InputInt3(string label, ref int[] v, ImGuiInputTextFlags flags)
         {
+            if (v.Length < 2)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -7207,7 +7264,7 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igInputInt3(native_label, native_v, flags);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7217,8 +7274,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool InputInt4(string label, ref int v)
+        public static bool InputInt4(string label, ref int[] v)
         {
+            if (v.Length < 2)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -7238,7 +7298,7 @@ namespace ImGuiNET
             }
             else { native_label = null; }
             ImGuiInputTextFlags flags = (ImGuiInputTextFlags)0;
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igInputInt4(native_label, native_v, flags);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7248,8 +7308,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
-        public static bool InputInt4(string label, ref int v, ImGuiInputTextFlags flags)
+        public static bool InputInt4(string label, ref int[] v, ImGuiInputTextFlags flags)
         {
+            if (v.Length < 2)
+                throw new ArgumentException("Invalid array size");
+
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
@@ -7268,7 +7331,7 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            fixed (int* native_v = &v)
+            fixed (int* native_v = v)
             {
                 byte ret = ImGuiNative.igInputInt4(native_label, native_v, flags);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
