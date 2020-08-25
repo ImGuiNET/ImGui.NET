@@ -355,12 +355,13 @@ namespace CodeGenerator
             TemplateType = templateType;
             ArraySize = asize;
             int startBracket = name.IndexOf('[');
-            if (startBracket != -1 && ArraySize == 0)
+            if (startBracket != -1)
             {
                 //This is only for older cimgui binding jsons
                 int endBracket = name.IndexOf(']');
                 string sizePart = name.Substring(startBracket + 1, endBracket - startBracket - 1);
-                ArraySize = ParseSizeString(sizePart, enums);
+                if(ArraySize == 0)
+                    ArraySize = ParseSizeString(sizePart, enums);
                 Name = Name.Substring(0, startBracket);
             }
             IsFunctionPointer = Type.IndexOf('(') != -1;
