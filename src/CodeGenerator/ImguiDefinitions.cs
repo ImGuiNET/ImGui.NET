@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -15,6 +14,13 @@ namespace CodeGenerator
         public TypeDefinition[] Types;
         public FunctionDefinition[] Functions;
         public Dictionary<string, MethodVariant> Variants;
+
+        static int GetInt(JToken token, string key)
+        {
+            var v = token[key];
+            if (v == null) return 0;
+            return v.ToObject<int>();
+        }
         public void LoadFrom(string directory)
         {
             
@@ -59,7 +65,7 @@ namespace CodeGenerator
             {
                 JProperty jp = (JProperty)jt;
                 string name = jp.Name;
-                if (typeLocations[jp.Name].Value<string>() == "internal") {
+                if (typeLocations?[jp.Name]?.Value<string>() == "internal") {
                     return null;
                 }
                 EnumMember[] elements = jp.Values().Select(v =>
@@ -73,16 +79,18 @@ namespace CodeGenerator
             {
                 JProperty jp = (JProperty)jt;
                 string name = jp.Name;
-                if (typeLocations[jp.Name].Value<string>() == "internal") {
+                if (typeLocations?[jp.Name]?.Value<string>() == "internal") {
                     return null;
                 }
                 TypeReference[] fields = jp.Values().Select(v =>
                 {
                     if (v["type"].ToString().Contains("static")) { return null; }
 
+                    
                     return new TypeReference(
                         v["name"].ToString(),
                         v["type"].ToString(),
+                            GetInt(v, "size"),
                         v["template_type"]?.ToString(),
                         Enums);
                 }).Where(tr => tr != null).ToArray();
@@ -147,7 +155,7 @@ namespace CodeGenerator
                         ParameterVariant matchingVariant = methodVariants?.Parameters.Where(pv => pv.Name == pName && pv.OriginalType == pType).FirstOrDefault() ?? null;
                         if (matchingVariant != null) matchingVariant.Used = true;
 
-                        parameters.Add(new TypeReference(pName, pType, Enums, matchingVariant?.VariantTypes));
+                        parameters.Add(new TypeReference(pName, pType, 0, Enums, matchingVariant?.VariantTypes));
                     }
 
                     Dictionary<string, string> defaultValues = new Dictionary<string, string>();
@@ -305,16 +313,16 @@ namespace CodeGenerator
         public string[] TypeVariants { get; }
         public bool IsEnum { get; }
 
-        public TypeReference(string name, string type, EnumDefinition[] enums)
-            : this(name, type, null, enums, null) { }
+        public TypeReference(string name, string type, int asize, EnumDefinition[] enums)
+            : this(name, type, asize, null, enums, null) { }
 
-        public TypeReference(string name, string type, EnumDefinition[] enums, string[] typeVariants)
-            : this(name, type, null, enums, typeVariants) { }
+        public TypeReference(string name, string type, int asize, EnumDefinition[] enums, string[] typeVariants)
+            : this(name, type, asize, null, enums, typeVariants) { }
 
-        public TypeReference(string name, string type, string templateType, EnumDefinition[] enums)
-            : this(name, type, templateType, enums, null) { }
+        public TypeReference(string name, string type, int asize, string templateType, EnumDefinition[] enums)
+            : this(name, type, asize, templateType, enums, null) { }
 
-        public TypeReference(string name, string type, string templateType, EnumDefinition[] enums, string[] typeVariants)
+        public TypeReference(string name, string type, int asize, string templateType, EnumDefinition[] enums, string[] typeVariants)
         {
             Name = name;
             Type = type.Replace("const", string.Empty).Trim();
@@ -345,29 +353,35 @@ namespace CodeGenerator
             }
 
             TemplateType = templateType;
+            ArraySize = asize;
             int startBracket = name.IndexOf('[');
-            if (startBracket != -1)
+            if (startBracket != -1 && ArraySize == 0)
             {
+                //This is only for older cimgui binding jsons
                 int endBracket = name.IndexOf(']');
                 string sizePart = name.Substring(startBracket + 1, endBracket - startBracket - 1);
                 ArraySize = ParseSizeString(sizePart, enums);
                 Name = Name.Substring(0, startBracket);
             }
-
             IsFunctionPointer = Type.IndexOf('(') != -1;
-
+            
             TypeVariants = typeVariants;
 
             IsEnum = enums.Any(t => t.Name == type || t.FriendlyName == type);
         }
-
-         private int ParseSizeString(string sizePart, EnumDefinition[] enums)
-         {
-            if (sizePart.Contains("(") || sizePart.Contains("+") || sizePart.Contains("/") ||
-                sizePart.Contains("*"))
+        
+        private int ParseSizeString(string sizePart, EnumDefinition[] enums)
+        {
+            int plusStart = sizePart.IndexOf('+');
+            if (plusStart != -1)
             {
-                return Task.WaitAny(CSharpScript.EvaluateAsync<int>($"(int)({sizePart})"));
+                string first = sizePart.Substring(0, plusStart);
+                string second = sizePart.Substring(plusStart, sizePart.Length - plusStart);
+                int firstVal = int.Parse(first);
+                int secondVal = int.Parse(second);
+                return firstVal + secondVal;
             }
+
             if (!int.TryParse(sizePart, out int ret))
             {
                 foreach (EnumDefinition ed in enums)
@@ -393,7 +407,7 @@ namespace CodeGenerator
         public TypeReference WithVariant(int variantIndex, EnumDefinition[] enums)
         {
             if (variantIndex == 0) return this;
-            else return new TypeReference(Name, TypeVariants[variantIndex - 1], TemplateType, enums);
+            else return new TypeReference(Name, TypeVariants[variantIndex - 1], ArraySize, TemplateType, enums);
         }
     }
 
