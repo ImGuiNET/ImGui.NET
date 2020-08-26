@@ -15,7 +15,7 @@ namespace ImGuiNET
                 native_text_begin[native_text_begin_offset] = 0;
             }
             byte* native_text_end = null;
-            ImGuiNative.ImDrawList_AddText(NativePtr, pos, col, native_text_begin, native_text_end);
+            ImGuiNative.ImDrawList_AddTextVec2(NativePtr, pos, col, native_text_begin, native_text_end);
         }
 
         public void AddText(ImFontPtr font, float font_size, Vector2 pos, uint col, string text_begin)

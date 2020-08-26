@@ -21,7 +21,72 @@ namespace ImGuiNET
         public ImVector Fonts;
         public ImVector CustomRects;
         public ImVector ConfigData;
-        public fixed int CustomRectIds[1];
+        public Vector4 TexUvLines_0;
+        public Vector4 TexUvLines_1;
+        public Vector4 TexUvLines_2;
+        public Vector4 TexUvLines_3;
+        public Vector4 TexUvLines_4;
+        public Vector4 TexUvLines_5;
+        public Vector4 TexUvLines_6;
+        public Vector4 TexUvLines_7;
+        public Vector4 TexUvLines_8;
+        public Vector4 TexUvLines_9;
+        public Vector4 TexUvLines_10;
+        public Vector4 TexUvLines_11;
+        public Vector4 TexUvLines_12;
+        public Vector4 TexUvLines_13;
+        public Vector4 TexUvLines_14;
+        public Vector4 TexUvLines_15;
+        public Vector4 TexUvLines_16;
+        public Vector4 TexUvLines_17;
+        public Vector4 TexUvLines_18;
+        public Vector4 TexUvLines_19;
+        public Vector4 TexUvLines_20;
+        public Vector4 TexUvLines_21;
+        public Vector4 TexUvLines_22;
+        public Vector4 TexUvLines_23;
+        public Vector4 TexUvLines_24;
+        public Vector4 TexUvLines_25;
+        public Vector4 TexUvLines_26;
+        public Vector4 TexUvLines_27;
+        public Vector4 TexUvLines_28;
+        public Vector4 TexUvLines_29;
+        public Vector4 TexUvLines_30;
+        public Vector4 TexUvLines_31;
+        public Vector4 TexUvLines_32;
+        public Vector4 TexUvLines_33;
+        public Vector4 TexUvLines_34;
+        public Vector4 TexUvLines_35;
+        public Vector4 TexUvLines_36;
+        public Vector4 TexUvLines_37;
+        public Vector4 TexUvLines_38;
+        public Vector4 TexUvLines_39;
+        public Vector4 TexUvLines_40;
+        public Vector4 TexUvLines_41;
+        public Vector4 TexUvLines_42;
+        public Vector4 TexUvLines_43;
+        public Vector4 TexUvLines_44;
+        public Vector4 TexUvLines_45;
+        public Vector4 TexUvLines_46;
+        public Vector4 TexUvLines_47;
+        public Vector4 TexUvLines_48;
+        public Vector4 TexUvLines_49;
+        public Vector4 TexUvLines_50;
+        public Vector4 TexUvLines_51;
+        public Vector4 TexUvLines_52;
+        public Vector4 TexUvLines_53;
+        public Vector4 TexUvLines_54;
+        public Vector4 TexUvLines_55;
+        public Vector4 TexUvLines_56;
+        public Vector4 TexUvLines_57;
+        public Vector4 TexUvLines_58;
+        public Vector4 TexUvLines_59;
+        public Vector4 TexUvLines_60;
+        public Vector4 TexUvLines_61;
+        public Vector4 TexUvLines_62;
+        public Vector4 TexUvLines_63;
+        public int PackIdMouseCursors;
+        public int PackIdLines;
     }
     public unsafe partial struct ImFontAtlasPtr
     {
@@ -45,41 +110,43 @@ namespace ImGuiNET
         public ImVector<ImFontPtr> Fonts => new ImVector<ImFontPtr>(NativePtr->Fonts);
         public ImPtrVector<ImFontAtlasCustomRectPtr> CustomRects => new ImPtrVector<ImFontAtlasCustomRectPtr>(NativePtr->CustomRects, Unsafe.SizeOf<ImFontAtlasCustomRect>());
         public ImPtrVector<ImFontConfigPtr> ConfigData => new ImPtrVector<ImFontConfigPtr>(NativePtr->ConfigData, Unsafe.SizeOf<ImFontConfig>());
-        public RangeAccessor<int> CustomRectIds => new RangeAccessor<int>(NativePtr->CustomRectIds, 1);
+        public RangeAccessor<Vector4> TexUvLines => new RangeAccessor<Vector4>(&NativePtr->TexUvLines_0, 64);
+        public ref int PackIdMouseCursors => ref Unsafe.AsRef<int>(&NativePtr->PackIdMouseCursors);
+        public ref int PackIdLines => ref Unsafe.AsRef<int>(&NativePtr->PackIdLines);
         public int AddCustomRectFontGlyph(ImFontPtr font, ushort id, int width, int height, float advance_x)
         {
             ImFont* native_font = font.NativePtr;
             Vector2 offset = new Vector2();
-            int ret = ImGuiNative.ImFontAtlas_AddCustomRectFontGlyph(NativePtr, native_font, id, width, height, advance_x, offset);
+            int ret = ImGuiNative.ImFontAtlas_AddCustomRectFontGlyph((ImFontAtlas*)(NativePtr), native_font, id, width, height, advance_x, offset);
             return ret;
         }
         public int AddCustomRectFontGlyph(ImFontPtr font, ushort id, int width, int height, float advance_x, Vector2 offset)
         {
             ImFont* native_font = font.NativePtr;
-            int ret = ImGuiNative.ImFontAtlas_AddCustomRectFontGlyph(NativePtr, native_font, id, width, height, advance_x, offset);
+            int ret = ImGuiNative.ImFontAtlas_AddCustomRectFontGlyph((ImFontAtlas*)(NativePtr), native_font, id, width, height, advance_x, offset);
             return ret;
         }
-        public int AddCustomRectRegular(uint id, int width, int height)
+        public int AddCustomRectRegular(int width, int height)
         {
-            int ret = ImGuiNative.ImFontAtlas_AddCustomRectRegular(NativePtr, id, width, height);
+            int ret = ImGuiNative.ImFontAtlas_AddCustomRectRegular((ImFontAtlas*)(NativePtr), width, height);
             return ret;
         }
         public ImFontPtr AddFont(ImFontConfigPtr font_cfg)
         {
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFont(NativePtr, native_font_cfg);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFont((ImFontAtlas*)(NativePtr), native_font_cfg);
             return new ImFontPtr(ret);
         }
         public ImFontPtr AddFontDefault()
         {
             ImFontConfig* font_cfg = null;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontDefault(NativePtr, font_cfg);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontDefault((ImFontAtlas*)(NativePtr), font_cfg);
             return new ImFontPtr(ret);
         }
         public ImFontPtr AddFontDefault(ImFontConfigPtr font_cfg)
         {
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontDefault(NativePtr, native_font_cfg);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontDefault((ImFontAtlas*)(NativePtr), native_font_cfg);
             return new ImFontPtr(ret);
         }
         public ImFontPtr AddFontFromFileTTF(string filename, float size_pixels)
@@ -104,7 +171,7 @@ namespace ImGuiNET
             else { native_filename = null; }
             ImFontConfig* font_cfg = null;
             ushort* glyph_ranges = null;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromFileTTF(NativePtr, native_filename, size_pixels, font_cfg, glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromFileTTF((ImFontAtlas*)(NativePtr), native_filename, size_pixels, font_cfg, glyph_ranges);
             if (filename_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_filename);
@@ -133,7 +200,7 @@ namespace ImGuiNET
             else { native_filename = null; }
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* glyph_ranges = null;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromFileTTF(NativePtr, native_filename, size_pixels, native_font_cfg, glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromFileTTF((ImFontAtlas*)(NativePtr), native_filename, size_pixels, native_font_cfg, glyph_ranges);
             if (filename_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_filename);
@@ -162,7 +229,7 @@ namespace ImGuiNET
             else { native_filename = null; }
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* native_glyph_ranges = (ushort*)glyph_ranges.ToPointer();
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromFileTTF(NativePtr, native_filename, size_pixels, native_font_cfg, native_glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromFileTTF((ImFontAtlas*)(NativePtr), native_filename, size_pixels, native_font_cfg, native_glyph_ranges);
             if (filename_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_filename);
@@ -191,7 +258,7 @@ namespace ImGuiNET
             else { native_compressed_font_data_base85 = null; }
             ImFontConfig* font_cfg = null;
             ushort* glyph_ranges = null;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(NativePtr, native_compressed_font_data_base85, size_pixels, font_cfg, glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF((ImFontAtlas*)(NativePtr), native_compressed_font_data_base85, size_pixels, font_cfg, glyph_ranges);
             if (compressed_font_data_base85_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_compressed_font_data_base85);
@@ -220,7 +287,7 @@ namespace ImGuiNET
             else { native_compressed_font_data_base85 = null; }
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* glyph_ranges = null;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(NativePtr, native_compressed_font_data_base85, size_pixels, native_font_cfg, glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF((ImFontAtlas*)(NativePtr), native_compressed_font_data_base85, size_pixels, native_font_cfg, glyph_ranges);
             if (compressed_font_data_base85_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_compressed_font_data_base85);
@@ -249,7 +316,7 @@ namespace ImGuiNET
             else { native_compressed_font_data_base85 = null; }
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* native_glyph_ranges = (ushort*)glyph_ranges.ToPointer();
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF(NativePtr, native_compressed_font_data_base85, size_pixels, native_font_cfg, native_glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedBase85TTF((ImFontAtlas*)(NativePtr), native_compressed_font_data_base85, size_pixels, native_font_cfg, native_glyph_ranges);
             if (compressed_font_data_base85_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_compressed_font_data_base85);
@@ -261,7 +328,7 @@ namespace ImGuiNET
             void* native_compressed_font_data = (void*)compressed_font_data.ToPointer();
             ImFontConfig* font_cfg = null;
             ushort* glyph_ranges = null;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedTTF(NativePtr, native_compressed_font_data, compressed_font_size, size_pixels, font_cfg, glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedTTF((ImFontAtlas*)(NativePtr), native_compressed_font_data, compressed_font_size, size_pixels, font_cfg, glyph_ranges);
             return new ImFontPtr(ret);
         }
         public ImFontPtr AddFontFromMemoryCompressedTTF(IntPtr compressed_font_data, int compressed_font_size, float size_pixels, ImFontConfigPtr font_cfg)
@@ -269,7 +336,7 @@ namespace ImGuiNET
             void* native_compressed_font_data = (void*)compressed_font_data.ToPointer();
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* glyph_ranges = null;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedTTF(NativePtr, native_compressed_font_data, compressed_font_size, size_pixels, native_font_cfg, glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedTTF((ImFontAtlas*)(NativePtr), native_compressed_font_data, compressed_font_size, size_pixels, native_font_cfg, glyph_ranges);
             return new ImFontPtr(ret);
         }
         public ImFontPtr AddFontFromMemoryCompressedTTF(IntPtr compressed_font_data, int compressed_font_size, float size_pixels, ImFontConfigPtr font_cfg, IntPtr glyph_ranges)
@@ -277,7 +344,7 @@ namespace ImGuiNET
             void* native_compressed_font_data = (void*)compressed_font_data.ToPointer();
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* native_glyph_ranges = (ushort*)glyph_ranges.ToPointer();
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedTTF(NativePtr, native_compressed_font_data, compressed_font_size, size_pixels, native_font_cfg, native_glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedTTF((ImFontAtlas*)(NativePtr), native_compressed_font_data, compressed_font_size, size_pixels, native_font_cfg, native_glyph_ranges);
             return new ImFontPtr(ret);
         }
         public ImFontPtr AddFontFromMemoryTTF(IntPtr font_data, int font_size, float size_pixels)
@@ -285,7 +352,7 @@ namespace ImGuiNET
             void* native_font_data = (void*)font_data.ToPointer();
             ImFontConfig* font_cfg = null;
             ushort* glyph_ranges = null;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF(NativePtr, native_font_data, font_size, size_pixels, font_cfg, glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF((ImFontAtlas*)(NativePtr), native_font_data, font_size, size_pixels, font_cfg, glyph_ranges);
             return new ImFontPtr(ret);
         }
         public ImFontPtr AddFontFromMemoryTTF(IntPtr font_data, int font_size, float size_pixels, ImFontConfigPtr font_cfg)
@@ -293,7 +360,7 @@ namespace ImGuiNET
             void* native_font_data = (void*)font_data.ToPointer();
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* glyph_ranges = null;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF(NativePtr, native_font_data, font_size, size_pixels, native_font_cfg, glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF((ImFontAtlas*)(NativePtr), native_font_data, font_size, size_pixels, native_font_cfg, glyph_ranges);
             return new ImFontPtr(ret);
         }
         public ImFontPtr AddFontFromMemoryTTF(IntPtr font_data, int font_size, float size_pixels, ImFontConfigPtr font_cfg, IntPtr glyph_ranges)
@@ -301,12 +368,12 @@ namespace ImGuiNET
             void* native_font_data = (void*)font_data.ToPointer();
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* native_glyph_ranges = (ushort*)glyph_ranges.ToPointer();
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF(NativePtr, native_font_data, font_size, size_pixels, native_font_cfg, native_glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF((ImFontAtlas*)(NativePtr), native_font_data, font_size, size_pixels, native_font_cfg, native_glyph_ranges);
             return new ImFontPtr(ret);
         }
         public bool Build()
         {
-            byte ret = ImGuiNative.ImFontAtlas_Build(NativePtr);
+            byte ret = ImGuiNative.ImFontAtlas_Build((ImFontAtlas*)(NativePtr));
             return ret != 0;
         }
         public void CalcCustomRectUV(ImFontAtlasCustomRectPtr rect, out Vector2 out_uv_min, out Vector2 out_uv_max)
@@ -316,73 +383,73 @@ namespace ImGuiNET
             {
                 fixed (Vector2* native_out_uv_max = &out_uv_max)
                 {
-                    ImGuiNative.ImFontAtlas_CalcCustomRectUV(NativePtr, native_rect, native_out_uv_min, native_out_uv_max);
+                    ImGuiNative.ImFontAtlas_CalcCustomRectUV((ImFontAtlas*)(NativePtr), native_rect, native_out_uv_min, native_out_uv_max);
                 }
             }
         }
         public void Clear()
         {
-            ImGuiNative.ImFontAtlas_Clear(NativePtr);
+            ImGuiNative.ImFontAtlas_Clear((ImFontAtlas*)(NativePtr));
         }
         public void ClearFonts()
         {
-            ImGuiNative.ImFontAtlas_ClearFonts(NativePtr);
+            ImGuiNative.ImFontAtlas_ClearFonts((ImFontAtlas*)(NativePtr));
         }
         public void ClearInputData()
         {
-            ImGuiNative.ImFontAtlas_ClearInputData(NativePtr);
+            ImGuiNative.ImFontAtlas_ClearInputData((ImFontAtlas*)(NativePtr));
         }
         public void ClearTexData()
         {
-            ImGuiNative.ImFontAtlas_ClearTexData(NativePtr);
+            ImGuiNative.ImFontAtlas_ClearTexData((ImFontAtlas*)(NativePtr));
         }
         public void Destroy()
         {
-            ImGuiNative.ImFontAtlas_destroy(NativePtr);
+            ImGuiNative.ImFontAtlas_destroy((ImFontAtlas*)(NativePtr));
         }
         public ImFontAtlasCustomRectPtr GetCustomRectByIndex(int index)
         {
-            ImFontAtlasCustomRect* ret = ImGuiNative.ImFontAtlas_GetCustomRectByIndex(NativePtr, index);
+            ImFontAtlasCustomRect* ret = ImGuiNative.ImFontAtlas_GetCustomRectByIndex((ImFontAtlas*)(NativePtr), index);
             return new ImFontAtlasCustomRectPtr(ret);
         }
         public IntPtr GetGlyphRangesChineseFull()
         {
-            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesChineseFull(NativePtr);
+            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesChineseFull((ImFontAtlas*)(NativePtr));
             return (IntPtr)ret;
         }
         public IntPtr GetGlyphRangesChineseSimplifiedCommon()
         {
-            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon(NativePtr);
+            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesChineseSimplifiedCommon((ImFontAtlas*)(NativePtr));
             return (IntPtr)ret;
         }
         public IntPtr GetGlyphRangesCyrillic()
         {
-            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesCyrillic(NativePtr);
+            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesCyrillic((ImFontAtlas*)(NativePtr));
             return (IntPtr)ret;
         }
         public IntPtr GetGlyphRangesDefault()
         {
-            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesDefault(NativePtr);
+            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesDefault((ImFontAtlas*)(NativePtr));
             return (IntPtr)ret;
         }
         public IntPtr GetGlyphRangesJapanese()
         {
-            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesJapanese(NativePtr);
+            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesJapanese((ImFontAtlas*)(NativePtr));
             return (IntPtr)ret;
         }
         public IntPtr GetGlyphRangesKorean()
         {
-            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesKorean(NativePtr);
+            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesKorean((ImFontAtlas*)(NativePtr));
             return (IntPtr)ret;
         }
         public IntPtr GetGlyphRangesThai()
         {
-            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesThai(NativePtr);
+            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesThai((ImFontAtlas*)(NativePtr));
             return (IntPtr)ret;
         }
         public IntPtr GetGlyphRangesVietnamese()
         {
-            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesVietnamese(NativePtr);
+            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesVietnamese((ImFontAtlas*)(NativePtr));
             return (IntPtr)ret;
         }
         public bool GetMouseCursorTexData(ImGuiMouseCursor cursor, out Vector2 out_offset, out Vector2 out_size, out Vector2 out_uv_border, out Vector2 out_uv_fill)
@@ -395,7 +462,7 @@ namespace ImGuiNET
                     {
                         fixed (Vector2* native_out_uv_fill = &out_uv_fill)
                         {
-                            byte ret = ImGuiNative.ImFontAtlas_GetMouseCursorTexData(NativePtr, cursor, native_out_offset, native_out_size, native_out_uv_border, native_out_uv_fill);
+                            byte ret = ImGuiNative.ImFontAtlas_GetMouseCursorTexData((ImFontAtlas*)(NativePtr), cursor, native_out_offset, native_out_size, native_out_uv_border, native_out_uv_fill);
                             return ret != 0;
                         }
                     }
@@ -411,7 +478,7 @@ namespace ImGuiNET
                 {
                     fixed (int* native_out_height = &out_height)
                     {
-                        ImGuiNative.ImFontAtlas_GetTexDataAsAlpha8(NativePtr, native_out_pixels, native_out_width, native_out_height, out_bytes_per_pixel);
+                        ImGuiNative.ImFontAtlas_GetTexDataAsAlpha8((ImFontAtlas*)(NativePtr), native_out_pixels, native_out_width, native_out_height, out_bytes_per_pixel);
                     }
                 }
             }
@@ -426,7 +493,7 @@ namespace ImGuiNET
                     {
                         fixed (int* native_out_bytes_per_pixel = &out_bytes_per_pixel)
                         {
-                            ImGuiNative.ImFontAtlas_GetTexDataAsAlpha8(NativePtr, native_out_pixels, native_out_width, native_out_height, native_out_bytes_per_pixel);
+                            ImGuiNative.ImFontAtlas_GetTexDataAsAlpha8((ImFontAtlas*)(NativePtr), native_out_pixels, native_out_width, native_out_height, native_out_bytes_per_pixel);
                         }
                     }
                 }
@@ -441,7 +508,7 @@ namespace ImGuiNET
                 {
                     fixed (int* native_out_height = &out_height)
                     {
-                        ImGuiNative.ImFontAtlas_GetTexDataAsAlpha8(NativePtr, native_out_pixels, native_out_width, native_out_height, out_bytes_per_pixel);
+                        ImGuiNative.ImFontAtlas_GetTexDataAsAlpha8((ImFontAtlas*)(NativePtr), native_out_pixels, native_out_width, native_out_height, out_bytes_per_pixel);
                     }
                 }
             }
@@ -456,7 +523,7 @@ namespace ImGuiNET
                     {
                         fixed (int* native_out_bytes_per_pixel = &out_bytes_per_pixel)
                         {
-                            ImGuiNative.ImFontAtlas_GetTexDataAsAlpha8(NativePtr, native_out_pixels, native_out_width, native_out_height, native_out_bytes_per_pixel);
+                            ImGuiNative.ImFontAtlas_GetTexDataAsAlpha8((ImFontAtlas*)(NativePtr), native_out_pixels, native_out_width, native_out_height, native_out_bytes_per_pixel);
                         }
                     }
                 }
@@ -471,7 +538,7 @@ namespace ImGuiNET
                 {
                     fixed (int* native_out_height = &out_height)
                     {
-                        ImGuiNative.ImFontAtlas_GetTexDataAsRGBA32(NativePtr, native_out_pixels, native_out_width, native_out_height, out_bytes_per_pixel);
+                        ImGuiNative.ImFontAtlas_GetTexDataAsRGBA32((ImFontAtlas*)(NativePtr), native_out_pixels, native_out_width, native_out_height, out_bytes_per_pixel);
                     }
                 }
             }
@@ -486,7 +553,7 @@ namespace ImGuiNET
                     {
                         fixed (int* native_out_bytes_per_pixel = &out_bytes_per_pixel)
                         {
-                            ImGuiNative.ImFontAtlas_GetTexDataAsRGBA32(NativePtr, native_out_pixels, native_out_width, native_out_height, native_out_bytes_per_pixel);
+                            ImGuiNative.ImFontAtlas_GetTexDataAsRGBA32((ImFontAtlas*)(NativePtr), native_out_pixels, native_out_width, native_out_height, native_out_bytes_per_pixel);
                         }
                     }
                 }
@@ -501,7 +568,7 @@ namespace ImGuiNET
                 {
                     fixed (int* native_out_height = &out_height)
                     {
-                        ImGuiNative.ImFontAtlas_GetTexDataAsRGBA32(NativePtr, native_out_pixels, native_out_width, native_out_height, out_bytes_per_pixel);
+                        ImGuiNative.ImFontAtlas_GetTexDataAsRGBA32((ImFontAtlas*)(NativePtr), native_out_pixels, native_out_width, native_out_height, out_bytes_per_pixel);
                     }
                 }
             }
@@ -516,7 +583,7 @@ namespace ImGuiNET
                     {
                         fixed (int* native_out_bytes_per_pixel = &out_bytes_per_pixel)
                         {
-                            ImGuiNative.ImFontAtlas_GetTexDataAsRGBA32(NativePtr, native_out_pixels, native_out_width, native_out_height, native_out_bytes_per_pixel);
+                            ImGuiNative.ImFontAtlas_GetTexDataAsRGBA32((ImFontAtlas*)(NativePtr), native_out_pixels, native_out_width, native_out_height, native_out_bytes_per_pixel);
                         }
                     }
                 }
@@ -524,12 +591,12 @@ namespace ImGuiNET
         }
         public bool IsBuilt()
         {
-            byte ret = ImGuiNative.ImFontAtlas_IsBuilt(NativePtr);
+            byte ret = ImGuiNative.ImFontAtlas_IsBuilt((ImFontAtlas*)(NativePtr));
             return ret != 0;
         }
         public void SetTexID(IntPtr id)
         {
-            ImGuiNative.ImFontAtlas_SetTexID(NativePtr, id);
+            ImGuiNative.ImFontAtlas_SetTexID((ImFontAtlas*)(NativePtr), id);
         }
     }
 }

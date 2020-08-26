@@ -8,5 +8,6 @@ namespace ImGuiNET
         SetSelected = 1 << 1,
         NoCloseWithMiddleMouseButton = 1 << 2,
         NoPushId = 1 << 3,
+        NoTooltip = 1 << 4,
     }
 }

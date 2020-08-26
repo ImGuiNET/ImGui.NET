@@ -24,6 +24,7 @@ namespace ImGuiNET
         NoNavInputs = 1 << 18,
         NoNavFocus = 1 << 19,
         UnsavedDocument = 1 << 20,
+        NoDocking = 1 << 21,
         NoNav = NoNavInputs | NoNavFocus,
         NoDecoration = NoTitleBar | NoResize | NoScrollbar | NoCollapse,
         NoInputs = NoMouseInputs | NoNavInputs | NoNavFocus,
@@ -33,5 +34,6 @@ namespace ImGuiNET
         Popup = 1 << 26,
         Modal = 1 << 27,
         ChildMenu = 1 << 28,
+        DockNodeHost = 1 << 29,
     }
 }

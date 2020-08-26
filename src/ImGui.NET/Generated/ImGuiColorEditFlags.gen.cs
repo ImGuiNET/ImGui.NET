@@ -13,6 +13,7 @@ namespace ImGuiNET
         NoLabel = 1 << 7,
         NoSidePreview = 1 << 8,
         NoDragDrop = 1 << 9,
+        NoBorder = 1 << 10,
         AlphaBar = 1 << 16,
         AlphaPreview = 1 << 17,
         AlphaPreviewHalf = 1 << 18,
@@ -26,10 +27,10 @@ namespace ImGuiNET
         PickerHueWheel = 1 << 26,
         InputRGB = 1 << 27,
         InputHSV = 1 << 28,
-        _OptionsDefault = Uint8|DisplayRGB|InputRGB|PickerHueBar,
-        _DisplayMask = DisplayRGB|DisplayHSV|DisplayHex,
-        _DataTypeMask = Uint8|Float,
-        _PickerMask = PickerHueWheel|PickerHueBar,
-        _InputMask = InputRGB|InputHSV,
+        _OptionsDefault = Uint8 | DisplayRGB | InputRGB | PickerHueBar,
+        _DisplayMask = DisplayRGB | DisplayHSV | DisplayHex,
+        _DataTypeMask = Uint8 | Float,
+        _PickerMask = PickerHueWheel | PickerHueBar,
+        _InputMask = InputRGB | InputHSV,
     }
 }

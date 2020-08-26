@@ -5,7 +5,8 @@ namespace ImGuiNET
     {
         None = 0,
         AntiAliasedLines = 1 << 0,
-        AntiAliasedFill = 1 << 1,
-        AllowVtxOffset = 1 << 2,
+        AntiAliasedLinesUseTex = 1 << 1,
+        AntiAliasedFill = 1 << 2,
+        AllowVtxOffset = 1 << 3,
     }
 }

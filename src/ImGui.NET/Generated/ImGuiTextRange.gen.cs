@@ -22,18 +22,18 @@ namespace ImGuiNET
         public IntPtr e { get => (IntPtr)NativePtr->e; set => NativePtr->e = (byte*)value; }
         public void Destroy()
         {
-            ImGuiNative.ImGuiTextRange_destroy(NativePtr);
+            ImGuiNative.ImGuiTextRange_destroy((ImGuiTextRange*)(NativePtr));
         }
         public bool empty()
         {
-            byte ret = ImGuiNative.ImGuiTextRange_empty(NativePtr);
+            byte ret = ImGuiNative.ImGuiTextRange_empty((ImGuiTextRange*)(NativePtr));
             return ret != 0;
         }
         public void split(byte separator, out ImVector @out)
         {
             fixed (ImVector* native_out = &@out)
             {
-                ImGuiNative.ImGuiTextRange_split(NativePtr, separator, native_out);
+                ImGuiNative.ImGuiTextRange_split((ImGuiTextRange*)(NativePtr), separator, native_out);
             }
         }
     }
