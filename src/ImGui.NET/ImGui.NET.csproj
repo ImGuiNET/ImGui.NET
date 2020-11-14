@@ -3,7 +3,7 @@
     <Description>A .NET wrapper for the Dear ImGui library.</Description>
     <AssemblyVersion>1.75.0</AssemblyVersion>
     <Authors>Eric Mellino</Authors>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netcoreapp5.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>portable</DebugType>
     <AssemblyName>ImGui.NET</AssemblyName>
