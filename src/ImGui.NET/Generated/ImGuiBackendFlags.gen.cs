@@ -8,5 +8,8 @@ namespace ImGuiNET
         HasMouseCursors = 1 << 1,
         HasSetMousePos = 1 << 2,
         RendererHasVtxOffset = 1 << 3,
+        PlatformHasViewports = 1 << 10,
+        HasMouseHoveredViewport = 1 << 11,
+        RendererHasViewports = 1 << 12,
     }
 }

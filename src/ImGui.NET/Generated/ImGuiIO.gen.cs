@@ -26,6 +26,14 @@ namespace ImGuiNET
         public byte FontAllowUserScaling;
         public ImFont* FontDefault;
         public Vector2 DisplayFramebufferScale;
+        public byte ConfigDockingNoSplit;
+        public byte ConfigDockingWithShift;
+        public byte ConfigDockingAlwaysTabBar;
+        public byte ConfigDockingTransparentPayload;
+        public byte ConfigViewportsNoAutoMerge;
+        public byte ConfigViewportsNoTaskBarIcon;
+        public byte ConfigViewportsNoDecoration;
+        public byte ConfigViewportsNoDefaultParent;
         public byte MouseDrawCursor;
         public byte ConfigMacOSXBehaviors;
         public byte ConfigInputTextCursorBlink;
@@ -40,13 +48,12 @@ namespace ImGuiNET
         public IntPtr GetClipboardTextFn;
         public IntPtr SetClipboardTextFn;
         public void* ClipboardUserData;
-        public IntPtr ImeSetInputScreenPosFn;
-        public void* ImeWindowHandle;
         public void* RenderDrawListsFnUnused;
         public Vector2 MousePos;
         public fixed byte MouseDown[5];
         public float MouseWheel;
         public float MouseWheelH;
+        public uint MouseHoveredViewport;
         public byte KeyCtrl;
         public byte KeyShift;
         public byte KeyAlt;
@@ -67,6 +74,7 @@ namespace ImGuiNET
         public int MetricsActiveWindows;
         public int MetricsActiveAllocations;
         public Vector2 MouseDelta;
+        public ImGuiKeyModFlags KeyMods;
         public Vector2 MousePosPrev;
         public Vector2 MouseClickedPos_0;
         public Vector2 MouseClickedPos_1;
@@ -91,6 +99,8 @@ namespace ImGuiNET
         public fixed float KeysDownDurationPrev[512];
         public fixed float NavInputsDownDuration[21];
         public fixed float NavInputsDownDurationPrev[21];
+        public float PenPressure;
+        public ushort InputQueueSurrogate;
         public ImVector InputQueueCharacters;
     }
     public unsafe partial struct ImGuiIOPtr
@@ -120,6 +130,14 @@ namespace ImGuiNET
         public ref bool FontAllowUserScaling => ref Unsafe.AsRef<bool>(&NativePtr->FontAllowUserScaling);
         public ImFontPtr FontDefault => new ImFontPtr(NativePtr->FontDefault);
         public ref Vector2 DisplayFramebufferScale => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayFramebufferScale);
+        public ref bool ConfigDockingNoSplit => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingNoSplit);
+        public ref bool ConfigDockingWithShift => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingWithShift);
+        public ref bool ConfigDockingAlwaysTabBar => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingAlwaysTabBar);
+        public ref bool ConfigDockingTransparentPayload => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingTransparentPayload);
+        public ref bool ConfigViewportsNoAutoMerge => ref Unsafe.AsRef<bool>(&NativePtr->ConfigViewportsNoAutoMerge);
+        public ref bool ConfigViewportsNoTaskBarIcon => ref Unsafe.AsRef<bool>(&NativePtr->ConfigViewportsNoTaskBarIcon);
+        public ref bool ConfigViewportsNoDecoration => ref Unsafe.AsRef<bool>(&NativePtr->ConfigViewportsNoDecoration);
+        public ref bool ConfigViewportsNoDefaultParent => ref Unsafe.AsRef<bool>(&NativePtr->ConfigViewportsNoDefaultParent);
         public ref bool MouseDrawCursor => ref Unsafe.AsRef<bool>(&NativePtr->MouseDrawCursor);
         public ref bool ConfigMacOSXBehaviors => ref Unsafe.AsRef<bool>(&NativePtr->ConfigMacOSXBehaviors);
         public ref bool ConfigInputTextCursorBlink => ref Unsafe.AsRef<bool>(&NativePtr->ConfigInputTextCursorBlink);
@@ -134,13 +152,12 @@ namespace ImGuiNET
         public ref IntPtr GetClipboardTextFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->GetClipboardTextFn);
         public ref IntPtr SetClipboardTextFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->SetClipboardTextFn);
         public IntPtr ClipboardUserData { get => (IntPtr)NativePtr->ClipboardUserData; set => NativePtr->ClipboardUserData = (void*)value; }
-        public ref IntPtr ImeSetInputScreenPosFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->ImeSetInputScreenPosFn);
-        public IntPtr ImeWindowHandle { get => (IntPtr)NativePtr->ImeWindowHandle; set => NativePtr->ImeWindowHandle = (void*)value; }
         public IntPtr RenderDrawListsFnUnused { get => (IntPtr)NativePtr->RenderDrawListsFnUnused; set => NativePtr->RenderDrawListsFnUnused = (void*)value; }
         public ref Vector2 MousePos => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePos);
         public RangeAccessor<bool> MouseDown => new RangeAccessor<bool>(NativePtr->MouseDown, 5);
         public ref float MouseWheel => ref Unsafe.AsRef<float>(&NativePtr->MouseWheel);
         public ref float MouseWheelH => ref Unsafe.AsRef<float>(&NativePtr->MouseWheelH);
+        public ref uint MouseHoveredViewport => ref Unsafe.AsRef<uint>(&NativePtr->MouseHoveredViewport);
         public ref bool KeyCtrl => ref Unsafe.AsRef<bool>(&NativePtr->KeyCtrl);
         public ref bool KeyShift => ref Unsafe.AsRef<bool>(&NativePtr->KeyShift);
         public ref bool KeyAlt => ref Unsafe.AsRef<bool>(&NativePtr->KeyAlt);
@@ -161,6 +178,7 @@ namespace ImGuiNET
         public ref int MetricsActiveWindows => ref Unsafe.AsRef<int>(&NativePtr->MetricsActiveWindows);
         public ref int MetricsActiveAllocations => ref Unsafe.AsRef<int>(&NativePtr->MetricsActiveAllocations);
         public ref Vector2 MouseDelta => ref Unsafe.AsRef<Vector2>(&NativePtr->MouseDelta);
+        public ref ImGuiKeyModFlags KeyMods => ref Unsafe.AsRef<ImGuiKeyModFlags>(&NativePtr->KeyMods);
         public ref Vector2 MousePosPrev => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePosPrev);
         public RangeAccessor<Vector2> MouseClickedPos => new RangeAccessor<Vector2>(&NativePtr->MouseClickedPos_0, 5);
         public RangeAccessor<double> MouseClickedTime => new RangeAccessor<double>(NativePtr->MouseClickedTime, 5);
@@ -177,10 +195,12 @@ namespace ImGuiNET
         public RangeAccessor<float> KeysDownDurationPrev => new RangeAccessor<float>(NativePtr->KeysDownDurationPrev, 512);
         public RangeAccessor<float> NavInputsDownDuration => new RangeAccessor<float>(NativePtr->NavInputsDownDuration, 21);
         public RangeAccessor<float> NavInputsDownDurationPrev => new RangeAccessor<float>(NativePtr->NavInputsDownDurationPrev, 21);
+        public ref float PenPressure => ref Unsafe.AsRef<float>(&NativePtr->PenPressure);
+        public ref ushort InputQueueSurrogate => ref Unsafe.AsRef<ushort>(&NativePtr->InputQueueSurrogate);
         public ImVector<ushort> InputQueueCharacters => new ImVector<ushort>(NativePtr->InputQueueCharacters);
         public void AddInputCharacter(uint c)
         {
-            ImGuiNative.ImGuiIO_AddInputCharacter(NativePtr, c);
+            ImGuiNative.ImGuiIO_AddInputCharacter((ImGuiIO*)(NativePtr), c);
         }
         public void AddInputCharactersUTF8(string str)
         {
@@ -202,19 +222,23 @@ namespace ImGuiNET
                 native_str[native_str_offset] = 0;
             }
             else { native_str = null; }
-            ImGuiNative.ImGuiIO_AddInputCharactersUTF8(NativePtr, native_str);
+            ImGuiNative.ImGuiIO_AddInputCharactersUTF8((ImGuiIO*)(NativePtr), native_str);
             if (str_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_str);
             }
         }
+        public void AddInputCharacterUTF16(ushort c)
+        {
+            ImGuiNative.ImGuiIO_AddInputCharacterUTF16((ImGuiIO*)(NativePtr), c);
+        }
         public void ClearInputCharacters()
         {
-            ImGuiNative.ImGuiIO_ClearInputCharacters(NativePtr);
+            ImGuiNative.ImGuiIO_ClearInputCharacters((ImGuiIO*)(NativePtr));
         }
         public void Destroy()
         {
-            ImGuiNative.ImGuiIO_destroy(NativePtr);
+            ImGuiNative.ImGuiIO_destroy((ImGuiIO*)(NativePtr));
         }
     }
 }

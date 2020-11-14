@@ -104,7 +104,7 @@ namespace ImGuiNET
                 float scroll_offset = ((DataEditingAddr / Rows) - (data_editing_addr_backup / Rows)) * line_height;
                 bool scroll_desired = (scroll_offset < 0.0f && DataEditingAddr < visible_start_addr + Rows * 2) || (scroll_offset > 0.0f && DataEditingAddr > visible_end_addr - Rows * 2);
                 if (scroll_desired)
-                    ImGuiNative.igSetScrollY(ImGuiNative.igGetScrollY() + scroll_offset);
+                    ImGuiNative.igSetScrollYFloat(ImGuiNative.igGetScrollY() + scroll_offset);
             }
 
             for (int line_i = clipper.DisplayStart; line_i < clipper.DisplayEnd; line_i++) // display only visible items

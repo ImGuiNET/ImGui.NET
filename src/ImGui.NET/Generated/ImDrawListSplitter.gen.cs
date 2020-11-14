@@ -24,30 +24,30 @@ namespace ImGuiNET
         public ImPtrVector<ImDrawChannelPtr> _Channels => new ImPtrVector<ImDrawChannelPtr>(NativePtr->_Channels, Unsafe.SizeOf<ImDrawChannel>());
         public void Clear()
         {
-            ImGuiNative.ImDrawListSplitter_Clear(NativePtr);
+            ImGuiNative.ImDrawListSplitter_Clear((ImDrawListSplitter*)(NativePtr));
         }
         public void ClearFreeMemory()
         {
-            ImGuiNative.ImDrawListSplitter_ClearFreeMemory(NativePtr);
+            ImGuiNative.ImDrawListSplitter_ClearFreeMemory((ImDrawListSplitter*)(NativePtr));
         }
         public void Destroy()
         {
-            ImGuiNative.ImDrawListSplitter_destroy(NativePtr);
+            ImGuiNative.ImDrawListSplitter_destroy((ImDrawListSplitter*)(NativePtr));
         }
         public void Merge(ImDrawListPtr draw_list)
         {
             ImDrawList* native_draw_list = draw_list.NativePtr;
-            ImGuiNative.ImDrawListSplitter_Merge(NativePtr, native_draw_list);
+            ImGuiNative.ImDrawListSplitter_Merge((ImDrawListSplitter*)(NativePtr), native_draw_list);
         }
         public void SetCurrentChannel(ImDrawListPtr draw_list, int channel_idx)
         {
             ImDrawList* native_draw_list = draw_list.NativePtr;
-            ImGuiNative.ImDrawListSplitter_SetCurrentChannel(NativePtr, native_draw_list, channel_idx);
+            ImGuiNative.ImDrawListSplitter_SetCurrentChannel((ImDrawListSplitter*)(NativePtr), native_draw_list, channel_idx);
         }
         public void Split(ImDrawListPtr draw_list, int count)
         {
             ImDrawList* native_draw_list = draw_list.NativePtr;
-            ImGuiNative.ImDrawListSplitter_Split(NativePtr, native_draw_list, count);
+            ImGuiNative.ImDrawListSplitter_Split((ImDrawListSplitter*)(NativePtr), native_draw_list, count);
         }
     }
 }

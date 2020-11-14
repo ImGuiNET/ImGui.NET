@@ -82,7 +82,7 @@ namespace ImGuiNET.SampleProgram.XNA
             // Tip: if we don't call ImGui.Begin()/ImGui.End() the widgets appears in a window automatically called "Debug"
             {
                 ImGui.Text("Hello, world!");
-                ImGui.SliderFloat("float", ref f, 0.0f, 1.0f, string.Empty, 1f);
+                ImGui.SliderFloat("float", ref f, 0.0f, 1.0f, string.Empty);
                 ImGui.ColorEdit3("clear color", ref clear_color);
                 if (ImGui.Button("Test Window")) show_test_window = !show_test_window;
                 if (ImGui.Button("Another Window")) show_another_window = !show_another_window;

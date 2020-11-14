@@ -7,102 +7,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace CodeGenerator
 {
     internal static class Program
     {
-        private static readonly Dictionary<string, string> s_wellKnownTypes = new Dictionary<string, string>()
-        {
-            { "bool", "byte" },
-            { "unsigned char", "byte" },
-            { "char", "byte" },
-            { "ImWchar", "ushort" },
-            { "unsigned short", "ushort" },
-            { "unsigned int", "uint" },
-            { "ImVec2", "Vector2" },
-            { "ImVec2_Simple", "Vector2" },
-            { "ImVec3", "Vector3" },
-            { "ImVec4", "Vector4" },
-            { "ImVec4_Simple", "Vector4" },
-            { "ImColor_Simple", "ImColor" },
-            { "ImTextureID", "IntPtr" },
-            { "ImGuiID", "uint" },
-            { "ImDrawIdx", "ushort" },
-            { "ImDrawListSharedData", "IntPtr" },
-            { "ImDrawListSharedData*", "IntPtr" },
-            { "ImU32", "uint" },
-            { "ImDrawCallback", "IntPtr" },
-            { "size_t", "uint" },
-            { "ImGuiContext*", "IntPtr" },
-            { "float[2]", "Vector2*" },
-            { "float[3]", "Vector3*" },
-            { "float[4]", "Vector4*" },
-            { "int[2]", "int*" },
-            { "int[3]", "int*" },
-            { "int[4]", "int*" },
-            { "float&", "float*" },
-            { "ImVec2[2]", "Vector2*" },
-            { "char* []", "byte**" },
-        };
-
-        private static readonly Dictionary<string, string> s_wellKnownFieldReplacements = new Dictionary<string, string>()
-        {
-            { "bool", "bool" }, // Force bool to remain as bool in type-safe wrappers.
-        };
-
-        private static readonly HashSet<string> s_customDefinedTypes = new HashSet<string>()
-        {
-            "ImVector",
-            "ImVec2",
-            "ImVec4",
-            "ImGuiStoragePair",
-        };
-
-        private static readonly Dictionary<string, string> s_wellKnownDefaultValues = new Dictionary<string, string>()
-        {
-            { "((void *)0)", "null" },
-            { "((void*)0)", "null" },
-            { "ImVec2(0,0)", "new Vector2()" },
-            { "ImVec2(-1,0)", "new Vector2(-1, 0)" },
-            { "ImVec2(1,0)", "new Vector2(1, 0)" },
-            { "ImVec2(1,1)", "new Vector2(1, 1)" },
-            { "ImVec2(0,1)", "new Vector2(0, 1)" },
-            { "ImVec4(0,0,0,0)", "new Vector4()" },
-            { "ImVec4(1,1,1,1)", "new Vector4(1, 1, 1, 1)" },
-            { "ImDrawCornerFlags_All", "ImDrawCornerFlags.All" },
-            { "FLT_MAX", "float.MaxValue" },
-            { "(((ImU32)(255)<<24)|((ImU32)(255)<<16)|((ImU32)(255)<<8)|((ImU32)(255)<<0))", "0xFFFFFFFF" }
-        };
-
-        private static readonly Dictionary<string, string> s_identifierReplacements = new Dictionary<string, string>()
-        {
-            { "in", "@in" },
-            { "out", "@out" },
-            { "ref", "@ref" },
-        };
-
-        private static readonly HashSet<string> s_legalFixedTypes = new HashSet<string>()
-        {
-            "byte",
-            "sbyte",
-            "char",
-            "ushort",
-            "short",
-            "uint",
-            "int",
-            "ulong",
-            "long",
-            "float",
-            "double",
-        };
-
-        private static readonly HashSet<string> s_skippedFunctions = new HashSet<string>()
-        {
-            "igInputText",
-            "igInputTextMultiline"
-        };
-
         static void Main(string[] args)
         {
             string outputPath;
@@ -114,157 +24,13 @@ namespace CodeGenerator
             {
                 outputPath = AppContext.BaseDirectory;
             }
+            
+            var defs = new ImguiDefinitions();
+            defs.LoadFrom(AppContext.BaseDirectory);
+            
             Console.WriteLine($"Outputting generated code files to {outputPath}.");
 
-            JObject typesJson;
-            using (StreamReader fs = File.OpenText(Path.Combine(AppContext.BaseDirectory, "structs_and_enums.json")))
-            using (JsonTextReader jr = new JsonTextReader(fs))
-            {
-                typesJson = JObject.Load(jr);
-            }
-
-            JObject functionsJson;
-            using (StreamReader fs = File.OpenText(Path.Combine(AppContext.BaseDirectory, "definitions.json")))
-            using (JsonTextReader jr = new JsonTextReader(fs))
-            {
-                functionsJson = JObject.Load(jr);
-            }
-
-            JObject variantsJson = null;
-            if (File.Exists(Path.Combine(AppContext.BaseDirectory, "variants.json")))
-            {
-                using (StreamReader fs = File.OpenText(Path.Combine(AppContext.BaseDirectory, "variants.json")))
-                using (JsonTextReader jr = new JsonTextReader(fs))
-                {
-                    variantsJson = JObject.Load(jr);
-                }
-            }
-
-            Dictionary<string, MethodVariant> variants = new Dictionary<string, MethodVariant>();
-            foreach (var jt in variantsJson.Children())
-            {
-                JProperty jp = (JProperty)jt;
-                ParameterVariant[] methodVariants = jp.Values().Select(jv =>
-                {
-                    return new ParameterVariant(jv["name"].ToString(), jv["type"].ToString(), jv["variants"].Select(s => s.ToString()).ToArray());
-                }).ToArray();
-                variants.Add(jp.Name, new MethodVariant(jp.Name, methodVariants));
-            }
-
-            EnumDefinition[] enums = typesJson["enums"].Select(jt =>
-            {
-                JProperty jp = (JProperty)jt;
-                string name = jp.Name;
-                EnumMember[] elements = jp.Values().Select(v =>
-                {
-                    return new EnumMember(v["name"].ToString(), v["value"].ToString());
-                }).ToArray();
-                return new EnumDefinition(name, elements);
-            }).ToArray();
-
-            TypeDefinition[] types = typesJson["structs"].Select(jt =>
-            {
-                JProperty jp = (JProperty)jt;
-                string name = jp.Name;
-                TypeReference[] fields = jp.Values().Select(v =>
-                {
-                    if (v["type"].ToString().Contains("static")) { return null; }
-
-                    return new TypeReference(
-                        v["name"].ToString(),
-                        v["type"].ToString(),
-                        v["template_type"]?.ToString(),
-                        enums);
-                }).Where(tr => tr != null).ToArray();
-                return new TypeDefinition(name, fields);
-            }).ToArray();
-
-            FunctionDefinition[] functions = functionsJson.Children().Select(jt =>
-            {
-                JProperty jp = (JProperty)jt;
-                string name = jp.Name;
-                bool hasNonUdtVariants = jp.Values().Any(val => val["ov_cimguiname"]?.ToString().EndsWith("nonUDT") ?? false);
-
-                OverloadDefinition[] overloads = jp.Values().Select(val =>
-                {
-                    string ov_cimguiname = val["ov_cimguiname"]?.ToString();
-                    string cimguiname = val["cimguiname"].ToString();
-                    string friendlyName = val["funcname"]?.ToString();
-                    if (cimguiname.EndsWith("_destroy"))
-                    {
-                        friendlyName = "Destroy";
-                    }
-                    if (friendlyName == null) { return null; }
-
-                    string exportedName = ov_cimguiname;
-                    if (exportedName == null)
-                    {
-                        exportedName = cimguiname;
-                    }
-
-                    if (hasNonUdtVariants && !exportedName.EndsWith("nonUDT2"))
-                    {
-                        return null;
-                    }
-
-                    string selfTypeName = null;
-                    int underscoreIndex = exportedName.IndexOf('_');
-                    if (underscoreIndex > 0 && !exportedName.StartsWith("ig")) // Hack to exclude some weirdly-named non-instance functions.
-                    {
-                        selfTypeName = exportedName.Substring(0, underscoreIndex);
-                    }
-
-                    List<TypeReference> parameters = new List<TypeReference>();
-
-                    // find any variants that can be applied to the parameters of this method based on the method name
-                    MethodVariant methodVariants = null;
-                    variants.TryGetValue(jp.Name, out methodVariants);
-
-                    foreach (JToken p in val["argsT"])
-                    {
-                        string pType = p["type"].ToString();
-                        string pName = p["name"].ToString();
-
-                        // if there are possible variants for this method then try to match them based on the parameter name and expected type
-                        ParameterVariant matchingVariant = methodVariants?.Parameters.Where(pv => pv.Name == pName && pv.OriginalType == pType).FirstOrDefault() ?? null;
-                        if (matchingVariant != null) matchingVariant.Used = true;
-
-                        parameters.Add(new TypeReference(pName, pType, enums, matchingVariant?.VariantTypes));
-                    }
-
-                    Dictionary<string, string> defaultValues = new Dictionary<string, string>();
-                    foreach (JToken dv in val["defaults"])
-                    {
-                        JProperty dvProp = (JProperty)dv;
-                        defaultValues.Add(dvProp.Name, dvProp.Value.ToString());
-                    }
-                    string returnType = val["ret"]?.ToString() ?? "void";
-                    string comment = null;
-
-                    string structName = val["stname"].ToString();
-                    bool isConstructor = val.Value<bool>("constructor");
-                    bool isDestructor = val.Value<bool>("destructor");
-                    if (isConstructor)
-                    {
-                        returnType = structName + "*";
-                    }
-
-                    return new OverloadDefinition(
-                        exportedName,
-                        friendlyName,
-                        parameters.ToArray(),
-                        defaultValues,
-                        returnType,
-                        structName,
-                        comment,
-                        isConstructor,
-                        isDestructor);
-                }).Where(od => od != null).ToArray();
-
-                return new FunctionDefinition(name, overloads, enums);
-            }).OrderBy(fd => fd.Name).ToArray();
-
-            foreach (EnumDefinition ed in enums)
+            foreach (EnumDefinition ed in defs.Enums)
             {
                 using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, ed.FriendlyName + ".gen.cs")))
                 {
@@ -285,9 +51,9 @@ namespace CodeGenerator
                 }
             }
 
-            foreach (TypeDefinition td in types)
+            foreach (TypeDefinition td in defs.Types)
             {
-                if (s_customDefinedTypes.Contains(td.Name)) { continue; }
+                if (TypeInfo.CustomDefinedTypes.Contains(td.Name)) { continue; }
 
                 using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, td.Name + ".gen.cs")))
                 {
@@ -305,7 +71,7 @@ namespace CodeGenerator
 
                         if (field.ArraySize != 0)
                         {
-                            if (s_legalFixedTypes.Contains(typeStr))
+                            if (TypeInfo.LegalFixedTypes.Contains(typeStr))
                             {
                                 writer.WriteLine($"public fixed {typeStr} {field.Name}[{field.ArraySize}];");
                             }
@@ -338,21 +104,21 @@ namespace CodeGenerator
                         string typeStr = GetTypeString(field.Type, field.IsFunctionPointer);
                         string rawType = typeStr;
 
-                        if (s_wellKnownFieldReplacements.TryGetValue(field.Type, out string wellKnownFieldType))
+                        if (TypeInfo.WellKnownFieldReplacements.TryGetValue(field.Type, out string wellKnownFieldType))
                         {
                             typeStr = wellKnownFieldType;
                         }
 
                         if (field.ArraySize != 0)
                         {
-                            string addrTarget = s_legalFixedTypes.Contains(rawType) ? $"NativePtr->{field.Name}" : $"&NativePtr->{field.Name}_0";
+                            string addrTarget = TypeInfo.LegalFixedTypes.Contains(rawType) ? $"NativePtr->{field.Name}" : $"&NativePtr->{field.Name}_0";
                             writer.WriteLine($"public RangeAccessor<{typeStr}> {field.Name} => new RangeAccessor<{typeStr}>({addrTarget}, {field.ArraySize});");
                         }
                         else if (typeStr.Contains("ImVector"))
                         {
                             string vectorElementType = GetTypeString(field.TemplateType, false);
 
-                            if (s_wellKnownTypes.TryGetValue(vectorElementType, out string wellKnown))
+                            if (TypeInfo.WellKnownTypes.TryGetValue(vectorElementType, out string wellKnown))
                             {
                                 vectorElementType = wellKnown;
                             }
@@ -394,7 +160,7 @@ namespace CodeGenerator
                         }
                     }
 
-                    foreach (FunctionDefinition fd in functions)
+                    foreach (FunctionDefinition fd in defs.Functions)
                     {
                         foreach (OverloadDefinition overload in fd.Overloads)
                         {
@@ -461,13 +227,15 @@ namespace CodeGenerator
                 writer.WriteLine(string.Empty);
                 writer.PushBlock("namespace ImGuiNET");
                 writer.PushBlock("public static unsafe partial class ImGuiNative");
-                foreach (FunctionDefinition fd in functions)
+                foreach (FunctionDefinition fd in defs.Functions)
                 {
                     foreach (OverloadDefinition overload in fd.Overloads)
                     {
                         string exportedName = overload.ExportedName;
                         if (exportedName.Contains("~")) { continue; }
                         if (exportedName.Contains("ImVector_")) { continue; }
+                        if (exportedName.Contains("ImChunkStream_")) { continue; }
+
                         if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
 
                         string ret = GetTypeString(overload.ReturnType, false);
@@ -528,9 +296,9 @@ namespace CodeGenerator
                 writer.WriteLine(string.Empty);
                 writer.PushBlock("namespace ImGuiNET");
                 writer.PushBlock("public static unsafe partial class ImGui");
-                foreach (FunctionDefinition fd in functions)
+                foreach (FunctionDefinition fd in defs.Functions)
                 {
-                    if (s_skippedFunctions.Contains(fd.Name)) { continue; }
+                    if (TypeInfo.SkippedFunctions.Contains(fd.Name)) { continue; }
 
                     foreach (OverloadDefinition overload in fd.Overloads)
                     {
@@ -576,7 +344,7 @@ namespace CodeGenerator
                 writer.PopBlock();
             }
 
-            foreach (var method in variants)
+            foreach (var method in defs.Variants)
             {
                 foreach (var variant in method.Value.Parameters)
                 {
@@ -635,17 +403,28 @@ namespace CodeGenerator
             List<string> preCallLines = new List<string>();
             List<string> postCallLines = new List<string>();
             List<string> byRefParams = new List<string>();
-
+            int selfIndex = -1;
+            int pOutIndex = -1;
+            string overrideRet = null;
             for (int i = 0; i < overload.Parameters.Length; i++)
             {
-                if (i == 0 && selfName != null) { continue; }
-
                 TypeReference tr = overload.Parameters[i];
+                if (tr.Name == "self")
+                {
+                    selfIndex = i;
+                    continue; 
+                }
                 if (tr.Name == "...") { continue; }
 
                 string correctedIdentifier = CorrectIdentifier(tr.Name);
                 string nativeTypeName = GetTypeString(tr.Type, tr.IsFunctionPointer);
-
+                if (correctedIdentifier == "pOut" && overload.ReturnType == "void")
+                {
+                    pOutIndex = i;
+                    overrideRet = nativeTypeName.TrimEnd('*');
+                    preCallLines.Add($"{overrideRet} __retval;");
+                    continue;
+                }
                 if (tr.Type == "char*")
                 {
                     string textToEncode = correctedIdentifier;
@@ -770,8 +549,8 @@ namespace CodeGenerator
                     preCallLines.Add($"{nativePtrTypeName} {nativeArgName} = ({nativePtrTypeName}){correctedIdentifier}.ToPointer();");
                 }
                 else if (GetWrappedType(tr.Type, out string wrappedParamType)
-                    && !s_wellKnownTypes.ContainsKey(tr.Type)
-                    && !s_wellKnownTypes.ContainsKey(tr.Type.Substring(0, tr.Type.Length - 1)))
+                    && !TypeInfo.WellKnownTypes.ContainsKey(tr.Type)
+                    && !TypeInfo.WellKnownTypes.ContainsKey(tr.Type.Substring(0, tr.Type.Length - 1)))
                 {
                     marshalledParameters[i] = new MarshalledParameter(wrappedParamType, false, "native_" + tr.Name, false);
                     string nativeArgName = "native_" + tr.Name;
@@ -783,7 +562,7 @@ namespace CodeGenerator
                     string nonPtrType;
                     if (tr.Type.Contains("["))
                     {
-                        string wellKnown = s_wellKnownTypes[tr.Type];
+                        string wellKnown = TypeInfo.WellKnownTypes[tr.Type];
                         nonPtrType = GetTypeString(wellKnown.Substring(0, wellKnown.Length - 1), false);
                     }
                     else
@@ -811,7 +590,7 @@ namespace CodeGenerator
             string friendlyName = overload.FriendlyName;
 
             string staticPortion = selfName == null ? "static " : string.Empty;
-            writer.PushBlock($"public {staticPortion}{safeRet} {friendlyName}({invocationList})");
+            writer.PushBlock($"public {staticPortion}{overrideRet ?? safeRet} {friendlyName}({invocationList})");
             foreach (string line in preCallLines)
             {
                 writer.WriteLine(line);
@@ -819,14 +598,22 @@ namespace CodeGenerator
 
             List<string> nativeInvocationArgs = new List<string>();
 
-            if (selfName != null)
-            {
-                nativeInvocationArgs.Add(selfName);
-            }
-
             for (int i = 0; i < marshalledParameters.Length; i++)
             {
                 TypeReference tr = overload.Parameters[i];
+                if (selfIndex == i)
+                {
+                    //Some overloads seem to be generated with IntPtr as self
+                    //instead of the proper pointer type. TODO: investigate
+                    string tstr = GetTypeString(tr.Type, false);
+                    nativeInvocationArgs.Add($"({tstr})({selfName})");
+                    continue;
+                }
+                if (pOutIndex == i)
+                {
+                    nativeInvocationArgs.Add("&__retval");
+                    continue;
+                }
                 MarshalledParameter mp = marshalledParameters[i];
                 if (mp == null) { continue; }
                 if (mp.IsPinned)
@@ -879,6 +666,9 @@ namespace CodeGenerator
                 }
             }
 
+            if (overrideRet != null)
+                writer.WriteLine("return __retval;");
+            
             for (int i = 0; i < marshalledParameters.Length; i++)
             {
                 MarshalledParameter mp = marshalledParameters[i];
@@ -927,7 +717,7 @@ namespace CodeGenerator
                 }
                 string nonPtrType = nativeType.Substring(0, nativeType.Length - pointerLevel);
 
-                if (s_wellKnownTypes.ContainsKey(nonPtrType))
+                if (TypeInfo.WellKnownTypes.ContainsKey(nonPtrType))
                 {
                     wrappedType = null;
                     return false;
@@ -952,7 +742,7 @@ namespace CodeGenerator
                 return true;
             }
 
-            if (s_wellKnownDefaultValues.TryGetValue(defaultVal, out correctedDefault)) { return true; }
+            if (TypeInfo.WellKnownDefaultValues.TryGetValue(defaultVal, out correctedDefault)) { return true; }
 
             if (tr.Type == "bool")
             {
@@ -978,13 +768,13 @@ namespace CodeGenerator
             if (typeName.EndsWith("**")) { pointerLevel = 2; }
             else if (typeName.EndsWith("*")) { pointerLevel = 1; }
 
-            if (!s_wellKnownTypes.TryGetValue(typeName, out string typeStr))
+            if (!TypeInfo.WellKnownTypes.TryGetValue(typeName, out string typeStr))
             {
-                if (s_wellKnownTypes.TryGetValue(typeName.Substring(0, typeName.Length - pointerLevel), out typeStr))
+                if (TypeInfo.WellKnownTypes.TryGetValue(typeName.Substring(0, typeName.Length - pointerLevel), out typeStr))
                 {
                     typeStr = typeStr + new string('*', pointerLevel);
                 }
-                else if (!s_wellKnownTypes.TryGetValue(typeName, out typeStr))
+                else if (!TypeInfo.WellKnownTypes.TryGetValue(typeName, out typeStr))
                 {
                     typeStr = typeName;
                     if (isFunctionPointer) { typeStr = "IntPtr"; }
@@ -996,7 +786,7 @@ namespace CodeGenerator
 
         private static string CorrectIdentifier(string identifier)
         {
-            if (s_identifierReplacements.TryGetValue(identifier, out string replacement))
+            if (TypeInfo.IdentifierReplacements.TryGetValue(identifier, out string replacement))
             {
                 return replacement;
             }
@@ -1004,319 +794,6 @@ namespace CodeGenerator
             {
                 return identifier;
             }
-        }
-    }
-
-    class MethodVariant
-    {
-        public string Name { get; }
-
-        public ParameterVariant[] Parameters { get; }
-
-        public MethodVariant(string name, ParameterVariant[] parameters)
-        {
-            Name = name;
-            Parameters = parameters;
-        }
-    }
-
-    class ParameterVariant
-    {
-        public string Name { get; }
-
-        public string OriginalType { get; }
-
-        public string[] VariantTypes { get; }
-
-        public bool Used { get; set; }
-
-        public ParameterVariant(string name, string originalType, string[] variantTypes)
-        {
-            Name = name;
-            OriginalType = originalType;
-            VariantTypes = variantTypes;
-            Used = false;
-        }
-    }
-
-    class EnumDefinition
-    {
-        private readonly Dictionary<string, string> _sanitizedNames;
-
-        public string Name { get; }
-        public string FriendlyName { get; }
-        public EnumMember[] Members { get; }
-
-        public EnumDefinition(string name, EnumMember[] elements)
-        {
-            Name = name;
-            if (Name.EndsWith('_'))
-            {
-                FriendlyName = Name.Substring(0, Name.Length - 1);
-            }
-            else
-            {
-                FriendlyName = Name;
-            }
-            Members = elements;
-
-            _sanitizedNames = new Dictionary<string, string>();
-            foreach (EnumMember el in elements)
-            {
-                _sanitizedNames.Add(el.Name, SanitizeMemberName(el.Name));
-            }
-        }
-
-        public string SanitizeNames(string text)
-        {
-            foreach (KeyValuePair<string, string> kvp in _sanitizedNames)
-            {
-                text = text.Replace(kvp.Key, kvp.Value);
-            }
-
-            return text;
-        }
-
-        private string SanitizeMemberName(string memberName)
-        {
-            string ret = memberName;
-            if (memberName.StartsWith(Name))
-            {
-                ret = memberName.Substring(Name.Length);
-            }
-
-            if (ret.EndsWith('_'))
-            {
-                ret = ret.Substring(0, ret.Length - 1);
-            }
-
-            return ret;
-        }
-    }
-
-    class EnumMember
-    {
-        public EnumMember(string name, string value)
-        {
-            Name = name;
-            Value = value;
-        }
-
-        public string Name { get; }
-        public string Value { get; }
-    }
-
-    class TypeDefinition
-    {
-        public string Name { get; }
-        public TypeReference[] Fields { get; }
-
-        public TypeDefinition(string name, TypeReference[] fields)
-        {
-            Name = name;
-            Fields = fields;
-        }
-    }
-
-    class TypeReference
-    {
-        public string Name { get; }
-        public string Type { get; }
-        public string TemplateType { get; }
-        public int ArraySize { get; }
-        public bool IsFunctionPointer { get; }
-        public string[] TypeVariants { get; }
-        public bool IsEnum { get; }
-
-        public TypeReference(string name, string type, EnumDefinition[] enums)
-            : this(name, type, null, enums, null) { }
-
-        public TypeReference(string name, string type, EnumDefinition[] enums, string[] typeVariants)
-            : this(name, type, null, enums, typeVariants) { }
-
-        public TypeReference(string name, string type, string templateType, EnumDefinition[] enums)
-            : this(name, type, templateType, enums, null) { }
-
-        public TypeReference(string name, string type, string templateType, EnumDefinition[] enums, string[] typeVariants)
-        {
-            Name = name;
-            Type = type.Replace("const", string.Empty).Trim();
-
-
-            if (Type.StartsWith("ImVector_"))
-            {
-                if (Type.EndsWith("*"))
-                {
-                    Type = "ImVector*";
-                }
-                else
-                {
-                    Type = "ImVector";
-                }
-            }
-
-            TemplateType = templateType;
-            int startBracket = name.IndexOf('[');
-            if (startBracket != -1)
-            {
-                int endBracket = name.IndexOf(']');
-                string sizePart = name.Substring(startBracket + 1, endBracket - startBracket - 1);
-                ArraySize = ParseSizeString(sizePart, enums);
-                Name = Name.Substring(0, startBracket);
-            }
-
-            IsFunctionPointer = Type.IndexOf('(') != -1;
-
-            TypeVariants = typeVariants;
-
-            IsEnum = enums.Any(t => t.Name == type || t.FriendlyName == type);
-        }
-
-        private int ParseSizeString(string sizePart, EnumDefinition[] enums)
-        {
-            int plusStart = sizePart.IndexOf('+');
-            if (plusStart != -1)
-            {
-                string first = sizePart.Substring(0, plusStart);
-                string second = sizePart.Substring(plusStart, sizePart.Length - plusStart);
-                int firstVal = int.Parse(first);
-                int secondVal = int.Parse(second);
-                return firstVal + secondVal;
-            }
-
-            if (!int.TryParse(sizePart, out int ret))
-            {
-                foreach (EnumDefinition ed in enums)
-                {
-                    if (sizePart.StartsWith(ed.Name))
-                    {
-                        foreach (EnumMember member in ed.Members)
-                        {
-                            if (member.Name == sizePart)
-                            {
-                                return int.Parse(member.Value);
-                            }
-                        }
-                    }
-                }
-
-                ret = -1;
-            }
-
-            return ret;
-        }
-
-        public TypeReference WithVariant(int variantIndex, EnumDefinition[] enums)
-        {
-            if (variantIndex == 0) return this;
-            else return new TypeReference(Name, TypeVariants[variantIndex - 1], TemplateType, enums);
-        }
-    }
-
-    class FunctionDefinition
-    {
-        public string Name { get; }
-        public OverloadDefinition[] Overloads { get; }
-
-        public FunctionDefinition(string name, OverloadDefinition[] overloads, EnumDefinition[] enums)
-        {
-            Name = name;
-            Overloads = ExpandOverloadVariants(overloads, enums);
-        }
-
-        private OverloadDefinition[] ExpandOverloadVariants(OverloadDefinition[] overloads, EnumDefinition[] enums)
-        {
-            List<OverloadDefinition> newDefinitions = new List<OverloadDefinition>();
-
-            foreach (OverloadDefinition overload in overloads)
-            {
-                bool hasVariants = false;
-                int[] variantCounts = new int[overload.Parameters.Length];
-
-                for (int i = 0; i < overload.Parameters.Length; i++)
-                {
-                    if (overload.Parameters[i].TypeVariants != null)
-                    {
-                        hasVariants = true;
-                        variantCounts[i] = overload.Parameters[i].TypeVariants.Length + 1;
-                    }
-                    else
-                    {
-                        variantCounts[i] = 1;
-                    }
-                }
-
-                if (hasVariants)
-                {
-                    int totalVariants = variantCounts[0];
-                    for (int i = 1; i < variantCounts.Length; i++) totalVariants *= variantCounts[i];
-
-                    for (int i = 0; i < totalVariants; i++)
-                    {
-                        TypeReference[] parameters = new TypeReference[overload.Parameters.Length];
-                        int div = 1;
-
-                        for (int j = 0; j < parameters.Length; j++)
-                        {
-                            int k = (i / div) % variantCounts[j];
-
-                            parameters[j] = overload.Parameters[j].WithVariant(k, enums);
-
-                            if (j > 0) div *= variantCounts[j];
-                        }
-
-                        newDefinitions.Add(overload.WithParameters(parameters));
-                    }
-                }
-                else
-                {
-                    newDefinitions.Add(overload);
-                }
-            }
-
-            return newDefinitions.ToArray();
-        }
-    }
-
-    class OverloadDefinition
-    {
-        public string ExportedName { get; }
-        public string FriendlyName { get; }
-        public TypeReference[] Parameters { get; }
-        public Dictionary<string, string> DefaultValues { get; }
-        public string ReturnType { get; }
-        public string StructName { get; }
-        public bool IsMemberFunction { get; }
-        public string Comment { get; }
-        public bool IsConstructor { get; }
-        public bool IsDestructor { get; }
-
-        public OverloadDefinition(
-            string exportedName,
-            string friendlyName,
-            TypeReference[] parameters,
-            Dictionary<string, string> defaultValues,
-            string returnType,
-            string structName,
-            string comment,
-            bool isConstructor,
-            bool isDestructor)
-        {
-            ExportedName = exportedName;
-            FriendlyName = friendlyName;
-            Parameters = parameters;
-            DefaultValues = defaultValues;
-            ReturnType = returnType.Replace("const", string.Empty).Replace("inline", string.Empty).Trim();
-            StructName = structName;
-            IsMemberFunction = !string.IsNullOrEmpty(structName);
-            Comment = comment;
-            IsConstructor = isConstructor;
-            IsDestructor = isDestructor;
-        }
-
-        public OverloadDefinition WithParameters(TypeReference[] parameters)
-        {
-            return new OverloadDefinition(ExportedName, FriendlyName, parameters, DefaultValues, ReturnType, StructName, Comment, IsConstructor, IsDestructor);
         }
     }
 

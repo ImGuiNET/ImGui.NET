@@ -56,7 +56,7 @@ namespace ImGuiNET
         public ImFontPtr DstFont => new ImFontPtr(NativePtr->DstFont);
         public void Destroy()
         {
-            ImGuiNative.ImFontConfig_destroy(NativePtr);
+            ImGuiNative.ImFontConfig_destroy((ImFontConfig*)(NativePtr));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace ImGuiNET
         public ref int RefFrame => ref Unsafe.AsRef<int>(&NativePtr->RefFrame);
         public void Destroy()
         {
-            ImGuiNative.ImGuiOnceUponAFrame_destroy(NativePtr);
+            ImGuiNative.ImGuiOnceUponAFrame_destroy((ImGuiOnceUponAFrame*)(NativePtr));
         }
     }
 }
