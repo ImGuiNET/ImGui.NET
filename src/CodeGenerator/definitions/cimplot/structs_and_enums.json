@@ -1,0 +1,817 @@
+{
+  "enums": {
+    "ImPlotAxisFlags_": [
+      {
+        "calc_value": 0,
+        "name": "ImPlotAxisFlags_None",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "ImPlotAxisFlags_NoGridLines",
+        "value": "1 << 0"
+      },
+      {
+        "calc_value": 2,
+        "name": "ImPlotAxisFlags_NoTickMarks",
+        "value": "1 << 1"
+      },
+      {
+        "calc_value": 4,
+        "name": "ImPlotAxisFlags_NoTickLabels",
+        "value": "1 << 2"
+      },
+      {
+        "calc_value": 8,
+        "name": "ImPlotAxisFlags_LogScale",
+        "value": "1 << 3"
+      },
+      {
+        "calc_value": 16,
+        "name": "ImPlotAxisFlags_Time",
+        "value": "1 << 4"
+      },
+      {
+        "calc_value": 32,
+        "name": "ImPlotAxisFlags_Invert",
+        "value": "1 << 5"
+      },
+      {
+        "calc_value": 64,
+        "name": "ImPlotAxisFlags_LockMin",
+        "value": "1 << 6"
+      },
+      {
+        "calc_value": 128,
+        "name": "ImPlotAxisFlags_LockMax",
+        "value": "1 << 7"
+      },
+      {
+        "calc_value": 192,
+        "name": "ImPlotAxisFlags_Lock",
+        "value": "ImPlotAxisFlags_LockMin | ImPlotAxisFlags_LockMax"
+      },
+      {
+        "calc_value": 7,
+        "name": "ImPlotAxisFlags_NoDecorations",
+        "value": "ImPlotAxisFlags_NoGridLines | ImPlotAxisFlags_NoTickMarks | ImPlotAxisFlags_NoTickLabels"
+      }
+    ],
+    "ImPlotCol_": [
+      {
+        "calc_value": 0,
+        "name": "ImPlotCol_Line",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "ImPlotCol_Fill",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "ImPlotCol_MarkerOutline",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "ImPlotCol_MarkerFill",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "ImPlotCol_ErrorBar",
+        "value": "4"
+      },
+      {
+        "calc_value": 5,
+        "name": "ImPlotCol_FrameBg",
+        "value": "5"
+      },
+      {
+        "calc_value": 6,
+        "name": "ImPlotCol_PlotBg",
+        "value": "6"
+      },
+      {
+        "calc_value": 7,
+        "name": "ImPlotCol_PlotBorder",
+        "value": "7"
+      },
+      {
+        "calc_value": 8,
+        "name": "ImPlotCol_LegendBg",
+        "value": "8"
+      },
+      {
+        "calc_value": 9,
+        "name": "ImPlotCol_LegendBorder",
+        "value": "9"
+      },
+      {
+        "calc_value": 10,
+        "name": "ImPlotCol_LegendText",
+        "value": "10"
+      },
+      {
+        "calc_value": 11,
+        "name": "ImPlotCol_TitleText",
+        "value": "11"
+      },
+      {
+        "calc_value": 12,
+        "name": "ImPlotCol_InlayText",
+        "value": "12"
+      },
+      {
+        "calc_value": 13,
+        "name": "ImPlotCol_XAxis",
+        "value": "13"
+      },
+      {
+        "calc_value": 14,
+        "name": "ImPlotCol_XAxisGrid",
+        "value": "14"
+      },
+      {
+        "calc_value": 15,
+        "name": "ImPlotCol_YAxis",
+        "value": "15"
+      },
+      {
+        "calc_value": 16,
+        "name": "ImPlotCol_YAxisGrid",
+        "value": "16"
+      },
+      {
+        "calc_value": 17,
+        "name": "ImPlotCol_YAxis2",
+        "value": "17"
+      },
+      {
+        "calc_value": 18,
+        "name": "ImPlotCol_YAxisGrid2",
+        "value": "18"
+      },
+      {
+        "calc_value": 19,
+        "name": "ImPlotCol_YAxis3",
+        "value": "19"
+      },
+      {
+        "calc_value": 20,
+        "name": "ImPlotCol_YAxisGrid3",
+        "value": "20"
+      },
+      {
+        "calc_value": 21,
+        "name": "ImPlotCol_Selection",
+        "value": "21"
+      },
+      {
+        "calc_value": 22,
+        "name": "ImPlotCol_Query",
+        "value": "22"
+      },
+      {
+        "calc_value": 23,
+        "name": "ImPlotCol_Crosshairs",
+        "value": "23"
+      },
+      {
+        "calc_value": 24,
+        "name": "ImPlotCol_COUNT",
+        "value": "24"
+      }
+    ],
+    "ImPlotColormap_": [
+      {
+        "calc_value": 0,
+        "name": "ImPlotColormap_Default",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "ImPlotColormap_Deep",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "ImPlotColormap_Dark",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "ImPlotColormap_Pastel",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "ImPlotColormap_Paired",
+        "value": "4"
+      },
+      {
+        "calc_value": 5,
+        "name": "ImPlotColormap_Viridis",
+        "value": "5"
+      },
+      {
+        "calc_value": 6,
+        "name": "ImPlotColormap_Plasma",
+        "value": "6"
+      },
+      {
+        "calc_value": 7,
+        "name": "ImPlotColormap_Hot",
+        "value": "7"
+      },
+      {
+        "calc_value": 8,
+        "name": "ImPlotColormap_Cool",
+        "value": "8"
+      },
+      {
+        "calc_value": 9,
+        "name": "ImPlotColormap_Pink",
+        "value": "9"
+      },
+      {
+        "calc_value": 10,
+        "name": "ImPlotColormap_Jet",
+        "value": "10"
+      },
+      {
+        "calc_value": 11,
+        "name": "ImPlotColormap_COUNT",
+        "value": "11"
+      }
+    ],
+    "ImPlotFlags_": [
+      {
+        "calc_value": 0,
+        "name": "ImPlotFlags_None",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "ImPlotFlags_NoLegend",
+        "value": "1 << 0"
+      },
+      {
+        "calc_value": 2,
+        "name": "ImPlotFlags_NoMenus",
+        "value": "1 << 1"
+      },
+      {
+        "calc_value": 4,
+        "name": "ImPlotFlags_NoBoxSelect",
+        "value": "1 << 2"
+      },
+      {
+        "calc_value": 8,
+        "name": "ImPlotFlags_NoMousePos",
+        "value": "1 << 3"
+      },
+      {
+        "calc_value": 16,
+        "name": "ImPlotFlags_NoHighlight",
+        "value": "1 << 4"
+      },
+      {
+        "calc_value": 32,
+        "name": "ImPlotFlags_NoChild",
+        "value": "1 << 5"
+      },
+      {
+        "calc_value": 64,
+        "name": "ImPlotFlags_YAxis2",
+        "value": "1 << 6"
+      },
+      {
+        "calc_value": 128,
+        "name": "ImPlotFlags_YAxis3",
+        "value": "1 << 7"
+      },
+      {
+        "calc_value": 256,
+        "name": "ImPlotFlags_Query",
+        "value": "1 << 8"
+      },
+      {
+        "calc_value": 512,
+        "name": "ImPlotFlags_Crosshairs",
+        "value": "1 << 9"
+      },
+      {
+        "calc_value": 1024,
+        "name": "ImPlotFlags_AntiAliased",
+        "value": "1 << 10"
+      },
+      {
+        "calc_value": 15,
+        "name": "ImPlotFlags_CanvasOnly",
+        "value": "ImPlotFlags_NoLegend | ImPlotFlags_NoMenus | ImPlotFlags_NoBoxSelect | ImPlotFlags_NoMousePos"
+      }
+    ],
+    "ImPlotLocation_": [
+      {
+        "calc_value": 0,
+        "name": "ImPlotLocation_Center",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "ImPlotLocation_North",
+        "value": "1 << 0"
+      },
+      {
+        "calc_value": 2,
+        "name": "ImPlotLocation_South",
+        "value": "1 << 1"
+      },
+      {
+        "calc_value": 4,
+        "name": "ImPlotLocation_West",
+        "value": "1 << 2"
+      },
+      {
+        "calc_value": 8,
+        "name": "ImPlotLocation_East",
+        "value": "1 << 3"
+      },
+      {
+        "calc_value": 5,
+        "name": "ImPlotLocation_NorthWest",
+        "value": "ImPlotLocation_North | ImPlotLocation_West"
+      },
+      {
+        "calc_value": 9,
+        "name": "ImPlotLocation_NorthEast",
+        "value": "ImPlotLocation_North | ImPlotLocation_East"
+      },
+      {
+        "calc_value": 6,
+        "name": "ImPlotLocation_SouthWest",
+        "value": "ImPlotLocation_South | ImPlotLocation_West"
+      },
+      {
+        "calc_value": 10,
+        "name": "ImPlotLocation_SouthEast",
+        "value": "ImPlotLocation_South | ImPlotLocation_East"
+      }
+    ],
+    "ImPlotMarker_": [
+      {
+        "calc_value": -1,
+        "name": "ImPlotMarker_None",
+        "value": "-1"
+      },
+      {
+        "calc_value": 0,
+        "name": "ImPlotMarker_Circle",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "ImPlotMarker_Square",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "ImPlotMarker_Diamond",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "ImPlotMarker_Up",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "ImPlotMarker_Down",
+        "value": "4"
+      },
+      {
+        "calc_value": 5,
+        "name": "ImPlotMarker_Left",
+        "value": "5"
+      },
+      {
+        "calc_value": 6,
+        "name": "ImPlotMarker_Right",
+        "value": "6"
+      },
+      {
+        "calc_value": 7,
+        "name": "ImPlotMarker_Cross",
+        "value": "7"
+      },
+      {
+        "calc_value": 8,
+        "name": "ImPlotMarker_Plus",
+        "value": "8"
+      },
+      {
+        "calc_value": 9,
+        "name": "ImPlotMarker_Asterisk",
+        "value": "9"
+      },
+      {
+        "calc_value": 10,
+        "name": "ImPlotMarker_COUNT",
+        "value": "10"
+      }
+    ],
+    "ImPlotOrientation_": [
+      {
+        "calc_value": 0,
+        "name": "ImPlotOrientation_Horizontal",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "ImPlotOrientation_Vertical",
+        "value": "1"
+      }
+    ],
+    "ImPlotStyleVar_": [
+      {
+        "calc_value": 0,
+        "name": "ImPlotStyleVar_LineWeight",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "ImPlotStyleVar_Marker",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "ImPlotStyleVar_MarkerSize",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "ImPlotStyleVar_MarkerWeight",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "ImPlotStyleVar_FillAlpha",
+        "value": "4"
+      },
+      {
+        "calc_value": 5,
+        "name": "ImPlotStyleVar_ErrorBarSize",
+        "value": "5"
+      },
+      {
+        "calc_value": 6,
+        "name": "ImPlotStyleVar_ErrorBarWeight",
+        "value": "6"
+      },
+      {
+        "calc_value": 7,
+        "name": "ImPlotStyleVar_DigitalBitHeight",
+        "value": "7"
+      },
+      {
+        "calc_value": 8,
+        "name": "ImPlotStyleVar_DigitalBitGap",
+        "value": "8"
+      },
+      {
+        "calc_value": 9,
+        "name": "ImPlotStyleVar_PlotBorderSize",
+        "value": "9"
+      },
+      {
+        "calc_value": 10,
+        "name": "ImPlotStyleVar_MinorAlpha",
+        "value": "10"
+      },
+      {
+        "calc_value": 11,
+        "name": "ImPlotStyleVar_MajorTickLen",
+        "value": "11"
+      },
+      {
+        "calc_value": 12,
+        "name": "ImPlotStyleVar_MinorTickLen",
+        "value": "12"
+      },
+      {
+        "calc_value": 13,
+        "name": "ImPlotStyleVar_MajorTickSize",
+        "value": "13"
+      },
+      {
+        "calc_value": 14,
+        "name": "ImPlotStyleVar_MinorTickSize",
+        "value": "14"
+      },
+      {
+        "calc_value": 15,
+        "name": "ImPlotStyleVar_MajorGridSize",
+        "value": "15"
+      },
+      {
+        "calc_value": 16,
+        "name": "ImPlotStyleVar_MinorGridSize",
+        "value": "16"
+      },
+      {
+        "calc_value": 17,
+        "name": "ImPlotStyleVar_PlotPadding",
+        "value": "17"
+      },
+      {
+        "calc_value": 18,
+        "name": "ImPlotStyleVar_LabelPadding",
+        "value": "18"
+      },
+      {
+        "calc_value": 19,
+        "name": "ImPlotStyleVar_LegendPadding",
+        "value": "19"
+      },
+      {
+        "calc_value": 20,
+        "name": "ImPlotStyleVar_LegendInnerPadding",
+        "value": "20"
+      },
+      {
+        "calc_value": 21,
+        "name": "ImPlotStyleVar_LegendSpacing",
+        "value": "21"
+      },
+      {
+        "calc_value": 22,
+        "name": "ImPlotStyleVar_MousePosPadding",
+        "value": "22"
+      },
+      {
+        "calc_value": 23,
+        "name": "ImPlotStyleVar_AnnotationPadding",
+        "value": "23"
+      },
+      {
+        "calc_value": 24,
+        "name": "ImPlotStyleVar_PlotDefaultSize",
+        "value": "24"
+      },
+      {
+        "calc_value": 25,
+        "name": "ImPlotStyleVar_PlotMinSize",
+        "value": "25"
+      },
+      {
+        "calc_value": 26,
+        "name": "ImPlotStyleVar_COUNT",
+        "value": "26"
+      }
+    ],
+    "ImPlotYAxis_": [
+      {
+        "calc_value": 0,
+        "name": "ImPlotYAxis_1",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "ImPlotYAxis_2",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "ImPlotYAxis_3",
+        "value": "2"
+      }
+    ]
+  },
+  "locations": {
+    "ImPlotAxisFlags_": "implot:83",
+    "ImPlotCol_": "implot:98",
+    "ImPlotColormap_": "implot:178",
+    "ImPlotFlags_": "implot:66",
+    "ImPlotInputMap": "implot:290",
+    "ImPlotLimits": "implot:243",
+    "ImPlotLocation_": "implot:194",
+    "ImPlotMarker_": "implot:162",
+    "ImPlotOrientation_": "implot:207",
+    "ImPlotPoint": "implot:220",
+    "ImPlotRange": "implot:234",
+    "ImPlotStyle": "implot:250",
+    "ImPlotStyleVar_": "implot:129",
+    "ImPlotYAxis_": "implot:213"
+  },
+  "structs": {
+    "ImPlotInputMap": [
+      {
+        "name": "PanButton",
+        "type": "ImGuiMouseButton"
+      },
+      {
+        "name": "PanMod",
+        "type": "ImGuiKeyModFlags"
+      },
+      {
+        "name": "FitButton",
+        "type": "ImGuiMouseButton"
+      },
+      {
+        "name": "ContextMenuButton",
+        "type": "ImGuiMouseButton"
+      },
+      {
+        "name": "BoxSelectButton",
+        "type": "ImGuiMouseButton"
+      },
+      {
+        "name": "BoxSelectMod",
+        "type": "ImGuiKeyModFlags"
+      },
+      {
+        "name": "BoxSelectCancelButton",
+        "type": "ImGuiMouseButton"
+      },
+      {
+        "name": "QueryButton",
+        "type": "ImGuiMouseButton"
+      },
+      {
+        "name": "QueryMod",
+        "type": "ImGuiKeyModFlags"
+      },
+      {
+        "name": "QueryToggleMod",
+        "type": "ImGuiKeyModFlags"
+      },
+      {
+        "name": "HorizontalMod",
+        "type": "ImGuiKeyModFlags"
+      },
+      {
+        "name": "VerticalMod",
+        "type": "ImGuiKeyModFlags"
+      }
+    ],
+    "ImPlotLimits": [
+      {
+        "name": "X",
+        "type": "ImPlotRange"
+      },
+      {
+        "name": "Y",
+        "type": "ImPlotRange"
+      }
+    ],
+    "ImPlotPoint": [
+      {
+        "name": "x",
+        "type": "double"
+      },
+      {
+        "name": "y",
+        "type": "double"
+      }
+    ],
+    "ImPlotRange": [
+      {
+        "name": "Min",
+        "type": "double"
+      },
+      {
+        "name": "Max",
+        "type": "double"
+      }
+    ],
+    "ImPlotStyle": [
+      {
+        "name": "LineWeight",
+        "type": "float"
+      },
+      {
+        "name": "Marker",
+        "type": "int"
+      },
+      {
+        "name": "MarkerSize",
+        "type": "float"
+      },
+      {
+        "name": "MarkerWeight",
+        "type": "float"
+      },
+      {
+        "name": "FillAlpha",
+        "type": "float"
+      },
+      {
+        "name": "ErrorBarSize",
+        "type": "float"
+      },
+      {
+        "name": "ErrorBarWeight",
+        "type": "float"
+      },
+      {
+        "name": "DigitalBitHeight",
+        "type": "float"
+      },
+      {
+        "name": "DigitalBitGap",
+        "type": "float"
+      },
+      {
+        "name": "PlotBorderSize",
+        "type": "float"
+      },
+      {
+        "name": "MinorAlpha",
+        "type": "float"
+      },
+      {
+        "name": "MajorTickLen",
+        "type": "ImVec2"
+      },
+      {
+        "name": "MinorTickLen",
+        "type": "ImVec2"
+      },
+      {
+        "name": "MajorTickSize",
+        "type": "ImVec2"
+      },
+      {
+        "name": "MinorTickSize",
+        "type": "ImVec2"
+      },
+      {
+        "name": "MajorGridSize",
+        "type": "ImVec2"
+      },
+      {
+        "name": "MinorGridSize",
+        "type": "ImVec2"
+      },
+      {
+        "name": "PlotPadding",
+        "type": "ImVec2"
+      },
+      {
+        "name": "LabelPadding",
+        "type": "ImVec2"
+      },
+      {
+        "name": "LegendPadding",
+        "type": "ImVec2"
+      },
+      {
+        "name": "LegendInnerPadding",
+        "type": "ImVec2"
+      },
+      {
+        "name": "LegendSpacing",
+        "type": "ImVec2"
+      },
+      {
+        "name": "MousePosPadding",
+        "type": "ImVec2"
+      },
+      {
+        "name": "AnnotationPadding",
+        "type": "ImVec2"
+      },
+      {
+        "name": "PlotDefaultSize",
+        "type": "ImVec2"
+      },
+      {
+        "name": "PlotMinSize",
+        "type": "ImVec2"
+      },
+      {
+        "name": "Colors[ImPlotCol_COUNT]",
+        "size": 24,
+        "type": "ImVec4"
+      },
+      {
+        "name": "AntiAliasedLines",
+        "type": "bool"
+      },
+      {
+        "name": "UseLocalTime",
+        "type": "bool"
+      },
+      {
+        "name": "UseISO8601",
+        "type": "bool"
+      },
+      {
+        "name": "Use24HourClock",
+        "type": "bool"
+      }
+    ]
+  }
+}

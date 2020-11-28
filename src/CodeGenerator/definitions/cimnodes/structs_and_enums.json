@@ -1,0 +1,335 @@
+{
+  "enums": {
+    "AttributeFlags": [
+      {
+        "calc_value": 0,
+        "name": "AttributeFlags_None",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "AttributeFlags_EnableLinkDetachWithDragClick",
+        "value": "1 << 0"
+      },
+      {
+        "calc_value": 2,
+        "name": "AttributeFlags_EnableLinkCreationOnSnap",
+        "value": "1 << 1"
+      }
+    ],
+    "ColorStyle": [
+      {
+        "calc_value": 0,
+        "name": "ColorStyle_NodeBackground",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "ColorStyle_NodeBackgroundHovered",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "ColorStyle_NodeBackgroundSelected",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "ColorStyle_NodeOutline",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "ColorStyle_TitleBar",
+        "value": "4"
+      },
+      {
+        "calc_value": 5,
+        "name": "ColorStyle_TitleBarHovered",
+        "value": "5"
+      },
+      {
+        "calc_value": 6,
+        "name": "ColorStyle_TitleBarSelected",
+        "value": "6"
+      },
+      {
+        "calc_value": 7,
+        "name": "ColorStyle_Link",
+        "value": "7"
+      },
+      {
+        "calc_value": 8,
+        "name": "ColorStyle_LinkHovered",
+        "value": "8"
+      },
+      {
+        "calc_value": 9,
+        "name": "ColorStyle_LinkSelected",
+        "value": "9"
+      },
+      {
+        "calc_value": 10,
+        "name": "ColorStyle_Pin",
+        "value": "10"
+      },
+      {
+        "calc_value": 11,
+        "name": "ColorStyle_PinHovered",
+        "value": "11"
+      },
+      {
+        "calc_value": 12,
+        "name": "ColorStyle_BoxSelector",
+        "value": "12"
+      },
+      {
+        "calc_value": 13,
+        "name": "ColorStyle_BoxSelectorOutline",
+        "value": "13"
+      },
+      {
+        "calc_value": 14,
+        "name": "ColorStyle_GridBackground",
+        "value": "14"
+      },
+      {
+        "calc_value": 15,
+        "name": "ColorStyle_GridLine",
+        "value": "15"
+      },
+      {
+        "calc_value": 16,
+        "name": "ColorStyle_Count",
+        "value": "16"
+      }
+    ],
+    "PinShape": [
+      {
+        "calc_value": 0,
+        "name": "PinShape_Circle",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "PinShape_CircleFilled",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "PinShape_Triangle",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "PinShape_TriangleFilled",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "PinShape_Quad",
+        "value": "4"
+      },
+      {
+        "calc_value": 5,
+        "name": "PinShape_QuadFilled",
+        "value": "5"
+      }
+    ],
+    "StyleFlags": [
+      {
+        "calc_value": 0,
+        "name": "StyleFlags_None",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "StyleFlags_NodeOutline",
+        "value": "1 << 0"
+      },
+      {
+        "calc_value": 4,
+        "name": "StyleFlags_GridLines",
+        "value": "1 << 2"
+      }
+    ],
+    "StyleVar": [
+      {
+        "calc_value": 0,
+        "name": "StyleVar_GridSpacing",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "StyleVar_NodeCornerRounding",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "StyleVar_NodePaddingHorizontal",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "StyleVar_NodePaddingVertical",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "StyleVar_NodeBorderThickness",
+        "value": "4"
+      },
+      {
+        "calc_value": 5,
+        "name": "StyleVar_LinkThickness",
+        "value": "5"
+      },
+      {
+        "calc_value": 6,
+        "name": "StyleVar_LinkLineSegmentsPerLength",
+        "value": "6"
+      },
+      {
+        "calc_value": 7,
+        "name": "StyleVar_LinkHoverDistance",
+        "value": "7"
+      },
+      {
+        "calc_value": 8,
+        "name": "StyleVar_PinCircleRadius",
+        "value": "8"
+      },
+      {
+        "calc_value": 9,
+        "name": "StyleVar_PinQuadSideLength",
+        "value": "9"
+      },
+      {
+        "calc_value": 10,
+        "name": "StyleVar_PinTriangleSideLength",
+        "value": "10"
+      },
+      {
+        "calc_value": 11,
+        "name": "StyleVar_PinLineThickness",
+        "value": "11"
+      },
+      {
+        "calc_value": 12,
+        "name": "StyleVar_PinHoverRadius",
+        "value": "12"
+      },
+      {
+        "calc_value": 13,
+        "name": "StyleVar_PinOffset",
+        "value": "13"
+      }
+    ]
+  },
+  "locations": {
+    "AttributeFlags": "imnodes:67",
+    "ColorStyle": "imnodes:9",
+    "EmulateThreeButtonMouse": "imnodes:84",
+    "IO": "imnodes:82",
+    "LinkDetachWithModifierClick": "imnodes:94",
+    "PinShape": "imnodes:56",
+    "Style": "imnodes:111",
+    "StyleFlags": "imnodes:48",
+    "StyleVar": "imnodes:30"
+  },
+  "structs": {
+    "EmulateThreeButtonMouse": [
+      {
+        "name": "enabled",
+        "type": "bool"
+      },
+      {
+        "name": "modifier",
+        "type": "const bool*"
+      }
+    ],
+    "IO": [
+      {
+        "name": "emulate_three_button_mouse",
+        "type": "EmulateThreeButtonMouse"
+      },
+      {
+        "name": "link_detach_with_modifier_click",
+        "type": "LinkDetachWithModifierClick"
+      }
+    ],
+    "LinkDetachWithModifierClick": [
+      {
+        "name": "modifier",
+        "type": "const bool*"
+      }
+    ],
+    "Style": [
+      {
+        "name": "grid_spacing",
+        "type": "float"
+      },
+      {
+        "name": "node_corner_rounding",
+        "type": "float"
+      },
+      {
+        "name": "node_padding_horizontal",
+        "type": "float"
+      },
+      {
+        "name": "node_padding_vertical",
+        "type": "float"
+      },
+      {
+        "name": "node_border_thickness",
+        "type": "float"
+      },
+      {
+        "name": "link_thickness",
+        "type": "float"
+      },
+      {
+        "name": "link_line_segments_per_length",
+        "type": "float"
+      },
+      {
+        "name": "link_hover_distance",
+        "type": "float"
+      },
+      {
+        "name": "pin_circle_radius",
+        "type": "float"
+      },
+      {
+        "name": "pin_quad_side_length",
+        "type": "float"
+      },
+      {
+        "name": "pin_triangle_side_length",
+        "type": "float"
+      },
+      {
+        "name": "pin_line_thickness",
+        "type": "float"
+      },
+      {
+        "name": "pin_hover_radius",
+        "type": "float"
+      },
+      {
+        "name": "pin_offset",
+        "type": "float"
+      },
+      {
+        "name": "flags",
+        "type": "StyleFlags"
+      },
+      {
+        "name": "colors[ColorStyle_Count]",
+        "size": 16,
+        "type": "unsigned int"
+      }
+    ]
+  }
+}
