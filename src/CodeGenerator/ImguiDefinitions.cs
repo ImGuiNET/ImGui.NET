@@ -41,7 +41,7 @@ namespace CodeGenerator
             JObject variantsJson = null;
             if (File.Exists(Path.Combine(directory, "variants.json")))
             {
-                using (StreamReader fs = File.OpenText(Path.Combine(AppContext.BaseDirectory, "variants.json")))
+                using (StreamReader fs = File.OpenText(Path.Combine(directory, "variants.json")))
                 using (JsonTextReader jr = new JsonTextReader(fs))
                 {
                     variantsJson = JObject.Load(jr);
@@ -275,6 +275,9 @@ namespace CodeGenerator
                 ret = ret.Substring(0, ret.Length - 1);
             }
 
+            if (Char.IsDigit(ret.First()))
+                ret = "_" + ret;
+
             return ret;
         }
     }
@@ -368,7 +371,7 @@ namespace CodeGenerator
             
             TypeVariants = typeVariants;
 
-            IsEnum = enums.Any(t => t.Name == type || t.FriendlyName == type);
+            IsEnum = enums.Any(t => t.Name == type || t.FriendlyName == type || TypeInfo.WellKnownEnums.Contains(type));
         }
         
         private int ParseSizeString(string sizePart, EnumDefinition[] enums)

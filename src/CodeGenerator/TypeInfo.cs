@@ -14,7 +14,12 @@ namespace CodeGenerator
             { "ImFileHandle", "IntPtr" },
             { "ImU8", "byte" },
             { "ImS8", "sbyte" },
+            { "ImU16", "ushort" },
+            { "ImS16", "short" },
+            { "ImU32", "uint" },
+            { "ImS32", "int" },
             { "ImU64", "ulong" },
+            { "ImS64", "long" },
             { "unsigned short", "ushort" },
             { "unsigned int", "uint" },
             { "ImVec2", "Vector2" },
@@ -29,10 +34,11 @@ namespace CodeGenerator
             { "ImDrawIdx", "ushort" },
             { "ImDrawListSharedData", "IntPtr" },
             { "ImDrawListSharedData*", "IntPtr" },
-            { "ImU32", "uint" },
             { "ImDrawCallback", "IntPtr" },
             { "size_t", "uint" },
             { "ImGuiContext*", "IntPtr" },
+            { "ImPlotContext*", "IntPtr" },
+            { "EditorContext*", "IntPtr" },
             { "float[2]", "Vector2*" },
             { "float[3]", "Vector3*" },
             { "float[4]", "Vector4*" },
@@ -44,7 +50,12 @@ namespace CodeGenerator
             { "char* []", "byte**" },
             { "unsigned char[256]", "byte*"},
         };
-
+        
+        public static readonly List<string> WellKnownEnums = new List<string>()
+        {
+            "ImGuiMouseButton"
+        };
+        
         public static readonly Dictionary<string, string> WellKnownFieldReplacements = new Dictionary<string, string>()
         {
             { "bool", "bool" }, // Force bool to remain as bool in type-safe wrappers.
@@ -62,6 +73,8 @@ namespace CodeGenerator
         {
             { "((void *)0)", "null" },
             { "((void*)0)", "null" },
+            { "NULL", "null"},
+            { "nullptr", "null"},
             { "ImVec2(0,0)", "new Vector2()" },
             { "ImVec2(-1,0)", "new Vector2(-1, 0)" },
             { "ImVec2(1,0)", "new Vector2(1, 0)" },
@@ -69,9 +82,26 @@ namespace CodeGenerator
             { "ImVec2(0,1)", "new Vector2(0, 1)" },
             { "ImVec4(0,0,0,0)", "new Vector4()" },
             { "ImVec4(1,1,1,1)", "new Vector4(1, 1, 1, 1)" },
+            { "ImVec4(0,0,0,-1)", "new Vector4(0, 0, 0, -1)" },
+            { "ImPlotPoint(0,0)", "new ImPlotPoint { x = 0, y = 0 }" },
+            { "ImPlotPoint(1,1)", "new ImPlotPoint { x = 1, y = 1 }" },
             { "ImDrawCornerFlags_All", "ImDrawCornerFlags.All" },
+            { "ImPlotFlags_None", "ImPlotFlags.None"},
+            { "ImPlotAxisFlags_None", "ImPlotAxisFlags.None"},
+            { "ImPlotAxisFlags_NoGridLines", "ImPlotAxisFlags.NoGridLines"},
+            { "ImGuiCond_Once", "ImGuiCond.Once"},
+            { "ImPlotOrientation_Vertical", "ImPlotOrientation.Vertical"},
+            { "PinShape_CircleFilled", "PinShape._CircleFilled"},
             { "FLT_MAX", "float.MaxValue" },
-            { "(((ImU32)(255)<<24)|((ImU32)(255)<<16)|((ImU32)(255)<<8)|((ImU32)(255)<<0))", "0xFFFFFFFF" }
+            { "(((ImU32)(255)<<24)|((ImU32)(255)<<16)|((ImU32)(255)<<8)|((ImU32)(255)<<0))", "0xFFFFFFFF" },
+            { "sizeof(ImU8)", "sizeof(byte)"},
+            { "sizeof(ImS8)", "sizeof(sbyte)"},
+            { "sizeof(ImU16)", "sizeof(ushort)"},
+            { "sizeof(ImS16)", "sizeof(short)"},
+            { "sizeof(ImU32)", "sizeof(uint)"},
+            { "sizeof(ImS32)", "sizeof(int)"},
+            { "sizeof(ImU64)", "sizeof(ulong)"},
+            { "sizeof(ImS64)", "sizeof(long)"}
         };
 
         public static readonly Dictionary<string, string> IdentifierReplacements = new Dictionary<string, string>()

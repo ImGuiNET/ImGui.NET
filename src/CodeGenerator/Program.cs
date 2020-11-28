@@ -24,17 +24,55 @@ namespace CodeGenerator
             {
                 outputPath = AppContext.BaseDirectory;
             }
+
+            string libraryName;
+            if (args.Length > 1)
+            {
+                libraryName = args[1];
+            }
+            else
+            {
+                libraryName = "cimgui";
+            }
+
+            string projectNamespace = libraryName switch
+            {
+                "cimgui" => "ImGuiNET",
+                "cimplot" => "ImGuiNET",
+                "cimnodes" => "ImGuiNET",
+                "cimguizmo" => "ImGuiNET",
+                _ => throw new NotImplementedException()
+            };
+
+            string classPrefix = libraryName switch
+            {
+                "cimgui" => "ImGui",
+                "cimplot" => "ImPlot",
+                "cimnodes" => "ImNodes",
+                "cimguizmo" => "ImGuizmo",
+                _ => throw new NotImplementedException()
+            };
+
+            string dllName = libraryName switch
+            {
+                "cimgui" => "cimgui",
+                "cimplot" => "cimgui",
+                "cimnodes" => "cimgui",
+                "cimguizmo" => "cimgui",
+                _ => throw new NotImplementedException()
+            };
             
+            string definitionsPath = Path.Combine(AppContext.BaseDirectory, "definitions", libraryName);
             var defs = new ImguiDefinitions();
-            defs.LoadFrom(AppContext.BaseDirectory);
-            
+            defs.LoadFrom(definitionsPath);
+
             Console.WriteLine($"Outputting generated code files to {outputPath}.");
 
             foreach (EnumDefinition ed in defs.Enums)
             {
                 using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, ed.FriendlyName + ".gen.cs")))
                 {
-                    writer.PushBlock("namespace ImGuiNET");
+                    writer.PushBlock($"namespace {projectNamespace}");
                     if (ed.FriendlyName.Contains("Flags"))
                     {
                         writer.WriteLine("[System.Flags]");
@@ -62,7 +100,7 @@ namespace CodeGenerator
                     writer.Using("System.Runtime.CompilerServices");
                     writer.Using("System.Text");
                     writer.WriteLine(string.Empty);
-                    writer.PushBlock("namespace ImGuiNET");
+                    writer.PushBlock($"namespace {projectNamespace}");
 
                     writer.PushBlock($"public unsafe partial struct {td.Name}");
                     foreach (TypeReference field in td.Fields)
@@ -209,7 +247,7 @@ namespace CodeGenerator
                                 {
                                     defaults.Add(orderedDefaults[j].Key, orderedDefaults[j].Value);
                                 }
-                                EmitOverload(writer, overload, defaults, "NativePtr");
+                                EmitOverload(writer, overload, defaults, "NativePtr", classPrefix);
                             }
                         }
                     }
@@ -219,14 +257,14 @@ namespace CodeGenerator
                 }
             }
 
-            using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, "ImGuiNative.gen.cs")))
+            using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, $"{classPrefix}Native.gen.cs")))
             {
                 writer.Using("System");
                 writer.Using("System.Numerics");
                 writer.Using("System.Runtime.InteropServices");
                 writer.WriteLine(string.Empty);
-                writer.PushBlock("namespace ImGuiNET");
-                writer.PushBlock("public static unsafe partial class ImGuiNative");
+                writer.PushBlock($"namespace {projectNamespace}");
+                writer.PushBlock($"public static unsafe partial class {classPrefix}Native");
                 foreach (FunctionDefinition fd in defs.Functions)
                 {
                     foreach (OverloadDefinition overload in fd.Overloads)
@@ -273,12 +311,12 @@ namespace CodeGenerator
 
                         if (isUdtVariant)
                         {
-                            writer.WriteLine($"[DllImport(\"cimgui\", CallingConvention = CallingConvention.Cdecl, EntryPoint = \"{exportedName}\")]");
+                            writer.WriteLine($"[DllImport(\"{dllName}\", CallingConvention = CallingConvention.Cdecl, EntryPoint = \"{exportedName}\")]");
 
                         }
                         else
                         {
-                            writer.WriteLine("[DllImport(\"cimgui\", CallingConvention = CallingConvention.Cdecl)]");
+                            writer.WriteLine($"[DllImport(\"{dllName}\", CallingConvention = CallingConvention.Cdecl)]");
                         }
                         writer.WriteLine($"public static extern {ret} {methodName}({parameters});");
                     }
@@ -287,15 +325,15 @@ namespace CodeGenerator
                 writer.PopBlock();
             }
 
-            using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, "ImGui.gen.cs")))
+            using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, $"{classPrefix}.gen.cs")))
             {
                 writer.Using("System");
                 writer.Using("System.Numerics");
                 writer.Using("System.Runtime.InteropServices");
                 writer.Using("System.Text");
                 writer.WriteLine(string.Empty);
-                writer.PushBlock("namespace ImGuiNET");
-                writer.PushBlock("public static unsafe partial class ImGui");
+                writer.PushBlock($"namespace {projectNamespace}");
+                writer.PushBlock($"public static unsafe partial class {classPrefix}");
                 foreach (FunctionDefinition fd in defs.Functions)
                 {
                     if (TypeInfo.SkippedFunctions.Contains(fd.Name)) { continue; }
@@ -336,7 +374,7 @@ namespace CodeGenerator
                             {
                                 defaults.Add(orderedDefaults[j].Key, orderedDefaults[j].Value);
                             }
-                            EmitOverload(writer, overload, defaults, null);
+                            EmitOverload(writer, overload, defaults, null, classPrefix);
                         }
                     }
                 }
@@ -381,7 +419,8 @@ namespace CodeGenerator
             CSharpCodeWriter writer,
             OverloadDefinition overload,
             Dictionary<string, string> defaultValues,
-            string selfName)
+            string selfName,
+            string classPrefix)
         {
             if (overload.Parameters.Where(tr => tr.Name.EndsWith("_begin") || tr.Name.EndsWith("_end"))
                 .Any(tr => !defaultValues.ContainsKey(tr.Name)))
@@ -481,6 +520,15 @@ namespace CodeGenerator
                         postCallLines.Add($"}}");
                     }
                 }
+                else if (defaultValues.TryGetValue(tr.Name, out string defaultVal))
+                {
+                    if (!CorrectDefaultValue(defaultVal, tr, out string correctedDefault))
+                    {
+                        correctedDefault = defaultVal;
+                    }
+                    marshalledParameters[i] = new MarshalledParameter(nativeTypeName, false, correctedIdentifier, true);
+                    preCallLines.Add($"{nativeTypeName} {correctedIdentifier} = {correctedDefault};");
+                }
                 else if (tr.Type == "char* []")
                 {
                     string nativeArgName = "native_" + tr.Name;
@@ -518,15 +566,6 @@ namespace CodeGenerator
                     preCallLines.Add($"    offset += {correctedIdentifier}_byteCounts[i] + 1;");
                     preCallLines.Add("}");
                 }
-                else if (defaultValues.TryGetValue(tr.Name, out string defaultVal))
-                {
-                    if (!CorrectDefaultValue(defaultVal, tr, out string correctedDefault))
-                    {
-                        correctedDefault = defaultVal;
-                    }
-                    marshalledParameters[i] = new MarshalledParameter(nativeTypeName, false, correctedIdentifier, true);
-                    preCallLines.Add($"{nativeTypeName} {correctedIdentifier} = {correctedDefault};");
-                }
                 else if (tr.Type == "bool")
                 {
                     string nativeArgName = "native_" + tr.Name;
@@ -557,7 +596,7 @@ namespace CodeGenerator
                     marshalledParameters[i] = new MarshalledParameter(wrappedParamType, false, nativeArgName, false);
                     preCallLines.Add($"{tr.Type} {nativeArgName} = {correctedIdentifier}.NativePtr;");
                 }
-                else if ((tr.Type.EndsWith("*") || tr.Type.Contains("[") || tr.Type.EndsWith("&")) && tr.Type != "void*" && tr.Type != "ImGuiContext*")
+                else if ((tr.Type.EndsWith("*") || tr.Type.Contains("[") || tr.Type.EndsWith("&")) && tr.Type != "void*" && tr.Type != "ImGuiContext*" && tr.Type != "ImPlotContext*"&& tr.Type != "EditorContext*")
                 {
                     string nonPtrType;
                     if (tr.Type.Contains("["))
@@ -634,7 +673,7 @@ namespace CodeGenerator
                 targetName = targetName.Substring(0, targetName.IndexOf("_nonUDT"));
             }
 
-            writer.WriteLine($"{ret}ImGuiNative.{targetName}({nativeInvocationStr});");
+            writer.WriteLine($"{ret}{classPrefix}Native.{targetName}({nativeInvocationStr});");
 
             foreach (string line in postCallLines)
             {
@@ -736,7 +775,7 @@ namespace CodeGenerator
 
         private static bool CorrectDefaultValue(string defaultVal, TypeReference tr, out string correctedDefault)
         {
-            if (tr.Type == "ImGuiContext*")
+            if (tr.Type == "ImGuiContext*" || tr.Type == "ImPlotContext*" || tr.Type == "EditorContext*")
             {
                 correctedDefault = "IntPtr.Zero";
                 return true;
@@ -754,7 +793,10 @@ namespace CodeGenerator
 
             if (tr.IsEnum)
             {
-                correctedDefault = $"({tr.Type}){defaultVal}";
+                if (defaultVal.StartsWith("-"))
+                    correctedDefault = $"({tr.Type})({defaultVal})";
+                else
+                    correctedDefault = $"({tr.Type}){defaultVal}";
                 return true;
             }
 
