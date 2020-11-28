@@ -22,7 +22,8 @@ namespace ImGuiNET
         private static int _counter = 0;
         private static int _dragInt = 0;
         private static Vector3 _clearColor = new Vector3(0.45f, 0.55f, 0.6f);
-        private static bool _showDemoWindow = true;
+        private static bool _showImGuiDemoWindow = true;
+        private static bool _showImPlotDemoWindow = false;
         private static bool _showAnotherWindow = false;
         private static bool _showMemoryEditor = false;
         private static byte[] _memoryEditorData;
@@ -89,7 +90,8 @@ namespace ImGuiNET
 
                 ImGui.Text($"Mouse position: {ImGui.GetMousePos()}");
 
-                ImGui.Checkbox("Demo Window", ref _showDemoWindow);                 // Edit bools storing our windows open/close state
+                ImGui.Checkbox("ImGui Demo Window", ref _showImGuiDemoWindow);                 // Edit bools storing our windows open/close state
+                ImGui.Checkbox("ImPlot Demo Window", ref _showImPlotDemoWindow);                 // Edit bools storing our windows open/close state
                 ImGui.Checkbox("Another Window", ref _showAnotherWindow);
                 ImGui.Checkbox("Memory Editor", ref _showMemoryEditor);
                 if (ImGui.Button("Button"))                                         // Buttons return true when clicked (NB: most widgets return true when edited/activated)
@@ -114,12 +116,17 @@ namespace ImGuiNET
             }
 
             // 3. Show the ImGui demo window. Most of the sample code is in ImGui.ShowDemoWindow(). Read its code to learn more about Dear ImGui!
-            if (_showDemoWindow)
+            if (_showImGuiDemoWindow)
             {
                 // Normally user code doesn't need/want to call this because positions are saved in .ini file anyway.
                 // Here we just want to make the demo initial state a bit more friendly!
                 ImGui.SetNextWindowPos(new Vector2(650, 20), ImGuiCond.FirstUseEver);
-                ImGui.ShowDemoWindow(ref _showDemoWindow);
+                ImGui.ShowDemoWindow(ref _showImGuiDemoWindow);
+            }
+            
+            if (_showImPlotDemoWindow)
+            {
+                ImPlot.ShowDemoWindow(ref _showImPlotDemoWindow);
             }
 
             if (ImGui.TreeNode("Tabs"))
