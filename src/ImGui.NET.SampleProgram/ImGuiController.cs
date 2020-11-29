@@ -63,6 +63,7 @@ namespace ImGuiNET
             ImGui.SetCurrentContext(context);
             IntPtr implotContext = ImPlot.CreateContext();
             ImPlot.SetCurrentContext(implotContext);
+            ImPlot.SetImGuiContext(context);
             var fonts = ImGui.GetIO().Fonts;
             ImGui.GetIO().Fonts.AddFontDefault();
 
