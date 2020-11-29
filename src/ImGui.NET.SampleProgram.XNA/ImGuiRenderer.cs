@@ -158,6 +158,7 @@ namespace ImGuiNET.SampleProgram.XNA
             _keys.Add(io.KeyMap[(int)ImGuiKey.Backspace] = (int)Keys.Back);
             _keys.Add(io.KeyMap[(int)ImGuiKey.Enter] = (int)Keys.Enter);
             _keys.Add(io.KeyMap[(int)ImGuiKey.Escape] = (int)Keys.Escape);
+            _keys.Add(io.KeyMap[(int)ImGuiKey.Space] = (int)Keys.Space);
             _keys.Add(io.KeyMap[(int)ImGuiKey.A] = (int)Keys.A);
             _keys.Add(io.KeyMap[(int)ImGuiKey.C] = (int)Keys.C);
             _keys.Add(io.KeyMap[(int)ImGuiKey.V] = (int)Keys.V);
@@ -195,17 +196,9 @@ namespace ImGuiNET.SampleProgram.XNA
 
             var io = ImGui.GetIO();
 
-            // MonoGame-specific //////////////////////
-            var offset = .5f;
-            ///////////////////////////////////////////
-
-            // FNA-specific ///////////////////////////
-            //var offset = 0f;
-            ///////////////////////////////////////////
-
             _effect.World = Matrix.Identity;
             _effect.View = Matrix.Identity;
-            _effect.Projection = Matrix.CreateOrthographicOffCenter(offset, io.DisplaySize.X + offset, io.DisplaySize.Y + offset, offset, -1f, 1f);
+            _effect.Projection = Matrix.CreateOrthographicOffCenter(0f, io.DisplaySize.X, io.DisplaySize.Y, 0f, -1f, 1f);
             _effect.TextureEnabled = true;
             _effect.Texture = texture;
             _effect.VertexColorEnabled = true;
