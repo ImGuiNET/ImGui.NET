@@ -794,9 +794,13 @@ namespace CodeGenerator
             if (tr.IsEnum)
             {
                 if (defaultVal.StartsWith("-"))
+                {
                     correctedDefault = $"({tr.Type})({defaultVal})";
+                }
                 else
+                {
                     correctedDefault = $"({tr.Type}){defaultVal}";
+                }
                 return true;
             }
 
