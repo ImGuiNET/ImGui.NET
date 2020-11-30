@@ -38,9 +38,18 @@ namespace CodeGenerator
             string projectNamespace = libraryName switch
             {
                 "cimgui" => "ImGuiNET",
-                "cimplot" => "ImGuiNET",
-                "cimnodes" => "ImGuiNET",
-                "cimguizmo" => "ImGuiNET",
+                "cimplot" => "ImPlotNET",
+                "cimnodes" => "ImNodesNET",
+                "cimguizmo" => "ImGuizmoNET",
+                _ => throw new NotImplementedException()
+            };
+
+            bool referencesImGui = libraryName switch
+            {
+                "cimgui" => false,
+                "cimplot" => true,
+                "cimnodes" => true,
+                "cimguizmo" => true,
                 _ => throw new NotImplementedException()
             };
 
@@ -99,6 +108,10 @@ namespace CodeGenerator
                     writer.Using("System.Numerics");
                     writer.Using("System.Runtime.CompilerServices");
                     writer.Using("System.Text");
+                    if (referencesImGui)
+                    {
+                        writer.Using("ImGuiNET");
+                    }
                     writer.WriteLine(string.Empty);
                     writer.PushBlock($"namespace {projectNamespace}");
 
@@ -262,6 +275,10 @@ namespace CodeGenerator
                 writer.Using("System");
                 writer.Using("System.Numerics");
                 writer.Using("System.Runtime.InteropServices");
+                if (referencesImGui)
+                {
+                    writer.Using("ImGuiNET");
+                }
                 writer.WriteLine(string.Empty);
                 writer.PushBlock($"namespace {projectNamespace}");
                 writer.PushBlock($"public static unsafe partial class {classPrefix}Native");
@@ -331,6 +348,10 @@ namespace CodeGenerator
                 writer.Using("System.Numerics");
                 writer.Using("System.Runtime.InteropServices");
                 writer.Using("System.Text");
+                if (referencesImGui)
+                {
+                    writer.Using("ImGuiNET");
+                }
                 writer.WriteLine(string.Empty);
                 writer.PushBlock($"namespace {projectNamespace}");
                 writer.PushBlock($"public static unsafe partial class {classPrefix}");
