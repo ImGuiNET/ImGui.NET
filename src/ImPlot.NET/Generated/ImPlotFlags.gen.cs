@@ -1,4 +1,4 @@
-namespace ImGuiNET
+namespace ImPlotNET
 {
     [System.Flags]
     public enum ImPlotFlags

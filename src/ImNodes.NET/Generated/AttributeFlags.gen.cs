@@ -1,4 +1,4 @@
-namespace ImGuiNET
+namespace ImNodesNET
 {
     [System.Flags]
     public enum AttributeFlags

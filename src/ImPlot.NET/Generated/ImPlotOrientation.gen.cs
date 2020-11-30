@@ -1,4 +1,4 @@
-namespace ImGuiNET
+namespace ImPlotNET
 {
     public enum ImPlotOrientation
     {
