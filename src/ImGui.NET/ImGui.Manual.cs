@@ -355,6 +355,47 @@ namespace ImGuiNET
             return result != 0;
         }
 
+        public static Vector2 CalcTextSize(
+            string text,
+            int? start = null,
+            int? length = null,
+            bool hideTextAfterDoubleHash = false,
+            float wrapWidth = -1.0f)
+        {
+            Vector2 ret;
+            byte* nativeText = null;
+            byte* nativeTextStart = null;
+            byte* nativeTextEnd = null;
+            int textByteCount = 0;
+            int textByteSize = 0;
+            if (text != null)
+            {
+                textByteCount = Encoding.UTF8.GetByteCount(text);
+                textByteSize = Encoding.UTF8.GetByteCount("X");
+                if (textByteCount > Util.StackAllocationSizeLimit)
+                {
+                    nativeText = Util.Allocate(textByteCount + 1);
+                }
+                else
+                {
+                    byte* nativeTextStackBytes = stackalloc byte[textByteCount + 1];
+                    nativeText = nativeTextStackBytes;
+                }
+                int nativeTextOffset = Util.GetUtf8(text, nativeText, textByteCount);
+                nativeText[nativeTextOffset] = 0;
+                nativeTextStart = nativeText + (start.HasValue ? (start.Value * textByteSize) : 0);
+                nativeTextEnd = length.HasValue ? nativeTextStart + (length.Value + textByteSize) : null;
+            }
+
+            ImGuiNative.igCalcTextSize(&ret, nativeTextStart, nativeTextEnd, *((byte*)(&hideTextAfterDoubleHash)), wrapWidth);
+            if (textByteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(nativeText);
+            }
+
+            return ret;
+        }
+
         public static bool InputText(
             string label,
             IntPtr buf,
