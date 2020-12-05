@@ -384,7 +384,7 @@ namespace ImGuiNET
                 int nativeTextOffset = Util.GetUtf8(text, nativeText, textByteCount);
                 nativeText[nativeTextOffset] = 0;
                 nativeTextStart = nativeText + (start.HasValue ? (start.Value * textByteSize) : 0);
-                nativeTextEnd = length.HasValue ? nativeTextStart + (length.Value + textByteSize) : null;
+                nativeTextEnd = length.HasValue ? nativeTextStart + (length.Value * textByteSize) : null;
             }
 
             ImGuiNative.igCalcTextSize(&ret, nativeTextStart, nativeTextEnd, *((byte*)(&hideTextAfterDoubleHash)), wrapWidth);
