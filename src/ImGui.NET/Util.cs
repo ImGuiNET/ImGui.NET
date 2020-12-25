@@ -37,7 +37,7 @@ namespace ImGuiNET
 
         internal static int CalcSizeInUtf8(string s, int start, int length)
         {
-            if (start > s.Length - 1 || length > s.Length || start + length > s.Length)
+            if (start < 0 || length < 0 || start + length > s.Length)
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -58,7 +58,7 @@ namespace ImGuiNET
 
         internal static int GetUtf8(string s, int start, int length, byte* utf8Bytes, int utf8ByteCount)
         {
-            if (start > s.Length - 1 || length > s.Length || start + length > s.Length)
+            if (start < 0 || length < 0 || start + length > s.Length)
             {
                 throw new ArgumentOutOfRangeException();
             }
