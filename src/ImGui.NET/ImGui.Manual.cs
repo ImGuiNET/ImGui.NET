@@ -355,42 +355,74 @@ namespace ImGuiNET
             return result != 0;
         }
 
-        public static Vector2 CalcTextSize(
+        public static Vector2 CalcTextSize(string text)
+            => CalcTextSizeImpl(text);
+
+        public static Vector2 CalcTextSize(string text, int start)
+            => CalcTextSizeImpl(text, start);
+
+        public static Vector2 CalcTextSize(string text, float wrapWidth)
+            => CalcTextSizeImpl(text, wrapWidth: wrapWidth);
+
+        public static Vector2 CalcTextSize(string text, bool hideTextAfterDoubleHash)
+            => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
+
+        public static Vector2 CalcTextSize(string text, int start, int length)
+            => CalcTextSizeImpl(text, start, length);
+
+        public static Vector2 CalcTextSize(string text, int start, bool hideTextAfterDoubleHash)
+            => CalcTextSizeImpl(text, start, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
+
+        public static Vector2 CalcTextSize(string text, int start, float wrapWidth)
+            => CalcTextSizeImpl(text, start, wrapWidth: wrapWidth);
+
+        public static Vector2 CalcTextSize(string text, bool hideTextAfterDoubleHash, float wrapWidth)
+            => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash, wrapWidth: wrapWidth);
+
+        public static Vector2 CalcTextSize(string text, int start, int length, bool hideTextAfterDoubleHash)
+            => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash);
+
+        public static Vector2 CalcTextSize(string text, int start, int length, float wrapWidth)
+            => CalcTextSizeImpl(text, start, length, wrapWidth: wrapWidth);
+
+        public static Vector2 CalcTextSize(string text, int start, int length, bool hideTextAfterDoubleHash, float wrapWidth)
+            => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash, wrapWidth);
+
+        private static Vector2 CalcTextSizeImpl(
             string text,
-            int? start = null,
+            int start = 0,
             int? length = null,
             bool hideTextAfterDoubleHash = false,
             float wrapWidth = -1.0f)
         {
             Vector2 ret;
-            byte* nativeText = null;
             byte* nativeTextStart = null;
             byte* nativeTextEnd = null;
             int textByteCount = 0;
-            int textByteSize = 0;
             if (text != null)
             {
-                textByteCount = Encoding.UTF8.GetByteCount(text);
-                textByteSize = Encoding.UTF8.GetByteCount("X");
+
+                int textToCopyLen = length.HasValue ? length.Value : text.Length;
+                textByteCount = Util.CalcUtf8(text, start, textToCopyLen);
                 if (textByteCount > Util.StackAllocationSizeLimit)
                 {
-                    nativeText = Util.Allocate(textByteCount + 1);
+                    nativeTextStart = Util.Allocate(textByteCount + 1);
                 }
                 else
                 {
                     byte* nativeTextStackBytes = stackalloc byte[textByteCount + 1];
-                    nativeText = nativeTextStackBytes;
+                    nativeTextStart = nativeTextStackBytes;
                 }
-                int nativeTextOffset = Util.GetUtf8(text, nativeText, textByteCount);
-                nativeText[nativeTextOffset] = 0;
-                nativeTextStart = nativeText + (start.HasValue ? (start.Value * textByteSize) : 0);
-                nativeTextEnd = length.HasValue ? nativeTextStart + (length.Value * textByteSize) : null;
+
+                int nativeTextOffset = Util.GetUtf8(text, nativeTextStart, textByteCount, start, textToCopyLen);
+                nativeTextStart[nativeTextOffset] = 0;
+                nativeTextEnd = nativeTextStart + nativeTextOffset;
             }
 
             ImGuiNative.igCalcTextSize(&ret, nativeTextStart, nativeTextEnd, *((byte*)(&hideTextAfterDoubleHash)), wrapWidth);
             if (textByteCount > Util.StackAllocationSizeLimit)
             {
-                Util.Free(nativeText);
+                Util.Free(nativeTextStart);
             }
 
             return ret;

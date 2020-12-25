@@ -33,11 +33,32 @@ namespace ImGuiNET
 
         internal static byte* Allocate(int byteCount) => (byte*)Marshal.AllocHGlobal(byteCount);
         internal static void Free(byte* ptr) => Marshal.FreeHGlobal((IntPtr)ptr);
+        internal static int CalcUtf8(string s, int start, int length)
+        {
+            if (start > s.Length - 1 || length > s.Length || start + length > s.Length)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            fixed (char* utf16Ptr = s)
+            {
+                return Encoding.UTF8.GetByteCount(utf16Ptr + start, length);
+            }
+        }
+
         internal static int GetUtf8(string s, byte* utf8Bytes, int utf8ByteCount)
         {
             fixed (char* utf16Ptr = s)
             {
                 return Encoding.UTF8.GetBytes(utf16Ptr, s.Length, utf8Bytes, utf8ByteCount);
+            }
+        }
+
+        internal static int GetUtf8(string s, byte* utf8Bytes, int utf8ByteCount, int start = 0, int length = 0)
+        {
+            fixed (char* utf16Ptr = s)
+            {
+                return Encoding.UTF8.GetBytes(utf16Ptr + start, length, utf8Bytes, utf8ByteCount);
             }
         }
     }
