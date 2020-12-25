@@ -58,6 +58,11 @@ namespace ImGuiNET
 
         internal static int GetUtf8(string s, int start, int length, byte* utf8Bytes, int utf8ByteCount)
         {
+            if (start > s.Length - 1 || length > s.Length || start + length > s.Length)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
             fixed (char* utf16Ptr = s)
             {
                 return Encoding.UTF8.GetBytes(utf16Ptr + start, length, utf8Bytes, utf8ByteCount);
