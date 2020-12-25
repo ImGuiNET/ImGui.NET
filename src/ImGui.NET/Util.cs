@@ -32,8 +32,10 @@ namespace ImGuiNET
         }
 
         internal static byte* Allocate(int byteCount) => (byte*)Marshal.AllocHGlobal(byteCount);
+
         internal static void Free(byte* ptr) => Marshal.FreeHGlobal((IntPtr)ptr);
-        internal static int CalcUtf8(string s, int start, int length)
+
+        internal static int CalcSizeInUtf8(string s, int start, int length)
         {
             if (start > s.Length - 1 || length > s.Length || start + length > s.Length)
             {
@@ -54,7 +56,7 @@ namespace ImGuiNET
             }
         }
 
-        internal static int GetUtf8(string s, byte* utf8Bytes, int utf8ByteCount, int start = 0, int length = 0)
+        internal static int GetUtf8(string s, int start, int length, byte* utf8Bytes, int utf8ByteCount)
         {
             fixed (char* utf16Ptr = s)
             {

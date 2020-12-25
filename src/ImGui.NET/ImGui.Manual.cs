@@ -403,7 +403,7 @@ namespace ImGuiNET
             {
 
                 int textToCopyLen = length.HasValue ? length.Value : text.Length;
-                textByteCount = Util.CalcUtf8(text, start, textToCopyLen);
+                textByteCount = Util.CalcSizeInUtf8(text, start, textToCopyLen);
                 if (textByteCount > Util.StackAllocationSizeLimit)
                 {
                     nativeTextStart = Util.Allocate(textByteCount + 1);
@@ -414,7 +414,7 @@ namespace ImGuiNET
                     nativeTextStart = nativeTextStackBytes;
                 }
 
-                int nativeTextOffset = Util.GetUtf8(text, nativeTextStart, textByteCount, start, textToCopyLen);
+                int nativeTextOffset = Util.GetUtf8(text, start, textToCopyLen, nativeTextStart, textByteCount);
                 nativeTextStart[nativeTextOffset] = 0;
                 nativeTextEnd = nativeTextStart + nativeTextOffset;
             }
