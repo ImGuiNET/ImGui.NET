@@ -7,8 +7,9 @@ namespace ImGuiNET
 {
     public unsafe partial struct ImFontGlyph
     {
-        public uint Codepoint;
+        public uint Colored;
         public uint Visible;
+        public uint Codepoint;
         public float AdvanceX;
         public float X0;
         public float Y0;
@@ -27,8 +28,9 @@ namespace ImGuiNET
         public static implicit operator ImFontGlyphPtr(ImFontGlyph* nativePtr) => new ImFontGlyphPtr(nativePtr);
         public static implicit operator ImFontGlyph* (ImFontGlyphPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImFontGlyphPtr(IntPtr nativePtr) => new ImFontGlyphPtr(nativePtr);
-        public ref uint Codepoint => ref Unsafe.AsRef<uint>(&NativePtr->Codepoint);
+        public ref uint Colored => ref Unsafe.AsRef<uint>(&NativePtr->Colored);
         public ref uint Visible => ref Unsafe.AsRef<uint>(&NativePtr->Visible);
+        public ref uint Codepoint => ref Unsafe.AsRef<uint>(&NativePtr->Codepoint);
         public ref float AdvanceX => ref Unsafe.AsRef<float>(&NativePtr->AdvanceX);
         public ref float X0 => ref Unsafe.AsRef<float>(&NativePtr->X0);
         public ref float Y0 => ref Unsafe.AsRef<float>(&NativePtr->Y0);

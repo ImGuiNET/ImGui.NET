@@ -40,6 +40,10 @@ namespace ImGuiNET
         public ref int CursorPos => ref Unsafe.AsRef<int>(&NativePtr->CursorPos);
         public ref int SelectionStart => ref Unsafe.AsRef<int>(&NativePtr->SelectionStart);
         public ref int SelectionEnd => ref Unsafe.AsRef<int>(&NativePtr->SelectionEnd);
+        public void ClearSelection()
+        {
+            ImGuiNative.ImGuiInputTextCallbackData_ClearSelection((ImGuiInputTextCallbackData*)(NativePtr));
+        }
         public void DeleteChars(int pos, int bytes_count)
         {
             ImGuiNative.ImGuiInputTextCallbackData_DeleteChars((ImGuiInputTextCallbackData*)(NativePtr), pos, bytes_count);
@@ -79,6 +83,10 @@ namespace ImGuiNET
             {
                 Util.Free(native_text);
             }
+        }
+        public void SelectAll()
+        {
+            ImGuiNative.ImGuiInputTextCallbackData_SelectAll((ImGuiInputTextCallbackData*)(NativePtr));
         }
     }
 }

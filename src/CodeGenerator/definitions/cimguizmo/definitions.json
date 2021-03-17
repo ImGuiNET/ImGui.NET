@@ -1,4 +1,26 @@
 {
+  "ImGuizmo_AllowAxisFlip": [
+    {
+      "args": "(bool value)",
+      "argsT": [
+        {
+          "name": "value",
+          "type": "bool"
+        }
+      ],
+      "argsoriginal": "(bool value)",
+      "call_args": "(value)",
+      "cimguiname": "ImGuizmo_AllowAxisFlip",
+      "defaults": {},
+      "funcname": "AllowAxisFlip",
+      "location": "ImGuizmo:212",
+      "namespace": "ImGuizmo",
+      "ov_cimguiname": "ImGuizmo_AllowAxisFlip",
+      "ret": "void",
+      "signature": "(bool)",
+      "stname": ""
+    }
+  ],
   "ImGuizmo_BeginFrame": [
     {
       "args": "()",
@@ -42,7 +64,7 @@
       "cimguiname": "ImGuizmo_DecomposeMatrixToComponents",
       "defaults": {},
       "funcname": "DecomposeMatrixToComponents",
-      "location": "ImGuizmo:145",
+      "location": "ImGuizmo:151",
       "namespace": "ImGuizmo",
       "ov_cimguiname": "ImGuizmo_DecomposeMatrixToComponents",
       "ret": "void",
@@ -76,7 +98,7 @@
       "cimguiname": "ImGuizmo_DrawCubes",
       "defaults": {},
       "funcname": "DrawCubes",
-      "location": "ImGuizmo:153",
+      "location": "ImGuizmo:159",
       "namespace": "ImGuizmo",
       "ov_cimguiname": "ImGuizmo_DrawCubes",
       "ret": "void",
@@ -110,7 +132,7 @@
       "cimguiname": "ImGuizmo_DrawGrid",
       "defaults": {},
       "funcname": "DrawGrid",
-      "location": "ImGuizmo:154",
+      "location": "ImGuizmo:160",
       "namespace": "ImGuizmo",
       "ov_cimguiname": "ImGuizmo_DrawGrid",
       "ret": "void",
@@ -132,7 +154,7 @@
       "cimguiname": "ImGuizmo_Enable",
       "defaults": {},
       "funcname": "Enable",
-      "location": "ImGuizmo:131",
+      "location": "ImGuizmo:137",
       "namespace": "ImGuizmo",
       "ov_cimguiname": "ImGuizmo_Enable",
       "ret": "void",
@@ -149,7 +171,7 @@
       "cimguiname": "ImGuizmo_IsOver",
       "defaults": {},
       "funcname": "IsOver",
-      "location": "ImGuizmo:124",
+      "location": "ImGuizmo:130",
       "namespace": "ImGuizmo",
       "ov_cimguiname": "ImGuizmo_IsOverNil",
       "ret": "bool",
@@ -169,7 +191,7 @@
       "cimguiname": "ImGuizmo_IsOver",
       "defaults": {},
       "funcname": "IsOver",
-      "location": "ImGuizmo:185",
+      "location": "ImGuizmo:206",
       "namespace": "ImGuizmo",
       "ov_cimguiname": "ImGuizmo_IsOverOPERATION",
       "ret": "bool",
@@ -186,7 +208,7 @@
       "cimguiname": "ImGuizmo_IsUsing",
       "defaults": {},
       "funcname": "IsUsing",
-      "location": "ImGuizmo:127",
+      "location": "ImGuizmo:133",
       "namespace": "ImGuizmo",
       "ov_cimguiname": "ImGuizmo_IsUsing",
       "ret": "bool",
@@ -196,7 +218,7 @@
   ],
   "ImGuizmo_Manipulate": [
     {
-      "args": "(const float* view,const float* projection,OPERATION operation,MODE mode,float* matrix,float* deltaMatrix,float* snap,float* localBounds,float* boundsSnap)",
+      "args": "(const float* view,const float* projection,OPERATION operation,MODE mode,float* matrix,float* deltaMatrix,const float* snap,const float* localBounds,const float* boundsSnap)",
       "argsT": [
         {
           "name": "view",
@@ -224,18 +246,18 @@
         },
         {
           "name": "snap",
-          "type": "float*"
+          "type": "const float*"
         },
         {
           "name": "localBounds",
-          "type": "float*"
+          "type": "const float*"
         },
         {
           "name": "boundsSnap",
-          "type": "float*"
+          "type": "const float*"
         }
       ],
-      "argsoriginal": "(const float* view,const float* projection,OPERATION operation,MODE mode,float* matrix,float* deltaMatrix=NULL,float* snap=NULL,float* localBounds=NULL,float* boundsSnap=NULL)",
+      "argsoriginal": "(const float* view,const float* projection,OPERATION operation,MODE mode,float* matrix,float* deltaMatrix=NULL,const float* snap=NULL,const float* localBounds=NULL,const float* boundsSnap=NULL)",
       "call_args": "(view,projection,operation,mode,matrix,deltaMatrix,snap,localBounds,boundsSnap)",
       "cimguiname": "ImGuizmo_Manipulate",
       "defaults": {
@@ -245,11 +267,11 @@
         "snap": "NULL"
       },
       "funcname": "Manipulate",
-      "location": "ImGuizmo:174",
+      "location": "ImGuizmo:195",
       "namespace": "ImGuizmo",
       "ov_cimguiname": "ImGuizmo_Manipulate",
       "ret": "bool",
-      "signature": "(const float*,const float*,OPERATION,MODE,float*,float*,float*,float*,float*)",
+      "signature": "(const float*,const float*,OPERATION,MODE,float*,float*,const float*,const float*,const float*)",
       "stname": ""
     }
   ],
@@ -279,7 +301,7 @@
       "cimguiname": "ImGuizmo_RecomposeMatrixFromComponents",
       "defaults": {},
       "funcname": "RecomposeMatrixFromComponents",
-      "location": "ImGuizmo:146",
+      "location": "ImGuizmo:152",
       "namespace": "ImGuizmo",
       "ov_cimguiname": "ImGuizmo_RecomposeMatrixFromComponents",
       "ret": "void",
@@ -311,6 +333,28 @@
       "stname": ""
     }
   ],
+  "ImGuizmo_SetGizmoSizeClipSpace": [
+    {
+      "args": "(float value)",
+      "argsT": [
+        {
+          "name": "value",
+          "type": "float"
+        }
+      ],
+      "argsoriginal": "(float value)",
+      "call_args": "(value)",
+      "cimguiname": "ImGuizmo_SetGizmoSizeClipSpace",
+      "defaults": {},
+      "funcname": "SetGizmoSizeClipSpace",
+      "location": "ImGuizmo:207",
+      "namespace": "ImGuizmo",
+      "ov_cimguiname": "ImGuizmo_SetGizmoSizeClipSpace",
+      "ret": "void",
+      "signature": "(float)",
+      "stname": ""
+    }
+  ],
   "ImGuizmo_SetID": [
     {
       "args": "(int id)",
@@ -325,11 +369,33 @@
       "cimguiname": "ImGuizmo_SetID",
       "defaults": {},
       "funcname": "SetID",
-      "location": "ImGuizmo:182",
+      "location": "ImGuizmo:203",
       "namespace": "ImGuizmo",
       "ov_cimguiname": "ImGuizmo_SetID",
       "ret": "void",
       "signature": "(int)",
+      "stname": ""
+    }
+  ],
+  "ImGuizmo_SetImGuiContext": [
+    {
+      "args": "(ImGuiContext* ctx)",
+      "argsT": [
+        {
+          "name": "ctx",
+          "type": "ImGuiContext*"
+        }
+      ],
+      "argsoriginal": "(ImGuiContext* ctx)",
+      "call_args": "(ctx)",
+      "cimguiname": "ImGuizmo_SetImGuiContext",
+      "defaults": {},
+      "funcname": "SetImGuiContext",
+      "location": "ImGuizmo:127",
+      "namespace": "ImGuizmo",
+      "ov_cimguiname": "ImGuizmo_SetImGuiContext",
+      "ret": "void",
+      "signature": "(ImGuiContext*)",
       "stname": ""
     }
   ],
@@ -347,7 +413,7 @@
       "cimguiname": "ImGuizmo_SetOrthographic",
       "defaults": {},
       "funcname": "SetOrthographic",
-      "location": "ImGuizmo:150",
+      "location": "ImGuizmo:156",
       "namespace": "ImGuizmo",
       "ov_cimguiname": "ImGuizmo_SetOrthographic",
       "ret": "void",
@@ -381,7 +447,7 @@
       "cimguiname": "ImGuizmo_SetRect",
       "defaults": {},
       "funcname": "SetRect",
-      "location": "ImGuizmo:148",
+      "location": "ImGuizmo:154",
       "namespace": "ImGuizmo",
       "ov_cimguiname": "ImGuizmo_SetRect",
       "ret": "void",
@@ -419,7 +485,7 @@
       "cimguiname": "ImGuizmo_ViewManipulate",
       "defaults": {},
       "funcname": "ViewManipulate",
-      "location": "ImGuizmo:180",
+      "location": "ImGuizmo:201",
       "namespace": "ImGuizmo",
       "ov_cimguiname": "ImGuizmo_ViewManipulate",
       "ret": "void",

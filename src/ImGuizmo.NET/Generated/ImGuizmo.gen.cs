@@ -8,6 +8,11 @@ namespace ImGuizmoNET
 {
     public static unsafe partial class ImGuizmo
     {
+        public static void AllowAxisFlip(bool value)
+        {
+            byte native_value = value ? (byte)1 : (byte)0;
+            ImGuizmoNative.ImGuizmo_AllowAxisFlip(native_value);
+        }
         public static void BeginFrame()
         {
             ImGuizmoNative.ImGuizmo_BeginFrame();
@@ -210,9 +215,17 @@ namespace ImGuizmoNET
             ImDrawList* native_drawlist = drawlist.NativePtr;
             ImGuizmoNative.ImGuizmo_SetDrawlist(native_drawlist);
         }
+        public static void SetGizmoSizeClipSpace(float value)
+        {
+            ImGuizmoNative.ImGuizmo_SetGizmoSizeClipSpace(value);
+        }
         public static void SetID(int id)
         {
             ImGuizmoNative.ImGuizmo_SetID(id);
+        }
+        public static void SetImGuiContext(IntPtr ctx)
+        {
+            ImGuizmoNative.ImGuizmo_SetImGuiContext(ctx);
         }
         public static void SetOrthographic(bool isOrthographic)
         {

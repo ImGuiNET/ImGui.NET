@@ -26,8 +26,9 @@ namespace ImPlotNET
         LegendSpacing = 21,
         MousePosPadding = 22,
         AnnotationPadding = 23,
-        PlotDefaultSize = 24,
-        PlotMinSize = 25,
-        COUNT = 26,
+        FitPadding = 24,
+        PlotDefaultSize = 25,
+        PlotMinSize = 26,
+        COUNT = 27,
     }
 }

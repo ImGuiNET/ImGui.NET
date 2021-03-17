@@ -7,12 +7,12 @@ namespace ImGuiNET
         MouseButtonLeft = 0,
         MouseButtonRight = 1,
         MouseButtonMiddle = 2,
-        MouseButtonMask = 0x1F,
+        MouseButtonMask = 31,
         MouseButtonDefault = 1,
-        NoOpenOverExistingPopup = 1 << 5,
-        NoOpenOverItems = 1 << 6,
-        AnyPopupId = 1 << 7,
-        AnyPopupLevel = 1 << 8,
-        AnyPopup = AnyPopupId | AnyPopupLevel,
+        NoOpenOverExistingPopup = 32,
+        NoOpenOverItems = 64,
+        AnyPopupId = 128,
+        AnyPopupLevel = 256,
+        AnyPopup = 384,
     }
 }

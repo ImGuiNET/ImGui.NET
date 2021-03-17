@@ -4,9 +4,9 @@ namespace ImGuiNET
     public enum ImGuiKeyModFlags
     {
         None = 0,
-        Ctrl = 1 << 0,
-        Shift = 1 << 1,
-        Alt = 1 << 2,
-        Super = 1 << 3,
+        Ctrl = 1,
+        Shift = 2,
+        Alt = 4,
+        Super = 8,
     }
 }

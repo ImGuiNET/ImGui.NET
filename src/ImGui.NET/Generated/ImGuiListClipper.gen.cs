@@ -11,6 +11,7 @@ namespace ImGuiNET
         public int DisplayEnd;
         public int ItemsCount;
         public int StepNo;
+        public int ItemsFrozen;
         public float ItemsHeight;
         public float StartPosY;
     }
@@ -26,6 +27,7 @@ namespace ImGuiNET
         public ref int DisplayEnd => ref Unsafe.AsRef<int>(&NativePtr->DisplayEnd);
         public ref int ItemsCount => ref Unsafe.AsRef<int>(&NativePtr->ItemsCount);
         public ref int StepNo => ref Unsafe.AsRef<int>(&NativePtr->StepNo);
+        public ref int ItemsFrozen => ref Unsafe.AsRef<int>(&NativePtr->ItemsFrozen);
         public ref float ItemsHeight => ref Unsafe.AsRef<float>(&NativePtr->ItemsHeight);
         public ref float StartPosY => ref Unsafe.AsRef<float>(&NativePtr->StartPosY);
         public void Begin(int items_count)

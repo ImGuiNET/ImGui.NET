@@ -14,30 +14,81 @@
     ],
     "OPERATION": [
       {
-        "calc_value": 0,
-        "name": "TRANSLATE",
-        "value": "0"
-      },
-      {
         "calc_value": 1,
-        "name": "ROTATE",
-        "value": "1"
+        "name": "TRANSLATE_X",
+        "value": "(1u << 0)"
       },
       {
         "calc_value": 2,
-        "name": "SCALE",
-        "value": "2"
+        "name": "TRANSLATE_Y",
+        "value": "(1u << 1)"
       },
       {
-        "calc_value": 3,
+        "calc_value": 4,
+        "name": "TRANSLATE_Z",
+        "value": "(1u << 2)"
+      },
+      {
+        "calc_value": 8,
+        "name": "ROTATE_X",
+        "value": "(1u << 3)"
+      },
+      {
+        "calc_value": 16,
+        "name": "ROTATE_Y",
+        "value": "(1u << 4)"
+      },
+      {
+        "calc_value": 32,
+        "name": "ROTATE_Z",
+        "value": "(1u << 5)"
+      },
+      {
+        "calc_value": 64,
+        "name": "ROTATE_SCREEN",
+        "value": "(1u << 6)"
+      },
+      {
+        "calc_value": 128,
+        "name": "SCALE_X",
+        "value": "(1u << 7)"
+      },
+      {
+        "calc_value": 256,
+        "name": "SCALE_Y",
+        "value": "(1u << 8)"
+      },
+      {
+        "calc_value": 512,
+        "name": "SCALE_Z",
+        "value": "(1u << 9)"
+      },
+      {
+        "calc_value": 1024,
         "name": "BOUNDS",
-        "value": "3"
+        "value": "(1u << 10)"
+      },
+      {
+        "calc_value": 7,
+        "name": "TRANSLATE",
+        "value": "TRANSLATE_X | TRANSLATE_Y | TRANSLATE_Z"
+      },
+      {
+        "calc_value": 120,
+        "name": "ROTATE",
+        "value": "ROTATE_X | ROTATE_Y | ROTATE_Z | ROTATE_SCREEN"
+      },
+      {
+        "calc_value": 896,
+        "name": "SCALE",
+        "value": "SCALE_X | SCALE_Y | SCALE_Z"
       }
     ]
   },
+  "enumtypes": [],
   "locations": {
-    "MODE": "ImGuizmo:168",
-    "OPERATION": "ImGuizmo:160"
+    "MODE": "ImGuizmo:189",
+    "OPERATION": "ImGuizmo:166"
   },
   "structs": []
 }

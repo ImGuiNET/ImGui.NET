@@ -4,10 +4,13 @@ namespace ImGuiNET
     public enum ImGuiTabItemFlags
     {
         None = 0,
-        UnsavedDocument = 1 << 0,
-        SetSelected = 1 << 1,
-        NoCloseWithMiddleMouseButton = 1 << 2,
-        NoPushId = 1 << 3,
-        NoTooltip = 1 << 4,
+        UnsavedDocument = 1,
+        SetSelected = 2,
+        NoCloseWithMiddleMouseButton = 4,
+        NoPushId = 8,
+        NoTooltip = 16,
+        NoReorder = 32,
+        Leading = 64,
+        Trailing = 128,
     }
 }

@@ -226,16 +226,17 @@
       }
     ]
   },
+  "enumtypes": [],
   "locations": {
-    "AttributeFlags": "imnodes:67",
-    "ColorStyle": "imnodes:9",
-    "EmulateThreeButtonMouse": "imnodes:84",
-    "IO": "imnodes:82",
-    "LinkDetachWithModifierClick": "imnodes:94",
-    "PinShape": "imnodes:56",
-    "Style": "imnodes:111",
-    "StyleFlags": "imnodes:48",
-    "StyleVar": "imnodes:30"
+    "AttributeFlags": "imnodes:68",
+    "ColorStyle": "imnodes:10",
+    "EmulateThreeButtonMouse": "imnodes:85",
+    "IO": "imnodes:83",
+    "LinkDetachWithModifierClick": "imnodes:95",
+    "PinShape": "imnodes:57",
+    "Style": "imnodes:112",
+    "StyleFlags": "imnodes:49",
+    "StyleVar": "imnodes:31"
   },
   "structs": {
     "EmulateThreeButtonMouse": [

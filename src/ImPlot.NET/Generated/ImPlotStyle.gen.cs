@@ -32,6 +32,7 @@ namespace ImPlotNET
         public Vector2 LegendSpacing;
         public Vector2 MousePosPadding;
         public Vector2 AnnotationPadding;
+        public Vector2 FitPadding;
         public Vector2 PlotDefaultSize;
         public Vector2 PlotMinSize;
         public Vector4 Colors_0;
@@ -95,6 +96,7 @@ namespace ImPlotNET
         public ref Vector2 LegendSpacing => ref Unsafe.AsRef<Vector2>(&NativePtr->LegendSpacing);
         public ref Vector2 MousePosPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePosPadding);
         public ref Vector2 AnnotationPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->AnnotationPadding);
+        public ref Vector2 FitPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->FitPadding);
         public ref Vector2 PlotDefaultSize => ref Unsafe.AsRef<Vector2>(&NativePtr->PlotDefaultSize);
         public ref Vector2 PlotMinSize => ref Unsafe.AsRef<Vector2>(&NativePtr->PlotMinSize);
         public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 24);

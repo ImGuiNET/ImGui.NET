@@ -4,15 +4,16 @@ namespace ImPlotNET
     public enum ImPlotAxisFlags
     {
         None = 0,
-        NoGridLines = 1 << 0,
-        NoTickMarks = 1 << 1,
-        NoTickLabels = 1 << 2,
-        LogScale = 1 << 3,
-        Time = 1 << 4,
-        Invert = 1 << 5,
-        LockMin = 1 << 6,
-        LockMax = 1 << 7,
-        Lock = LockMin | LockMax,
-        NoDecorations = NoGridLines | NoTickMarks | NoTickLabels,
+        NoLabel = 1,
+        NoGridLines = 2,
+        NoTickMarks = 4,
+        NoTickLabels = 8,
+        LogScale = 16,
+        Time = 32,
+        Invert = 64,
+        LockMin = 128,
+        LockMax = 256,
+        Lock = 384,
+        NoDecorations = 15,
     }
 }

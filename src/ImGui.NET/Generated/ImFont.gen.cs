@@ -13,7 +13,6 @@ namespace ImGuiNET
         public ImVector IndexLookup;
         public ImVector Glyphs;
         public ImFontGlyph* FallbackGlyph;
-        public Vector2 DisplayOffset;
         public ImFontAtlas* ContainerAtlas;
         public ImFontConfig* ConfigData;
         public short ConfigDataCount;
@@ -40,7 +39,6 @@ namespace ImGuiNET
         public ImVector<ushort> IndexLookup => new ImVector<ushort>(NativePtr->IndexLookup);
         public ImPtrVector<ImFontGlyphPtr> Glyphs => new ImPtrVector<ImFontGlyphPtr>(NativePtr->Glyphs, Unsafe.SizeOf<ImFontGlyph>());
         public ImFontGlyphPtr FallbackGlyph => new ImFontGlyphPtr(NativePtr->FallbackGlyph);
-        public ref Vector2 DisplayOffset => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayOffset);
         public ImFontAtlasPtr ContainerAtlas => new ImFontAtlasPtr(NativePtr->ContainerAtlas);
         public ImFontConfigPtr ConfigData => new ImFontConfigPtr(NativePtr->ConfigData);
         public ref short ConfigDataCount => ref Unsafe.AsRef<short>(&NativePtr->ConfigDataCount);

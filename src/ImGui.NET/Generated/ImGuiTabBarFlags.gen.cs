@@ -4,15 +4,15 @@ namespace ImGuiNET
     public enum ImGuiTabBarFlags
     {
         None = 0,
-        Reorderable = 1 << 0,
-        AutoSelectNewTabs = 1 << 1,
-        TabListPopupButton = 1 << 2,
-        NoCloseWithMiddleMouseButton = 1 << 3,
-        NoTabListScrollingButtons = 1 << 4,
-        NoTooltip = 1 << 5,
-        FittingPolicyResizeDown = 1 << 6,
-        FittingPolicyScroll = 1 << 7,
-        FittingPolicyMask = FittingPolicyResizeDown | FittingPolicyScroll,
-        FittingPolicyDefault = FittingPolicyResizeDown,
+        Reorderable = 1,
+        AutoSelectNewTabs = 2,
+        TabListPopupButton = 4,
+        NoCloseWithMiddleMouseButton = 8,
+        NoTabListScrollingButtons = 16,
+        NoTooltip = 32,
+        FittingPolicyResizeDown = 64,
+        FittingPolicyScroll = 128,
+        FittingPolicyMask = 192,
+        FittingPolicyDefault = 64,
     }
 }

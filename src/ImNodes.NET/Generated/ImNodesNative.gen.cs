@@ -126,6 +126,8 @@ namespace ImNodesNET
         [DllImport("cimnodes", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte* imnodes_SaveEditorStateToIniString(IntPtr editor, uint* data_size);
         [DllImport("cimnodes", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void imnodes_SetImGuiContext(IntPtr ctx);
+        [DllImport("cimnodes", CallingConvention = CallingConvention.Cdecl)]
         public static extern void imnodes_SetNodeDraggable(int node_id, byte draggable);
         [DllImport("cimnodes", CallingConvention = CallingConvention.Cdecl)]
         public static extern void imnodes_SetNodeEditorSpacePos(int node_id, Vector2 editor_space_pos);

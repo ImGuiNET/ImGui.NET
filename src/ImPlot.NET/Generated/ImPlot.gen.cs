@@ -112,7 +112,25 @@ namespace ImPlotNET
                 Util.Free(native_fmt);
             }
         }
-        public static bool BeginLegendDragDropSource(string label_id)
+        public static bool BeginDragDropSource()
+        {
+            ImGuiKeyModFlags key_mods = ImGuiKeyModFlags.Ctrl;
+            ImGuiDragDropFlags flags = 0;
+            byte ret = ImPlotNative.ImPlot_BeginDragDropSource(key_mods, flags);
+            return ret != 0;
+        }
+        public static bool BeginDragDropSource(ImGuiKeyModFlags key_mods)
+        {
+            ImGuiDragDropFlags flags = 0;
+            byte ret = ImPlotNative.ImPlot_BeginDragDropSource(key_mods, flags);
+            return ret != 0;
+        }
+        public static bool BeginDragDropSource(ImGuiKeyModFlags key_mods, ImGuiDragDropFlags flags)
+        {
+            byte ret = ImPlotNative.ImPlot_BeginDragDropSource(key_mods, flags);
+            return ret != 0;
+        }
+        public static bool BeginDragDropSourceItem(string label_id)
         {
             byte* native_label_id;
             int label_id_byteCount = 0;
@@ -133,14 +151,14 @@ namespace ImPlotNET
             }
             else { native_label_id = null; }
             ImGuiDragDropFlags flags = 0;
-            byte ret = ImPlotNative.ImPlot_BeginLegendDragDropSource(native_label_id, flags);
+            byte ret = ImPlotNative.ImPlot_BeginDragDropSourceItem(native_label_id, flags);
             if (label_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label_id);
             }
             return ret != 0;
         }
-        public static bool BeginLegendDragDropSource(string label_id, ImGuiDragDropFlags flags)
+        public static bool BeginDragDropSourceItem(string label_id, ImGuiDragDropFlags flags)
         {
             byte* native_label_id;
             int label_id_byteCount = 0;
@@ -160,11 +178,81 @@ namespace ImPlotNET
                 native_label_id[native_label_id_offset] = 0;
             }
             else { native_label_id = null; }
-            byte ret = ImPlotNative.ImPlot_BeginLegendDragDropSource(native_label_id, flags);
+            byte ret = ImPlotNative.ImPlot_BeginDragDropSourceItem(native_label_id, flags);
             if (label_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label_id);
             }
+            return ret != 0;
+        }
+        public static bool BeginDragDropSourceX()
+        {
+            ImGuiKeyModFlags key_mods = ImGuiKeyModFlags.Ctrl;
+            ImGuiDragDropFlags flags = 0;
+            byte ret = ImPlotNative.ImPlot_BeginDragDropSourceX(key_mods, flags);
+            return ret != 0;
+        }
+        public static bool BeginDragDropSourceX(ImGuiKeyModFlags key_mods)
+        {
+            ImGuiDragDropFlags flags = 0;
+            byte ret = ImPlotNative.ImPlot_BeginDragDropSourceX(key_mods, flags);
+            return ret != 0;
+        }
+        public static bool BeginDragDropSourceX(ImGuiKeyModFlags key_mods, ImGuiDragDropFlags flags)
+        {
+            byte ret = ImPlotNative.ImPlot_BeginDragDropSourceX(key_mods, flags);
+            return ret != 0;
+        }
+        public static bool BeginDragDropSourceY()
+        {
+            ImPlotYAxis axis = ImPlotYAxis._1;
+            ImGuiKeyModFlags key_mods = ImGuiKeyModFlags.Ctrl;
+            ImGuiDragDropFlags flags = 0;
+            byte ret = ImPlotNative.ImPlot_BeginDragDropSourceY(axis, key_mods, flags);
+            return ret != 0;
+        }
+        public static bool BeginDragDropSourceY(ImPlotYAxis axis)
+        {
+            ImGuiKeyModFlags key_mods = ImGuiKeyModFlags.Ctrl;
+            ImGuiDragDropFlags flags = 0;
+            byte ret = ImPlotNative.ImPlot_BeginDragDropSourceY(axis, key_mods, flags);
+            return ret != 0;
+        }
+        public static bool BeginDragDropSourceY(ImPlotYAxis axis, ImGuiKeyModFlags key_mods)
+        {
+            ImGuiDragDropFlags flags = 0;
+            byte ret = ImPlotNative.ImPlot_BeginDragDropSourceY(axis, key_mods, flags);
+            return ret != 0;
+        }
+        public static bool BeginDragDropSourceY(ImPlotYAxis axis, ImGuiKeyModFlags key_mods, ImGuiDragDropFlags flags)
+        {
+            byte ret = ImPlotNative.ImPlot_BeginDragDropSourceY(axis, key_mods, flags);
+            return ret != 0;
+        }
+        public static bool BeginDragDropTarget()
+        {
+            byte ret = ImPlotNative.ImPlot_BeginDragDropTarget();
+            return ret != 0;
+        }
+        public static bool BeginDragDropTargetLegend()
+        {
+            byte ret = ImPlotNative.ImPlot_BeginDragDropTargetLegend();
+            return ret != 0;
+        }
+        public static bool BeginDragDropTargetX()
+        {
+            byte ret = ImPlotNative.ImPlot_BeginDragDropTargetX();
+            return ret != 0;
+        }
+        public static bool BeginDragDropTargetY()
+        {
+            ImPlotYAxis axis = ImPlotYAxis._1;
+            byte ret = ImPlotNative.ImPlot_BeginDragDropTargetY(axis);
+            return ret != 0;
+        }
+        public static bool BeginDragDropTargetY(ImPlotYAxis axis)
+        {
+            byte ret = ImPlotNative.ImPlot_BeginDragDropTargetY(axis);
             return ret != 0;
         }
         public static bool BeginLegendPopup(string label_id)
@@ -250,7 +338,9 @@ namespace ImPlotNET
             ImPlotAxisFlags y_flags = ImPlotAxisFlags.None;
             ImPlotAxisFlags y2_flags = ImPlotAxisFlags.NoGridLines;
             ImPlotAxisFlags y3_flags = ImPlotAxisFlags.NoGridLines;
-            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags);
+            byte* native_y2_label = null;
+            byte* native_y3_label = null;
+            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags, native_y2_label, native_y3_label);
             if (title_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_title_id);
@@ -302,7 +392,9 @@ namespace ImPlotNET
             ImPlotAxisFlags y_flags = ImPlotAxisFlags.None;
             ImPlotAxisFlags y2_flags = ImPlotAxisFlags.NoGridLines;
             ImPlotAxisFlags y3_flags = ImPlotAxisFlags.NoGridLines;
-            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags);
+            byte* native_y2_label = null;
+            byte* native_y3_label = null;
+            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags, native_y2_label, native_y3_label);
             if (title_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_title_id);
@@ -375,7 +467,9 @@ namespace ImPlotNET
             ImPlotAxisFlags y_flags = ImPlotAxisFlags.None;
             ImPlotAxisFlags y2_flags = ImPlotAxisFlags.NoGridLines;
             ImPlotAxisFlags y3_flags = ImPlotAxisFlags.NoGridLines;
-            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags);
+            byte* native_y2_label = null;
+            byte* native_y3_label = null;
+            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags, native_y2_label, native_y3_label);
             if (title_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_title_id);
@@ -451,7 +545,9 @@ namespace ImPlotNET
             ImPlotAxisFlags y_flags = ImPlotAxisFlags.None;
             ImPlotAxisFlags y2_flags = ImPlotAxisFlags.NoGridLines;
             ImPlotAxisFlags y3_flags = ImPlotAxisFlags.NoGridLines;
-            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags);
+            byte* native_y2_label = null;
+            byte* native_y3_label = null;
+            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags, native_y2_label, native_y3_label);
             if (title_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_title_id);
@@ -526,7 +622,9 @@ namespace ImPlotNET
             ImPlotAxisFlags y_flags = ImPlotAxisFlags.None;
             ImPlotAxisFlags y2_flags = ImPlotAxisFlags.NoGridLines;
             ImPlotAxisFlags y3_flags = ImPlotAxisFlags.NoGridLines;
-            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags);
+            byte* native_y2_label = null;
+            byte* native_y3_label = null;
+            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags, native_y2_label, native_y3_label);
             if (title_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_title_id);
@@ -600,7 +698,9 @@ namespace ImPlotNET
             ImPlotAxisFlags y_flags = ImPlotAxisFlags.None;
             ImPlotAxisFlags y2_flags = ImPlotAxisFlags.NoGridLines;
             ImPlotAxisFlags y3_flags = ImPlotAxisFlags.NoGridLines;
-            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags);
+            byte* native_y2_label = null;
+            byte* native_y3_label = null;
+            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags, native_y2_label, native_y3_label);
             if (title_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_title_id);
@@ -673,7 +773,9 @@ namespace ImPlotNET
             else { native_y_label = null; }
             ImPlotAxisFlags y2_flags = ImPlotAxisFlags.NoGridLines;
             ImPlotAxisFlags y3_flags = ImPlotAxisFlags.NoGridLines;
-            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags);
+            byte* native_y2_label = null;
+            byte* native_y3_label = null;
+            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags, native_y2_label, native_y3_label);
             if (title_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_title_id);
@@ -745,7 +847,9 @@ namespace ImPlotNET
             }
             else { native_y_label = null; }
             ImPlotAxisFlags y3_flags = ImPlotAxisFlags.NoGridLines;
-            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags);
+            byte* native_y2_label = null;
+            byte* native_y3_label = null;
+            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags, native_y2_label, native_y3_label);
             if (title_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_title_id);
@@ -816,7 +920,9 @@ namespace ImPlotNET
                 native_y_label[native_y_label_offset] = 0;
             }
             else { native_y_label = null; }
-            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags);
+            byte* native_y2_label = null;
+            byte* native_y3_label = null;
+            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags, native_y2_label, native_y3_label);
             if (title_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_title_id);
@@ -828,6 +934,215 @@ namespace ImPlotNET
             if (y_label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_y_label);
+            }
+            return ret != 0;
+        }
+        public static bool BeginPlot(string title_id, string x_label, string y_label, Vector2 size, ImPlotFlags flags, ImPlotAxisFlags x_flags, ImPlotAxisFlags y_flags, ImPlotAxisFlags y2_flags, ImPlotAxisFlags y3_flags, string y2_label)
+        {
+            byte* native_title_id;
+            int title_id_byteCount = 0;
+            if (title_id != null)
+            {
+                title_id_byteCount = Encoding.UTF8.GetByteCount(title_id);
+                if (title_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_title_id = Util.Allocate(title_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_title_id_stackBytes = stackalloc byte[title_id_byteCount + 1];
+                    native_title_id = native_title_id_stackBytes;
+                }
+                int native_title_id_offset = Util.GetUtf8(title_id, native_title_id, title_id_byteCount);
+                native_title_id[native_title_id_offset] = 0;
+            }
+            else { native_title_id = null; }
+            byte* native_x_label;
+            int x_label_byteCount = 0;
+            if (x_label != null)
+            {
+                x_label_byteCount = Encoding.UTF8.GetByteCount(x_label);
+                if (x_label_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_x_label = Util.Allocate(x_label_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_x_label_stackBytes = stackalloc byte[x_label_byteCount + 1];
+                    native_x_label = native_x_label_stackBytes;
+                }
+                int native_x_label_offset = Util.GetUtf8(x_label, native_x_label, x_label_byteCount);
+                native_x_label[native_x_label_offset] = 0;
+            }
+            else { native_x_label = null; }
+            byte* native_y_label;
+            int y_label_byteCount = 0;
+            if (y_label != null)
+            {
+                y_label_byteCount = Encoding.UTF8.GetByteCount(y_label);
+                if (y_label_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_y_label = Util.Allocate(y_label_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_y_label_stackBytes = stackalloc byte[y_label_byteCount + 1];
+                    native_y_label = native_y_label_stackBytes;
+                }
+                int native_y_label_offset = Util.GetUtf8(y_label, native_y_label, y_label_byteCount);
+                native_y_label[native_y_label_offset] = 0;
+            }
+            else { native_y_label = null; }
+            byte* native_y2_label;
+            int y2_label_byteCount = 0;
+            if (y2_label != null)
+            {
+                y2_label_byteCount = Encoding.UTF8.GetByteCount(y2_label);
+                if (y2_label_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_y2_label = Util.Allocate(y2_label_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_y2_label_stackBytes = stackalloc byte[y2_label_byteCount + 1];
+                    native_y2_label = native_y2_label_stackBytes;
+                }
+                int native_y2_label_offset = Util.GetUtf8(y2_label, native_y2_label, y2_label_byteCount);
+                native_y2_label[native_y2_label_offset] = 0;
+            }
+            else { native_y2_label = null; }
+            byte* native_y3_label = null;
+            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags, native_y2_label, native_y3_label);
+            if (title_id_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_title_id);
+            }
+            if (x_label_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_x_label);
+            }
+            if (y_label_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_y_label);
+            }
+            if (y2_label_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_y2_label);
+            }
+            return ret != 0;
+        }
+        public static bool BeginPlot(string title_id, string x_label, string y_label, Vector2 size, ImPlotFlags flags, ImPlotAxisFlags x_flags, ImPlotAxisFlags y_flags, ImPlotAxisFlags y2_flags, ImPlotAxisFlags y3_flags, string y2_label, string y3_label)
+        {
+            byte* native_title_id;
+            int title_id_byteCount = 0;
+            if (title_id != null)
+            {
+                title_id_byteCount = Encoding.UTF8.GetByteCount(title_id);
+                if (title_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_title_id = Util.Allocate(title_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_title_id_stackBytes = stackalloc byte[title_id_byteCount + 1];
+                    native_title_id = native_title_id_stackBytes;
+                }
+                int native_title_id_offset = Util.GetUtf8(title_id, native_title_id, title_id_byteCount);
+                native_title_id[native_title_id_offset] = 0;
+            }
+            else { native_title_id = null; }
+            byte* native_x_label;
+            int x_label_byteCount = 0;
+            if (x_label != null)
+            {
+                x_label_byteCount = Encoding.UTF8.GetByteCount(x_label);
+                if (x_label_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_x_label = Util.Allocate(x_label_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_x_label_stackBytes = stackalloc byte[x_label_byteCount + 1];
+                    native_x_label = native_x_label_stackBytes;
+                }
+                int native_x_label_offset = Util.GetUtf8(x_label, native_x_label, x_label_byteCount);
+                native_x_label[native_x_label_offset] = 0;
+            }
+            else { native_x_label = null; }
+            byte* native_y_label;
+            int y_label_byteCount = 0;
+            if (y_label != null)
+            {
+                y_label_byteCount = Encoding.UTF8.GetByteCount(y_label);
+                if (y_label_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_y_label = Util.Allocate(y_label_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_y_label_stackBytes = stackalloc byte[y_label_byteCount + 1];
+                    native_y_label = native_y_label_stackBytes;
+                }
+                int native_y_label_offset = Util.GetUtf8(y_label, native_y_label, y_label_byteCount);
+                native_y_label[native_y_label_offset] = 0;
+            }
+            else { native_y_label = null; }
+            byte* native_y2_label;
+            int y2_label_byteCount = 0;
+            if (y2_label != null)
+            {
+                y2_label_byteCount = Encoding.UTF8.GetByteCount(y2_label);
+                if (y2_label_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_y2_label = Util.Allocate(y2_label_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_y2_label_stackBytes = stackalloc byte[y2_label_byteCount + 1];
+                    native_y2_label = native_y2_label_stackBytes;
+                }
+                int native_y2_label_offset = Util.GetUtf8(y2_label, native_y2_label, y2_label_byteCount);
+                native_y2_label[native_y2_label_offset] = 0;
+            }
+            else { native_y2_label = null; }
+            byte* native_y3_label;
+            int y3_label_byteCount = 0;
+            if (y3_label != null)
+            {
+                y3_label_byteCount = Encoding.UTF8.GetByteCount(y3_label);
+                if (y3_label_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_y3_label = Util.Allocate(y3_label_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_y3_label_stackBytes = stackalloc byte[y3_label_byteCount + 1];
+                    native_y3_label = native_y3_label_stackBytes;
+                }
+                int native_y3_label_offset = Util.GetUtf8(y3_label, native_y3_label, y3_label_byteCount);
+                native_y3_label[native_y3_label_offset] = 0;
+            }
+            else { native_y3_label = null; }
+            byte ret = ImPlotNative.ImPlot_BeginPlot(native_title_id, native_x_label, native_y_label, size, flags, x_flags, y_flags, y2_flags, y3_flags, native_y2_label, native_y3_label);
+            if (title_id_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_title_id);
+            }
+            if (x_label_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_x_label);
+            }
+            if (y_label_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_y_label);
+            }
+            if (y2_label_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_y2_label);
+            }
+            if (y3_label_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_y3_label);
             }
             return ret != 0;
         }
@@ -1244,9 +1559,13 @@ namespace ImPlotNET
                 }
             }
         }
-        public static void EndLegendDragDropSource()
+        public static void EndDragDropSource()
         {
-            ImPlotNative.ImPlot_EndLegendDragDropSource();
+            ImPlotNative.ImPlot_EndDragDropSource();
+        }
+        public static void EndDragDropTarget()
+        {
+            ImPlotNative.ImPlot_EndDragDropTarget();
         }
         public static void EndLegendPopup()
         {
@@ -1316,11 +1635,6 @@ namespace ImPlotNET
         {
             IntPtr ret = ImPlotNative.ImPlot_GetCurrentContext();
             return ret;
-        }
-        public static ImPlotInputMapPtr GetInputMap()
-        {
-            ImPlotInputMap* ret = ImPlotNative.ImPlot_GetInputMap();
-            return new ImPlotInputMapPtr(ret);
         }
         public static Vector4 GetLastItemColor()
         {
@@ -1469,10 +1783,18 @@ namespace ImPlotNET
             byte ret = ImPlotNative.ImPlot_IsPlotYAxisHovered(y_axis);
             return ret != 0;
         }
+        public static void ItemIcon(Vector4 col)
+        {
+            ImPlotNative.ImPlot_ItemIconVec4(col);
+        }
+        public static void ItemIcon(uint col)
+        {
+            ImPlotNative.ImPlot_ItemIconU32(col);
+        }
         public static Vector4 LerpColormap(float t)
         {
             Vector4 __retval;
-            ImPlotNative.ImPlot_LerpColormap(&__retval, t);
+            ImPlotNative.ImPlot_LerpColormapFloat(&__retval, t);
             return __retval;
         }
         public static void LinkNextPlotLimits(ref double xmin, ref double xmax, ref double ymin, ref double ymax)
@@ -14273,6 +14595,906 @@ namespace ImPlotNET
                 }
             }
         }
+        public static void PlotHLines(string label_id, ref float ys, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(float);
+            fixed (float* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesFloatPtr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref float ys, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(float);
+            fixed (float* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesFloatPtr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref float ys, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (float* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesFloatPtr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref double ys, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(double);
+            fixed (double* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesdoublePtr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref double ys, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(double);
+            fixed (double* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesdoublePtr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref double ys, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (double* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesdoublePtr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref sbyte ys, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(sbyte);
+            fixed (sbyte* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesS8Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref sbyte ys, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(sbyte);
+            fixed (sbyte* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesS8Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref sbyte ys, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (sbyte* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesS8Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref byte ys, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(byte);
+            fixed (byte* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesU8Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref byte ys, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(byte);
+            fixed (byte* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesU8Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref byte ys, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (byte* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesU8Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref short ys, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(short);
+            fixed (short* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesS16Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref short ys, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(short);
+            fixed (short* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesS16Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref short ys, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (short* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesS16Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref ushort ys, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(ushort);
+            fixed (ushort* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesU16Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref ushort ys, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(ushort);
+            fixed (ushort* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesU16Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref ushort ys, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (ushort* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesU16Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref int ys, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(int);
+            fixed (int* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesS32Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref int ys, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(int);
+            fixed (int* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesS32Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref int ys, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (int* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesS32Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref uint ys, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(uint);
+            fixed (uint* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesU32Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref uint ys, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(uint);
+            fixed (uint* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesU32Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref uint ys, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (uint* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesU32Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref long ys, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(long);
+            fixed (long* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesS64Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref long ys, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(long);
+            fixed (long* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesS64Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref long ys, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (long* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesS64Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref ulong ys, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(ulong);
+            fixed (ulong* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesU64Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref ulong ys, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(ulong);
+            fixed (ulong* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesU64Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotHLines(string label_id, ref ulong ys, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (ulong* native_ys = &ys)
+            {
+                ImPlotNative.ImPlot_PlotHLinesU64Ptr(native_label_id, native_ys, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
         public static void PlotImage(string label_id, IntPtr user_texture_id, ImPlotPoint bounds_min, ImPlotPoint bounds_max)
         {
             byte* native_label_id;
@@ -21720,7 +22942,7 @@ namespace ImPlotNET
             int stride = sizeof(float);
             fixed (float* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedFloatPtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedFloatPtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -21753,7 +22975,7 @@ namespace ImPlotNET
             int stride = sizeof(float);
             fixed (float* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedFloatPtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedFloatPtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -21785,7 +23007,7 @@ namespace ImPlotNET
             int stride = sizeof(float);
             fixed (float* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedFloatPtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedFloatPtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -21816,7 +23038,7 @@ namespace ImPlotNET
             int stride = sizeof(float);
             fixed (float* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedFloatPtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedFloatPtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -21846,7 +23068,7 @@ namespace ImPlotNET
             int stride = sizeof(float);
             fixed (float* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedFloatPtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedFloatPtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -21875,7 +23097,7 @@ namespace ImPlotNET
             else { native_label_id = null; }
             fixed (float* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedFloatPtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedFloatPtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -21909,7 +23131,7 @@ namespace ImPlotNET
             int stride = sizeof(double);
             fixed (double* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadeddoublePtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadeddoublePtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -21942,7 +23164,7 @@ namespace ImPlotNET
             int stride = sizeof(double);
             fixed (double* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadeddoublePtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadeddoublePtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -21974,7 +23196,7 @@ namespace ImPlotNET
             int stride = sizeof(double);
             fixed (double* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadeddoublePtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadeddoublePtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22005,7 +23227,7 @@ namespace ImPlotNET
             int stride = sizeof(double);
             fixed (double* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadeddoublePtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadeddoublePtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22035,7 +23257,7 @@ namespace ImPlotNET
             int stride = sizeof(double);
             fixed (double* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadeddoublePtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadeddoublePtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22064,7 +23286,7 @@ namespace ImPlotNET
             else { native_label_id = null; }
             fixed (double* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadeddoublePtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadeddoublePtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22098,7 +23320,7 @@ namespace ImPlotNET
             int stride = sizeof(sbyte);
             fixed (sbyte* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS8PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS8PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22131,7 +23353,7 @@ namespace ImPlotNET
             int stride = sizeof(sbyte);
             fixed (sbyte* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS8PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS8PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22163,7 +23385,7 @@ namespace ImPlotNET
             int stride = sizeof(sbyte);
             fixed (sbyte* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS8PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS8PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22194,7 +23416,7 @@ namespace ImPlotNET
             int stride = sizeof(sbyte);
             fixed (sbyte* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS8PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS8PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22224,7 +23446,7 @@ namespace ImPlotNET
             int stride = sizeof(sbyte);
             fixed (sbyte* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS8PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS8PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22253,7 +23475,7 @@ namespace ImPlotNET
             else { native_label_id = null; }
             fixed (sbyte* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS8PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS8PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22287,7 +23509,7 @@ namespace ImPlotNET
             int stride = sizeof(byte);
             fixed (byte* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU8PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU8PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22320,7 +23542,7 @@ namespace ImPlotNET
             int stride = sizeof(byte);
             fixed (byte* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU8PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU8PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22352,7 +23574,7 @@ namespace ImPlotNET
             int stride = sizeof(byte);
             fixed (byte* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU8PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU8PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22383,7 +23605,7 @@ namespace ImPlotNET
             int stride = sizeof(byte);
             fixed (byte* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU8PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU8PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22413,7 +23635,7 @@ namespace ImPlotNET
             int stride = sizeof(byte);
             fixed (byte* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU8PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU8PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22442,7 +23664,7 @@ namespace ImPlotNET
             else { native_label_id = null; }
             fixed (byte* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU8PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU8PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22476,7 +23698,7 @@ namespace ImPlotNET
             int stride = sizeof(short);
             fixed (short* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS16PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS16PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22509,7 +23731,7 @@ namespace ImPlotNET
             int stride = sizeof(short);
             fixed (short* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS16PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS16PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22541,7 +23763,7 @@ namespace ImPlotNET
             int stride = sizeof(short);
             fixed (short* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS16PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS16PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22572,7 +23794,7 @@ namespace ImPlotNET
             int stride = sizeof(short);
             fixed (short* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS16PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS16PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22602,7 +23824,7 @@ namespace ImPlotNET
             int stride = sizeof(short);
             fixed (short* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS16PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS16PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22631,7 +23853,7 @@ namespace ImPlotNET
             else { native_label_id = null; }
             fixed (short* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS16PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS16PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22665,7 +23887,7 @@ namespace ImPlotNET
             int stride = sizeof(ushort);
             fixed (ushort* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU16PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU16PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22698,7 +23920,7 @@ namespace ImPlotNET
             int stride = sizeof(ushort);
             fixed (ushort* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU16PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU16PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22730,7 +23952,7 @@ namespace ImPlotNET
             int stride = sizeof(ushort);
             fixed (ushort* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU16PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU16PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22761,7 +23983,7 @@ namespace ImPlotNET
             int stride = sizeof(ushort);
             fixed (ushort* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU16PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU16PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22791,7 +24013,7 @@ namespace ImPlotNET
             int stride = sizeof(ushort);
             fixed (ushort* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU16PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU16PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22820,7 +24042,7 @@ namespace ImPlotNET
             else { native_label_id = null; }
             fixed (ushort* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU16PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU16PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22854,7 +24076,7 @@ namespace ImPlotNET
             int stride = sizeof(int);
             fixed (int* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS32PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS32PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22887,7 +24109,7 @@ namespace ImPlotNET
             int stride = sizeof(int);
             fixed (int* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS32PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS32PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22919,7 +24141,7 @@ namespace ImPlotNET
             int stride = sizeof(int);
             fixed (int* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS32PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS32PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22950,7 +24172,7 @@ namespace ImPlotNET
             int stride = sizeof(int);
             fixed (int* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS32PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS32PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -22980,7 +24202,7 @@ namespace ImPlotNET
             int stride = sizeof(int);
             fixed (int* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS32PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS32PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23009,7 +24231,7 @@ namespace ImPlotNET
             else { native_label_id = null; }
             fixed (int* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS32PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS32PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23043,7 +24265,7 @@ namespace ImPlotNET
             int stride = sizeof(uint);
             fixed (uint* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU32PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU32PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23076,7 +24298,7 @@ namespace ImPlotNET
             int stride = sizeof(uint);
             fixed (uint* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU32PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU32PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23108,7 +24330,7 @@ namespace ImPlotNET
             int stride = sizeof(uint);
             fixed (uint* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU32PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU32PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23139,7 +24361,7 @@ namespace ImPlotNET
             int stride = sizeof(uint);
             fixed (uint* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU32PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU32PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23169,7 +24391,7 @@ namespace ImPlotNET
             int stride = sizeof(uint);
             fixed (uint* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU32PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU32PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23198,7 +24420,7 @@ namespace ImPlotNET
             else { native_label_id = null; }
             fixed (uint* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU32PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU32PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23232,7 +24454,7 @@ namespace ImPlotNET
             int stride = sizeof(long);
             fixed (long* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS64PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS64PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23265,7 +24487,7 @@ namespace ImPlotNET
             int stride = sizeof(long);
             fixed (long* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS64PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS64PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23297,7 +24519,7 @@ namespace ImPlotNET
             int stride = sizeof(long);
             fixed (long* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS64PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS64PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23328,7 +24550,7 @@ namespace ImPlotNET
             int stride = sizeof(long);
             fixed (long* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS64PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS64PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23358,7 +24580,7 @@ namespace ImPlotNET
             int stride = sizeof(long);
             fixed (long* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS64PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS64PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23387,7 +24609,7 @@ namespace ImPlotNET
             else { native_label_id = null; }
             fixed (long* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedS64PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedS64PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23421,7 +24643,7 @@ namespace ImPlotNET
             int stride = sizeof(ulong);
             fixed (ulong* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU64PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU64PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23454,7 +24676,7 @@ namespace ImPlotNET
             int stride = sizeof(ulong);
             fixed (ulong* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU64PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU64PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23486,7 +24708,7 @@ namespace ImPlotNET
             int stride = sizeof(ulong);
             fixed (ulong* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU64PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU64PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23517,7 +24739,7 @@ namespace ImPlotNET
             int stride = sizeof(ulong);
             fixed (ulong* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU64PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU64PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23547,7 +24769,7 @@ namespace ImPlotNET
             int stride = sizeof(ulong);
             fixed (ulong* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU64PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU64PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23576,7 +24798,7 @@ namespace ImPlotNET
             else { native_label_id = null; }
             fixed (ulong* native_values = &values)
             {
-                ImPlotNative.ImPlot_PlotShadedU64PtrIntdoubledoubleInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
+                ImPlotNative.ImPlot_PlotShadedU64PtrInt(native_label_id, native_values, count, y_ref, xscale, x0, offset, stride);
                 if (label_id_byteCount > Util.StackAllocationSizeLimit)
                 {
                     Util.Free(native_label_id);
@@ -23610,7 +24832,7 @@ namespace ImPlotNET
             {
                 fixed (float* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedFloatPtrFloatPtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedFloatPtrFloatPtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -23644,7 +24866,7 @@ namespace ImPlotNET
             {
                 fixed (float* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedFloatPtrFloatPtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedFloatPtrFloatPtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -23677,7 +24899,7 @@ namespace ImPlotNET
             {
                 fixed (float* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedFloatPtrFloatPtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedFloatPtrFloatPtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -23709,7 +24931,7 @@ namespace ImPlotNET
             {
                 fixed (float* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedFloatPtrFloatPtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedFloatPtrFloatPtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -23744,7 +24966,7 @@ namespace ImPlotNET
             {
                 fixed (double* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadeddoublePtrdoublePtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadeddoublePtrdoublePtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -23778,7 +25000,7 @@ namespace ImPlotNET
             {
                 fixed (double* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadeddoublePtrdoublePtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadeddoublePtrdoublePtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -23811,7 +25033,7 @@ namespace ImPlotNET
             {
                 fixed (double* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadeddoublePtrdoublePtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadeddoublePtrdoublePtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -23843,7 +25065,7 @@ namespace ImPlotNET
             {
                 fixed (double* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadeddoublePtrdoublePtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadeddoublePtrdoublePtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -23878,7 +25100,7 @@ namespace ImPlotNET
             {
                 fixed (sbyte* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS8PtrS8PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS8PtrS8PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -23912,7 +25134,7 @@ namespace ImPlotNET
             {
                 fixed (sbyte* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS8PtrS8PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS8PtrS8PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -23945,7 +25167,7 @@ namespace ImPlotNET
             {
                 fixed (sbyte* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS8PtrS8PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS8PtrS8PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -23977,7 +25199,7 @@ namespace ImPlotNET
             {
                 fixed (sbyte* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS8PtrS8PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS8PtrS8PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24012,7 +25234,7 @@ namespace ImPlotNET
             {
                 fixed (byte* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU8PtrU8PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU8PtrU8PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24046,7 +25268,7 @@ namespace ImPlotNET
             {
                 fixed (byte* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU8PtrU8PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU8PtrU8PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24079,7 +25301,7 @@ namespace ImPlotNET
             {
                 fixed (byte* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU8PtrU8PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU8PtrU8PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24111,7 +25333,7 @@ namespace ImPlotNET
             {
                 fixed (byte* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU8PtrU8PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU8PtrU8PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24146,7 +25368,7 @@ namespace ImPlotNET
             {
                 fixed (short* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS16PtrS16PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS16PtrS16PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24180,7 +25402,7 @@ namespace ImPlotNET
             {
                 fixed (short* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS16PtrS16PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS16PtrS16PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24213,7 +25435,7 @@ namespace ImPlotNET
             {
                 fixed (short* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS16PtrS16PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS16PtrS16PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24245,7 +25467,7 @@ namespace ImPlotNET
             {
                 fixed (short* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS16PtrS16PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS16PtrS16PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24280,7 +25502,7 @@ namespace ImPlotNET
             {
                 fixed (ushort* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU16PtrU16PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU16PtrU16PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24314,7 +25536,7 @@ namespace ImPlotNET
             {
                 fixed (ushort* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU16PtrU16PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU16PtrU16PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24347,7 +25569,7 @@ namespace ImPlotNET
             {
                 fixed (ushort* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU16PtrU16PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU16PtrU16PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24379,7 +25601,7 @@ namespace ImPlotNET
             {
                 fixed (ushort* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU16PtrU16PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU16PtrU16PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24414,7 +25636,7 @@ namespace ImPlotNET
             {
                 fixed (int* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS32PtrS32PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS32PtrS32PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24448,7 +25670,7 @@ namespace ImPlotNET
             {
                 fixed (int* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS32PtrS32PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS32PtrS32PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24481,7 +25703,7 @@ namespace ImPlotNET
             {
                 fixed (int* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS32PtrS32PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS32PtrS32PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24513,7 +25735,7 @@ namespace ImPlotNET
             {
                 fixed (int* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS32PtrS32PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS32PtrS32PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24548,7 +25770,7 @@ namespace ImPlotNET
             {
                 fixed (uint* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU32PtrU32PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU32PtrU32PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24582,7 +25804,7 @@ namespace ImPlotNET
             {
                 fixed (uint* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU32PtrU32PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU32PtrU32PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24615,7 +25837,7 @@ namespace ImPlotNET
             {
                 fixed (uint* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU32PtrU32PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU32PtrU32PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24647,7 +25869,7 @@ namespace ImPlotNET
             {
                 fixed (uint* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU32PtrU32PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU32PtrU32PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24682,7 +25904,7 @@ namespace ImPlotNET
             {
                 fixed (long* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS64PtrS64PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS64PtrS64PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24716,7 +25938,7 @@ namespace ImPlotNET
             {
                 fixed (long* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS64PtrS64PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS64PtrS64PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24749,7 +25971,7 @@ namespace ImPlotNET
             {
                 fixed (long* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS64PtrS64PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS64PtrS64PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24781,7 +26003,7 @@ namespace ImPlotNET
             {
                 fixed (long* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedS64PtrS64PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedS64PtrS64PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24816,7 +26038,7 @@ namespace ImPlotNET
             {
                 fixed (ulong* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU64PtrU64PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU64PtrU64PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24850,7 +26072,7 @@ namespace ImPlotNET
             {
                 fixed (ulong* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU64PtrU64PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU64PtrU64PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24883,7 +26105,7 @@ namespace ImPlotNET
             {
                 fixed (ulong* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU64PtrU64PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU64PtrU64PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -24915,7 +26137,7 @@ namespace ImPlotNET
             {
                 fixed (ulong* native_ys = &ys)
                 {
-                    ImPlotNative.ImPlot_PlotShadedU64PtrU64PtrIntInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
+                    ImPlotNative.ImPlot_PlotShadedU64PtrU64PtrInt(native_label_id, native_xs, native_ys, count, y_ref, offset, stride);
                     if (label_id_byteCount > Util.StackAllocationSizeLimit)
                     {
                         Util.Free(native_label_id);
@@ -31882,6 +33104,906 @@ namespace ImPlotNET
             ImPlotNative.ImPlot_PlotToPixelsdouble(&__retval, x, y, y_axis);
             return __retval;
         }
+        public static void PlotVLines(string label_id, ref float xs, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(float);
+            fixed (float* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesFloatPtr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref float xs, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(float);
+            fixed (float* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesFloatPtr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref float xs, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (float* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesFloatPtr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref double xs, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(double);
+            fixed (double* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesdoublePtr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref double xs, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(double);
+            fixed (double* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesdoublePtr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref double xs, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (double* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesdoublePtr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref sbyte xs, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(sbyte);
+            fixed (sbyte* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesS8Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref sbyte xs, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(sbyte);
+            fixed (sbyte* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesS8Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref sbyte xs, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (sbyte* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesS8Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref byte xs, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(byte);
+            fixed (byte* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesU8Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref byte xs, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(byte);
+            fixed (byte* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesU8Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref byte xs, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (byte* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesU8Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref short xs, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(short);
+            fixed (short* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesS16Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref short xs, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(short);
+            fixed (short* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesS16Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref short xs, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (short* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesS16Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref ushort xs, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(ushort);
+            fixed (ushort* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesU16Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref ushort xs, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(ushort);
+            fixed (ushort* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesU16Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref ushort xs, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (ushort* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesU16Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref int xs, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(int);
+            fixed (int* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesS32Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref int xs, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(int);
+            fixed (int* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesS32Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref int xs, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (int* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesS32Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref uint xs, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(uint);
+            fixed (uint* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesU32Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref uint xs, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(uint);
+            fixed (uint* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesU32Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref uint xs, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (uint* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesU32Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref long xs, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(long);
+            fixed (long* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesS64Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref long xs, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(long);
+            fixed (long* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesS64Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref long xs, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (long* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesS64Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref ulong xs, int count)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int offset = 0;
+            int stride = sizeof(ulong);
+            fixed (ulong* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesU64Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref ulong xs, int count, int offset)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            int stride = sizeof(ulong);
+            fixed (ulong* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesU64Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
+        public static void PlotVLines(string label_id, ref ulong xs, int count, int offset, int stride)
+        {
+            byte* native_label_id;
+            int label_id_byteCount = 0;
+            if (label_id != null)
+            {
+                label_id_byteCount = Encoding.UTF8.GetByteCount(label_id);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label_id = Util.Allocate(label_id_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_id_stackBytes = stackalloc byte[label_id_byteCount + 1];
+                    native_label_id = native_label_id_stackBytes;
+                }
+                int native_label_id_offset = Util.GetUtf8(label_id, native_label_id, label_id_byteCount);
+                native_label_id[native_label_id_offset] = 0;
+            }
+            else { native_label_id = null; }
+            fixed (ulong* native_xs = &xs)
+            {
+                ImPlotNative.ImPlot_PlotVLinesU64Ptr(native_label_id, native_xs, count, offset, stride);
+                if (label_id_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    Util.Free(native_label_id);
+                }
+            }
+        }
         public static void PopColormap()
         {
             int count = 1;
@@ -32491,9 +34613,14 @@ namespace ImPlotNET
         {
             ImPlotNative.ImPlot_SetPlotYAxis(y_axis);
         }
-        public static void ShowColormapScale(double scale_min, double scale_max, float height)
+        public static void ShowColormapScale(double scale_min, double scale_max)
         {
-            ImPlotNative.ImPlot_ShowColormapScale(scale_min, scale_max, height);
+            Vector2 size = new Vector2();
+            ImPlotNative.ImPlot_ShowColormapScale(scale_min, scale_max, size);
+        }
+        public static void ShowColormapScale(double scale_min, double scale_max, Vector2 size)
+        {
+            ImPlotNative.ImPlot_ShowColormapScale(scale_min, scale_max, size);
         }
         public static bool ShowColormapSelector(string label)
         {

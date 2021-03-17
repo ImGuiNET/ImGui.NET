@@ -16,11 +16,25 @@ namespace ImPlotNET
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_AnnotateClampedVec4(double x, double y, Vector2 pix_offset, Vector4 color, byte* fmt);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte ImPlot_BeginLegendDragDropSource(byte* label_id, ImGuiDragDropFlags flags);
+        public static extern byte ImPlot_BeginDragDropSource(ImGuiKeyModFlags key_mods, ImGuiDragDropFlags flags);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern byte ImPlot_BeginDragDropSourceItem(byte* label_id, ImGuiDragDropFlags flags);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern byte ImPlot_BeginDragDropSourceX(ImGuiKeyModFlags key_mods, ImGuiDragDropFlags flags);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern byte ImPlot_BeginDragDropSourceY(ImPlotYAxis axis, ImGuiKeyModFlags key_mods, ImGuiDragDropFlags flags);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern byte ImPlot_BeginDragDropTarget();
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern byte ImPlot_BeginDragDropTargetLegend();
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern byte ImPlot_BeginDragDropTargetX();
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern byte ImPlot_BeginDragDropTargetY(ImPlotYAxis axis);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte ImPlot_BeginLegendPopup(byte* label_id, ImGuiMouseButton mouse_button);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte ImPlot_BeginPlot(byte* title_id, byte* x_label, byte* y_label, Vector2 size, ImPlotFlags flags, ImPlotAxisFlags x_flags, ImPlotAxisFlags y_flags, ImPlotAxisFlags y2_flags, ImPlotAxisFlags y3_flags);
+        public static extern byte ImPlot_BeginPlot(byte* title_id, byte* x_label, byte* y_label, Vector2 size, ImPlotFlags flags, ImPlotAxisFlags x_flags, ImPlotAxisFlags y_flags, ImPlotAxisFlags y2_flags, ImPlotAxisFlags y3_flags, byte* y2_label, byte* y3_label);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr ImPlot_CreateContext();
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
@@ -32,7 +46,9 @@ namespace ImPlotNET
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte ImPlot_DragPoint(byte* id, double* x, double* y, byte show_label, Vector4 col, float radius);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_EndLegendDragDropSource();
+        public static extern void ImPlot_EndDragDropSource();
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_EndDragDropTarget();
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_EndLegendPopup();
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
@@ -47,8 +63,6 @@ namespace ImPlotNET
         public static extern int ImPlot_GetColormapSize();
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr ImPlot_GetCurrentContext();
-        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern ImPlotInputMap* ImPlot_GetInputMap();
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_GetLastItemColor(Vector4* pOut);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
@@ -82,7 +96,11 @@ namespace ImPlotNET
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte ImPlot_IsPlotYAxisHovered(ImPlotYAxis y_axis);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_LerpColormap(Vector4* pOut, float t);
+        public static extern void ImPlot_ItemIconVec4(Vector4 col);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_ItemIconU32(uint col);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_LerpColormapFloat(Vector4* pOut, float t);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_LinkNextPlotLimits(double* xmin, double* xmax, double* ymin, double* ymax, double* ymin2, double* ymax2, double* ymin3, double* ymax3);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
@@ -294,6 +312,26 @@ namespace ImPlotNET
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_PlotHeatmapU64Ptr(byte* label_id, ulong* values, int rows, int cols, double scale_min, double scale_max, byte* label_fmt, ImPlotPoint bounds_min, ImPlotPoint bounds_max);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotHLinesFloatPtr(byte* label_id, float* ys, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotHLinesdoublePtr(byte* label_id, double* ys, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotHLinesS8Ptr(byte* label_id, sbyte* ys, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotHLinesU8Ptr(byte* label_id, byte* ys, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotHLinesS16Ptr(byte* label_id, short* ys, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotHLinesU16Ptr(byte* label_id, ushort* ys, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotHLinesS32Ptr(byte* label_id, int* ys, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotHLinesU32Ptr(byte* label_id, uint* ys, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotHLinesS64Ptr(byte* label_id, long* ys, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotHLinesU64Ptr(byte* label_id, ulong* ys, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_PlotImage(byte* label_id, IntPtr user_texture_id, ImPlotPoint bounds_min, ImPlotPoint bounds_max, Vector2 uv0, Vector2 uv1, Vector4 tint_col);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_PlotLineFloatPtrInt(byte* label_id, float* values, int count, double xscale, double x0, int offset, int stride);
@@ -396,45 +434,45 @@ namespace ImPlotNET
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_PlotScatterU64PtrU64Ptr(byte* label_id, ulong* xs, ulong* ys, int count, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedFloatPtrIntdoubledoubleInt(byte* label_id, float* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
+        public static extern void ImPlot_PlotShadedFloatPtrInt(byte* label_id, float* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadeddoublePtrIntdoubledoubleInt(byte* label_id, double* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
+        public static extern void ImPlot_PlotShadeddoublePtrInt(byte* label_id, double* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedS8PtrIntdoubledoubleInt(byte* label_id, sbyte* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
+        public static extern void ImPlot_PlotShadedS8PtrInt(byte* label_id, sbyte* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedU8PtrIntdoubledoubleInt(byte* label_id, byte* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
+        public static extern void ImPlot_PlotShadedU8PtrInt(byte* label_id, byte* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedS16PtrIntdoubledoubleInt(byte* label_id, short* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
+        public static extern void ImPlot_PlotShadedS16PtrInt(byte* label_id, short* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedU16PtrIntdoubledoubleInt(byte* label_id, ushort* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
+        public static extern void ImPlot_PlotShadedU16PtrInt(byte* label_id, ushort* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedS32PtrIntdoubledoubleInt(byte* label_id, int* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
+        public static extern void ImPlot_PlotShadedS32PtrInt(byte* label_id, int* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedU32PtrIntdoubledoubleInt(byte* label_id, uint* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
+        public static extern void ImPlot_PlotShadedU32PtrInt(byte* label_id, uint* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedS64PtrIntdoubledoubleInt(byte* label_id, long* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
+        public static extern void ImPlot_PlotShadedS64PtrInt(byte* label_id, long* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedU64PtrIntdoubledoubleInt(byte* label_id, ulong* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
+        public static extern void ImPlot_PlotShadedU64PtrInt(byte* label_id, ulong* values, int count, double y_ref, double xscale, double x0, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedFloatPtrFloatPtrIntInt(byte* label_id, float* xs, float* ys, int count, double y_ref, int offset, int stride);
+        public static extern void ImPlot_PlotShadedFloatPtrFloatPtrInt(byte* label_id, float* xs, float* ys, int count, double y_ref, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadeddoublePtrdoublePtrIntInt(byte* label_id, double* xs, double* ys, int count, double y_ref, int offset, int stride);
+        public static extern void ImPlot_PlotShadeddoublePtrdoublePtrInt(byte* label_id, double* xs, double* ys, int count, double y_ref, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedS8PtrS8PtrIntInt(byte* label_id, sbyte* xs, sbyte* ys, int count, double y_ref, int offset, int stride);
+        public static extern void ImPlot_PlotShadedS8PtrS8PtrInt(byte* label_id, sbyte* xs, sbyte* ys, int count, double y_ref, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedU8PtrU8PtrIntInt(byte* label_id, byte* xs, byte* ys, int count, double y_ref, int offset, int stride);
+        public static extern void ImPlot_PlotShadedU8PtrU8PtrInt(byte* label_id, byte* xs, byte* ys, int count, double y_ref, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedS16PtrS16PtrIntInt(byte* label_id, short* xs, short* ys, int count, double y_ref, int offset, int stride);
+        public static extern void ImPlot_PlotShadedS16PtrS16PtrInt(byte* label_id, short* xs, short* ys, int count, double y_ref, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedU16PtrU16PtrIntInt(byte* label_id, ushort* xs, ushort* ys, int count, double y_ref, int offset, int stride);
+        public static extern void ImPlot_PlotShadedU16PtrU16PtrInt(byte* label_id, ushort* xs, ushort* ys, int count, double y_ref, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedS32PtrS32PtrIntInt(byte* label_id, int* xs, int* ys, int count, double y_ref, int offset, int stride);
+        public static extern void ImPlot_PlotShadedS32PtrS32PtrInt(byte* label_id, int* xs, int* ys, int count, double y_ref, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedU32PtrU32PtrIntInt(byte* label_id, uint* xs, uint* ys, int count, double y_ref, int offset, int stride);
+        public static extern void ImPlot_PlotShadedU32PtrU32PtrInt(byte* label_id, uint* xs, uint* ys, int count, double y_ref, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedS64PtrS64PtrIntInt(byte* label_id, long* xs, long* ys, int count, double y_ref, int offset, int stride);
+        public static extern void ImPlot_PlotShadedS64PtrS64PtrInt(byte* label_id, long* xs, long* ys, int count, double y_ref, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_PlotShadedU64PtrU64PtrIntInt(byte* label_id, ulong* xs, ulong* ys, int count, double y_ref, int offset, int stride);
+        public static extern void ImPlot_PlotShadedU64PtrU64PtrInt(byte* label_id, ulong* xs, ulong* ys, int count, double y_ref, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_PlotShadedFloatPtrFloatPtrFloatPtr(byte* label_id, float* xs, float* ys1, float* ys2, int count, int offset, int stride);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
@@ -542,6 +580,26 @@ namespace ImPlotNET
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_PlotToPixelsdouble(Vector2* pOut, double x, double y, ImPlotYAxis y_axis);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotVLinesFloatPtr(byte* label_id, float* xs, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotVLinesdoublePtr(byte* label_id, double* xs, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotVLinesS8Ptr(byte* label_id, sbyte* xs, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotVLinesU8Ptr(byte* label_id, byte* xs, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotVLinesS16Ptr(byte* label_id, short* xs, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotVLinesU16Ptr(byte* label_id, ushort* xs, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotVLinesS32Ptr(byte* label_id, int* xs, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotVLinesU32Ptr(byte* label_id, uint* xs, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotVLinesS64Ptr(byte* label_id, long* xs, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void ImPlot_PlotVLinesU64Ptr(byte* label_id, ulong* xs, int count, int offset, int stride);
+        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_PopColormap(int count);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_PopPlotClipRect();
@@ -602,7 +660,7 @@ namespace ImPlotNET
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_SetPlotYAxis(ImPlotYAxis y_axis);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlot_ShowColormapScale(double scale_min, double scale_max, float height);
+        public static extern void ImPlot_ShowColormapScale(double scale_min, double scale_max, Vector2 size);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte ImPlot_ShowColormapSelector(byte* label);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
@@ -623,10 +681,6 @@ namespace ImPlotNET
         public static extern void ImPlot_StyleColorsDark(ImPlotStyle* dst);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImPlot_StyleColorsLight(ImPlotStyle* dst);
-        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void ImPlotInputMap_destroy(ImPlotInputMap* self);
-        [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
-        public static extern ImPlotInputMap* ImPlotInputMap_ImPlotInputMap();
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte ImPlotLimits_ContainsPlotPoInt(ImPlotLimits* self, ImPlotPoint p);
         [DllImport("cimplot", CallingConvention = CallingConvention.Cdecl)]
