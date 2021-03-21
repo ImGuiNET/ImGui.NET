@@ -27,10 +27,10 @@ namespace ImGuiNET
         PickerHueWheel = 67108864,
         InputRGB = 134217728,
         InputHSV = 268435456,
-        _OptionsDefault = 177209344,
-        _DisplayMask = 7340032,
-        _DataTypeMask = 25165824,
-        _PickerMask = 100663296,
-        _InputMask = 402653184,
+        OptionsDefault = 177209344,
+        DisplayMask = 7340032,
+        DataTypeMask = 25165824,
+        PickerMask = 100663296,
+        InputMask = 402653184,
     }
 }
