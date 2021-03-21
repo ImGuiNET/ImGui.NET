@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>A .NET wrapper for the ImNodes library.</Description>
+    <Description>A .NET wrapper for the imnodes library.</Description>
     <AssemblyVersion>0.3.0</AssemblyVersion>
     <Authors>Eric Mellino</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -10,10 +10,10 @@
     <PackageId>ImNodes.NET</PackageId>
     <PackagePrereleaseIdentifier></PackagePrereleaseIdentifier>
     <PackageVersion>$(AssemblyVersion)$(PackagePrereleaseIdentifier)</PackageVersion>
-    <PackageTags>ImNodes ImGui ImGui.NET Immediate Mode GUI</PackageTags>
+    <PackageTags>imnodes ImGui ImGui.NET Immediate Mode GUI</PackageTags>
     <PackageProjectUrl>https://github.com/mellinoe/imgui.net</PackageProjectUrl>
-    <DocumentationFile Condition="'$(Configuration)' == 'Release'">$(OutputPath)\ImNodes.NET.xml</DocumentationFile>
-    <RootNamespace>ImNodesNET</RootNamespace>
+    <DocumentationFile Condition="'$(Configuration)' == 'Release'">$(OutputPath)\imnodes.NET.xml</DocumentationFile>
+    <RootNamespace>imnodesNET</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Numerics.Vectors" Version="4.4.0" />

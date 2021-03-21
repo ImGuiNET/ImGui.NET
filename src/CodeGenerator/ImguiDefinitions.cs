@@ -268,6 +268,10 @@ namespace CodeGenerator
             if (memberName.StartsWith(Name))
             {
                 ret = memberName.Substring(Name.Length);
+                if (ret.StartsWith("_"))
+                {
+                    ret = ret.Substring(1);
+                }
             }
 
             if (ret.EndsWith('_'))

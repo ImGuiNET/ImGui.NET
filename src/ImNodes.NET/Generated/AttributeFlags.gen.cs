@@ -1,10 +1,10 @@
-namespace ImNodesNET
+namespace imnodesNET
 {
     [System.Flags]
     public enum AttributeFlags
     {
-        _None = 0,
-        _EnableLinkDetachWithDragClick = 1,
-        _EnableLinkCreationOnSnap = 2,
+        None = 0,
+        EnableLinkDetachWithDragClick = 1,
+        EnableLinkCreationOnSnap = 2,
     }
 }

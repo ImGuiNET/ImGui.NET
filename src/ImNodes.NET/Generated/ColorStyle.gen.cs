@@ -1,23 +1,23 @@
-namespace ImNodesNET
+namespace imnodesNET
 {
     public enum ColorStyle
     {
-        _NodeBackground = 0,
-        _NodeBackgroundHovered = 1,
-        _NodeBackgroundSelected = 2,
-        _NodeOutline = 3,
-        _TitleBar = 4,
-        _TitleBarHovered = 5,
-        _TitleBarSelected = 6,
-        _Link = 7,
-        _LinkHovered = 8,
-        _LinkSelected = 9,
-        _Pin = 10,
-        _PinHovered = 11,
-        _BoxSelector = 12,
-        _BoxSelectorOutline = 13,
-        _GridBackground = 14,
-        _GridLine = 15,
-        _Count = 16,
+        NodeBackground = 0,
+        NodeBackgroundHovered = 1,
+        NodeBackgroundSelected = 2,
+        NodeOutline = 3,
+        TitleBar = 4,
+        TitleBarHovered = 5,
+        TitleBarSelected = 6,
+        Link = 7,
+        LinkHovered = 8,
+        LinkSelected = 9,
+        Pin = 10,
+        PinHovered = 11,
+        BoxSelector = 12,
+        BoxSelectorOutline = 13,
+        GridBackground = 14,
+        GridLine = 15,
+        Count = 16,
     }
 }

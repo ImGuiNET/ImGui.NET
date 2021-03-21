@@ -1,20 +1,20 @@
-namespace ImNodesNET
+namespace imnodesNET
 {
     public enum StyleVar
     {
-        _GridSpacing = 0,
-        _NodeCornerRounding = 1,
-        _NodePaddingHorizontal = 2,
-        _NodePaddingVertical = 3,
-        _NodeBorderThickness = 4,
-        _LinkThickness = 5,
-        _LinkLineSegmentsPerLength = 6,
-        _LinkHoverDistance = 7,
-        _PinCircleRadius = 8,
-        _PinQuadSideLength = 9,
-        _PinTriangleSideLength = 10,
-        _PinLineThickness = 11,
-        _PinHoverRadius = 12,
-        _PinOffset = 13,
+        GridSpacing = 0,
+        NodeCornerRounding = 1,
+        NodePaddingHorizontal = 2,
+        NodePaddingVertical = 3,
+        NodeBorderThickness = 4,
+        LinkThickness = 5,
+        LinkLineSegmentsPerLength = 6,
+        LinkHoverDistance = 7,
+        PinCircleRadius = 8,
+        PinQuadSideLength = 9,
+        PinTriangleSideLength = 10,
+        PinLineThickness = 11,
+        PinHoverRadius = 12,
+        PinOffset = 13,
     }
 }

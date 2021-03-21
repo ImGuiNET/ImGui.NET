@@ -1,10 +1,10 @@
-namespace ImNodesNET
+namespace imnodesNET
 {
     [System.Flags]
     public enum StyleFlags
     {
-        _None = 0,
-        _NodeOutline = 1,
-        _GridLines = 4,
+        None = 0,
+        NodeOutline = 1,
+        GridLines = 4,
     }
 }

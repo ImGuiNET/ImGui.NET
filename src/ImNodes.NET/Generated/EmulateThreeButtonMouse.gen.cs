@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using ImGuiNET;
 
-namespace ImNodesNET
+namespace imnodesNET
 {
     public unsafe partial struct EmulateThreeButtonMouse
     {
@@ -23,7 +23,7 @@ namespace ImNodesNET
         public IntPtr modifier { get => (IntPtr)NativePtr->modifier; set => NativePtr->modifier = (byte*)value; }
         public void Destroy()
         {
-            ImNodesNative.EmulateThreeButtonMouse_destroy((EmulateThreeButtonMouse*)(NativePtr));
+            imnodesNative.EmulateThreeButtonMouse_destroy((EmulateThreeButtonMouse*)(NativePtr));
         }
     }
 }

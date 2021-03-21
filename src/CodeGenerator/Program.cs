@@ -39,9 +39,9 @@ namespace CodeGenerator
             {
                 "cimgui" => "ImGuiNET",
                 "cimplot" => "ImPlotNET",
-                "cimnodes" => "ImNodesNET",
+                "cimnodes" => "imnodesNET",
                 "cimguizmo" => "ImGuizmoNET",
-                _ => throw new NotImplementedException()
+                _ => throw new NotImplementedException($"Library \"{libraryName}\" is not supported.")
             };
 
             bool referencesImGui = libraryName switch
@@ -50,16 +50,16 @@ namespace CodeGenerator
                 "cimplot" => true,
                 "cimnodes" => true,
                 "cimguizmo" => true,
-                _ => throw new NotImplementedException()
+                _ => throw new NotImplementedException($"Library \"{libraryName}\" is not supported.")
             };
 
             string classPrefix = libraryName switch
             {
                 "cimgui" => "ImGui",
                 "cimplot" => "ImPlot",
-                "cimnodes" => "ImNodes",
+                "cimnodes" => "imnodes",
                 "cimguizmo" => "ImGuizmo",
-                _ => throw new NotImplementedException()
+                _ => throw new NotImplementedException($"Library \"{libraryName}\" is not supported.")
             };
 
             string dllName = libraryName switch
