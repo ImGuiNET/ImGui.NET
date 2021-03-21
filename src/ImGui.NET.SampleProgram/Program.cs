@@ -24,7 +24,6 @@ namespace ImGuiNET
         private static int _dragInt = 0;
         private static Vector3 _clearColor = new Vector3(0.45f, 0.55f, 0.6f);
         private static bool _showImGuiDemoWindow = true;
-        private static bool _showImPlotDemoWindow = false;
         private static bool _showAnotherWindow = false;
         private static bool _showMemoryEditor = false;
         private static byte[] _memoryEditorData;
@@ -92,7 +91,6 @@ namespace ImGuiNET
                 ImGui.Text($"Mouse position: {ImGui.GetMousePos()}");
 
                 ImGui.Checkbox("ImGui Demo Window", ref _showImGuiDemoWindow);                 // Edit bools storing our windows open/close state
-                ImGui.Checkbox("ImPlot Demo Window", ref _showImPlotDemoWindow);                 // Edit bools storing our windows open/close state
                 ImGui.Checkbox("Another Window", ref _showAnotherWindow);
                 ImGui.Checkbox("Memory Editor", ref _showMemoryEditor);
                 if (ImGui.Button("Button"))                                         // Buttons return true when clicked (NB: most widgets return true when edited/activated)
@@ -125,11 +123,6 @@ namespace ImGuiNET
                 ImGui.ShowDemoWindow(ref _showImGuiDemoWindow);
             }
             
-            if (_showImPlotDemoWindow)
-            {
-                ImPlot.ShowDemoWindow(ref _showImPlotDemoWindow);
-            }
-
             if (ImGui.TreeNode("Tabs"))
             {
                 if (ImGui.TreeNode("Basic"))
