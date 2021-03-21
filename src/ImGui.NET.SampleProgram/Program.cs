@@ -38,7 +38,7 @@ namespace ImGuiNET
             // Create window, GraphicsDevice, and all resources necessary for the demo.
             VeldridStartup.CreateWindowAndGraphicsDevice(
                 new WindowCreateInfo(50, 50, 1280, 720, WindowState.Normal, "ImGui.NET Sample Program"),
-                new GraphicsDeviceOptions(true, null, true),
+                new GraphicsDeviceOptions(true, null, true, ResourceBindingModel.Improved, true, true),
                 out _window,
                 out _gd);
             _window.Resized += () =>

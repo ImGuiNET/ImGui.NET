@@ -138,7 +138,9 @@ namespace CodeGenerator
         public static readonly HashSet<string> SkippedFunctions = new HashSet<string>()
         {
             "igInputText",
-            "igInputTextMultiline"
+            "igInputTextMultiline",
+            "igCalcTextSize",
+            "igInputTextWithHint"
         };
     }
 }
