@@ -63,6 +63,7 @@ namespace ImGuiNET
             ImGui.SetCurrentContext(context);
             var fonts = ImGui.GetIO().Fonts;
             ImGui.GetIO().Fonts.AddFontDefault();
+            ImGui.GetIO().BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
 
             CreateDeviceResources(gd, outputDescription);
             SetKeyMappings();
@@ -520,7 +521,7 @@ namespace ImGuiNET
                             (uint)(pcmd.ClipRect.Z - pcmd.ClipRect.X),
                             (uint)(pcmd.ClipRect.W - pcmd.ClipRect.Y));
 
-                        cl.DrawIndexed(pcmd.ElemCount, 1, (uint)idx_offset, vtx_offset, 0);
+                        cl.DrawIndexed(pcmd.ElemCount, 1, (uint)idx_offset, (int) (vtx_offset + pcmd.VtxOffset), 0);
                     }
 
                     idx_offset += (int)pcmd.ElemCount;
