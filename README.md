@@ -18,6 +18,15 @@ ImGui.NET can be built in Visual Studio or on the command line. The .NET Core SD
 
 ImGui.NET currently provides a raw wrapper around the ImGui native API, and also provides a very thin safe, managed API for convenience. It is currently very much like using the native library, which is very simple, flexible, and robust. The easiest way to figure out how to use the library is to read the documentation of imgui itself, mostly in the imgui.cpp, and imgui.h files, as well as the exported functions in cimgui.h. Looking at the sample program code will also give some indication about basic usage.
 
+# Debugging native code
+
+ImGui.NET is a wrapper over native code. By default, this native code is packaged and released in an optimized form, making debugging difficult. To obtain a debuggable version of the native code, follow these steps:
+
+1. Clone the [ImGui.NET-nativebuild](https://github.com/mellinoe/ImGui.NET-nativebuild) repo, at the tag matching the version of ImGui.NET you are using.
+2. In the ImGui.NET-nativebuild repo, run `build.cmd debug` or `build.sh debug` (depending on your platform).
+3. Copy the produced binaries (cimgui.dll, libcimgui.so, or libcimgui.dylib) into your application.
+4. Run the program under a native debugger, or enable mixed-mode debugging in Visual Studio.
+
 # See Also
 
 https://github.com/ocornut/imgui
