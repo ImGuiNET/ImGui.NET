@@ -25,9 +25,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="$(RepositoryRootDirectory)/deps/cimgui/win-x64/cimgui.dll" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="$(RepositoryRootDirectory)/deps/cimgui/osx-x64/cimgui.dylib" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="$(RepositoryRootDirectory)/deps/cimgui/linux-x64/cimgui.so" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/brotlicommon.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/brotlidec.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/bz2.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/cimgui.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/cimguizmo.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/cimnodes.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/cimplot.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/freetype.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/libpng16.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/zlib1.dll" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
