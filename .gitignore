@@ -258,8 +258,5 @@ Session.vim
 # Rider/Jetbrains IDEs
 .idea
 
-# download dir
-deps/
-
 # VS Launch
 launchSettings.json
