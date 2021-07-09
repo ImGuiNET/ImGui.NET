@@ -59,6 +59,7 @@ namespace ImPlotNET
         public Vector4 Colors_21;
         public Vector4 Colors_22;
         public Vector4 Colors_23;
+        public ImPlotColormap Colormap;
         public byte AntiAliasedLines;
         public byte UseLocalTime;
         public byte UseISO8601;
@@ -100,6 +101,7 @@ namespace ImPlotNET
         public ref Vector2 PlotDefaultSize => ref Unsafe.AsRef<Vector2>(&NativePtr->PlotDefaultSize);
         public ref Vector2 PlotMinSize => ref Unsafe.AsRef<Vector2>(&NativePtr->PlotMinSize);
         public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 24);
+        public ref ImPlotColormap Colormap => ref Unsafe.AsRef<ImPlotColormap>(&NativePtr->Colormap);
         public ref bool AntiAliasedLines => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedLines);
         public ref bool UseLocalTime => ref Unsafe.AsRef<bool>(&NativePtr->UseLocalTime);
         public ref bool UseISO8601 => ref Unsafe.AsRef<bool>(&NativePtr->UseISO8601);
