@@ -18,12 +18,13 @@ namespace ImGuiNET
         public short ConfigDataCount;
         public ushort FallbackChar;
         public ushort EllipsisChar;
+        public ushort DotChar;
         public byte DirtyLookupTables;
         public float Scale;
         public float Ascent;
         public float Descent;
         public int MetricsTotalSurface;
-        public fixed byte Used4kPagesMap[2];
+        public fixed byte Used4kPagesMap[34];
     }
     public unsafe partial struct ImFontPtr
     {
@@ -44,12 +45,13 @@ namespace ImGuiNET
         public ref short ConfigDataCount => ref Unsafe.AsRef<short>(&NativePtr->ConfigDataCount);
         public ref ushort FallbackChar => ref Unsafe.AsRef<ushort>(&NativePtr->FallbackChar);
         public ref ushort EllipsisChar => ref Unsafe.AsRef<ushort>(&NativePtr->EllipsisChar);
+        public ref ushort DotChar => ref Unsafe.AsRef<ushort>(&NativePtr->DotChar);
         public ref bool DirtyLookupTables => ref Unsafe.AsRef<bool>(&NativePtr->DirtyLookupTables);
         public ref float Scale => ref Unsafe.AsRef<float>(&NativePtr->Scale);
         public ref float Ascent => ref Unsafe.AsRef<float>(&NativePtr->Ascent);
         public ref float Descent => ref Unsafe.AsRef<float>(&NativePtr->Descent);
         public ref int MetricsTotalSurface => ref Unsafe.AsRef<int>(&NativePtr->MetricsTotalSurface);
-        public RangeAccessor<byte> Used4kPagesMap => new RangeAccessor<byte>(NativePtr->Used4kPagesMap, 2);
+        public RangeAccessor<byte> Used4kPagesMap => new RangeAccessor<byte>(NativePtr->Used4kPagesMap, 34);
         public void AddGlyph(ImFontConfigPtr src_cfg, ushort c, float x0, float y0, float x1, float y1, float u0, float v0, float u1, float v1, float advance_x)
         {
             ImFontConfig* native_src_cfg = src_cfg.NativePtr;
@@ -110,10 +112,6 @@ namespace ImGuiNET
         {
             ImDrawList* native_draw_list = draw_list.NativePtr;
             ImGuiNative.ImFont_RenderChar((ImFont*)(NativePtr), native_draw_list, size, pos, col, c);
-        }
-        public void SetFallbackChar(ushort c)
-        {
-            ImGuiNative.ImFont_SetFallbackChar((ImFont*)(NativePtr), c);
         }
         public void SetGlyphVisible(ushort c, bool visible)
         {

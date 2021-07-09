@@ -13,7 +13,6 @@ namespace ImGuiNET
         public ImGuiViewportFlags ViewportFlagsOverrideClear;
         public ImGuiTabItemFlags TabItemFlagsOverrideSet;
         public ImGuiDockNodeFlags DockNodeFlagsOverrideSet;
-        public ImGuiDockNodeFlags DockNodeFlagsOverrideClear;
         public byte DockingAlwaysTabBar;
         public byte DockingAllowUnclassed;
     }
@@ -31,7 +30,6 @@ namespace ImGuiNET
         public ref ImGuiViewportFlags ViewportFlagsOverrideClear => ref Unsafe.AsRef<ImGuiViewportFlags>(&NativePtr->ViewportFlagsOverrideClear);
         public ref ImGuiTabItemFlags TabItemFlagsOverrideSet => ref Unsafe.AsRef<ImGuiTabItemFlags>(&NativePtr->TabItemFlagsOverrideSet);
         public ref ImGuiDockNodeFlags DockNodeFlagsOverrideSet => ref Unsafe.AsRef<ImGuiDockNodeFlags>(&NativePtr->DockNodeFlagsOverrideSet);
-        public ref ImGuiDockNodeFlags DockNodeFlagsOverrideClear => ref Unsafe.AsRef<ImGuiDockNodeFlags>(&NativePtr->DockNodeFlagsOverrideClear);
         public ref bool DockingAlwaysTabBar => ref Unsafe.AsRef<bool>(&NativePtr->DockingAlwaysTabBar);
         public ref bool DockingAllowUnclassed => ref Unsafe.AsRef<bool>(&NativePtr->DockingAllowUnclassed);
         public void Destroy()
