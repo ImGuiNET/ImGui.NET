@@ -3,10 +3,12 @@ using ImPlotNET;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Numerics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 using Veldrid;
+using Shader = Veldrid.Shader;
+using Texture = Veldrid.Texture;
 
 namespace ImGuiNET
 {
@@ -41,7 +43,7 @@ namespace ImGuiNET
 
 		private int _windowWidth;
 		private int _windowHeight;
-		private Vector2 _scaleFactor = Vector2.One;
+		private Vector2 _scaleFactor = new Vector2(1, 1);
 
 		// Image trackers
 		private readonly Dictionary<TextureView, ResourceSetInfo> _setsByView
@@ -328,8 +330,8 @@ namespace ImGuiNET
 		{
 			ImGuiIOPtr io = ImGui.GetIO();
 			io.DisplaySize = new Vector2(
-				_windowWidth / _scaleFactor.X,
-				_windowHeight / _scaleFactor.Y);
+				_windowWidth / _scaleFactor.x,
+				_windowHeight / _scaleFactor.y);
 			io.DisplayFramebufferScale = _scaleFactor;
 			io.DeltaTime = deltaSeconds; // DeltaTime is in seconds.
 		}
@@ -338,7 +340,7 @@ namespace ImGuiNET
 		{
 			ImGuiIOPtr io = ImGui.GetIO();
 
-			Vector2 mousePosition = snapshot.MousePosition;
+			Vector2 mousePosition = new Vector2(snapshot.MousePosition.X, snapshot.MousePosition.Y);
 
 			// Determine if any of the mouse buttons were pressed during this snapshot period, even if they are no longer held.
 			bool leftPressed = false;
@@ -476,10 +478,10 @@ namespace ImGuiNET
 
 			// Setup orthographic projection matrix into our constant buffer
 			ImGuiIOPtr io = ImGui.GetIO();
-			Matrix4x4 mvp = Matrix4x4.CreateOrthographicOffCenter(
+			var mvp = System.Numerics.Matrix4x4.CreateOrthographicOffCenter(
 				0f,
-				io.DisplaySize.X,
-				io.DisplaySize.Y,
+				io.DisplaySize.x,
+				io.DisplaySize.y,
 				0.0f,
 				-1.0f,
 				1.0f);
@@ -522,10 +524,10 @@ namespace ImGuiNET
 
 						cl.SetScissorRect(
 							0,
-							(uint)pcmd.ClipRect.X,
-							(uint)pcmd.ClipRect.Y,
-							(uint)(pcmd.ClipRect.Z - pcmd.ClipRect.X),
-							(uint)(pcmd.ClipRect.W - pcmd.ClipRect.Y));
+							(uint)pcmd.ClipRect.x,
+							(uint)pcmd.ClipRect.y,
+							(uint)(pcmd.ClipRect.z - pcmd.ClipRect.x),
+							(uint)(pcmd.ClipRect.w - pcmd.ClipRect.y));
 
 						cl.DrawIndexed(pcmd.ElemCount, 1, (uint)idx_offset, vtx_offset, 0);
 					}

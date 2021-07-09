@@ -1,11 +1,13 @@
-﻿using imnodesNET;
+﻿#define UIMGUI_USE_UNITY_MATHEMATICS
+
+using imnodesNET;
 using ImPlotNET;
 using System;
 using System.Linq;
-using System.Numerics;
 using Veldrid;
 using Veldrid.Sdl2;
 using Veldrid.StartupUtilities;
+using UnityEngine;
 
 namespace ImGuiNET
 {
@@ -47,7 +49,7 @@ namespace ImGuiNET
 			_cl = _gd.ResourceFactory.CreateCommandList();
 			_controller = new ImGuiController(_gd, _gd.MainSwapchain.Framebuffer.OutputDescription, _window.Width, _window.Height);
 			_memoryEditor = new MemoryEditor();
-			Random random = new Random();
+			System.Random random = new System.Random();
 			_memoryEditorData = Enumerable.Range(0, 1024).Select(i => (byte)random.Next(255)).ToArray();
 
 			// Main application loop
@@ -61,7 +63,7 @@ namespace ImGuiNET
 
 				_cl.Begin();
 				_cl.SetFramebuffer(_gd.MainSwapchain.Framebuffer);
-				_cl.ClearColorTarget(0, new RgbaFloat(_clearColor.X, _clearColor.Y, _clearColor.Z, 1f));
+				_cl.ClearColorTarget(0, new RgbaFloat(_clearColor.x, _clearColor.y, _clearColor.z, 1f));
 				_controller.Render(_gd, _cl);
 				_cl.End();
 				_gd.SubmitCommands(_cl);
@@ -74,6 +76,8 @@ namespace ImGuiNET
 			_cl.Dispose();
 			_gd.Dispose();
 		}
+
+		static Vector3 clear_color = default;
 
 		private static unsafe void SubmitUI()
 		{
@@ -201,6 +205,7 @@ namespace ImGuiNET
 
 			if (ImGui.Begin("Plot Test"))
 			{
+				ImGui.ColorEdit3("clear color", ref clear_color);
 				ImPlot.BeginPlot("TTE");
 				ImPlot.EndPlot();
 
