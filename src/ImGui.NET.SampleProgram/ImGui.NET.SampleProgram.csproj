@@ -10,6 +10,7 @@
     <ProjectReference Include="..\ImGui.NET\ImGui.NET.csproj" />
     <PackageReference Include="Veldrid" Version="4.8.0" />
     <PackageReference Include="Veldrid.StartupUtilities" Version="4.8.0" />
+    <ProjectReference Include="..\imnodes.NET\imnodes.NET.csproj" />
     <ProjectReference Include="..\ImPlot.NET\ImPlot.NET.csproj" />
   </ItemGroup>
 
