@@ -413,8 +413,6 @@ namespace CodeGenerator
 					if (!variant.Used) Console.WriteLine($"Error: Variants targetting parameter {variant.Name} with type {variant.OriginalType} could not be applied to method {method.Key}.");
 				}
 			}
-
-
 		}
 
 		private static bool IsStringFieldName(string name)
