@@ -1,13 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CodeGenerator
 {
@@ -80,7 +76,7 @@ namespace CodeGenerator
             var defs = new ImguiDefinitions();
             defs.LoadFrom(definitionsPath);
 
-            Console.WriteLine($"Outputting generated code files to {outputPath}.");
+			Console.WriteLine($"Outputting generated code files to {outputPath}.");
 
             foreach (EnumDefinition ed in defs.Enums)
             {
