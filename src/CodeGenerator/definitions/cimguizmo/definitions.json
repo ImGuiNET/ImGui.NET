@@ -173,7 +173,7 @@
       "funcname": "IsOver",
       "location": "ImGuizmo:130",
       "namespace": "ImGuizmo",
-      "ov_cimguiname": "ImGuizmo_IsOverNil",
+      "ov_cimguiname": "ImGuizmo_IsOver_Nil",
       "ret": "bool",
       "signature": "()",
       "stname": ""
@@ -193,7 +193,7 @@
       "funcname": "IsOver",
       "location": "ImGuizmo:206",
       "namespace": "ImGuizmo",
-      "ov_cimguiname": "ImGuizmo_IsOverOPERATION",
+      "ov_cimguiname": "ImGuizmo_IsOver_OPERATION",
       "ret": "bool",
       "signature": "(OPERATION)",
       "stname": ""

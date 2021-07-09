@@ -1,335 +1,408 @@
 {
   "enums": {
-    "AttributeFlags": [
+    "ImNodesAttributeFlags_": [
       {
         "calc_value": 0,
-        "name": "AttributeFlags_None",
+        "name": "ImNodesAttributeFlags_None",
         "value": "0"
       },
       {
         "calc_value": 1,
-        "name": "AttributeFlags_EnableLinkDetachWithDragClick",
+        "name": "ImNodesAttributeFlags_EnableLinkDetachWithDragClick",
         "value": "1 << 0"
       },
       {
         "calc_value": 2,
-        "name": "AttributeFlags_EnableLinkCreationOnSnap",
+        "name": "ImNodesAttributeFlags_EnableLinkCreationOnSnap",
         "value": "1 << 1"
       }
     ],
-    "ColorStyle": [
+    "ImNodesCol_": [
       {
         "calc_value": 0,
-        "name": "ColorStyle_NodeBackground",
+        "name": "ImNodesCol_NodeBackground",
         "value": "0"
       },
       {
         "calc_value": 1,
-        "name": "ColorStyle_NodeBackgroundHovered",
+        "name": "ImNodesCol_NodeBackgroundHovered",
         "value": "1"
       },
       {
         "calc_value": 2,
-        "name": "ColorStyle_NodeBackgroundSelected",
+        "name": "ImNodesCol_NodeBackgroundSelected",
         "value": "2"
       },
       {
         "calc_value": 3,
-        "name": "ColorStyle_NodeOutline",
+        "name": "ImNodesCol_NodeOutline",
         "value": "3"
       },
       {
         "calc_value": 4,
-        "name": "ColorStyle_TitleBar",
+        "name": "ImNodesCol_TitleBar",
         "value": "4"
       },
       {
         "calc_value": 5,
-        "name": "ColorStyle_TitleBarHovered",
+        "name": "ImNodesCol_TitleBarHovered",
         "value": "5"
       },
       {
         "calc_value": 6,
-        "name": "ColorStyle_TitleBarSelected",
+        "name": "ImNodesCol_TitleBarSelected",
         "value": "6"
       },
       {
         "calc_value": 7,
-        "name": "ColorStyle_Link",
+        "name": "ImNodesCol_Link",
         "value": "7"
       },
       {
         "calc_value": 8,
-        "name": "ColorStyle_LinkHovered",
+        "name": "ImNodesCol_LinkHovered",
         "value": "8"
       },
       {
         "calc_value": 9,
-        "name": "ColorStyle_LinkSelected",
+        "name": "ImNodesCol_LinkSelected",
         "value": "9"
       },
       {
         "calc_value": 10,
-        "name": "ColorStyle_Pin",
+        "name": "ImNodesCol_Pin",
         "value": "10"
       },
       {
         "calc_value": 11,
-        "name": "ColorStyle_PinHovered",
+        "name": "ImNodesCol_PinHovered",
         "value": "11"
       },
       {
         "calc_value": 12,
-        "name": "ColorStyle_BoxSelector",
+        "name": "ImNodesCol_BoxSelector",
         "value": "12"
       },
       {
         "calc_value": 13,
-        "name": "ColorStyle_BoxSelectorOutline",
+        "name": "ImNodesCol_BoxSelectorOutline",
         "value": "13"
       },
       {
         "calc_value": 14,
-        "name": "ColorStyle_GridBackground",
+        "name": "ImNodesCol_GridBackground",
         "value": "14"
       },
       {
         "calc_value": 15,
-        "name": "ColorStyle_GridLine",
+        "name": "ImNodesCol_GridLine",
         "value": "15"
       },
       {
         "calc_value": 16,
-        "name": "ColorStyle_Count",
+        "name": "ImNodesCol_MiniMapBackground",
         "value": "16"
+      },
+      {
+        "calc_value": 17,
+        "name": "ImNodesCol_MiniMapBackgroundHovered",
+        "value": "17"
+      },
+      {
+        "calc_value": 18,
+        "name": "ImNodesCol_MiniMapOutline",
+        "value": "18"
+      },
+      {
+        "calc_value": 19,
+        "name": "ImNodesCol_MiniMapOutlineHovered",
+        "value": "19"
+      },
+      {
+        "calc_value": 20,
+        "name": "ImNodesCol_MiniMapNodeBackground",
+        "value": "20"
+      },
+      {
+        "calc_value": 21,
+        "name": "ImNodesCol_MiniMapNodeBackgroundHovered",
+        "value": "21"
+      },
+      {
+        "calc_value": 22,
+        "name": "ImNodesCol_MiniMapNodeBackgroundSelected",
+        "value": "22"
+      },
+      {
+        "calc_value": 23,
+        "name": "ImNodesCol_MiniMapNodeOutline",
+        "value": "23"
+      },
+      {
+        "calc_value": 24,
+        "name": "ImNodesCol_MiniMapLink",
+        "value": "24"
+      },
+      {
+        "calc_value": 25,
+        "name": "ImNodesCol_MiniMapLinkSelected",
+        "value": "25"
+      },
+      {
+        "calc_value": 26,
+        "name": "ImNodesCol_COUNT",
+        "value": "26"
       }
     ],
-    "PinShape": [
+    "ImNodesMiniMapLocation_": [
       {
         "calc_value": 0,
-        "name": "PinShape_Circle",
+        "name": "ImNodesMiniMapLocation_BottomLeft",
         "value": "0"
       },
       {
         "calc_value": 1,
-        "name": "PinShape_CircleFilled",
+        "name": "ImNodesMiniMapLocation_BottomRight",
         "value": "1"
       },
       {
         "calc_value": 2,
-        "name": "PinShape_Triangle",
+        "name": "ImNodesMiniMapLocation_TopLeft",
         "value": "2"
       },
       {
         "calc_value": 3,
-        "name": "PinShape_TriangleFilled",
+        "name": "ImNodesMiniMapLocation_TopRight",
         "value": "3"
-      },
-      {
-        "calc_value": 4,
-        "name": "PinShape_Quad",
-        "value": "4"
-      },
-      {
-        "calc_value": 5,
-        "name": "PinShape_QuadFilled",
-        "value": "5"
       }
     ],
-    "StyleFlags": [
+    "ImNodesPinShape_": [
       {
         "calc_value": 0,
-        "name": "StyleFlags_None",
+        "name": "ImNodesPinShape_Circle",
         "value": "0"
       },
       {
         "calc_value": 1,
-        "name": "StyleFlags_NodeOutline",
+        "name": "ImNodesPinShape_CircleFilled",
+        "value": "1"
+      },
+      {
+        "calc_value": 2,
+        "name": "ImNodesPinShape_Triangle",
+        "value": "2"
+      },
+      {
+        "calc_value": 3,
+        "name": "ImNodesPinShape_TriangleFilled",
+        "value": "3"
+      },
+      {
+        "calc_value": 4,
+        "name": "ImNodesPinShape_Quad",
+        "value": "4"
+      },
+      {
+        "calc_value": 5,
+        "name": "ImNodesPinShape_QuadFilled",
+        "value": "5"
+      }
+    ],
+    "ImNodesStyleFlags_": [
+      {
+        "calc_value": 0,
+        "name": "ImNodesStyleFlags_None",
+        "value": "0"
+      },
+      {
+        "calc_value": 1,
+        "name": "ImNodesStyleFlags_NodeOutline",
         "value": "1 << 0"
       },
       {
         "calc_value": 4,
-        "name": "StyleFlags_GridLines",
+        "name": "ImNodesStyleFlags_GridLines",
         "value": "1 << 2"
       }
     ],
-    "StyleVar": [
+    "ImNodesStyleVar_": [
       {
         "calc_value": 0,
-        "name": "StyleVar_GridSpacing",
+        "name": "ImNodesStyleVar_GridSpacing",
         "value": "0"
       },
       {
         "calc_value": 1,
-        "name": "StyleVar_NodeCornerRounding",
+        "name": "ImNodesStyleVar_NodeCornerRounding",
         "value": "1"
       },
       {
         "calc_value": 2,
-        "name": "StyleVar_NodePaddingHorizontal",
+        "name": "ImNodesStyleVar_NodePaddingHorizontal",
         "value": "2"
       },
       {
         "calc_value": 3,
-        "name": "StyleVar_NodePaddingVertical",
+        "name": "ImNodesStyleVar_NodePaddingVertical",
         "value": "3"
       },
       {
         "calc_value": 4,
-        "name": "StyleVar_NodeBorderThickness",
+        "name": "ImNodesStyleVar_NodeBorderThickness",
         "value": "4"
       },
       {
         "calc_value": 5,
-        "name": "StyleVar_LinkThickness",
+        "name": "ImNodesStyleVar_LinkThickness",
         "value": "5"
       },
       {
         "calc_value": 6,
-        "name": "StyleVar_LinkLineSegmentsPerLength",
+        "name": "ImNodesStyleVar_LinkLineSegmentsPerLength",
         "value": "6"
       },
       {
         "calc_value": 7,
-        "name": "StyleVar_LinkHoverDistance",
+        "name": "ImNodesStyleVar_LinkHoverDistance",
         "value": "7"
       },
       {
         "calc_value": 8,
-        "name": "StyleVar_PinCircleRadius",
+        "name": "ImNodesStyleVar_PinCircleRadius",
         "value": "8"
       },
       {
         "calc_value": 9,
-        "name": "StyleVar_PinQuadSideLength",
+        "name": "ImNodesStyleVar_PinQuadSideLength",
         "value": "9"
       },
       {
         "calc_value": 10,
-        "name": "StyleVar_PinTriangleSideLength",
+        "name": "ImNodesStyleVar_PinTriangleSideLength",
         "value": "10"
       },
       {
         "calc_value": 11,
-        "name": "StyleVar_PinLineThickness",
+        "name": "ImNodesStyleVar_PinLineThickness",
         "value": "11"
       },
       {
         "calc_value": 12,
-        "name": "StyleVar_PinHoverRadius",
+        "name": "ImNodesStyleVar_PinHoverRadius",
         "value": "12"
       },
       {
         "calc_value": 13,
-        "name": "StyleVar_PinOffset",
+        "name": "ImNodesStyleVar_PinOffset",
         "value": "13"
       }
     ]
   },
   "enumtypes": [],
   "locations": {
-    "AttributeFlags": "imnodes:68",
-    "ColorStyle": "imnodes:10",
-    "EmulateThreeButtonMouse": "imnodes:85",
-    "IO": "imnodes:83",
-    "LinkDetachWithModifierClick": "imnodes:95",
-    "PinShape": "imnodes:57",
-    "Style": "imnodes:112",
-    "StyleFlags": "imnodes:49",
-    "StyleVar": "imnodes:31"
+    "EmulateThreeButtonMouse": "imnodes:96",
+    "ImNodesAttributeFlags_": "imnodes:79",
+    "ImNodesCol_": "imnodes:12",
+    "ImNodesIO": "imnodes:94",
+    "ImNodesMiniMapLocation_": "imnodes:173",
+    "ImNodesPinShape_": "imnodes:68",
+    "ImNodesStyle": "imnodes:131",
+    "ImNodesStyleFlags_": "imnodes:61",
+    "ImNodesStyleVar_": "imnodes:43",
+    "LinkDetachWithModifierClick": "imnodes:108"
   },
   "structs": {
     "EmulateThreeButtonMouse": [
       {
-        "name": "enabled",
-        "type": "bool"
-      },
-      {
-        "name": "modifier",
+        "name": "Modifier",
         "type": "const bool*"
       }
     ],
-    "IO": [
+    "ImNodesIO": [
       {
-        "name": "emulate_three_button_mouse",
+        "name": "EmulateThreeButtonMouse",
         "type": "EmulateThreeButtonMouse"
       },
       {
-        "name": "link_detach_with_modifier_click",
+        "name": "LinkDetachWithModifierClick",
         "type": "LinkDetachWithModifierClick"
+      },
+      {
+        "name": "AltMouseButton",
+        "type": "int"
+      }
+    ],
+    "ImNodesStyle": [
+      {
+        "name": "GridSpacing",
+        "type": "float"
+      },
+      {
+        "name": "NodeCornerRounding",
+        "type": "float"
+      },
+      {
+        "name": "NodePaddingHorizontal",
+        "type": "float"
+      },
+      {
+        "name": "NodePaddingVertical",
+        "type": "float"
+      },
+      {
+        "name": "NodeBorderThickness",
+        "type": "float"
+      },
+      {
+        "name": "LinkThickness",
+        "type": "float"
+      },
+      {
+        "name": "LinkLineSegmentsPerLength",
+        "type": "float"
+      },
+      {
+        "name": "LinkHoverDistance",
+        "type": "float"
+      },
+      {
+        "name": "PinCircleRadius",
+        "type": "float"
+      },
+      {
+        "name": "PinQuadSideLength",
+        "type": "float"
+      },
+      {
+        "name": "PinTriangleSideLength",
+        "type": "float"
+      },
+      {
+        "name": "PinLineThickness",
+        "type": "float"
+      },
+      {
+        "name": "PinHoverRadius",
+        "type": "float"
+      },
+      {
+        "name": "PinOffset",
+        "type": "float"
+      },
+      {
+        "name": "Flags",
+        "type": "ImNodesStyleFlags"
+      },
+      {
+        "name": "Colors[ImNodesCol_COUNT]",
+        "size": 26,
+        "type": "unsigned int"
       }
     ],
     "LinkDetachWithModifierClick": [
       {
-        "name": "modifier",
+        "name": "Modifier",
         "type": "const bool*"
-      }
-    ],
-    "Style": [
-      {
-        "name": "grid_spacing",
-        "type": "float"
-      },
-      {
-        "name": "node_corner_rounding",
-        "type": "float"
-      },
-      {
-        "name": "node_padding_horizontal",
-        "type": "float"
-      },
-      {
-        "name": "node_padding_vertical",
-        "type": "float"
-      },
-      {
-        "name": "node_border_thickness",
-        "type": "float"
-      },
-      {
-        "name": "link_thickness",
-        "type": "float"
-      },
-      {
-        "name": "link_line_segments_per_length",
-        "type": "float"
-      },
-      {
-        "name": "link_hover_distance",
-        "type": "float"
-      },
-      {
-        "name": "pin_circle_radius",
-        "type": "float"
-      },
-      {
-        "name": "pin_quad_side_length",
-        "type": "float"
-      },
-      {
-        "name": "pin_triangle_side_length",
-        "type": "float"
-      },
-      {
-        "name": "pin_line_thickness",
-        "type": "float"
-      },
-      {
-        "name": "pin_hover_radius",
-        "type": "float"
-      },
-      {
-        "name": "pin_offset",
-        "type": "float"
-      },
-      {
-        "name": "flags",
-        "type": "StyleFlags"
-      },
-      {
-        "name": "colors[ColorStyle_Count]",
-        "size": 16,
-        "type": "unsigned int"
       }
     ]
   }

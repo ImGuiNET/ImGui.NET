@@ -28,31 +28,51 @@
       },
       {
         "calc_value": 16,
-        "name": "ImPlotAxisFlags_LogScale",
+        "name": "ImPlotAxisFlags_Foreground",
         "value": "1 << 4"
       },
       {
         "calc_value": 32,
-        "name": "ImPlotAxisFlags_Time",
+        "name": "ImPlotAxisFlags_LogScale",
         "value": "1 << 5"
       },
       {
         "calc_value": 64,
-        "name": "ImPlotAxisFlags_Invert",
+        "name": "ImPlotAxisFlags_Time",
         "value": "1 << 6"
       },
       {
         "calc_value": 128,
-        "name": "ImPlotAxisFlags_LockMin",
+        "name": "ImPlotAxisFlags_Invert",
         "value": "1 << 7"
       },
       {
         "calc_value": 256,
-        "name": "ImPlotAxisFlags_LockMax",
+        "name": "ImPlotAxisFlags_NoInitialFit",
         "value": "1 << 8"
       },
       {
-        "calc_value": 384,
+        "calc_value": 512,
+        "name": "ImPlotAxisFlags_AutoFit",
+        "value": "1 << 9"
+      },
+      {
+        "calc_value": 1024,
+        "name": "ImPlotAxisFlags_RangeFit",
+        "value": "1 << 10"
+      },
+      {
+        "calc_value": 2048,
+        "name": "ImPlotAxisFlags_LockMin",
+        "value": "1 << 11"
+      },
+      {
+        "calc_value": 4096,
+        "name": "ImPlotAxisFlags_LockMax",
+        "value": "1 << 12"
+      },
+      {
+        "calc_value": 6144,
         "name": "ImPlotAxisFlags_Lock",
         "value": "ImPlotAxisFlags_LockMin | ImPlotAxisFlags_LockMax"
       },
@@ -60,6 +80,28 @@
         "calc_value": 15,
         "name": "ImPlotAxisFlags_NoDecorations",
         "value": "ImPlotAxisFlags_NoLabel | ImPlotAxisFlags_NoGridLines | ImPlotAxisFlags_NoTickMarks | ImPlotAxisFlags_NoTickLabels"
+      }
+    ],
+    "ImPlotBin_": [
+      {
+        "calc_value": -1,
+        "name": "ImPlotBin_Sqrt",
+        "value": "-1"
+      },
+      {
+        "calc_value": -2,
+        "name": "ImPlotBin_Sturges",
+        "value": "-2"
+      },
+      {
+        "calc_value": -3,
+        "name": "ImPlotBin_Rice",
+        "value": "-3"
+      },
+      {
+        "calc_value": -4,
+        "name": "ImPlotBin_Scott",
+        "value": "-4"
       }
     ],
     "ImPlotCol_": [
@@ -192,63 +234,83 @@
     "ImPlotColormap_": [
       {
         "calc_value": 0,
-        "name": "ImPlotColormap_Default",
+        "name": "ImPlotColormap_Deep",
         "value": "0"
       },
       {
         "calc_value": 1,
-        "name": "ImPlotColormap_Deep",
+        "name": "ImPlotColormap_Dark",
         "value": "1"
       },
       {
         "calc_value": 2,
-        "name": "ImPlotColormap_Dark",
+        "name": "ImPlotColormap_Pastel",
         "value": "2"
       },
       {
         "calc_value": 3,
-        "name": "ImPlotColormap_Pastel",
+        "name": "ImPlotColormap_Paired",
         "value": "3"
       },
       {
         "calc_value": 4,
-        "name": "ImPlotColormap_Paired",
+        "name": "ImPlotColormap_Viridis",
         "value": "4"
       },
       {
         "calc_value": 5,
-        "name": "ImPlotColormap_Viridis",
+        "name": "ImPlotColormap_Plasma",
         "value": "5"
       },
       {
         "calc_value": 6,
-        "name": "ImPlotColormap_Plasma",
+        "name": "ImPlotColormap_Hot",
         "value": "6"
       },
       {
         "calc_value": 7,
-        "name": "ImPlotColormap_Hot",
+        "name": "ImPlotColormap_Cool",
         "value": "7"
       },
       {
         "calc_value": 8,
-        "name": "ImPlotColormap_Cool",
+        "name": "ImPlotColormap_Pink",
         "value": "8"
       },
       {
         "calc_value": 9,
-        "name": "ImPlotColormap_Pink",
+        "name": "ImPlotColormap_Jet",
         "value": "9"
       },
       {
         "calc_value": 10,
-        "name": "ImPlotColormap_Jet",
+        "name": "ImPlotColormap_Twilight",
         "value": "10"
       },
       {
         "calc_value": 11,
-        "name": "ImPlotColormap_COUNT",
+        "name": "ImPlotColormap_RdBu",
         "value": "11"
+      },
+      {
+        "calc_value": 12,
+        "name": "ImPlotColormap_BrBG",
+        "value": "12"
+      },
+      {
+        "calc_value": 13,
+        "name": "ImPlotColormap_PiYG",
+        "value": "13"
+      },
+      {
+        "calc_value": 14,
+        "name": "ImPlotColormap_Spectral",
+        "value": "14"
+      },
+      {
+        "calc_value": 15,
+        "name": "ImPlotColormap_Greys",
+        "value": "15"
       }
     ],
     "ImPlotDateFmt_": [
@@ -759,40 +821,41 @@
   },
   "enumtypes": [],
   "locations": {
-    "ImBufferWriter": "implot_internal:125",
-    "ImPlotAnnotation": "implot_internal:291",
-    "ImPlotAnnotationCollection": "implot_internal:301",
-    "ImPlotAxis": "implot_internal:403",
-    "ImPlotAxisFlags_": "implot:85",
-    "ImPlotCol_": "implot:101",
-    "ImPlotColormapMod": "implot_internal:272",
-    "ImPlotColormap_": "implot:182",
-    "ImPlotContext": "implot_internal:662",
-    "ImPlotDateFmt_": "implot_internal:189",
-    "ImPlotDateTimeFmt": "implot_internal:232",
-    "ImPlotFlags_": "implot:66",
-    "ImPlotInputMap": "implot_internal:211",
-    "ImPlotItem": "implot_internal:514",
-    "ImPlotLegendData": "implot_internal:536",
-    "ImPlotLimits": "implot:247",
-    "ImPlotLocation_": "implot:198",
-    "ImPlotMarker_": "implot:166",
-    "ImPlotNextItemData": "implot_internal:633",
-    "ImPlotNextPlotData": "implot_internal:598",
-    "ImPlotOrientation_": "implot:211",
-    "ImPlotPlot": "implot_internal:544",
-    "ImPlotPoint": "implot:224",
-    "ImPlotPointError": "implot_internal:282",
-    "ImPlotRange": "implot:238",
-    "ImPlotScale_": "implot_internal:170",
-    "ImPlotStyle": "implot:254",
-    "ImPlotStyleVar_": "implot:132",
-    "ImPlotTick": "implot_internal:341",
-    "ImPlotTickCollection": "implot_internal:361",
-    "ImPlotTime": "implot_internal:246",
-    "ImPlotTimeFmt_": "implot_internal:198",
-    "ImPlotTimeUnit_": "implot_internal:177",
-    "ImPlotYAxis_": "implot:217"
+    "ImBufferWriter": "implot_internal:202",
+    "ImPlotAnnotation": "implot_internal:460",
+    "ImPlotAnnotationCollection": "implot_internal:470",
+    "ImPlotAxis": "implot_internal:579",
+    "ImPlotAxisFlags_": "implot:86",
+    "ImPlotBin_": "implot:233",
+    "ImPlotCol_": "implot:106",
+    "ImPlotColormapData": "implot_internal:349",
+    "ImPlotColormap_": "implot:187",
+    "ImPlotContext": "implot_internal:860",
+    "ImPlotDateFmt_": "implot_internal:266",
+    "ImPlotDateTimeFmt": "implot_internal:309",
+    "ImPlotFlags_": "implot:67",
+    "ImPlotInputMap": "implot_internal:288",
+    "ImPlotItem": "implot_internal:702",
+    "ImPlotLegendData": "implot_internal:723",
+    "ImPlotLimits": "implot:264",
+    "ImPlotLocation_": "implot:207",
+    "ImPlotMarker_": "implot:171",
+    "ImPlotNextItemData": "implot_internal:831",
+    "ImPlotNextPlotData": "implot_internal:790",
+    "ImPlotOrientation_": "implot:220",
+    "ImPlotPlot": "implot_internal:731",
+    "ImPlotPoint": "implot:241",
+    "ImPlotPointError": "implot_internal:452",
+    "ImPlotRange": "implot:255",
+    "ImPlotScale_": "implot_internal:247",
+    "ImPlotStyle": "implot:275",
+    "ImPlotStyleVar_": "implot:137",
+    "ImPlotTick": "implot_internal:510",
+    "ImPlotTickCollection": "implot_internal:530",
+    "ImPlotTime": "implot_internal:323",
+    "ImPlotTimeFmt_": "implot_internal:275",
+    "ImPlotTimeUnit_": "implot_internal:254",
+    "ImPlotYAxis_": "implot:226"
   },
   "structs": {
     "ImBufferWriter": [
@@ -932,13 +995,57 @@
         "type": "ImRect"
       }
     ],
-    "ImPlotColormapMod": [
+    "ImPlotColormapData": [
       {
-        "name": "Colormap",
-        "type": "const ImVec4*"
+        "name": "Keys",
+        "template_type": "ImU32",
+        "type": "ImVector_ImU32"
       },
       {
-        "name": "ColormapSize",
+        "name": "KeyCounts",
+        "template_type": "int",
+        "type": "ImVector_int"
+      },
+      {
+        "name": "KeyOffsets",
+        "template_type": "int",
+        "type": "ImVector_int"
+      },
+      {
+        "name": "Tables",
+        "template_type": "ImU32",
+        "type": "ImVector_ImU32"
+      },
+      {
+        "name": "TableSizes",
+        "template_type": "int",
+        "type": "ImVector_int"
+      },
+      {
+        "name": "TableOffsets",
+        "template_type": "int",
+        "type": "ImVector_int"
+      },
+      {
+        "name": "Text",
+        "type": "ImGuiTextBuffer"
+      },
+      {
+        "name": "TextOffsets",
+        "template_type": "int",
+        "type": "ImVector_int"
+      },
+      {
+        "name": "Quals",
+        "template_type": "bool",
+        "type": "ImVector_bool"
+      },
+      {
+        "name": "Map",
+        "type": "ImGuiStorage"
+      },
+      {
+        "name": "Count",
         "type": "int"
       }
     ],
@@ -1060,21 +1167,27 @@
         "type": "ImVector_ImGuiStyleMod"
       },
       {
-        "name": "Colormap",
-        "type": "const ImVec4*"
-      },
-      {
-        "name": "ColormapSize",
-        "type": "int"
+        "name": "ColormapData",
+        "type": "ImPlotColormapData"
       },
       {
         "name": "ColormapModifiers",
-        "template_type": "ImPlotColormapMod",
-        "type": "ImVector_ImPlotColormapMod"
+        "template_type": "ImPlotColormap",
+        "type": "ImVector_ImPlotColormap"
       },
       {
         "name": "Tm",
         "type": "tm"
+      },
+      {
+        "name": "Temp1",
+        "template_type": "double",
+        "type": "ImVector_double"
+      },
+      {
+        "name": "Temp2",
+        "template_type": "double",
+        "type": "ImVector_double"
       },
       {
         "name": "VisibleItemCount",
@@ -1181,7 +1294,7 @@
       },
       {
         "name": "Color",
-        "type": "ImVec4"
+        "type": "ImU32"
       },
       {
         "name": "NameOffset",
@@ -1303,11 +1416,11 @@
         "type": "ImGuiCond"
       },
       {
-        "name": "X",
+        "name": "XRange",
         "type": "ImPlotRange"
       },
       {
-        "name": "Y[3]",
+        "name": "YRange[3]",
         "size": 3,
         "type": "ImPlotRange"
       },
@@ -1326,6 +1439,25 @@
       },
       {
         "name": "ShowDefaultTicksY[3]",
+        "size": 3,
+        "type": "bool"
+      },
+      {
+        "name": "FmtX[16]",
+        "size": 16,
+        "type": "char"
+      },
+      {
+        "name": "FmtY[3][16]",
+        "size": 3,
+        "type": "char"
+      },
+      {
+        "name": "HasFmtX",
+        "type": "bool"
+      },
+      {
+        "name": "HasFmtY[3]",
         "size": 3,
         "type": "bool"
       },
@@ -1393,6 +1525,10 @@
         "type": "ImVec2"
       },
       {
+        "name": "SelectRect",
+        "type": "ImRect"
+      },
+      {
         "name": "QueryStart",
         "type": "ImVec2"
       },
@@ -1401,7 +1537,15 @@
         "type": "ImRect"
       },
       {
+        "name": "Initialized",
+        "type": "bool"
+      },
+      {
         "name": "Selecting",
+        "type": "bool"
+      },
+      {
+        "name": "Selected",
         "type": "bool"
       },
       {
@@ -1634,6 +1778,10 @@
         "type": "ImVec4"
       },
       {
+        "name": "Colormap",
+        "type": "ImPlotColormap"
+      },
+      {
         "name": "AntiAliasedLines",
         "type": "bool"
       },
@@ -1689,6 +1837,10 @@
       {
         "name": "TextBuffer",
         "type": "ImGuiTextBuffer"
+      },
+      {
+        "name": "TotalWidthMax",
+        "type": "float"
       },
       {
         "name": "TotalWidth",
