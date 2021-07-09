@@ -1,6 +1,6 @@
 namespace imnodesNET
 {
-    public enum StyleVar
+    public enum ImNodesStyleVar
     {
         GridSpacing = 0,
         NodeCornerRounding = 1,
