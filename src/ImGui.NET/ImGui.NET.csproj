@@ -29,24 +29,8 @@
     </AssemblyAttribute>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\deps\cimgui\win-x86\cimgui.dll">
-      <PackagePath>runtimes/win-x86/native</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="..\..\deps\cimgui\win-x64\cimgui.dll">
+    <Content Include="..\..\deps\cimgui.dll">
       <PackagePath>runtimes/win-x64/native</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="..\..\deps\cimgui\win-arm64\cimgui.dll">
-      <PackagePath>runtimes/win-arm64/native</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="..\..\deps\cimgui\linux-x64\cimgui.so">
-      <PackagePath>runtimes/linux-x64/native/libcimgui.so</PackagePath>
-      <Pack>true</Pack>
-    </Content>
-    <Content Include="..\..\deps\cimgui\osx\cimgui.dylib">
-      <PackagePath>runtimes/osx/native/libcimgui.dylib</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="build\net40\ImGui.NET.targets">
