@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-using System.Numerics;
+using UnityEngine;
 
 namespace ImGuiNET
 {
@@ -76,7 +76,7 @@ namespace ImGuiNET
 			for (int n = base_display_addr + mem_size - 1; n > 0; n >>= 4)
 				addr_digits_count++;
 
-			float glyph_width = ImGui.CalcTextSize("F").X;
+			float glyph_width = ImGui.CalcTextSize("F").x;
 			float cell_width = glyph_width * 3; // "FF " we include trailing space in the width to easily catch clicks everywhere
 
 			var clipper = new ImGuiListClipper2(line_total_count, line_height);
@@ -140,7 +140,7 @@ namespace ImGuiNET
 							ReplaceChars(DataInput, FixedHex(mem_data[addr], 2));
 							ReplaceChars(AddrInput, FixedHex(base_display_addr + addr, addr_digits_count));
 						}
-						ImGui.PushItemWidth(ImGui.CalcTextSize("FF").X);
+						ImGui.PushItemWidth(ImGui.CalcTextSize("FF").x);
 
 						var flags = ImGuiInputTextFlags.CharsHexadecimal | ImGuiInputTextFlags.EnterReturnsTrue | ImGuiInputTextFlags.AutoSelectAll | ImGuiInputTextFlags.NoHorizontalScroll | ImGuiInputTextFlags.CallbackAlways;
 
@@ -206,7 +206,7 @@ namespace ImGuiNET
 			{
 				if (Rows <= 0) Rows = 4;
 				Vector2 new_window_size = ImGui.GetWindowSize();
-				new_window_size.X += (Rows - rows_backup) * (cell_width + glyph_width);
+				new_window_size.x += (Rows - rows_backup) * (cell_width + glyph_width);
 				ImGui.SetWindowSize(new_window_size);
 			}
 			ImGui.PopAllowKeyboardFocus();
@@ -224,7 +224,7 @@ namespace ImGuiNET
 					if (goto_addr >= 0 && goto_addr < mem_size)
 					{
 						ImGui.BeginChild("##scrolling");
-						ImGui.SetScrollFromPosY(ImGui.GetCursorStartPos().Y + (goto_addr / Rows) * ImGuiNative.igGetTextLineHeight());
+						ImGui.SetScrollFromPosY(ImGui.GetCursorStartPos().y + (goto_addr / Rows) * ImGuiNative.igGetTextLineHeight());
 						ImGui.EndChild();
 						DataEditingAddr = goto_addr;
 						DataEditingTakeFocus = true;
