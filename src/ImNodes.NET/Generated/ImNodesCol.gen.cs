@@ -1,6 +1,6 @@
 namespace imnodesNET
 {
-    public enum ColorStyle
+    public enum ImNodesCol
     {
         NodeBackground = 0,
         NodeBackgroundHovered = 1,
@@ -18,6 +18,16 @@ namespace imnodesNET
         BoxSelectorOutline = 13,
         GridBackground = 14,
         GridLine = 15,
-        Count = 16,
+        MiniMapBackground = 16,
+        MiniMapBackgroundHovered = 17,
+        MiniMapOutline = 18,
+        MiniMapOutlineHovered = 19,
+        MiniMapNodeBackground = 20,
+        MiniMapNodeBackgroundHovered = 21,
+        MiniMapNodeBackgroundSelected = 22,
+        MiniMapNodeOutline = 23,
+        MiniMapLink = 24,
+        MiniMapLinkSelected = 25,
+        COUNT = 26,
     }
 }

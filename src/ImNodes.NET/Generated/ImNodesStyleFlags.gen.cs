@@ -1,7 +1,7 @@
 namespace imnodesNET
 {
     [System.Flags]
-    public enum StyleFlags
+    public enum ImNodesStyleFlags
     {
         None = 0,
         NodeOutline = 1,
