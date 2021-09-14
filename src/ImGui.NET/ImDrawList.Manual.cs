@@ -15,7 +15,7 @@ namespace ImGuiNET
                 native_text_begin[native_text_begin_offset] = 0;
             }
             byte* native_text_end = null;
-            ImGuiNative.ImDrawList_AddTextVec2(NativePtr, pos, col, native_text_begin, native_text_end);
+            ImGuiNative.ImDrawList_AddText_Vec2(NativePtr, pos, col, native_text_begin, native_text_end);
         }
 
         public void AddText(ImFontPtr font, float font_size, Vector2 pos, uint col, string text_begin)
@@ -31,7 +31,7 @@ namespace ImGuiNET
             byte* native_text_end = null;
             float wrap_width = 0.0f;
             Vector4* cpu_fine_clip_rect = null;
-            ImGuiNative.ImDrawList_AddTextFontPtr(NativePtr, native_font, font_size, pos, col, native_text_begin, native_text_end, wrap_width, cpu_fine_clip_rect);
+            ImGuiNative.ImDrawList_AddText_FontPtr(NativePtr, native_font, font_size, pos, col, native_text_begin, native_text_end, wrap_width, cpu_fine_clip_rect);
         }
     }
 }
