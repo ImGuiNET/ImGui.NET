@@ -143,6 +143,10 @@ namespace CodeGenerator
 					.Remove("NativePtr->TabBars")   // Error CS1503 Can not convert from ImPool to ImSpan
 					.Apply();
 
+				new PostFix(outputPath, "ImGuiViewportP.gen.cs")
+					.Replace("RangeAccessor<ImDrawList*>", "RangeAccessor<ImDrawList>")   // Error CS0306 Pointer can't be used as generic argument?
+					.Apply();
+
 				new PostFix(outputPath, "ImGuiInputTextState.gen.cs")
 					.Remove("ImGuiInputTextCallback UserCallback")  // Different errors. The ImGuiInputTextCallback seems to be handcoded
 					.Apply();
@@ -151,8 +155,32 @@ namespace CodeGenerator
 					.Replace("RangeAccessor<ImGuiDockNode*>", "RangeAccessor<ImGuiDockNode>")   // Error CS0306 Pointer can't be used as generic argument?
 					.Apply();
 
-				new PostFix(outputPath, "ImGuiViewportP.gen.cs")
-					.Replace("RangeAccessor<ImDrawList*>", "RangeAccessor<ImDrawList>")   // Error CS0306 Pointer can't be used as generic argument?
+				// These enum values are originally inside the `ImGuiDockNodeFlagsPrivate` enum, but the numbers here have been changed.
+				// This fix comes from the initial fork and I have not yet spoken to the author, so my best guess on how this originated:
+				// The values have been shifted up to continue where the non-private enum ends to close the gap between both enums.
+				//
+				// Using `ImGuiDockNodeFlagsPrivate.ImGuiDockNodeFlags_DockSpace` instead of `ImGuiDockNodeFlags.DockSpace` with
+				// DockBuilderAddNode() throws an AccessViolationException. The private enum hasn't been touched in the past ~2 years,
+				// so version mismatches or outdated generated json files should be off the table. Link to blame showing no changes:
+				// https://github.com/ocornut/imgui/blame/c58fb464113435fdb7d122fde87cef4920b3d2c6/imgui_internal.h#L1306
+				//
+				// This "required" disparity is kinda weird and I can't really natively test dear imgui to rule out issues in the bindings.
+				// However, we're basically using the "internal internal" parts here which might just not be in the most stable state to begin with?
+				new PostFix(outputPath, "ImGuiDockNodeFlags.gen.cs")
+					.Replace("AutoHideTabBar = 64,", @"AutoHideTabBar = 64,
+		DockSpace = 128,
+		CentralNode = 256,
+		NoTabBar = 512,
+		HiddenTabBar = 1024,
+		NoWindowMenuButton = 2048,
+		NoCloseButton = 4096,
+		NoDocking = 8192,
+		NoDockingSplitMe = 16384,
+		NoDockingSplitOther = 32768,
+		NoDockingOverMe = 65536,
+		NoDockingOverOther = 131072,
+		NoResizeX = 262144,
+		NoResizeY = 524288")
 					.Apply();
 
 			}
