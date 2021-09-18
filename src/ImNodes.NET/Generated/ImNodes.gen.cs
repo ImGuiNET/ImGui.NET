@@ -10,7 +10,7 @@ namespace imnodesNET
     {
         public static void BeginInputAttribute(int id)
         {
-            PinShape shape = PinShape._CircleFilled;
+            PinShape shape = PinShape.CircleFilled;
             imnodesNative.imnodes_BeginInputAttribute(id, shape);
         }
         public static void BeginInputAttribute(int id, PinShape shape)
@@ -31,7 +31,7 @@ namespace imnodesNET
         }
         public static void BeginOutputAttribute(int id)
         {
-            PinShape shape = PinShape._CircleFilled;
+            PinShape shape = PinShape.CircleFilled;
             imnodesNative.imnodes_BeginOutputAttribute(id, shape);
         }
         public static void BeginOutputAttribute(int id, PinShape shape)
@@ -184,7 +184,7 @@ namespace imnodesNET
             {
                 fixed (int* native_ended_at_attribute_id = &ended_at_attribute_id)
                 {
-                    byte ret = imnodesNative.imnodes_IsLinkCreatedBoolPtr(native_started_at_attribute_id, native_ended_at_attribute_id, created_from_snap);
+                    byte ret = imnodesNative.imnodes_IsLinkCreated_BoolPtr(native_started_at_attribute_id, native_ended_at_attribute_id, created_from_snap);
                     return ret != 0;
                 }
             }
@@ -197,7 +197,7 @@ namespace imnodesNET
             {
                 fixed (int* native_ended_at_attribute_id = &ended_at_attribute_id)
                 {
-                    byte ret = imnodesNative.imnodes_IsLinkCreatedBoolPtr(native_started_at_attribute_id, native_ended_at_attribute_id, native_created_from_snap);
+                    byte ret = imnodesNative.imnodes_IsLinkCreated_BoolPtr(native_started_at_attribute_id, native_ended_at_attribute_id, native_created_from_snap);
                     created_from_snap = native_created_from_snap_val != 0;
                     return ret != 0;
                 }
@@ -214,7 +214,7 @@ namespace imnodesNET
                     {
                         fixed (int* native_ended_at_attribute_id = &ended_at_attribute_id)
                         {
-                            byte ret = imnodesNative.imnodes_IsLinkCreatedIntPtr(native_started_at_node_id, native_started_at_attribute_id, native_ended_at_node_id, native_ended_at_attribute_id, created_from_snap);
+                            byte ret = imnodesNative.imnodes_IsLinkCreated_IntPtr(native_started_at_node_id, native_started_at_attribute_id, native_ended_at_node_id, native_ended_at_attribute_id, created_from_snap);
                             return ret != 0;
                         }
                     }
@@ -233,7 +233,7 @@ namespace imnodesNET
                     {
                         fixed (int* native_ended_at_attribute_id = &ended_at_attribute_id)
                         {
-                            byte ret = imnodesNative.imnodes_IsLinkCreatedIntPtr(native_started_at_node_id, native_started_at_attribute_id, native_ended_at_node_id, native_ended_at_attribute_id, native_created_from_snap);
+                            byte ret = imnodesNative.imnodes_IsLinkCreated_IntPtr(native_started_at_node_id, native_started_at_attribute_id, native_ended_at_node_id, native_ended_at_attribute_id, native_created_from_snap);
                             created_from_snap = native_created_from_snap_val != 0;
                             return ret != 0;
                         }
