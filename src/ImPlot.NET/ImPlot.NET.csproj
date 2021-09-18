@@ -24,9 +24,6 @@
     <ProjectReference Include="..\ImGui.NET\ImGui.NET.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="build\net40" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="build\net40\ImPlot.NET.targets" />
+    <Folder Include="Generated\" />
   </ItemGroup>
 </Project>
