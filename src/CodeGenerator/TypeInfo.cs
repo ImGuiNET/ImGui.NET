@@ -52,6 +52,16 @@ namespace CodeGenerator
             { "ImVec2[2]", "Vector2*" },
             { "char* []", "byte**" },
             { "unsigned char[256]", "byte*"},
+            { "char[5]", "byte*"},
+            { "ImGuiDir*", "IntPtr" },
+            { "ImGuiStoragePair", "IntPtr" },
+            { "ImGuiDockRequest", "IntPtr" },
+            { "ImGuiDockNodeSettings", "IntPtr" },
+            { "ImGuiTableColumnIdx", "sbyte" },
+            { "ImGuiTableDrawChannelIdx", "byte"},
+            { "ImGuiContextHookCallback", "IntPtr" },
+            { "ImGuiErrorLogCallback", "IntPtr" },
+            { "ImGuiSizeCallback", "IntPtr"}
         };
         
         public static readonly List<string> WellKnownEnums = new List<string>()
@@ -70,6 +80,7 @@ namespace CodeGenerator
             "ImVec2",
             "ImVec4",
             "ImGuiStoragePair",
+            "ImGuiStyleMod",
         };
 
         public static readonly Dictionary<string, string> WellKnownDefaultValues = new Dictionary<string, string>()
@@ -96,7 +107,7 @@ namespace CodeGenerator
             { "ImPlotAxisFlags_NoGridLines", "ImPlotAxisFlags.NoGridLines"},
             { "ImGuiCond_Once", "ImGuiCond.Once"},
             { "ImPlotOrientation_Vertical", "ImPlotOrientation.Vertical"},
-            { "PinShape_CircleFilled", "PinShape._CircleFilled"},
+            { "PinShape_CircleFilled", "PinShape.CircleFilled"},
             { "ImGuiPopupFlags_None", "ImGuiPopupFlags.None"},
             { "ImGuiNavHighlightFlags_TypeDefault", "ImGuiNavHighlightFlags.TypeDefault"},
             { "ImGuiKeyModFlags_Ctrl", "ImGuiKeyModFlags.Ctrl"},

@@ -15,12 +15,20 @@ namespace CodeGenerator
         public FunctionDefinition[] Functions;
         public Dictionary<string, MethodVariant> Variants;
 
+        private bool _enableInternals;
+
+        public ImguiDefinitions(bool enableInternals = false)
+		{
+            _enableInternals = enableInternals;
+        }
+
         static int GetInt(JToken token, string key)
         {
             var v = token[key];
             if (v == null) return 0;
             return v.ToObject<int>();
         }
+
         public void LoadFrom(string directory)
         {
             
@@ -65,10 +73,12 @@ namespace CodeGenerator
             {
                 JProperty jp = (JProperty)jt;
                 string name = jp.Name;
-                if (typeLocations?[jp.Name]?.Value<string>().Contains("internal") ?? false) {
-                    return null;
-                }
-                EnumMember[] elements = jp.Values().Select(v =>
+                if (!_enableInternals && (typeLocations?[jp.Name]?.Value<string>().Contains("internal") ?? false))
+                {
+					return null;
+				}
+
+				EnumMember[] elements = jp.Values().Select(v =>
                 {
                     return new EnumMember(v["name"].ToString(), v["calc_value"].ToString());
                 }).ToArray();
@@ -79,7 +89,8 @@ namespace CodeGenerator
             {
                 JProperty jp = (JProperty)jt;
                 string name = jp.Name;
-                if (typeLocations?[jp.Name]?.Value<string>().Contains("internal") ?? false) {
+                if (!_enableInternals && (typeLocations?[jp.Name]?.Value<string>().Contains("internal") ?? false)) 
+                {
                     return null;
                 }
                 TypeReference[] fields = jp.Values().Select(v =>
@@ -120,7 +131,10 @@ namespace CodeGenerator
                         }
                     }
                     if (friendlyName == null) { return null; }
-                    if (val["location"]?.ToString().Contains("internal") ?? false) return null;
+                    if (!_enableInternals && (val["location"]?.ToString().Contains("internal") ?? false))
+                    {
+                        return null;
+                    }
 
                     string exportedName = ov_cimguiname;
                     if (exportedName == null)
@@ -161,6 +175,7 @@ namespace CodeGenerator
                     Dictionary<string, string> defaultValues = new Dictionary<string, string>();
                     foreach (JToken dv in val["defaults"])
                     {
+                        
                         JProperty dvProp = (JProperty)dv;
                         defaultValues.Add(dvProp.Name, dvProp.Value.ToString());
                     }
@@ -359,6 +374,29 @@ namespace CodeGenerator
                 }
             }
 
+            if (Type.StartsWith("ImSpan_"))
+            {
+                if (Type.EndsWith("*"))
+                {
+                    Type = "ImSpan*";
+                }
+                else
+                {
+                    Type = "ImSpan";
+                }
+            }
+
+            if (Type.StartsWith("ImPool_"))
+            {
+                if (Type.EndsWith("*"))
+                {
+                    Type = "ImPool*";
+                }
+                else
+                {
+                    Type = "ImPool";
+                }
+            }
             TemplateType = templateType;
             ArraySize = asize;
             int startBracket = name.IndexOf('[');
