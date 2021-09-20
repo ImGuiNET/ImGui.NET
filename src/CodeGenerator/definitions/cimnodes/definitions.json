@@ -826,7 +826,7 @@
       "funcname": "IsLinkCreated",
       "location": "imnodes:299",
       "namespace": "imnodes",
-      "ov_cimguiname": "imnodes_IsLinkCreatedBoolPtr",
+      "ov_cimguiname": "imnodes_IsLinkCreated_BoolPtr",
       "ret": "bool",
       "signature": "(int*,int*,bool*)",
       "stname": ""
@@ -864,7 +864,7 @@
       "funcname": "IsLinkCreated",
       "location": "imnodes:303",
       "namespace": "imnodes",
-      "ov_cimguiname": "imnodes_IsLinkCreatedIntPtr",
+      "ov_cimguiname": "imnodes_IsLinkCreated_IntPtr",
       "ret": "bool",
       "signature": "(int*,int*,int*,int*,bool*)",
       "stname": ""

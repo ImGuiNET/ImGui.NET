@@ -34,5 +34,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawCmd_destroy((ImDrawCmd*)(NativePtr));
         }
+        public IntPtr GetTexID()
+        {
+            IntPtr ret = ImGuiNative.ImDrawCmd_GetTexID((ImDrawCmd*)(NativePtr));
+            return ret;
+        }
     }
 }

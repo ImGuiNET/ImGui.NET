@@ -20,9 +20,9 @@ namespace ImGuizmoNET
         [DllImport("cimguizmo", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ImGuizmo_Enable(byte enable);
         [DllImport("cimguizmo", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte ImGuizmo_IsOverNil();
+        public static extern byte ImGuizmo_IsOver_Nil();
         [DllImport("cimguizmo", CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte ImGuizmo_IsOverOPERATION(OPERATION op);
+        public static extern byte ImGuizmo_IsOver_OPERATION(OPERATION op);
         [DllImport("cimguizmo", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte ImGuizmo_IsUsing();
         [DllImport("cimguizmo", CallingConvention = CallingConvention.Cdecl)]

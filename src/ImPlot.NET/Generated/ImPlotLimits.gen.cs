@@ -23,12 +23,12 @@ namespace ImPlotNET
         public ref ImPlotRange Y => ref Unsafe.AsRef<ImPlotRange>(&NativePtr->Y);
         public bool Contains(ImPlotPoint p)
         {
-            byte ret = ImPlotNative.ImPlotLimits_ContainsPlotPoInt((ImPlotLimits*)(NativePtr), p);
+            byte ret = ImPlotNative.ImPlotLimits_Contains_PlotPoInt((ImPlotLimits*)(NativePtr), p);
             return ret != 0;
         }
         public bool Contains(double x, double y)
         {
-            byte ret = ImPlotNative.ImPlotLimits_Containsdouble((ImPlotLimits*)(NativePtr), x, y);
+            byte ret = ImPlotNative.ImPlotLimits_Contains_double((ImPlotLimits*)(NativePtr), x, y);
             return ret != 0;
         }
     }
