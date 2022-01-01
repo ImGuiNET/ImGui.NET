@@ -27,6 +27,7 @@ namespace ImGuiNET
         public ImFont* FontDefault;
         public Vector2 DisplayFramebufferScale;
         public byte ConfigDockingNoSplit;
+        public byte ConfigDockingWithShift;
         public byte ConfigDockingAlwaysTabBar;
         public byte ConfigDockingTransparentPayload;
         public byte ConfigViewportsNoAutoMerge;
@@ -73,6 +74,7 @@ namespace ImGuiNET
         public int MetricsActiveWindows;
         public int MetricsActiveAllocations;
         public Vector2 MouseDelta;
+        public byte WantCaptureMouseUnlessPopupClose;
         public ImGuiKeyModFlags KeyMods;
         public ImGuiKeyModFlags KeyModsPrev;
         public Vector2 MousePosPrev;
@@ -84,9 +86,11 @@ namespace ImGuiNET
         public fixed double MouseClickedTime[5];
         public fixed byte MouseClicked[5];
         public fixed byte MouseDoubleClicked[5];
+        public fixed ushort MouseClickedCount[5];
+        public fixed ushort MouseClickedLastCount[5];
         public fixed byte MouseReleased[5];
         public fixed byte MouseDownOwned[5];
-        public fixed byte MouseDownWasDoubleClick[5];
+        public fixed byte MouseDownOwnedUnlessPopupClose[5];
         public fixed float MouseDownDuration[5];
         public fixed float MouseDownDurationPrev[5];
         public Vector2 MouseDragMaxDistanceAbs_0;
@@ -132,6 +136,7 @@ namespace ImGuiNET
         public ImFontPtr FontDefault => new ImFontPtr(NativePtr->FontDefault);
         public ref Vector2 DisplayFramebufferScale => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayFramebufferScale);
         public ref bool ConfigDockingNoSplit => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingNoSplit);
+        public ref bool ConfigDockingWithShift => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingWithShift);
         public ref bool ConfigDockingAlwaysTabBar => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingAlwaysTabBar);
         public ref bool ConfigDockingTransparentPayload => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingTransparentPayload);
         public ref bool ConfigViewportsNoAutoMerge => ref Unsafe.AsRef<bool>(&NativePtr->ConfigViewportsNoAutoMerge);
@@ -178,6 +183,7 @@ namespace ImGuiNET
         public ref int MetricsActiveWindows => ref Unsafe.AsRef<int>(&NativePtr->MetricsActiveWindows);
         public ref int MetricsActiveAllocations => ref Unsafe.AsRef<int>(&NativePtr->MetricsActiveAllocations);
         public ref Vector2 MouseDelta => ref Unsafe.AsRef<Vector2>(&NativePtr->MouseDelta);
+        public ref bool WantCaptureMouseUnlessPopupClose => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureMouseUnlessPopupClose);
         public ref ImGuiKeyModFlags KeyMods => ref Unsafe.AsRef<ImGuiKeyModFlags>(&NativePtr->KeyMods);
         public ref ImGuiKeyModFlags KeyModsPrev => ref Unsafe.AsRef<ImGuiKeyModFlags>(&NativePtr->KeyModsPrev);
         public ref Vector2 MousePosPrev => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePosPrev);
@@ -185,9 +191,11 @@ namespace ImGuiNET
         public RangeAccessor<double> MouseClickedTime => new RangeAccessor<double>(NativePtr->MouseClickedTime, 5);
         public RangeAccessor<bool> MouseClicked => new RangeAccessor<bool>(NativePtr->MouseClicked, 5);
         public RangeAccessor<bool> MouseDoubleClicked => new RangeAccessor<bool>(NativePtr->MouseDoubleClicked, 5);
+        public RangeAccessor<ushort> MouseClickedCount => new RangeAccessor<ushort>(NativePtr->MouseClickedCount, 5);
+        public RangeAccessor<ushort> MouseClickedLastCount => new RangeAccessor<ushort>(NativePtr->MouseClickedLastCount, 5);
         public RangeAccessor<bool> MouseReleased => new RangeAccessor<bool>(NativePtr->MouseReleased, 5);
         public RangeAccessor<bool> MouseDownOwned => new RangeAccessor<bool>(NativePtr->MouseDownOwned, 5);
-        public RangeAccessor<bool> MouseDownWasDoubleClick => new RangeAccessor<bool>(NativePtr->MouseDownWasDoubleClick, 5);
+        public RangeAccessor<bool> MouseDownOwnedUnlessPopupClose => new RangeAccessor<bool>(NativePtr->MouseDownOwnedUnlessPopupClose, 5);
         public RangeAccessor<float> MouseDownDuration => new RangeAccessor<float>(NativePtr->MouseDownDuration, 5);
         public RangeAccessor<float> MouseDownDurationPrev => new RangeAccessor<float>(NativePtr->MouseDownDurationPrev, 5);
         public RangeAccessor<Vector2> MouseDragMaxDistanceAbs => new RangeAccessor<Vector2>(&NativePtr->MouseDragMaxDistanceAbs_0, 5);

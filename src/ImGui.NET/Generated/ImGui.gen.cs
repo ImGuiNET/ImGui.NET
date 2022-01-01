@@ -6424,6 +6424,11 @@ namespace ImGuiNET
             ImGuiViewport* ret = ImGuiNative.igGetMainViewport();
             return new ImGuiViewportPtr(ret);
         }
+        public static int GetMouseClickedCount(ImGuiMouseButton button)
+        {
+            int ret = ImGuiNative.igGetMouseClickedCount(button);
+            return ret;
+        }
         public static ImGuiMouseCursor GetMouseCursor()
         {
             ImGuiMouseCursor ret = ImGuiNative.igGetMouseCursor();
@@ -6543,11 +6548,6 @@ namespace ImGuiNET
             Vector2 __retval;
             ImGuiNative.igGetWindowContentRegionMin(&__retval);
             return __retval;
-        }
-        public static float GetWindowContentRegionWidth()
-        {
-            float ret = ImGuiNative.igGetWindowContentRegionWidth();
-            return ret;
         }
         public static uint GetWindowDockID()
         {
@@ -11266,6 +11266,18 @@ namespace ImGuiNET
             byte native_p_open_val = p_open ? (byte)1 : (byte)0;
             byte* native_p_open = &native_p_open_val;
             ImGuiNative.igShowMetricsWindow(native_p_open);
+            p_open = native_p_open_val != 0;
+        }
+        public static void ShowStackToolWindow()
+        {
+            byte* p_open = null;
+            ImGuiNative.igShowStackToolWindow(p_open);
+        }
+        public static void ShowStackToolWindow(ref bool p_open)
+        {
+            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
+            byte* native_p_open = &native_p_open_val;
+            ImGuiNative.igShowStackToolWindow(native_p_open);
             p_open = native_p_open_val != 0;
         }
         public static void ShowStyleEditor()
