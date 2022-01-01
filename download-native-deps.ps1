@@ -63,3 +63,27 @@ if( -not $? )
 }
 
 Write-Host - cimgui.dylib
+
+$client.DownloadFile(
+    "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$tag/definitions.json",
+    "$PSScriptRoot/src/CodeGenerator/definitions/cimgui/definitions.json")
+if( -not $? )
+{
+    $msg = $Error[0].Exception.Message
+    Write-Error "Couldn't download definitions.json."
+    exit
+}
+
+Write-Host - definitions.json
+
+$client.DownloadFile(
+    "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$tag/structs_and_enums.json",
+    "$PSScriptRoot/src/CodeGenerator/definitions/cimgui/structs_and_enums.json")
+if( -not $? )
+{
+    $msg = $Error[0].Exception.Message
+    Write-Error "Couldn't download structs_and_enums.json."
+    exit
+}
+
+Write-Host - structs_and_enums.json
