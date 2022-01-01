@@ -10,7 +10,7 @@ namespace imnodesNET
     {
         public static void BeginInputAttribute(int id)
         {
-            PinShape shape = PinShape._CircleFilled;
+            PinShape shape = PinShape.CircleFilled;
             imnodesNative.imnodes_BeginInputAttribute(id, shape);
         }
         public static void BeginInputAttribute(int id, PinShape shape)
@@ -31,7 +31,7 @@ namespace imnodesNET
         }
         public static void BeginOutputAttribute(int id)
         {
-            PinShape shape = PinShape._CircleFilled;
+            PinShape shape = PinShape.CircleFilled;
             imnodesNative.imnodes_BeginOutputAttribute(id, shape);
         }
         public static void BeginOutputAttribute(int id, PinShape shape)

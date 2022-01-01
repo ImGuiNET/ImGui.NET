@@ -96,7 +96,7 @@ namespace CodeGenerator
             { "ImPlotAxisFlags_NoGridLines", "ImPlotAxisFlags.NoGridLines"},
             { "ImGuiCond_Once", "ImGuiCond.Once"},
             { "ImPlotOrientation_Vertical", "ImPlotOrientation.Vertical"},
-            { "PinShape_CircleFilled", "PinShape._CircleFilled"},
+            { "PinShape_CircleFilled", "PinShape.CircleFilled"},
             { "ImGuiPopupFlags_None", "ImGuiPopupFlags.None"},
             { "ImGuiNavHighlightFlags_TypeDefault", "ImGuiNavHighlightFlags.TypeDefault"},
             { "ImGuiKeyModFlags_Ctrl", "ImGuiKeyModFlags.Ctrl"},
