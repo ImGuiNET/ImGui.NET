@@ -1,0 +1,54 @@
+name: CI
+on:
+  create: # when tags are created
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  Build_Windows:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    # create a tag via following command to execute these CI steps
+    # git tag -a v1.86 -m "Releasing new ImGui.NET Version"
+    # git push origin v1.86
+    - name: Bump up ImGui.NET version
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+        sed -i "s/<AssemblyVersion>.*/<AssemblyVersion>${{ github.event.ref }}<\/AssemblyVersion>/g;" src/ImGui.NET/ImGui.NET.csproj
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git commit -m "Bump version to ${{ github.event.ref }}" -a
+      shell: bash
+    - name: Push changes
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: master
+    ########################################################
+
+    - name: Install .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore src
+    - name: Build Project
+      run: dotnet build -c Release --no-restore src
+
+    # create a tag via following command to execute these CI steps
+    # git tag -a v1.86 -m "Releasing new ImGui.NET Version"
+    # git push origin v1.86
+    - name: Build Packages
+      if: startsWith(github.ref, 'refs/tags/')
+      run: dotnet pack src/ImGui.NET -c Release --no-restore --no-build
+    - name: List Packages
+      if: startsWith(github.ref, 'refs/tags/')
+      run: ls -l bin\Release\ImGui.NET\
+    ########################################################
