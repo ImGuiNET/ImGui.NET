@@ -15,8 +15,8 @@ jobs:
         fetch-depth: 0
 
     # create a tag via following command to execute these CI steps
-    # git tag -a v1.86 -m "Releasing new ImGui.NET Version"
-    # git push origin v1.86
+    # git tag -a 1.86 -m "Releasing new ImGui.NET Version"
+    # git push origin 1.86
     - name: Bump up ImGui.NET version
       if: startsWith(github.ref, 'refs/tags/')
       run: |
@@ -43,8 +43,8 @@ jobs:
       run: dotnet build -c Release --no-restore src
 
     # create a tag via following command to execute these CI steps
-    # git tag -a v1.86 -m "Releasing new ImGui.NET Version"
-    # git push origin v1.86
+    # git tag -a 1.86 -m "Releasing new ImGui.NET Version"
+    # git push origin 1.86
     - name: Build Packages
       if: startsWith(github.ref, 'refs/tags/')
       run: dotnet pack src/ImGui.NET -c Release --no-restore --no-build
