@@ -2,7 +2,7 @@
 
 This is a .NET wrapper for the immediate mode GUI library, Dear ImGui (https://github.com/ocornut/imgui). ImGui.NET lets you build graphical interfaces using a simple immediate-mode style. ImGui.NET is a .NET Standard library, and can be used on all major .NET runtimes and operating systems.
 
-Included is a basic sample program that shows how to use the library, and renders the UI using [Veldrid](https://github.com/mellinoe/veldrid), a portable graphics library for .NET. By itself, Dear ImGui does not care what technology you use for rendering; it simply outputs textured triangles. Example renderers also exist for MonoGame and OpenTK (OpenGL).
+Included is a basic sample program that shows how to use the library, and renders the UI using [Veldrid](https://github.com/mellinoe/veldrid), a portable graphics library for .NET. By itself, Dear ImGui does not care what technology you use for rendering; it simply outputs textured triangles. There's also a MonoGame and [OpenTK (OpenGL) ImGui.NET](https://github.com/NogginBops/ImGui.NET_OpenTK_Sample) renderer.
 
 This wrapper is built on top of [cimgui](https://github.com/Extrawurst/cimgui), which exposes a plain C API for Dear ImGui. If you are using Windows, OSX, or a mainline Linux distribution, then the ImGui.NET NuGet package comes bundled with a pre-built native library. If you are using another operating system, then you may need to build the native library yourself; see the cimgui repo for build instructions.
 
