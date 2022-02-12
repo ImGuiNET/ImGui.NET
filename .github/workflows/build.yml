@@ -2,6 +2,7 @@ name: CI
 on:
   create: # when tags are created
   push:
+    tags: 'v*'
     branches: [ master ]
   pull_request:
     branches: [ master ]
