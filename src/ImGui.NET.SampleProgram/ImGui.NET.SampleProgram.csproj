@@ -26,7 +26,7 @@
 
   <ItemGroup>
     <Content Include="$(RepositoryRootDirectory)/deps/cimgui/win-x64/cimgui.dll" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="$(RepositoryRootDirectory)/deps/cimgui/osx-x64/cimgui.dylib" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/cimgui/osx-universal/cimgui.dylib" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="$(RepositoryRootDirectory)/deps/cimgui/linux-x64/cimgui.so" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 

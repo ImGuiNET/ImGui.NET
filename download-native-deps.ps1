@@ -1,6 +1,12 @@
 param (
+    [Parameter(Mandatory=$false)][string]$repository,
     [Parameter(Mandatory=$true)][string]$tag
 )
+
+if( -not $repository )
+{
+    $repository="https://github.com/mellinoe/imgui.net-nativebuild"
+}
 
 Write-Host Downloading native binaries from GitHub Releases...
 
@@ -9,7 +15,7 @@ if (Test-Path $PSScriptRoot\deps\cimgui\)
     Remove-Item $PSScriptRoot\deps\cimgui\ -Force -Recurse | Out-Null
 }
 New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\linux-x64 | Out-Null
-New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\osx-x64 | Out-Null
+New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\osx-universal | Out-Null
 New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\win-x86 | Out-Null
 New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\win-x64 | Out-Null
 
@@ -17,7 +23,7 @@ New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\win-x64 | Ou
 
 $client = New-Object System.Net.WebClient
 $client.DownloadFile(
-    "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$tag/cimgui.win-x86.dll",
+    "$repository/releases/download/$tag/cimgui.win-x86.dll",
     "$PSScriptRoot/deps/cimgui/win-x86/cimgui.dll")
 if( -not $? )
 {
@@ -29,7 +35,7 @@ if( -not $? )
 Write-Host "- cimgui.dll (x86)"
 
 $client.DownloadFile(
-    "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$tag/cimgui.win-x64.dll",
+    "$repository/releases/download/$tag/cimgui.win-x64.dll",
     "$PSScriptRoot/deps/cimgui/win-x64/$configuration/cimgui.dll")
 if( -not $? )
 {
@@ -41,7 +47,7 @@ if( -not $? )
 Write-Host "- cimgui.dll (x64)"
 
 $client.DownloadFile(
-    "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$tag/cimgui.so",
+    "$repository/releases/download/$tag/cimgui.so",
     "$PSScriptRoot/deps/cimgui/linux-x64/cimgui.so")
 if( -not $? )
 {
@@ -53,8 +59,8 @@ if( -not $? )
 Write-Host - cimgui.so
 
 $client.DownloadFile(
-    "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$tag/cimgui.dylib",
-    "$PSScriptRoot/deps/cimgui/osx-x64/cimgui.dylib")
+    "$repository/releases/download/$tag/cimgui.dylib",
+    "$PSScriptRoot/deps/cimgui/osx-universal/cimgui.dylib")
 if( -not $? )
 {
     $msg = $Error[0].Exception.Message
@@ -62,7 +68,7 @@ if( -not $? )
     exit
 }
 
-Write-Host - cimgui.dylib
+Write-Host "- cimgui.dylib"
 
 $client.DownloadFile(
     "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$tag/definitions.json",

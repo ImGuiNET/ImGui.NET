@@ -3,7 +3,7 @@
     <Description>A .NET wrapper for the Dear ImGui library.</Description>
     <AssemblyVersion>1.87.0</AssemblyVersion>
     <Authors>Eric Mellino</Authors>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>portable</DebugType>
     <AssemblyName>ImGui.NET</AssemblyName>
@@ -41,8 +41,8 @@
       <PackagePath>runtimes/linux-x64/native/libcimgui.so</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="..\..\deps\cimgui\osx-x64\cimgui.dylib">
-      <PackagePath>runtimes/osx-x64/native/libcimgui.dylib</PackagePath>
+    <Content Include="..\..\deps\cimgui\osx-universal\cimgui.dylib">
+      <PackagePath>runtimes/osx-universal/native/libcimgui.dylib</PackagePath>
       <Pack>true</Pack>
     </Content>
     <Content Include="build\net40\ImGui.NET.targets">
