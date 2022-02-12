@@ -3,7 +3,7 @@
     <Description>A .NET wrapper for the ImGuizmo library.</Description>
     <AssemblyVersion>1.61.0</AssemblyVersion>
     <Authors>Eric Mellino</Authors>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>portable</DebugType>
     <AssemblyName>ImGuizmo.NET</AssemblyName>

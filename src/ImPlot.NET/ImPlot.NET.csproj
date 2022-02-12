@@ -3,7 +3,7 @@
     <Description>A .NET wrapper for the ImPlot library.</Description>
     <AssemblyVersion>0.8.0</AssemblyVersion>
     <Authors>Eric Mellino</Authors>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>portable</DebugType>
     <AssemblyName>ImPlot.NET</AssemblyName>
