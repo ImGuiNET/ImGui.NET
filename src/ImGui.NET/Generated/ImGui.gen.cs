@@ -6409,14 +6409,19 @@ namespace ImGuiNET
             ImGuiNative.igGetItemRectSize(&__retval);
             return __retval;
         }
-        public static int GetKeyIndex(ImGuiKey imgui_key)
+        public static int GetKeyIndex(ImGuiKey key)
         {
-            int ret = ImGuiNative.igGetKeyIndex(imgui_key);
+            int ret = ImGuiNative.igGetKeyIndex(key);
             return ret;
         }
-        public static int GetKeyPressedAmount(int key_index, float repeat_delay, float rate)
+        public static string GetKeyName(ImGuiKey key)
         {
-            int ret = ImGuiNative.igGetKeyPressedAmount(key_index, repeat_delay, rate);
+            byte* ret = ImGuiNative.igGetKeyName(key);
+            return Util.StringFromPtr(ret);
+        }
+        public static int GetKeyPressedAmount(ImGuiKey key, float repeat_delay, float rate)
+        {
+            int ret = ImGuiNative.igGetKeyPressedAmount(key, repeat_delay, rate);
             return ret;
         }
         public static ImGuiViewportPtr GetMainViewport()
@@ -8495,26 +8500,26 @@ namespace ImGuiNET
             byte ret = ImGuiNative.igIsItemVisible();
             return ret != 0;
         }
-        public static bool IsKeyDown(int user_key_index)
+        public static bool IsKeyDown(ImGuiKey key)
         {
-            byte ret = ImGuiNative.igIsKeyDown(user_key_index);
+            byte ret = ImGuiNative.igIsKeyDown(key);
             return ret != 0;
         }
-        public static bool IsKeyPressed(int user_key_index)
+        public static bool IsKeyPressed(ImGuiKey key)
         {
             byte repeat = 1;
-            byte ret = ImGuiNative.igIsKeyPressed(user_key_index, repeat);
+            byte ret = ImGuiNative.igIsKeyPressed(key, repeat);
             return ret != 0;
         }
-        public static bool IsKeyPressed(int user_key_index, bool repeat)
+        public static bool IsKeyPressed(ImGuiKey key, bool repeat)
         {
             byte native_repeat = repeat ? (byte)1 : (byte)0;
-            byte ret = ImGuiNative.igIsKeyPressed(user_key_index, native_repeat);
+            byte ret = ImGuiNative.igIsKeyPressed(key, native_repeat);
             return ret != 0;
         }
-        public static bool IsKeyReleased(int user_key_index)
+        public static bool IsKeyReleased(ImGuiKey key)
         {
-            byte ret = ImGuiNative.igIsKeyReleased(user_key_index);
+            byte ret = ImGuiNative.igIsKeyReleased(key);
             return ret != 0;
         }
         public static bool IsMouseClicked(ImGuiMouseButton button)

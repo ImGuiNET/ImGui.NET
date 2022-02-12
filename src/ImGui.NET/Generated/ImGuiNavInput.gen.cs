@@ -23,6 +23,5 @@ namespace ImGuiNET
         KeyUp = 18,
         KeyDown = 19,
         COUNT = 20,
-        InternalStart = 16,
     }
 }
