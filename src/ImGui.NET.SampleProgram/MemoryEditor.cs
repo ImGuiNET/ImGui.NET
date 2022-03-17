@@ -3,6 +3,8 @@ using System.Globalization;
 using ImGuiNET;
 using System.Numerics;
 
+#if false
+
 namespace ImGuiNET
 {
     // C# port of ocornut's imgui_memory_editor.h - https://gist.github.com/ocornut/0673e37e54aff644298b
@@ -104,7 +106,7 @@ namespace ImGuiNET
                 float scroll_offset = ((DataEditingAddr / Rows) - (data_editing_addr_backup / Rows)) * line_height;
                 bool scroll_desired = (scroll_offset < 0.0f && DataEditingAddr < visible_start_addr + Rows * 2) || (scroll_offset > 0.0f && DataEditingAddr > visible_end_addr - Rows * 2);
                 if (scroll_desired)
-                    ImGuiNative.igSetScrollYFloat(ImGuiNative.igGetScrollY() + scroll_offset);
+                    ImGuiNative.igSetScrollY_Float(ImGuiNative.igGetScrollY() + scroll_offset);
             }
 
             for (int line_i = clipper.DisplayStart; line_i < clipper.DisplayEnd; line_i++) // display only visible items
@@ -275,3 +277,4 @@ namespace ImGuiNET
         }
     }
 }
+#endif

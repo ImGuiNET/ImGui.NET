@@ -521,12 +521,11 @@ namespace ImGuiNET
                             (uint)(pcmd.ClipRect.Z - pcmd.ClipRect.X),
                             (uint)(pcmd.ClipRect.W - pcmd.ClipRect.Y));
 
-                        cl.DrawIndexed(pcmd.ElemCount, 1, (uint)idx_offset, (int) (vtx_offset + pcmd.VtxOffset), 0);
+                        cl.DrawIndexed(pcmd.ElemCount, 1, pcmd.IdxOffset + (uint)idx_offset, (int)pcmd.VtxOffset + vtx_offset, 0);
                     }
-
-                    idx_offset += (int)pcmd.ElemCount;
                 }
                 vtx_offset += cmd_list.VtxBuffer.Size;
+                idx_offset += cmd_list.IdxBuffer.Size;
             }
         }
 

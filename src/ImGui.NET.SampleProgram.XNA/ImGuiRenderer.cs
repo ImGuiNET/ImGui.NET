@@ -339,6 +339,11 @@ namespace ImGuiNET.SampleProgram.XNA
                 {
                     ImDrawCmdPtr drawCmd = cmdList.CmdBuffer[cmdi];
 
+                    if (drawCmd.ElemCount == 0) 
+                    {
+                        continue;
+                    }
+
                     if (!_loadedTextures.ContainsKey(drawCmd.TextureId))
                     {
                         throw new InvalidOperationException($"Could not find a texture with id '{drawCmd.TextureId}', please check your bindings");
@@ -360,19 +365,18 @@ namespace ImGuiNET.SampleProgram.XNA
 #pragma warning disable CS0618 // // FNA does not expose an alternative method.
                         _graphicsDevice.DrawIndexedPrimitives(
                             primitiveType: PrimitiveType.TriangleList,
-                            baseVertex: vtxOffset,
+                            baseVertex: (int)drawCmd.VtxOffset + vtxOffset,
                             minVertexIndex: 0,
                             numVertices: cmdList.VtxBuffer.Size,
-                            startIndex: idxOffset,
+                            startIndex: (int)drawCmd.IdxOffset + idxOffset,
                             primitiveCount: (int)drawCmd.ElemCount / 3
                         );
 #pragma warning restore CS0618
                     }
-
-                    idxOffset += (int)drawCmd.ElemCount;
                 }
 
                 vtxOffset += cmdList.VtxBuffer.Size;
+                idxOffset += cmdList.IdxBuffer.Size;
             }
         }
 

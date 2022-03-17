@@ -83,6 +83,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawList__ResetForNewFrame((ImDrawList*)(NativePtr));
         }
+        public void _TryMergeDrawCmds()
+        {
+            ImGuiNative.ImDrawList__TryMergeDrawCmds((ImDrawList*)(NativePtr));
+        }
         public void AddBezierCubic(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4, uint col, float thickness)
         {
             int num_segments = 0;
