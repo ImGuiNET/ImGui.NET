@@ -24,7 +24,7 @@ namespace CodeGenerator
 
 		private static void Run(string libraryName)
 		{
-			string outputPath = AppContext.BaseDirectory + "\\gen\\" + libraryName;
+			string outputPath = Path.Combine(AppContext.BaseDirectory, "gen", libraryName);
 
 			if (!Directory.Exists(outputPath))
 			{
