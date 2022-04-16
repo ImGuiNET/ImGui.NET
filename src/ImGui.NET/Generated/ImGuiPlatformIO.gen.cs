@@ -24,7 +24,6 @@ namespace ImGuiNET
         public IntPtr Platform_SwapBuffers;
         public IntPtr Platform_GetWindowDpiScale;
         public IntPtr Platform_OnChangedViewport;
-        public IntPtr Platform_SetImeInputPos;
         public IntPtr Platform_CreateVkSurface;
         public IntPtr Renderer_CreateWindow;
         public IntPtr Renderer_DestroyWindow;
@@ -59,7 +58,6 @@ namespace ImGuiNET
         public ref IntPtr Platform_SwapBuffers => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_SwapBuffers);
         public ref IntPtr Platform_GetWindowDpiScale => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_GetWindowDpiScale);
         public ref IntPtr Platform_OnChangedViewport => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_OnChangedViewport);
-        public ref IntPtr Platform_SetImeInputPos => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_SetImeInputPos);
         public ref IntPtr Platform_CreateVkSurface => ref Unsafe.AsRef<IntPtr>(&NativePtr->Platform_CreateVkSurface);
         public ref IntPtr Renderer_CreateWindow => ref Unsafe.AsRef<IntPtr>(&NativePtr->Renderer_CreateWindow);
         public ref IntPtr Renderer_DestroyWindow => ref Unsafe.AsRef<IntPtr>(&NativePtr->Renderer_DestroyWindow);

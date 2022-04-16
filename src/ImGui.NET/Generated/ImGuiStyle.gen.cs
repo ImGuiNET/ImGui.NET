@@ -8,6 +8,7 @@ namespace ImGuiNET
     public unsafe partial struct ImGuiStyle
     {
         public float Alpha;
+        public float DisabledAlpha;
         public Vector2 WindowPadding;
         public float WindowRounding;
         public float WindowBorderSize;
@@ -111,6 +112,7 @@ namespace ImGuiNET
         public static implicit operator ImGuiStyle* (ImGuiStylePtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiStylePtr(IntPtr nativePtr) => new ImGuiStylePtr(nativePtr);
         public ref float Alpha => ref Unsafe.AsRef<float>(&NativePtr->Alpha);
+        public ref float DisabledAlpha => ref Unsafe.AsRef<float>(&NativePtr->DisabledAlpha);
         public ref Vector2 WindowPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->WindowPadding);
         public ref float WindowRounding => ref Unsafe.AsRef<float>(&NativePtr->WindowRounding);
         public ref float WindowBorderSize => ref Unsafe.AsRef<float>(&NativePtr->WindowBorderSize);

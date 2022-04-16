@@ -2,8 +2,9 @@
 using ImPlotNET;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Numerics;
 using System.Reflection;
+using System.IO;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using Veldrid;
@@ -63,17 +64,17 @@ namespace ImGuiNET
 			_windowWidth = width;
 			_windowHeight = height;
 
-			IntPtr context = ImGui.CreateContext();
-			ImGui.SetCurrentContext(context);
-
-			imnodes.CreateContext();
+            IntPtr context = ImGui.CreateContext();
+            ImGui.SetCurrentContext(context);
+            ImGui.GetIO().BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
+            var fonts = ImGui.GetIO().Fonts;
+            ImGui.GetIO().Fonts.AddFontDefault();
+            
+            imnodes.CreateContext();
 			imnodes.SetImGuiContext(context);
 
 			ImPlot.CreateContext();
 			ImPlot.SetImGuiContext(context);
-
-			var fonts = ImGui.GetIO().Fonts;
-			ImGui.GetIO().Fonts.AddFontDefault();
 
 			CreateDeviceResources(gd, outputDescription);
 			SetKeyMappings();
@@ -529,14 +530,13 @@ namespace ImGuiNET
 							(uint)(pcmd.ClipRect.z - pcmd.ClipRect.x),
 							(uint)(pcmd.ClipRect.w - pcmd.ClipRect.y));
 
-						cl.DrawIndexed(pcmd.ElemCount, 1, (uint)idx_offset, vtx_offset, 0);
-					}
-
-					idx_offset += (int)pcmd.ElemCount;
-				}
-				vtx_offset += cmd_list.VtxBuffer.Size;
-			}
-		}
+                        cl.DrawIndexed(pcmd.ElemCount, 1, pcmd.IdxOffset + (uint)idx_offset, (int)pcmd.VtxOffset + vtx_offset, 0);
+                    }
+                }
+                vtx_offset += cmd_list.VtxBuffer.Size;
+                idx_offset += cmd_list.IdxBuffer.Size;
+            }
+        }
 
 		/// <summary>
 		/// Frees all graphics resources used by the renderer.
