@@ -437,6 +437,16 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+        public static void BeginDisabled()
+        {
+            byte disabled = 1;
+            ImGuiNative.igBeginDisabled(disabled);
+        }
+        public static void BeginDisabled(bool disabled)
+        {
+            byte native_disabled = disabled ? (byte)1 : (byte)0;
+            ImGuiNative.igBeginDisabled(native_disabled);
+        }
         public static bool BeginDragDropSource()
         {
             ImGuiDragDropFlags flags = (ImGuiDragDropFlags)0;
@@ -6092,6 +6102,10 @@ namespace ImGuiNET
         {
             ImGuiNative.igEndCombo();
         }
+        public static void EndDisabled()
+        {
+            ImGuiNative.igEndDisabled();
+        }
         public static void EndDragDropSource()
         {
             ImGuiNative.igEndDragDropSource();
@@ -6395,20 +6409,30 @@ namespace ImGuiNET
             ImGuiNative.igGetItemRectSize(&__retval);
             return __retval;
         }
-        public static int GetKeyIndex(ImGuiKey imgui_key)
+        public static int GetKeyIndex(ImGuiKey key)
         {
-            int ret = ImGuiNative.igGetKeyIndex(imgui_key);
+            int ret = ImGuiNative.igGetKeyIndex(key);
             return ret;
         }
-        public static int GetKeyPressedAmount(int key_index, float repeat_delay, float rate)
+        public static string GetKeyName(ImGuiKey key)
         {
-            int ret = ImGuiNative.igGetKeyPressedAmount(key_index, repeat_delay, rate);
+            byte* ret = ImGuiNative.igGetKeyName(key);
+            return Util.StringFromPtr(ret);
+        }
+        public static int GetKeyPressedAmount(ImGuiKey key, float repeat_delay, float rate)
+        {
+            int ret = ImGuiNative.igGetKeyPressedAmount(key, repeat_delay, rate);
             return ret;
         }
         public static ImGuiViewportPtr GetMainViewport()
         {
             ImGuiViewport* ret = ImGuiNative.igGetMainViewport();
             return new ImGuiViewportPtr(ret);
+        }
+        public static int GetMouseClickedCount(ImGuiMouseButton button)
+        {
+            int ret = ImGuiNative.igGetMouseClickedCount(button);
+            return ret;
         }
         public static ImGuiMouseCursor GetMouseCursor()
         {
@@ -6529,11 +6553,6 @@ namespace ImGuiNET
             Vector2 __retval;
             ImGuiNative.igGetWindowContentRegionMin(&__retval);
             return __retval;
-        }
-        public static float GetWindowContentRegionWidth()
-        {
-            float ret = ImGuiNative.igGetWindowContentRegionWidth();
-            return ret;
         }
         public static uint GetWindowDockID()
         {
@@ -8481,26 +8500,26 @@ namespace ImGuiNET
             byte ret = ImGuiNative.igIsItemVisible();
             return ret != 0;
         }
-        public static bool IsKeyDown(int user_key_index)
+        public static bool IsKeyDown(ImGuiKey key)
         {
-            byte ret = ImGuiNative.igIsKeyDown(user_key_index);
+            byte ret = ImGuiNative.igIsKeyDown(key);
             return ret != 0;
         }
-        public static bool IsKeyPressed(int user_key_index)
+        public static bool IsKeyPressed(ImGuiKey key)
         {
             byte repeat = 1;
-            byte ret = ImGuiNative.igIsKeyPressed(user_key_index, repeat);
+            byte ret = ImGuiNative.igIsKeyPressed(key, repeat);
             return ret != 0;
         }
-        public static bool IsKeyPressed(int user_key_index, bool repeat)
+        public static bool IsKeyPressed(ImGuiKey key, bool repeat)
         {
             byte native_repeat = repeat ? (byte)1 : (byte)0;
-            byte ret = ImGuiNative.igIsKeyPressed(user_key_index, native_repeat);
+            byte ret = ImGuiNative.igIsKeyPressed(key, native_repeat);
             return ret != 0;
         }
-        public static bool IsKeyReleased(int user_key_index)
+        public static bool IsKeyReleased(ImGuiKey key)
         {
-            byte ret = ImGuiNative.igIsKeyReleased(user_key_index);
+            byte ret = ImGuiNative.igIsKeyReleased(key);
             return ret != 0;
         }
         public static bool IsMouseClicked(ImGuiMouseButton button)
@@ -11252,6 +11271,18 @@ namespace ImGuiNET
             byte native_p_open_val = p_open ? (byte)1 : (byte)0;
             byte* native_p_open = &native_p_open_val;
             ImGuiNative.igShowMetricsWindow(native_p_open);
+            p_open = native_p_open_val != 0;
+        }
+        public static void ShowStackToolWindow()
+        {
+            byte* p_open = null;
+            ImGuiNative.igShowStackToolWindow(p_open);
+        }
+        public static void ShowStackToolWindow(ref bool p_open)
+        {
+            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
+            byte* native_p_open = &native_p_open_val;
+            ImGuiNative.igShowStackToolWindow(native_p_open);
             p_open = native_p_open_val != 0;
         }
         public static void ShowStyleEditor()
