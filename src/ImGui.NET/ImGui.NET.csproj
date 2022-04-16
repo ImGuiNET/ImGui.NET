@@ -53,4 +53,12 @@
   <ItemGroup>
     <Folder Include="Generated\" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UnityEngine" Condition=" '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' ">
+      <HintPath>/Applications/Unity/Hub/Editor/2020.3.29f1/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine" Condition=" '$(OS)' == 'Windows_NT' ">
+      <HintPath>..\..\..\..\Program Files\Unity\Hub\Editor\2020.3.29f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
