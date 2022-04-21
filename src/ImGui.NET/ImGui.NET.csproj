@@ -45,10 +45,6 @@
       <PackagePath>runtimes/osx/native/libcimgui.dylib</PackagePath>
       <Pack>true</Pack>
     </Content>
-    <Content Include="..\..\deps\cimgui\osx\cimgui.dylib">
-      <PackagePath>runtimes/osx-arm64/native/libcimgui.dylib</PackagePath>
-      <Pack>true</Pack>
-    </Content>
     <Content Include="build\net40\ImGui.NET.targets">
       <PackagePath>build/net40/ImGui.NET.targets</PackagePath>
       <Pack>true</Pack>
