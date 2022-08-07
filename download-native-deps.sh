@@ -12,20 +12,8 @@ SCRIPT_ROOT=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 echo "Script is located in: $SCRIPT_ROOT"
 echo "Using Tag: $TAG"
 
-echo -n "Downloading windows x86 cimgui: "
-curl -sfLo "$SCRIPT_ROOT/deps/cimgui/win-x86/cimgui.dll" "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$TAG/cimgui.win-x86.dll"
-echo ""
-
 echo -n "Downloading windows x64 cimgui: "
 curl -sfLo "$SCRIPT_ROOT/deps/cimgui/win-x64/cimgui.dll" "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$TAG/cimgui.win-x64.dll"
-echo ""
-
-echo -n "Downloading linux x64 cimgui: "
-curl -sfLo "$SCRIPT_ROOT/deps/cimgui/linux-x64/cimgui.so" "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$TAG/cimgui.so"
-echo ""
-
-echo -n "Downloading osx x64 cimgui: "
-curl -sfLo "$SCRIPT_ROOT/deps/cimgui/osx-x64/cimgui.dylib" "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$TAG/cimgui.dylib"
 echo ""
 
 echo -n "Downloading definitions json file: "
