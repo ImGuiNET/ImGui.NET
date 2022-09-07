@@ -402,26 +402,34 @@ namespace ImGuiNET
         private static void SetKeyMappings()
         {
             ImGuiIOPtr io = ImGui.GetIO();
-            io.KeyMap[(int)ImGuiKey.Tab] = (int)Key.Tab;
             io.KeyMap[(int)ImGuiKey.LeftArrow] = (int)Key.Left;
             io.KeyMap[(int)ImGuiKey.RightArrow] = (int)Key.Right;
             io.KeyMap[(int)ImGuiKey.UpArrow] = (int)Key.Up;
             io.KeyMap[(int)ImGuiKey.DownArrow] = (int)Key.Down;
-            io.KeyMap[(int)ImGuiKey.PageUp] = (int)Key.PageUp;
-            io.KeyMap[(int)ImGuiKey.PageDown] = (int)Key.PageDown;
-            io.KeyMap[(int)ImGuiKey.Home] = (int)Key.Home;
-            io.KeyMap[(int)ImGuiKey.End] = (int)Key.End;
-            io.KeyMap[(int)ImGuiKey.Delete] = (int)Key.Delete;
-            io.KeyMap[(int)ImGuiKey.Backspace] = (int)Key.BackSpace;
-            io.KeyMap[(int)ImGuiKey.Enter] = (int)Key.Enter;
-            io.KeyMap[(int)ImGuiKey.Escape] = (int)Key.Escape;
-            io.KeyMap[(int)ImGuiKey.Space] = (int)Key.Space;
-            io.KeyMap[(int)ImGuiKey.A] = (int)Key.A;
-            io.KeyMap[(int)ImGuiKey.C] = (int)Key.C;
-            io.KeyMap[(int)ImGuiKey.V] = (int)Key.V;
-            io.KeyMap[(int)ImGuiKey.X] = (int)Key.X;
-            io.KeyMap[(int)ImGuiKey.Y] = (int)Key.Y;
-            io.KeyMap[(int)ImGuiKey.Z] = (int)Key.Z;
+
+            io.KeyMap[(int)ImGuiKey._0] = (int)Key.Number0;
+            io.KeyMap[(int)ImGuiKey._1] = (int)Key.Number1;
+            io.KeyMap[(int)ImGuiKey._2] = (int)Key.Number2;
+            io.KeyMap[(int)ImGuiKey._3] = (int)Key.Number3;
+            io.KeyMap[(int)ImGuiKey._4] = (int)Key.Number4;
+            io.KeyMap[(int)ImGuiKey._5] = (int)Key.Number5;
+            io.KeyMap[(int)ImGuiKey._6] = (int)Key.Number6;
+            io.KeyMap[(int)ImGuiKey._7] = (int)Key.Number7;
+            io.KeyMap[(int)ImGuiKey._8] = (int)Key.Number8;
+            io.KeyMap[(int)ImGuiKey._9] = (int)Key.Number9;
+            io.KeyMap[(int)ImGuiKey.Apostrophe] = (int)Key.Grave;
+            io.KeyMap[(int)ImGuiKey.Equal] = (int)Key.Plus;
+            io.KeyMap[(int)ImGuiKey.LeftBracket] = (int)Key.BracketLeft;
+            io.KeyMap[(int)ImGuiKey.Backslash] = (int)Key.BackSlash;
+            io.KeyMap[(int)ImGuiKey.RightBracket] = (int)Key.BracketRight;
+
+            foreach (var key in Enum.GetValues<ImGuiKey>())
+            {
+                if (Enum.TryParse<Key>(key.ToString(), out var target))
+                {
+                    io.KeyMap[(int)key] = (int)target;
+                }
+            }
         }
 
         private void RenderImDrawData(ImDrawDataPtr draw_data, GraphicsDevice gd, CommandList cl)
