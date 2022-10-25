@@ -1,7 +1,7 @@
 namespace ImGuiNET
 {
     [System.Flags]
-    public enum ImGuiKeyModFlags
+    public enum ImGuiModFlags
     {
         None = 0,
         Ctrl = 1,
