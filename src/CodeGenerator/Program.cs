@@ -25,6 +25,11 @@ namespace CodeGenerator
                 outputPath = AppContext.BaseDirectory;
             }
 
+            if (!Directory.Exists(outputPath))
+            {
+                Directory.CreateDirectory(outputPath);
+            }
+
             string libraryName;
             if (args.Length > 1)
             {

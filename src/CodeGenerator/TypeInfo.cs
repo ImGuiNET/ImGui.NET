@@ -52,6 +52,9 @@ namespace CodeGenerator
             { "ImVec2[2]", "Vector2*" },
             { "char* []", "byte**" },
             { "unsigned char[256]", "byte*"},
+            { "ImPlotFormatter", "IntPtr" },
+            { "ImPlotGetter", "IntPtr" },
+            { "ImPlotTransform", "IntPtr" },
         };
         
         public static readonly List<string> WellKnownEnums = new List<string>()
@@ -110,7 +113,12 @@ namespace CodeGenerator
             { "sizeof(ImU32)", "sizeof(uint)"},
             { "sizeof(ImS32)", "sizeof(int)"},
             { "sizeof(ImU64)", "sizeof(ulong)"},
-            { "sizeof(ImS64)", "sizeof(long)"}
+            { "sizeof(ImS64)", "sizeof(long)"},
+            { "ImPlotBin_Sturges", "(int)ImPlotBin.Sturges" },
+            { "ImPlotRect()", "new ImPlotRect()" },
+            { "ImPlotCond_Once", "ImPlotCond.Once" },
+            { "ImPlotRange()", "new ImPlotRange()" },
+            
         };
 
         public static readonly Dictionary<string, string> IdentifierReplacements = new Dictionary<string, string>()

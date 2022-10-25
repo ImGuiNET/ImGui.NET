@@ -66,7 +66,7 @@ namespace ImGuiNET
         public int MetricsActiveAllocations;
         public Vector2 MouseDelta;
         public fixed int KeyMap[645];
-        public fixed byte KeysDown[512];
+        public fixed byte KeysDown[645];
         public Vector2 MousePos;
         public fixed byte MouseDown[5];
         public float MouseWheel;
@@ -77,8 +77,7 @@ namespace ImGuiNET
         public byte KeyAlt;
         public byte KeySuper;
         public fixed float NavInputs[20];
-        public ImGuiKeyModFlags KeyMods;
-        public ImGuiKeyModFlags KeyModsPrev;
+        public ImGuiModFlags KeyMods;
         public ImGuiKeyData KeysData_0;
         public ImGuiKeyData KeysData_1;
         public ImGuiKeyData KeysData_2;
@@ -751,6 +750,7 @@ namespace ImGuiNET
         public fixed float NavInputsDownDurationPrev[20];
         public float PenPressure;
         public byte AppFocusLost;
+        public byte AppAcceptingEvents;
         public sbyte BackendUsingLegacyKeyArrays;
         public byte BackendUsingLegacyNavInputArray;
         public ushort InputQueueSurrogate;
@@ -823,7 +823,7 @@ namespace ImGuiNET
         public ref int MetricsActiveAllocations => ref Unsafe.AsRef<int>(&NativePtr->MetricsActiveAllocations);
         public ref Vector2 MouseDelta => ref Unsafe.AsRef<Vector2>(&NativePtr->MouseDelta);
         public RangeAccessor<int> KeyMap => new RangeAccessor<int>(NativePtr->KeyMap, 645);
-        public RangeAccessor<bool> KeysDown => new RangeAccessor<bool>(NativePtr->KeysDown, 512);
+        public RangeAccessor<bool> KeysDown => new RangeAccessor<bool>(NativePtr->KeysDown, 645);
         public ref Vector2 MousePos => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePos);
         public RangeAccessor<bool> MouseDown => new RangeAccessor<bool>(NativePtr->MouseDown, 5);
         public ref float MouseWheel => ref Unsafe.AsRef<float>(&NativePtr->MouseWheel);
@@ -834,8 +834,7 @@ namespace ImGuiNET
         public ref bool KeyAlt => ref Unsafe.AsRef<bool>(&NativePtr->KeyAlt);
         public ref bool KeySuper => ref Unsafe.AsRef<bool>(&NativePtr->KeySuper);
         public RangeAccessor<float> NavInputs => new RangeAccessor<float>(NativePtr->NavInputs, 20);
-        public ref ImGuiKeyModFlags KeyMods => ref Unsafe.AsRef<ImGuiKeyModFlags>(&NativePtr->KeyMods);
-        public ref ImGuiKeyModFlags KeyModsPrev => ref Unsafe.AsRef<ImGuiKeyModFlags>(&NativePtr->KeyModsPrev);
+        public ref ImGuiModFlags KeyMods => ref Unsafe.AsRef<ImGuiModFlags>(&NativePtr->KeyMods);
         public RangeAccessor<ImGuiKeyData> KeysData => new RangeAccessor<ImGuiKeyData>(&NativePtr->KeysData_0, 645);
         public ref bool WantCaptureMouseUnlessPopupClose => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureMouseUnlessPopupClose);
         public ref Vector2 MousePosPrev => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePosPrev);
@@ -856,6 +855,7 @@ namespace ImGuiNET
         public RangeAccessor<float> NavInputsDownDurationPrev => new RangeAccessor<float>(NativePtr->NavInputsDownDurationPrev, 20);
         public ref float PenPressure => ref Unsafe.AsRef<float>(&NativePtr->PenPressure);
         public ref bool AppFocusLost => ref Unsafe.AsRef<bool>(&NativePtr->AppFocusLost);
+        public ref bool AppAcceptingEvents => ref Unsafe.AsRef<bool>(&NativePtr->AppAcceptingEvents);
         public ref sbyte BackendUsingLegacyKeyArrays => ref Unsafe.AsRef<sbyte>(&NativePtr->BackendUsingLegacyKeyArrays);
         public ref bool BackendUsingLegacyNavInputArray => ref Unsafe.AsRef<bool>(&NativePtr->BackendUsingLegacyNavInputArray);
         public ref ushort InputQueueSurrogate => ref Unsafe.AsRef<ushort>(&NativePtr->InputQueueSurrogate);
@@ -937,6 +937,11 @@ namespace ImGuiNET
         public void Destroy()
         {
             ImGuiNative.ImGuiIO_destroy((ImGuiIO*)(NativePtr));
+        }
+        public void SetAppAcceptingEvents(bool accepting_events)
+        {
+            byte native_accepting_events = accepting_events ? (byte)1 : (byte)0;
+            ImGuiNative.ImGuiIO_SetAppAcceptingEvents((ImGuiIO*)(NativePtr), native_accepting_events);
         }
         public void SetKeyEventNativeData(ImGuiKey key, int native_keycode, int native_scancode)
         {
