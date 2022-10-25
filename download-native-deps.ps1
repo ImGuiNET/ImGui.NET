@@ -15,7 +15,7 @@ if (Test-Path $PSScriptRoot\deps\cimgui\)
     Remove-Item $PSScriptRoot\deps\cimgui\ -Force -Recurse | Out-Null
 }
 New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\linux-x64 | Out-Null
-New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\osx-universal | Out-Null
+New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\osx | Out-Null
 New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\win-x86 | Out-Null
 New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\win-x64 | Out-Null
 
@@ -60,7 +60,7 @@ Write-Host - cimgui.so
 
 $client.DownloadFile(
     "$repository/releases/download/$tag/cimgui.dylib",
-    "$PSScriptRoot/deps/cimgui/osx-universal/cimgui.dylib")
+    "$PSScriptRoot/deps/cimgui/osx/cimgui.dylib")
 if( -not $? )
 {
     $msg = $Error[0].Exception.Message
