@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using ImPlotNET;
@@ -51,12 +52,16 @@ namespace ImGuiNET
             Random random = new Random();
             _memoryEditorData = Enumerable.Range(0, 1024).Select(i => (byte)random.Next(255)).ToArray();
 
+            var stopwatch = Stopwatch.StartNew();
+            float deltaTime = 0f;
             // Main application loop
             while (_window.Exists)
             {
+                deltaTime = stopwatch.ElapsedTicks / (float)Stopwatch.Frequency;
+                stopwatch.Restart();
                 InputSnapshot snapshot = _window.PumpEvents();
                 if (!_window.Exists) { break; }
-                _controller.Update(1f / 60f, snapshot); // Feed the input events to our ImGui controller, which passes them through to ImGui.
+                _controller.Update(deltaTime, snapshot); // Feed the input events to our ImGui controller, which passes them through to ImGui.
 
                 SubmitUI();
 
