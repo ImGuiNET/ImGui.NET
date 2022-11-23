@@ -21,7 +21,7 @@ namespace CodeGenerator
             if (v == null) return 0;
             return v.ToObject<int>();
         }
-        public void LoadFrom(string directory)
+        public void LoadFrom(string directory, bool excludeInternals = true)
         {
             
             JObject typesJson;
@@ -65,23 +65,27 @@ namespace CodeGenerator
             {
                 JProperty jp = (JProperty)jt;
                 string name = jp.Name;
-                if (typeLocations?[jp.Name]?.Value<string>().Contains("internal") ?? false) {
+                bool isInternal = typeLocations?[jp.Name]?.Value<string>().Contains("internal") ?? false;
+
+                if (excludeInternals && isInternal)
                     return null;
-                }
+
                 EnumMember[] elements = jp.Values().Select(v =>
                 {
                     return new EnumMember(v["name"].ToString(), v["calc_value"].ToString());
                 }).ToArray();
-                return new EnumDefinition(name, elements);
+                return new EnumDefinition(name, elements, isInternal);
             }).Where(x => x != null).ToArray();
 
             Types = typesJson["structs"].Select(jt =>
             {
                 JProperty jp = (JProperty)jt;
                 string name = jp.Name;
-                if (typeLocations?[jp.Name]?.Value<string>().Contains("internal") ?? false) {
+                bool isInternal = typeLocations?[jp.Name]?.Value<string>().Contains("internal") ?? false;
+
+                if (excludeInternals && isInternal)
                     return null;
-                }
+
                 TypeReference[] fields = jp.Values().Select(v =>
                 {
                     if (v["type"].ToString().Contains("static")) { return null; }
@@ -94,7 +98,7 @@ namespace CodeGenerator
                         v["template_type"]?.ToString(),
                         Enums);
                 }).Where(tr => tr != null).ToArray();
-                return new TypeDefinition(name, fields);
+                return new TypeDefinition(name, fields, isInternal);
             }).Where(x => x != null).ToArray();
 
             Functions = functionsJson.Children().Select(jt =>
@@ -120,7 +124,9 @@ namespace CodeGenerator
                         }
                     }
                     if (friendlyName == null) { return null; }
-                    if (val["location"]?.ToString().Contains("internal") ?? false) return null;
+                    bool isInternal = val["location"]?.ToString().Contains("internal") ?? false;
+                    if (excludeInternals && isInternal)
+                        return null;
 
                     string exportedName = ov_cimguiname;
                     if (exportedName == null)
@@ -184,7 +190,8 @@ namespace CodeGenerator
                         structName,
                         comment,
                         isConstructor,
-                        isDestructor);
+                        isDestructor,
+                        isInternal);
                 }).Where(od => od != null).ToArray();
                 if(overloads.Length == 0) return null;
                 return new FunctionDefinition(name, overloads, Enums);
@@ -231,8 +238,9 @@ namespace CodeGenerator
         public string Name { get; }
         public string FriendlyName { get; }
         public EnumMember[] Members { get; }
+        public bool IsInternal { get; }
 
-        public EnumDefinition(string name, EnumMember[] elements)
+        public EnumDefinition(string name, EnumMember[] elements, bool isInternal)
         {
             Name = name;
             if (Name.EndsWith('_'))
@@ -250,6 +258,7 @@ namespace CodeGenerator
             {
                 _sanitizedNames.Add(el.Name, SanitizeMemberName(el.Name));
             }
+            IsInternal = isInternal;
         }
 
         public string SanitizeNames(string text)
@@ -302,11 +311,13 @@ namespace CodeGenerator
     {
         public string Name { get; }
         public TypeReference[] Fields { get; }
+        public bool IsInternal { get; }
 
-        public TypeDefinition(string name, TypeReference[] fields)
+        public TypeDefinition(string name, TypeReference[] fields, bool isInternal)
         {
             Name = name;
             Fields = fields;
+            IsInternal = isInternal;
         }
     }
 
@@ -496,6 +507,7 @@ namespace CodeGenerator
         public string Comment { get; }
         public bool IsConstructor { get; }
         public bool IsDestructor { get; }
+        public bool IsInternal { get; }
 
         public OverloadDefinition(
             string exportedName,
@@ -506,7 +518,8 @@ namespace CodeGenerator
             string structName,
             string comment,
             bool isConstructor,
-            bool isDestructor)
+            bool isDestructor,
+            bool isInternal)
         {
             ExportedName = exportedName;
             FriendlyName = friendlyName;
@@ -518,11 +531,12 @@ namespace CodeGenerator
             Comment = comment;
             IsConstructor = isConstructor;
             IsDestructor = isDestructor;
+            IsInternal = isInternal;
         }
 
         public OverloadDefinition WithParameters(TypeReference[] parameters)
         {
-            return new OverloadDefinition(ExportedName, FriendlyName, parameters, DefaultValues, ReturnType, StructName, Comment, IsConstructor, IsDestructor);
+            return new OverloadDefinition(ExportedName, FriendlyName, parameters, DefaultValues, ReturnType, StructName, Comment, IsConstructor, IsDestructor, IsInternal);
         }
     }
 }

@@ -8,37 +8,85 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.CommandLine;
+using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace CodeGenerator
 {
     internal static class Program
     {
-        static void Main(string[] args)
+        private const string InternalNamespace = ".Internal";
+
+        static async Task<int> Main(string[] args)
         {
-            string outputPath;
-            if (args.Length > 0)
-            {
-                outputPath = args[0];
-            }
-            else
-            {
-                outputPath = AppContext.BaseDirectory;
-            }
+            // internal vars for command line results used by the rest of the program.
+            bool runApp = false;
+            string outputPath = string.Empty;
+            string libraryName = string.Empty;
+            bool useInternals = false;
 
-            if (!Directory.Exists(outputPath))
-            {
-                Directory.CreateDirectory(outputPath);
-            }
+            #region Command line handler
+            var optionOutputPath = new Option<DirectoryInfo>(
+                                        aliases: new[] { "--outputDir", "-o" },
+                                        description: "The directory to place generated code files.",
+                                        parseArgument: result =>
+                                        {
+                                            if (result.Tokens.Count == 0)
+                                                return new DirectoryInfo(AppContext.BaseDirectory);
 
-            string libraryName;
-            if (args.Length > 1)
+                                            string value = result.Tokens.Single().Value;
+
+                                            try { return Directory.CreateDirectory(value); }
+                                            catch (Exception) { result.ErrorMessage = $"Unable to create directory: {value}"; return null; }
+                                        },
+                                        isDefault: true);
+
+            var optionLibraryname = new Option<string>(
+                                        aliases: new[] { "--library", "-l" },
+                                        description: "The library to read parse.",
+                                        getDefaultValue: () => "cimgui")
+                                            .FromAmong("cimgui", "cimplot", "cimnodes", "cimguizmo");
+
+            var optionInternal = new Option<bool>(
+                                        name: "--internal",
+                                        description: "When set to true, includes the internal header file.",
+                                        parseArgument: result =>
+                                        {
+                                            // Using parse with isDefault: false, instead of the normal validation, allows us to use "--internal" without specifying true to mean true.
+                                            if (result.Tokens.Count == 0)
+                                                return true;
+
+                                            if (bool.TryParse(result.Tokens.Single().Value, out var value))
+                                                return value;
+
+                                            result.ErrorMessage = "Invalid option for --internal. Value must be true or false.";
+                                            return false; // ignored because of error message.
+                                        },
+                                        isDefault: false);
+
+            var rootCommand = new RootCommand("Generates code for the ImGui.NET libraries based on the cimgui definition files.");
+
+            rootCommand.AddOption(optionInternal);
+            rootCommand.AddOption(optionOutputPath);
+            rootCommand.AddOption(optionLibraryname);
+
+            rootCommand.SetHandler((outputPathValue, libNameValue, useInternalValue) =>
             {
-                libraryName = args[1];
-            }
-            else
-            {
-                libraryName = "cimgui";
-            }
+                outputPath = outputPathValue.FullName;
+                libraryName = libNameValue;
+                useInternals = useInternalValue;
+
+                runApp = true;
+
+            }, optionOutputPath, optionLibraryname, optionInternal);
+
+            var commandResult = await rootCommand.InvokeAsync(args);
+
+            if (!runApp)
+                return commandResult;
+
+            #endregion
 
             string projectNamespace = libraryName switch
             {
@@ -78,7 +126,7 @@ namespace CodeGenerator
             
             string definitionsPath = Path.Combine(AppContext.BaseDirectory, "definitions", libraryName);
             var defs = new ImguiDefinitions();
-            defs.LoadFrom(definitionsPath);
+            defs.LoadFrom(definitionsPath, !useInternals);
 
             Console.WriteLine($"Outputting generated code files to {outputPath}.");
 
@@ -118,7 +166,7 @@ namespace CodeGenerator
                         writer.Using("ImGuiNET");
                     }
                     writer.WriteLine(string.Empty);
-                    writer.PushBlock($"namespace {projectNamespace}");
+                    writer.PushBlock($"namespace {projectNamespace}{(td.IsInternal ? InternalNamespace : string.Empty)}");
 
                     writer.PushBlock($"public unsafe partial struct {td.Name}");
                     foreach (TypeReference field in td.Fields)
@@ -284,6 +332,10 @@ namespace CodeGenerator
                 {
                     writer.Using("ImGuiNET");
                 }
+                if (useInternals)
+                {
+                    writer.Using($"{projectNamespace}{InternalNamespace}");
+                }
                 writer.WriteLine(string.Empty);
                 writer.PushBlock($"namespace {projectNamespace}");
                 writer.PushBlock($"public static unsafe partial class {classPrefix}Native");
@@ -347,6 +399,7 @@ namespace CodeGenerator
                 writer.PopBlock();
             }
 
+            // Root ImGui* class items - Noninternal
             using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, $"{classPrefix}.gen.cs")))
             {
                 writer.Using("System");
@@ -360,52 +413,65 @@ namespace CodeGenerator
                 writer.WriteLine(string.Empty);
                 writer.PushBlock($"namespace {projectNamespace}");
                 writer.PushBlock($"public static unsafe partial class {classPrefix}");
-                foreach (FunctionDefinition fd in defs.Functions)
+                EmitFunctions(false);
+                writer.PopBlock();
+                writer.PopBlock();
+
+                if (useInternals)
                 {
-                    if (TypeInfo.SkippedFunctions.Contains(fd.Name)) { continue; }
+                    writer.PushBlock($"namespace {projectNamespace}{InternalNamespace}");
+                    writer.PushBlock($"public static unsafe partial class {classPrefix}");
+                    EmitFunctions(true);
+                    writer.PopBlock();
+                    writer.PopBlock();
+                }
 
-                    foreach (OverloadDefinition overload in fd.Overloads)
+                void EmitFunctions(bool isInternal)
+                {
+                    foreach (FunctionDefinition fd in defs.Functions)
                     {
-                        string exportedName = overload.ExportedName;
-                        if (exportedName.StartsWith("ig"))
-                        {
-                            exportedName = exportedName.Substring(2, exportedName.Length - 2);
-                        }
-                        if (exportedName.Contains("~")) { continue; }
-                        if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
+                        if (TypeInfo.SkippedFunctions.Contains(fd.Name)) { continue; }
 
-                        bool hasVaList = false;
-                        for (int i = 0; i < overload.Parameters.Length; i++)
+                        foreach (OverloadDefinition overload in fd.Overloads.Where(o => !o.IsMemberFunction && o.IsInternal == isInternal))
                         {
-                            TypeReference p = overload.Parameters[i];
-                            string paramType = GetTypeString(p.Type, p.IsFunctionPointer);
-                            if (p.Name == "...") { continue; }
-
-                            if (paramType == "va_list")
+                            string exportedName = overload.ExportedName;
+                            if (exportedName.StartsWith("ig"))
                             {
-                                hasVaList = true;
-                                break;
+                                exportedName = exportedName.Substring(2, exportedName.Length - 2);
                             }
-                        }
-                        if (hasVaList) { continue; }
+                            if (exportedName.Contains("~")) { continue; }
+                            if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
 
-                        KeyValuePair<string, string>[] orderedDefaults = overload.DefaultValues.OrderByDescending(
-                            kvp => GetIndex(overload.Parameters, kvp.Key)).ToArray();
-
-                        for (int i = overload.DefaultValues.Count; i >= 0; i--)
-                        {
-                            if (overload.IsMemberFunction) { continue; }
-                            Dictionary<string, string> defaults = new Dictionary<string, string>();
-                            for (int j = 0; j < i; j++)
+                            bool hasVaList = false;
+                            for (int i = 0; i < overload.Parameters.Length; i++)
                             {
-                                defaults.Add(orderedDefaults[j].Key, orderedDefaults[j].Value);
+                                TypeReference p = overload.Parameters[i];
+                                string paramType = GetTypeString(p.Type, p.IsFunctionPointer);
+                                if (p.Name == "...") { continue; }
+
+                                if (paramType == "va_list")
+                                {
+                                    hasVaList = true;
+                                    break;
+                                }
                             }
-                            EmitOverload(writer, overload, defaults, null, classPrefix);
+                            if (hasVaList) { continue; }
+
+                            KeyValuePair<string, string>[] orderedDefaults = overload.DefaultValues.OrderByDescending(
+                                kvp => GetIndex(overload.Parameters, kvp.Key)).ToArray();
+
+                            for (int i = overload.DefaultValues.Count; i >= 0; i--)
+                            {
+                                Dictionary<string, string> defaults = new Dictionary<string, string>();
+                                for (int j = 0; j < i; j++)
+                                {
+                                    defaults.Add(orderedDefaults[j].Key, orderedDefaults[j].Value);
+                                }
+                                EmitOverload(writer, overload, defaults, null, classPrefix);
+                            }
                         }
                     }
                 }
-                writer.PopBlock();
-                writer.PopBlock();
             }
 
             foreach (var method in defs.Variants)
@@ -415,6 +481,8 @@ namespace CodeGenerator
                     if (!variant.Used) Console.WriteLine($"Error: Variants targetting parameter {variant.Name} with type {variant.OriginalType} could not be applied to method {method.Key}.");
                 }
             }
+
+            return 0;
         }
 
         private static bool IsStringFieldName(string name)
