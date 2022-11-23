@@ -9,8 +9,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.CommandLine;
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 
 namespace CodeGenerator
 {
@@ -126,7 +124,7 @@ namespace CodeGenerator
             
             string definitionsPath = Path.Combine(AppContext.BaseDirectory, "definitions", libraryName);
             var defs = new ImguiDefinitions();
-            defs.LoadFrom(definitionsPath, !useInternals);
+            defs.LoadFrom(definitionsPath, useInternals);
 
             Console.WriteLine($"Outputting generated code files to {outputPath}.");
 

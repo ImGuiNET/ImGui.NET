@@ -21,7 +21,7 @@ namespace CodeGenerator
             if (v == null) return 0;
             return v.ToObject<int>();
         }
-        public void LoadFrom(string directory, bool excludeInternals = true)
+        public void LoadFrom(string directory, bool useInternals = false)
         {
             
             JObject typesJson;
@@ -67,7 +67,7 @@ namespace CodeGenerator
                 string name = jp.Name;
                 bool isInternal = typeLocations?[jp.Name]?.Value<string>().Contains("internal") ?? false;
 
-                if (excludeInternals && isInternal)
+                if (!useInternals && isInternal)
                     return null;
 
                 EnumMember[] elements = jp.Values().Select(v =>
@@ -83,7 +83,7 @@ namespace CodeGenerator
                 string name = jp.Name;
                 bool isInternal = typeLocations?[jp.Name]?.Value<string>().Contains("internal") ?? false;
 
-                if (excludeInternals && isInternal)
+                if (!useInternals && isInternal)
                     return null;
 
                 TypeReference[] fields = jp.Values().Select(v =>
@@ -125,7 +125,7 @@ namespace CodeGenerator
                     }
                     if (friendlyName == null) { return null; }
                     bool isInternal = val["location"]?.ToString().Contains("internal") ?? false;
-                    if (excludeInternals && isInternal)
+                    if (!useInternals && isInternal)
                         return null;
 
                     string exportedName = ov_cimguiname;
