@@ -16,5 +16,8 @@ namespace ImGuiNET
         NoNavOverride = 1024,
         RectOnly = 416,
         RootAndChildWindows = 3,
+        DelayNormal = 2048,
+        DelayShort = 4096,
+        NoSharedDelay = 8192,
     }
 }

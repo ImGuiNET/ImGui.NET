@@ -440,6 +440,11 @@ namespace ImGuiNET
             ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesDefault((ImFontAtlas*)(NativePtr));
             return (IntPtr)ret;
         }
+        public IntPtr GetGlyphRangesGreek()
+        {
+            ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesGreek((ImFontAtlas*)(NativePtr));
+            return (IntPtr)ret;
+        }
         public IntPtr GetGlyphRangesJapanese()
         {
             ushort* ret = ImGuiNative.ImFontAtlas_GetGlyphRangesJapanese((ImFontAtlas*)(NativePtr));
