@@ -84,14 +84,14 @@ namespace CodeGenerator
 
             foreach (EnumDefinition ed in defs.Enums)
             {
-                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, ed.FriendlyName + ".gen.cs")))
+                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, ed.FriendlyNames[0] + ".gen.cs")))
                 {
                     writer.PushBlock($"namespace {projectNamespace}");
-                    if (ed.FriendlyName.Contains("Flags"))
+                    if (ed.FriendlyNames[0].Contains("Flags"))
                     {
                         writer.WriteLine("[System.Flags]");
                     }
-                    writer.PushBlock($"public enum {ed.FriendlyName}");
+                    writer.PushBlock($"public enum {ed.FriendlyNames[0]}");
                     foreach (EnumMember member in ed.Members)
                     {
                         string sanitizedName = ed.SanitizeNames(member.Name);

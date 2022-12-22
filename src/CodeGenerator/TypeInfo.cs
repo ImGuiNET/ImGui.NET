@@ -62,6 +62,11 @@ namespace CodeGenerator
         {
             "ImGuiMouseButton"
         };
+
+        public static readonly Dictionary<string, string> AlternateEnumPrefixes = new Dictionary<string, string>()
+        {
+            { "ImGuiKey", "ImGuiMod" },
+        };
         
         public static readonly Dictionary<string, string> WellKnownFieldReplacements = new Dictionary<string, string>()
         {
