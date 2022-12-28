@@ -280,14 +280,30 @@ namespace CodeGenerator
         private string SanitizeMemberName(string memberName)
         {
             string ret = memberName;
-            foreach (string name in Names)
+            bool altSubstitution = false;
+
+            // Try alternate substitution first
+            foreach (KeyValuePair<string, string> substitutionPair in TypeInfo.AlternateEnumPrefixSubstitutions)
             {
-                if (memberName.StartsWith(name))
+                if (memberName.StartsWith(substitutionPair.Key))
                 {
-                    ret = memberName.Substring(name.Length);
-                    if (ret.StartsWith("_"))
+                    ret = ret.Replace(substitutionPair.Key, substitutionPair.Value);
+                    altSubstitution = true;
+                    break;
+                }
+            }
+
+            if (!altSubstitution)
+            {
+                foreach (string name in Names)
+                {
+                    if (memberName.StartsWith(name))
                     {
-                        ret = ret.Substring(1);
+                        ret = memberName.Substring(name.Length);
+                        if (ret.StartsWith("_"))
+                        {
+                            ret = ret.Substring(1);
+                        }
                     }
                 }
             }
@@ -297,7 +313,7 @@ namespace CodeGenerator
                 ret = ret.Substring(0, ret.Length - 1);
             }
 
-            if (Char.IsDigit(ret.First()))
+            if (char.IsDigit(ret.First()))
                 ret = "_" + ret;
 
             return ret;

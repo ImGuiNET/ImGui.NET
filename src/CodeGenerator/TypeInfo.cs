@@ -67,7 +67,12 @@ namespace CodeGenerator
         {
             { "ImGuiKey", "ImGuiMod" },
         };
-        
+
+        public static readonly Dictionary<string, string> AlternateEnumPrefixSubstitutions = new Dictionary<string, string>()
+        {
+            { "ImGuiMod_", "Mod" },
+        };
+
         public static readonly Dictionary<string, string> WellKnownFieldReplacements = new Dictionary<string, string>()
         {
             { "bool", "bool" }, // Force bool to remain as bool in type-safe wrappers.
