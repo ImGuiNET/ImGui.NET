@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Directives>
+  <Application>
+    <Assembly Name="SharpDX.DXGI" Dynamic="Required All">
+      <Type Name="SharpDX.DXGI.Factory" Dynamic="Required All" />
+    </Assembly>
+    <Assembly Name="SharpDX.Direct3D11" Dynamic="Required All">
+      <Type Name="SharpDX.Direct3D11.Texture2D" Dynamic="Required All" />
+    </Assembly>
+  </Application>
+</Directives>
