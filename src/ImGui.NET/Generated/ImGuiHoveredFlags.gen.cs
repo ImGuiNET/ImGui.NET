@@ -13,7 +13,11 @@ namespace ImGuiNET
         AllowWhenBlockedByActiveItem = 128,
         AllowWhenOverlapped = 256,
         AllowWhenDisabled = 512,
+        NoNavOverride = 1024,
         RectOnly = 416,
         RootAndChildWindows = 3,
+        DelayNormal = 2048,
+        DelayShort = 4096,
+        NoSharedDelay = 8192,
     }
 }

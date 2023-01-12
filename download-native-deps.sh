@@ -24,8 +24,8 @@ echo -n "Downloading linux x64 cimgui: "
 curl -sfLo "$SCRIPT_ROOT/deps/cimgui/linux-x64/cimgui.so" "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$TAG/cimgui.so"
 echo ""
 
-echo -n "Downloading osx x64 cimgui: "
-curl -sfLo "$SCRIPT_ROOT/deps/cimgui/osx-x64/cimgui.dylib" "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$TAG/cimgui.dylib"
+echo -n "Downloading osx universal (x86_64 and arm64) cimgui: "
+curl -sfLo "$SCRIPT_ROOT/deps/cimgui/osx/cimgui.dylib" "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$TAG/cimgui.dylib"
 echo ""
 
 echo -n "Downloading definitions json file: "

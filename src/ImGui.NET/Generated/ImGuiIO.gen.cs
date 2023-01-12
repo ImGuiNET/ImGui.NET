@@ -19,6 +19,8 @@ namespace ImGuiNET
         public float MouseDragThreshold;
         public float KeyRepeatDelay;
         public float KeyRepeatRate;
+        public float HoverDelayNormal;
+        public float HoverDelayShort;
         public void* UserData;
         public ImFontAtlas* Fonts;
         public float FontGlobalScale;
@@ -37,6 +39,7 @@ namespace ImGuiNET
         public byte ConfigMacOSXBehaviors;
         public byte ConfigInputTrickleEventQueue;
         public byte ConfigInputTextCursorBlink;
+        public byte ConfigInputTextEnterKeepActive;
         public byte ConfigDragClickToInputText;
         public byte ConfigWindowsResizeFromEdges;
         public byte ConfigWindowsMoveFromTitleBarOnly;
@@ -65,8 +68,9 @@ namespace ImGuiNET
         public int MetricsActiveWindows;
         public int MetricsActiveAllocations;
         public Vector2 MouseDelta;
-        public fixed int KeyMap[645];
-        public fixed byte KeysDown[512];
+        public fixed int KeyMap[652];
+        public fixed byte KeysDown[652];
+        public fixed float NavInputs[16];
         public Vector2 MousePos;
         public fixed byte MouseDown[5];
         public float MouseWheel;
@@ -76,9 +80,7 @@ namespace ImGuiNET
         public byte KeyShift;
         public byte KeyAlt;
         public byte KeySuper;
-        public fixed float NavInputs[20];
-        public ImGuiKeyModFlags KeyMods;
-        public ImGuiKeyModFlags KeyModsPrev;
+        public ImGuiKey KeyMods;
         public ImGuiKeyData KeysData_0;
         public ImGuiKeyData KeysData_1;
         public ImGuiKeyData KeysData_2;
@@ -724,6 +726,13 @@ namespace ImGuiNET
         public ImGuiKeyData KeysData_642;
         public ImGuiKeyData KeysData_643;
         public ImGuiKeyData KeysData_644;
+        public ImGuiKeyData KeysData_645;
+        public ImGuiKeyData KeysData_646;
+        public ImGuiKeyData KeysData_647;
+        public ImGuiKeyData KeysData_648;
+        public ImGuiKeyData KeysData_649;
+        public ImGuiKeyData KeysData_650;
+        public ImGuiKeyData KeysData_651;
         public byte WantCaptureMouseUnlessPopupClose;
         public Vector2 MousePosPrev;
         public Vector2 MouseClickedPos_0;
@@ -747,10 +756,9 @@ namespace ImGuiNET
         public Vector2 MouseDragMaxDistanceAbs_3;
         public Vector2 MouseDragMaxDistanceAbs_4;
         public fixed float MouseDragMaxDistanceSqr[5];
-        public fixed float NavInputsDownDuration[20];
-        public fixed float NavInputsDownDurationPrev[20];
         public float PenPressure;
         public byte AppFocusLost;
+        public byte AppAcceptingEvents;
         public sbyte BackendUsingLegacyKeyArrays;
         public byte BackendUsingLegacyNavInputArray;
         public ushort InputQueueSurrogate;
@@ -776,6 +784,8 @@ namespace ImGuiNET
         public ref float MouseDragThreshold => ref Unsafe.AsRef<float>(&NativePtr->MouseDragThreshold);
         public ref float KeyRepeatDelay => ref Unsafe.AsRef<float>(&NativePtr->KeyRepeatDelay);
         public ref float KeyRepeatRate => ref Unsafe.AsRef<float>(&NativePtr->KeyRepeatRate);
+        public ref float HoverDelayNormal => ref Unsafe.AsRef<float>(&NativePtr->HoverDelayNormal);
+        public ref float HoverDelayShort => ref Unsafe.AsRef<float>(&NativePtr->HoverDelayShort);
         public IntPtr UserData { get => (IntPtr)NativePtr->UserData; set => NativePtr->UserData = (void*)value; }
         public ImFontAtlasPtr Fonts => new ImFontAtlasPtr(NativePtr->Fonts);
         public ref float FontGlobalScale => ref Unsafe.AsRef<float>(&NativePtr->FontGlobalScale);
@@ -794,6 +804,7 @@ namespace ImGuiNET
         public ref bool ConfigMacOSXBehaviors => ref Unsafe.AsRef<bool>(&NativePtr->ConfigMacOSXBehaviors);
         public ref bool ConfigInputTrickleEventQueue => ref Unsafe.AsRef<bool>(&NativePtr->ConfigInputTrickleEventQueue);
         public ref bool ConfigInputTextCursorBlink => ref Unsafe.AsRef<bool>(&NativePtr->ConfigInputTextCursorBlink);
+        public ref bool ConfigInputTextEnterKeepActive => ref Unsafe.AsRef<bool>(&NativePtr->ConfigInputTextEnterKeepActive);
         public ref bool ConfigDragClickToInputText => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDragClickToInputText);
         public ref bool ConfigWindowsResizeFromEdges => ref Unsafe.AsRef<bool>(&NativePtr->ConfigWindowsResizeFromEdges);
         public ref bool ConfigWindowsMoveFromTitleBarOnly => ref Unsafe.AsRef<bool>(&NativePtr->ConfigWindowsMoveFromTitleBarOnly);
@@ -822,8 +833,9 @@ namespace ImGuiNET
         public ref int MetricsActiveWindows => ref Unsafe.AsRef<int>(&NativePtr->MetricsActiveWindows);
         public ref int MetricsActiveAllocations => ref Unsafe.AsRef<int>(&NativePtr->MetricsActiveAllocations);
         public ref Vector2 MouseDelta => ref Unsafe.AsRef<Vector2>(&NativePtr->MouseDelta);
-        public RangeAccessor<int> KeyMap => new RangeAccessor<int>(NativePtr->KeyMap, 645);
-        public RangeAccessor<bool> KeysDown => new RangeAccessor<bool>(NativePtr->KeysDown, 512);
+        public RangeAccessor<int> KeyMap => new RangeAccessor<int>(NativePtr->KeyMap, 652);
+        public RangeAccessor<bool> KeysDown => new RangeAccessor<bool>(NativePtr->KeysDown, 652);
+        public RangeAccessor<float> NavInputs => new RangeAccessor<float>(NativePtr->NavInputs, 16);
         public ref Vector2 MousePos => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePos);
         public RangeAccessor<bool> MouseDown => new RangeAccessor<bool>(NativePtr->MouseDown, 5);
         public ref float MouseWheel => ref Unsafe.AsRef<float>(&NativePtr->MouseWheel);
@@ -833,10 +845,8 @@ namespace ImGuiNET
         public ref bool KeyShift => ref Unsafe.AsRef<bool>(&NativePtr->KeyShift);
         public ref bool KeyAlt => ref Unsafe.AsRef<bool>(&NativePtr->KeyAlt);
         public ref bool KeySuper => ref Unsafe.AsRef<bool>(&NativePtr->KeySuper);
-        public RangeAccessor<float> NavInputs => new RangeAccessor<float>(NativePtr->NavInputs, 20);
-        public ref ImGuiKeyModFlags KeyMods => ref Unsafe.AsRef<ImGuiKeyModFlags>(&NativePtr->KeyMods);
-        public ref ImGuiKeyModFlags KeyModsPrev => ref Unsafe.AsRef<ImGuiKeyModFlags>(&NativePtr->KeyModsPrev);
-        public RangeAccessor<ImGuiKeyData> KeysData => new RangeAccessor<ImGuiKeyData>(&NativePtr->KeysData_0, 645);
+        public ref ImGuiKey KeyMods => ref Unsafe.AsRef<ImGuiKey>(&NativePtr->KeyMods);
+        public RangeAccessor<ImGuiKeyData> KeysData => new RangeAccessor<ImGuiKeyData>(&NativePtr->KeysData_0, 652);
         public ref bool WantCaptureMouseUnlessPopupClose => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureMouseUnlessPopupClose);
         public ref Vector2 MousePosPrev => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePosPrev);
         public RangeAccessor<Vector2> MouseClickedPos => new RangeAccessor<Vector2>(&NativePtr->MouseClickedPos_0, 5);
@@ -852,10 +862,9 @@ namespace ImGuiNET
         public RangeAccessor<float> MouseDownDurationPrev => new RangeAccessor<float>(NativePtr->MouseDownDurationPrev, 5);
         public RangeAccessor<Vector2> MouseDragMaxDistanceAbs => new RangeAccessor<Vector2>(&NativePtr->MouseDragMaxDistanceAbs_0, 5);
         public RangeAccessor<float> MouseDragMaxDistanceSqr => new RangeAccessor<float>(NativePtr->MouseDragMaxDistanceSqr, 5);
-        public RangeAccessor<float> NavInputsDownDuration => new RangeAccessor<float>(NativePtr->NavInputsDownDuration, 20);
-        public RangeAccessor<float> NavInputsDownDurationPrev => new RangeAccessor<float>(NativePtr->NavInputsDownDurationPrev, 20);
         public ref float PenPressure => ref Unsafe.AsRef<float>(&NativePtr->PenPressure);
         public ref bool AppFocusLost => ref Unsafe.AsRef<bool>(&NativePtr->AppFocusLost);
+        public ref bool AppAcceptingEvents => ref Unsafe.AsRef<bool>(&NativePtr->AppAcceptingEvents);
         public ref sbyte BackendUsingLegacyKeyArrays => ref Unsafe.AsRef<sbyte>(&NativePtr->BackendUsingLegacyKeyArrays);
         public ref bool BackendUsingLegacyNavInputArray => ref Unsafe.AsRef<bool>(&NativePtr->BackendUsingLegacyNavInputArray);
         public ref ushort InputQueueSurrogate => ref Unsafe.AsRef<ushort>(&NativePtr->InputQueueSurrogate);
@@ -937,6 +946,11 @@ namespace ImGuiNET
         public void Destroy()
         {
             ImGuiNative.ImGuiIO_destroy((ImGuiIO*)(NativePtr));
+        }
+        public void SetAppAcceptingEvents(bool accepting_events)
+        {
+            byte native_accepting_events = accepting_events ? (byte)1 : (byte)0;
+            ImGuiNative.ImGuiIO_SetAppAcceptingEvents((ImGuiIO*)(NativePtr), native_accepting_events);
         }
         public void SetKeyEventNativeData(ImGuiKey key, int native_keycode, int native_scancode)
         {

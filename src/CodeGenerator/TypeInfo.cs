@@ -52,13 +52,27 @@ namespace CodeGenerator
             { "ImVec2[2]", "Vector2*" },
             { "char* []", "byte**" },
             { "unsigned char[256]", "byte*"},
+            { "ImPlotFormatter", "IntPtr" },
+            { "ImPlotGetter", "IntPtr" },
+            { "ImPlotTransform", "IntPtr" },
+            { "ImGuiKeyChord", "ImGuiKey" },
         };
         
         public static readonly List<string> WellKnownEnums = new List<string>()
         {
             "ImGuiMouseButton"
         };
-        
+
+        public static readonly Dictionary<string, string> AlternateEnumPrefixes = new Dictionary<string, string>()
+        {
+            { "ImGuiKey", "ImGuiMod" },
+        };
+
+        public static readonly Dictionary<string, string> AlternateEnumPrefixSubstitutions = new Dictionary<string, string>()
+        {
+            { "ImGuiMod_", "Mod" },
+        };
+
         public static readonly Dictionary<string, string> WellKnownFieldReplacements = new Dictionary<string, string>()
         {
             { "bool", "bool" }, // Force bool to remain as bool in type-safe wrappers.
@@ -110,7 +124,12 @@ namespace CodeGenerator
             { "sizeof(ImU32)", "sizeof(uint)"},
             { "sizeof(ImS32)", "sizeof(int)"},
             { "sizeof(ImU64)", "sizeof(ulong)"},
-            { "sizeof(ImS64)", "sizeof(long)"}
+            { "sizeof(ImS64)", "sizeof(long)"},
+            { "ImPlotBin_Sturges", "(int)ImPlotBin.Sturges" },
+            { "ImPlotRect()", "new ImPlotRect()" },
+            { "ImPlotCond_Once", "ImPlotCond.Once" },
+            { "ImPlotRange()", "new ImPlotRange()" },
+            
         };
 
         public static readonly Dictionary<string, string> IdentifierReplacements = new Dictionary<string, string>()
