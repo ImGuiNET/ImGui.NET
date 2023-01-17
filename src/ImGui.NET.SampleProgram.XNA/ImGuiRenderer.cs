@@ -38,7 +38,8 @@ namespace ImGuiNET.SampleProgram.XNA
         private int _scrollWheelValue;
         private int _horizontalScrollWheelValue;
         private readonly float WHEEL_DELTA = 120;
-        private Array _allKeys = Enum.GetValues(typeof(Keys));
+        private Keys[] _allKeys = Enum.GetValues<Keys>();
+
         public ImGuiRenderer(Game game)
         {
             var context = ImGui.CreateContext();
@@ -209,9 +210,9 @@ namespace ImGuiNET.SampleProgram.XNA
 
             foreach (var key in _allKeys)
             {
-                if (TryMapKeys((Keys)key, out ImGuiKey imguikey))
+                if (TryMapKeys(key, out ImGuiKey imguikey))
                 {
-                    io.AddKeyEvent(imguikey, keyboard.IsKeyDown((Keys)key));
+                    io.AddKeyEvent(imguikey, keyboard.IsKeyDown(key));
                 }
             }
 
