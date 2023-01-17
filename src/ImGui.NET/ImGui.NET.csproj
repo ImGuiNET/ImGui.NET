@@ -37,6 +37,10 @@
       <PackagePath>runtimes/win-x64/native</PackagePath>
       <Pack>true</Pack>
     </Content>
+    <Content Include="..\..\deps\cimgui\win-arm64\cimgui.dll">
+      <PackagePath>runtimes/win-arm64/native</PackagePath>
+      <Pack>true</Pack>
+    </Content>
     <Content Include="..\..\deps\cimgui\linux-x64\cimgui.so">
       <PackagePath>runtimes/linux-x64/native/libcimgui.so</PackagePath>
       <Pack>true</Pack>
