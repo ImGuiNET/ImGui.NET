@@ -20,6 +20,10 @@ echo -n "Downloading windows x64 cimgui: "
 curl -sfLo "$SCRIPT_ROOT/deps/cimgui/win-x64/cimgui.dll" "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$TAG/cimgui.win-x64.dll"
 echo ""
 
+echo -n "Downloading windows arm64 cimgui: "
+curl -sfLo "$SCRIPT_ROOT/deps/cimgui/win-arm64/cimgui.dll" "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$TAG/cimgui.win-arm64.dll"
+echo ""
+
 echo -n "Downloading linux x64 cimgui: "
 curl -sfLo "$SCRIPT_ROOT/deps/cimgui/linux-x64/cimgui.so" "https://github.com/mellinoe/imgui.net-nativebuild/releases/download/$TAG/cimgui.so"
 echo ""
