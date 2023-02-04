@@ -6397,6 +6397,11 @@ namespace ImGuiNET
             ImGuiIO* ret = ImGuiNative.igGetIO();
             return new ImGuiIOPtr(ret);
         }
+        public static uint GetItemID()
+        {
+            uint ret = ImGuiNative.igGetItemID();
+            return ret;
+        }
         public static Vector2 GetItemRectMax()
         {
             Vector2 __retval;
