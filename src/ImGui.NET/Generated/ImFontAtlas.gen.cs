@@ -12,6 +12,7 @@ namespace ImGuiNET
         public int TexDesiredWidth;
         public int TexGlyphPadding;
         public byte Locked;
+        public void* UserData;
         public byte TexReady;
         public byte TexPixelsUseColors;
         public byte* TexPixelsAlpha8;
@@ -105,6 +106,7 @@ namespace ImGuiNET
         public ref int TexDesiredWidth => ref Unsafe.AsRef<int>(&NativePtr->TexDesiredWidth);
         public ref int TexGlyphPadding => ref Unsafe.AsRef<int>(&NativePtr->TexGlyphPadding);
         public ref bool Locked => ref Unsafe.AsRef<bool>(&NativePtr->Locked);
+        public IntPtr UserData { get => (IntPtr)NativePtr->UserData; set => NativePtr->UserData = (void*)value; }
         public ref bool TexReady => ref Unsafe.AsRef<bool>(&NativePtr->TexReady);
         public ref bool TexPixelsUseColors => ref Unsafe.AsRef<bool>(&NativePtr->TexPixelsUseColors);
         public IntPtr TexPixelsAlpha8 { get => (IntPtr)NativePtr->TexPixelsAlpha8; set => NativePtr->TexPixelsAlpha8 = (byte*)value; }
