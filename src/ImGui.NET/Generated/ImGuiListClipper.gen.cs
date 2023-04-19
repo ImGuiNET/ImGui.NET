@@ -7,6 +7,7 @@ namespace ImGuiNET
 {
     public unsafe partial struct ImGuiListClipper
     {
+        public IntPtr Ctx;
         public int DisplayStart;
         public int DisplayEnd;
         public int ItemsCount;
@@ -22,6 +23,7 @@ namespace ImGuiNET
         public static implicit operator ImGuiListClipperPtr(ImGuiListClipper* nativePtr) => new ImGuiListClipperPtr(nativePtr);
         public static implicit operator ImGuiListClipper* (ImGuiListClipperPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiListClipperPtr(IntPtr nativePtr) => new ImGuiListClipperPtr(nativePtr);
+        public ref IntPtr Ctx => ref Unsafe.AsRef<IntPtr>(&NativePtr->Ctx);
         public ref int DisplayStart => ref Unsafe.AsRef<int>(&NativePtr->DisplayStart);
         public ref int DisplayEnd => ref Unsafe.AsRef<int>(&NativePtr->DisplayEnd);
         public ref int ItemsCount => ref Unsafe.AsRef<int>(&NativePtr->ItemsCount);

@@ -39,6 +39,9 @@ namespace ImGuiNET
         public ImGuiDir ColorButtonPosition;
         public Vector2 ButtonTextAlign;
         public Vector2 SelectableTextAlign;
+        public float SeparatorTextBorderSize;
+        public Vector2 SeparatorTextAlign;
+        public Vector2 SeparatorTextPadding;
         public Vector2 DisplayWindowPadding;
         public Vector2 DisplaySafeAreaPadding;
         public float MouseCursorScale;
@@ -143,6 +146,9 @@ namespace ImGuiNET
         public ref ImGuiDir ColorButtonPosition => ref Unsafe.AsRef<ImGuiDir>(&NativePtr->ColorButtonPosition);
         public ref Vector2 ButtonTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->ButtonTextAlign);
         public ref Vector2 SelectableTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->SelectableTextAlign);
+        public ref float SeparatorTextBorderSize => ref Unsafe.AsRef<float>(&NativePtr->SeparatorTextBorderSize);
+        public ref Vector2 SeparatorTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->SeparatorTextAlign);
+        public ref Vector2 SeparatorTextPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->SeparatorTextPadding);
         public ref Vector2 DisplayWindowPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayWindowPadding);
         public ref Vector2 DisplaySafeAreaPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplaySafeAreaPadding);
         public ref float MouseCursorScale => ref Unsafe.AsRef<float>(&NativePtr->MouseCursorScale);

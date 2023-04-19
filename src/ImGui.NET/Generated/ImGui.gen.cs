@@ -1178,9 +1178,10 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
-        public static void BeginTooltip()
+        public static bool BeginTooltip()
         {
-            ImGuiNative.igBeginTooltip();
+            byte ret = ImGuiNative.igBeginTooltip();
+            return ret != 0;
         }
         public static void Bullet()
         {
@@ -10230,10 +10231,6 @@ namespace ImGuiNET
                 }
             }
         }
-        public static void PopAllowKeyboardFocus()
-        {
-            ImGuiNative.igPopAllowKeyboardFocus();
-        }
         public static void PopButtonRepeat()
         {
             ImGuiNative.igPopButtonRepeat();
@@ -10271,6 +10268,10 @@ namespace ImGuiNET
         public static void PopStyleVar(int count)
         {
             ImGuiNative.igPopStyleVar(count);
+        }
+        public static void PopTabStop()
+        {
+            ImGuiNative.igPopTabStop();
         }
         public static void PopTextWrapPos()
         {
@@ -10312,11 +10313,6 @@ namespace ImGuiNET
             {
                 Util.Free(native_overlay);
             }
-        }
-        public static void PushAllowKeyboardFocus(bool allow_keyboard_focus)
-        {
-            byte native_allow_keyboard_focus = allow_keyboard_focus ? (byte)1 : (byte)0;
-            ImGuiNative.igPushAllowKeyboardFocus(native_allow_keyboard_focus);
         }
         public static void PushButtonRepeat(bool repeat)
         {
@@ -10387,6 +10383,11 @@ namespace ImGuiNET
         public static void PushStyleVar(ImGuiStyleVar idx, Vector2 val)
         {
             ImGuiNative.igPushStyleVar_Vec2(idx, val);
+        }
+        public static void PushTabStop(bool tab_stop)
+        {
+            byte native_tab_stop = tab_stop ? (byte)1 : (byte)0;
+            ImGuiNative.igPushTabStop(native_tab_stop);
         }
         public static void PushTextWrapPos()
         {
@@ -10754,6 +10755,32 @@ namespace ImGuiNET
         public static void Separator()
         {
             ImGuiNative.igSeparator();
+        }
+        public static void SeparatorText(string label)
+        {
+            byte* native_label;
+            int label_byteCount = 0;
+            if (label != null)
+            {
+                label_byteCount = Encoding.UTF8.GetByteCount(label);
+                if (label_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_label = Util.Allocate(label_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_label_stackBytes = stackalloc byte[label_byteCount + 1];
+                    native_label = native_label_stackBytes;
+                }
+                int native_label_offset = Util.GetUtf8(label, native_label, label_byteCount);
+                native_label[native_label_offset] = 0;
+            }
+            else { native_label = null; }
+            ImGuiNative.igSeparatorText(native_label);
+            if (label_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_label);
+            }
         }
         public static void SetAllocatorFunctions(IntPtr alloc_func, IntPtr free_func)
         {

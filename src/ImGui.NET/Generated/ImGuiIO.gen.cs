@@ -44,6 +44,8 @@ namespace ImGuiNET
         public byte ConfigWindowsResizeFromEdges;
         public byte ConfigWindowsMoveFromTitleBarOnly;
         public float ConfigMemoryCompactTimer;
+        public byte ConfigDebugBeginReturnValueOnce;
+        public byte ConfigDebugBeginReturnValueLoop;
         public byte* BackendPlatformName;
         public byte* BackendRendererName;
         public void* BackendPlatformUserData;
@@ -71,10 +73,12 @@ namespace ImGuiNET
         public fixed int KeyMap[652];
         public fixed byte KeysDown[652];
         public fixed float NavInputs[16];
+        public IntPtr Ctx;
         public Vector2 MousePos;
         public fixed byte MouseDown[5];
         public float MouseWheel;
         public float MouseWheelH;
+        public ImGuiMouseSource MouseSource;
         public uint MouseHoveredViewport;
         public byte KeyCtrl;
         public byte KeyShift;
@@ -748,6 +752,7 @@ namespace ImGuiNET
         public fixed byte MouseReleased[5];
         public fixed byte MouseDownOwned[5];
         public fixed byte MouseDownOwnedUnlessPopupClose[5];
+        public byte MouseWheelRequestAxisSwap;
         public fixed float MouseDownDuration[5];
         public fixed float MouseDownDurationPrev[5];
         public Vector2 MouseDragMaxDistanceAbs_0;
@@ -809,6 +814,8 @@ namespace ImGuiNET
         public ref bool ConfigWindowsResizeFromEdges => ref Unsafe.AsRef<bool>(&NativePtr->ConfigWindowsResizeFromEdges);
         public ref bool ConfigWindowsMoveFromTitleBarOnly => ref Unsafe.AsRef<bool>(&NativePtr->ConfigWindowsMoveFromTitleBarOnly);
         public ref float ConfigMemoryCompactTimer => ref Unsafe.AsRef<float>(&NativePtr->ConfigMemoryCompactTimer);
+        public ref bool ConfigDebugBeginReturnValueOnce => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugBeginReturnValueOnce);
+        public ref bool ConfigDebugBeginReturnValueLoop => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugBeginReturnValueLoop);
         public NullTerminatedString BackendPlatformName => new NullTerminatedString(NativePtr->BackendPlatformName);
         public NullTerminatedString BackendRendererName => new NullTerminatedString(NativePtr->BackendRendererName);
         public IntPtr BackendPlatformUserData { get => (IntPtr)NativePtr->BackendPlatformUserData; set => NativePtr->BackendPlatformUserData = (void*)value; }
@@ -836,10 +843,12 @@ namespace ImGuiNET
         public RangeAccessor<int> KeyMap => new RangeAccessor<int>(NativePtr->KeyMap, 652);
         public RangeAccessor<bool> KeysDown => new RangeAccessor<bool>(NativePtr->KeysDown, 652);
         public RangeAccessor<float> NavInputs => new RangeAccessor<float>(NativePtr->NavInputs, 16);
+        public ref IntPtr Ctx => ref Unsafe.AsRef<IntPtr>(&NativePtr->Ctx);
         public ref Vector2 MousePos => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePos);
         public RangeAccessor<bool> MouseDown => new RangeAccessor<bool>(NativePtr->MouseDown, 5);
         public ref float MouseWheel => ref Unsafe.AsRef<float>(&NativePtr->MouseWheel);
         public ref float MouseWheelH => ref Unsafe.AsRef<float>(&NativePtr->MouseWheelH);
+        public ref ImGuiMouseSource MouseSource => ref Unsafe.AsRef<ImGuiMouseSource>(&NativePtr->MouseSource);
         public ref uint MouseHoveredViewport => ref Unsafe.AsRef<uint>(&NativePtr->MouseHoveredViewport);
         public ref bool KeyCtrl => ref Unsafe.AsRef<bool>(&NativePtr->KeyCtrl);
         public ref bool KeyShift => ref Unsafe.AsRef<bool>(&NativePtr->KeyShift);
@@ -858,6 +867,7 @@ namespace ImGuiNET
         public RangeAccessor<bool> MouseReleased => new RangeAccessor<bool>(NativePtr->MouseReleased, 5);
         public RangeAccessor<bool> MouseDownOwned => new RangeAccessor<bool>(NativePtr->MouseDownOwned, 5);
         public RangeAccessor<bool> MouseDownOwnedUnlessPopupClose => new RangeAccessor<bool>(NativePtr->MouseDownOwnedUnlessPopupClose, 5);
+        public ref bool MouseWheelRequestAxisSwap => ref Unsafe.AsRef<bool>(&NativePtr->MouseWheelRequestAxisSwap);
         public RangeAccessor<float> MouseDownDuration => new RangeAccessor<float>(NativePtr->MouseDownDuration, 5);
         public RangeAccessor<float> MouseDownDurationPrev => new RangeAccessor<float>(NativePtr->MouseDownDurationPrev, 5);
         public RangeAccessor<Vector2> MouseDragMaxDistanceAbs => new RangeAccessor<Vector2>(&NativePtr->MouseDragMaxDistanceAbs_0, 5);
@@ -927,13 +937,17 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiIO_AddMousePosEvent((ImGuiIO*)(NativePtr), x, y);
         }
+        public void AddMouseSourceEvent(ImGuiMouseSource source)
+        {
+            ImGuiNative.ImGuiIO_AddMouseSourceEvent((ImGuiIO*)(NativePtr), source);
+        }
         public void AddMouseViewportEvent(uint id)
         {
             ImGuiNative.ImGuiIO_AddMouseViewportEvent((ImGuiIO*)(NativePtr), id);
         }
-        public void AddMouseWheelEvent(float wh_x, float wh_y)
+        public void AddMouseWheelEvent(float wheel_x, float wheel_y)
         {
-            ImGuiNative.ImGuiIO_AddMouseWheelEvent((ImGuiIO*)(NativePtr), wh_x, wh_y);
+            ImGuiNative.ImGuiIO_AddMouseWheelEvent((ImGuiIO*)(NativePtr), wheel_x, wheel_y);
         }
         public void ClearInputCharacters()
         {

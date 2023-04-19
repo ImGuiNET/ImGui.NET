@@ -18,7 +18,9 @@ namespace ImGuiNET
         public short ConfigDataCount;
         public ushort FallbackChar;
         public ushort EllipsisChar;
-        public ushort DotChar;
+        public short EllipsisCharCount;
+        public float EllipsisWidth;
+        public float EllipsisCharStep;
         public byte DirtyLookupTables;
         public float Scale;
         public float Ascent;
@@ -45,7 +47,9 @@ namespace ImGuiNET
         public ref short ConfigDataCount => ref Unsafe.AsRef<short>(&NativePtr->ConfigDataCount);
         public ref ushort FallbackChar => ref Unsafe.AsRef<ushort>(&NativePtr->FallbackChar);
         public ref ushort EllipsisChar => ref Unsafe.AsRef<ushort>(&NativePtr->EllipsisChar);
-        public ref ushort DotChar => ref Unsafe.AsRef<ushort>(&NativePtr->DotChar);
+        public ref short EllipsisCharCount => ref Unsafe.AsRef<short>(&NativePtr->EllipsisCharCount);
+        public ref float EllipsisWidth => ref Unsafe.AsRef<float>(&NativePtr->EllipsisWidth);
+        public ref float EllipsisCharStep => ref Unsafe.AsRef<float>(&NativePtr->EllipsisCharStep);
         public ref bool DirtyLookupTables => ref Unsafe.AsRef<bool>(&NativePtr->DirtyLookupTables);
         public ref float Scale => ref Unsafe.AsRef<float>(&NativePtr->Scale);
         public ref float Ascent => ref Unsafe.AsRef<float>(&NativePtr->Ascent);
