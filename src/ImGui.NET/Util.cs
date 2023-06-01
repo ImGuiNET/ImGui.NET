@@ -48,7 +48,11 @@ namespace ImGuiNET
             }
         }
 
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        internal static int GetUtf8(ReadOnlySpan<char> s, byte* utf8Bytes, int utf8ByteCount)
+#else
         internal static int GetUtf8(string s, byte* utf8Bytes, int utf8ByteCount)
+#endif
         {
             fixed (char* utf16Ptr = s)
             {

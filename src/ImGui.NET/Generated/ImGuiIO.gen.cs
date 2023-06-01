@@ -888,7 +888,11 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiIO_AddInputCharacter((ImGuiIO*)(NativePtr), c);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public void AddInputCharactersUTF8(ReadOnlySpan<char> str)
+#else
         public void AddInputCharactersUTF8(string str)
+#endif
         {
             byte* native_str;
             int str_byteCount = 0;
