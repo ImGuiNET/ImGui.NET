@@ -656,7 +656,7 @@ namespace CodeGenerator
 
             string staticPortion = selfName == null ? "static " : string.Empty;
             
-            if (marshalledParameters.Length > 0 && marshalledParameters.Any(p => p is { MarshalledType: "string" }))
+            if (invocationArgs.Count > 0 && invocationArgs.Any(a => a is { MarshalledType: "string" }))
             {
                 string readOnlySpanInvocationList = string.Join(", ", invocationArgs.Select(a => $"{(a.MarshalledType == "string" ? "ReadOnlySpan<char>" : a.MarshalledType)} {a.CorrectedIdentifier}"));
                 writer.WriteRaw($$"""

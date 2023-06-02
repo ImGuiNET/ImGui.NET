@@ -715,11 +715,7 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static bool BeginPopupContextItem()
-#else
-        public static bool BeginPopupContextItem()
-#endif
         {
             byte* native_str_id = null;
             ImGuiPopupFlags popup_flags = (ImGuiPopupFlags)1;
@@ -789,11 +785,7 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static bool BeginPopupContextVoid()
-#else
-        public static bool BeginPopupContextVoid()
-#endif
         {
             byte* native_str_id = null;
             ImGuiPopupFlags popup_flags = (ImGuiPopupFlags)1;
@@ -863,11 +855,7 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static bool BeginPopupContextWindow()
-#else
-        public static bool BeginPopupContextWindow()
-#endif
         {
             byte* native_str_id = null;
             ImGuiPopupFlags popup_flags = (ImGuiPopupFlags)1;
@@ -2127,22 +2115,14 @@ namespace ImGuiNET
                 }
             }
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static void Columns()
-#else
-        public static void Columns()
-#endif
         {
             int count = 1;
             byte* native_id = null;
             byte border = 1;
             ImGuiNative.igColumns(count, native_id, border);
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static void Columns(int count)
-#else
-        public static void Columns(int count)
-#endif
         {
             byte* native_id = null;
             byte border = 1;
@@ -9889,21 +9869,13 @@ namespace ImGuiNET
         {
             ImGuiNative.igLogToClipboard(auto_open_depth);
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static void LogToFile()
-#else
-        public static void LogToFile()
-#endif
         {
             int auto_open_depth = -1;
             byte* native_filename = null;
             ImGuiNative.igLogToFile(auto_open_depth, native_filename);
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static void LogToFile(int auto_open_depth)
-#else
-        public static void LogToFile(int auto_open_depth)
-#endif
         {
             byte* native_filename = null;
             ImGuiNative.igLogToFile(auto_open_depth, native_filename);
@@ -10352,11 +10324,7 @@ namespace ImGuiNET
         {
             ImGuiNative.igOpenPopup_ID(id, popup_flags);
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static void OpenPopupOnItemClick()
-#else
-        public static void OpenPopupOnItemClick()
-#endif
         {
             byte* native_str_id = null;
             ImGuiPopupFlags popup_flags = (ImGuiPopupFlags)1;
@@ -11193,21 +11161,13 @@ namespace ImGuiNET
         {
             ImGuiNative.igPopTextWrapPos();
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static void ProgressBar(float fraction)
-#else
-        public static void ProgressBar(float fraction)
-#endif
         {
             Vector2 size_arg = new Vector2(-float.MinValue, 0.0f);
             byte* native_overlay = null;
             ImGuiNative.igProgressBar(fraction, size_arg, native_overlay);
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static void ProgressBar(float fraction, Vector2 size_arg)
-#else
-        public static void ProgressBar(float fraction, Vector2 size_arg)
-#endif
         {
             byte* native_overlay = null;
             ImGuiNative.igProgressBar(fraction, size_arg, native_overlay);

@@ -34,11 +34,7 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiTextFilter_destroy((ImGuiTextFilter*)(NativePtr));
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public bool Draw()
-#else
-        public bool Draw()
-#endif
         {
             byte* native_label;
             int label_byteCount = 0;
