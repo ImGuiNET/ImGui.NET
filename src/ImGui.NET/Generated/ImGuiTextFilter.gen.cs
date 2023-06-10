@@ -58,7 +58,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public bool Draw(ReadOnlySpan<char> label)
+#else
         public bool Draw(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -86,7 +90,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public bool Draw(ReadOnlySpan<char> label, float width)
+#else
         public bool Draw(string label, float width)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -118,7 +126,11 @@ namespace ImGuiNET
             byte ret = ImGuiNative.ImGuiTextFilter_IsActive((ImGuiTextFilter*)(NativePtr));
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public bool PassFilter(ReadOnlySpan<char> text)
+#else
         public bool PassFilter(string text)
+#endif
         {
             byte* native_text;
             int text_byteCount = 0;

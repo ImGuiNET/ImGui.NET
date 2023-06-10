@@ -7,7 +7,11 @@ namespace ImGuiNET
 {
     public static unsafe partial class ImGui
     {
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static ImGuiPayloadPtr AcceptDragDropPayload(ReadOnlySpan<char> type)
+#else
         public static ImGuiPayloadPtr AcceptDragDropPayload(string type)
+#endif
         {
             byte* native_type;
             int type_byteCount = 0;
@@ -35,7 +39,11 @@ namespace ImGuiNET
             }
             return new ImGuiPayloadPtr(ret);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static ImGuiPayloadPtr AcceptDragDropPayload(ReadOnlySpan<char> type, ImGuiDragDropFlags flags)
+#else
         public static ImGuiPayloadPtr AcceptDragDropPayload(string type, ImGuiDragDropFlags flags)
+#endif
         {
             byte* native_type;
             int type_byteCount = 0;
@@ -66,7 +74,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igAlignTextToFramePadding();
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ArrowButton(ReadOnlySpan<char> str_id, ImGuiDir dir)
+#else
         public static bool ArrowButton(string str_id, ImGuiDir dir)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -93,7 +105,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Begin(ReadOnlySpan<char> name)
+#else
         public static bool Begin(string name)
+#endif
         {
             byte* native_name;
             int name_byteCount = 0;
@@ -122,7 +138,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Begin(ReadOnlySpan<char> name, ref bool p_open)
+#else
         public static bool Begin(string name, ref bool p_open)
+#endif
         {
             byte* native_name;
             int name_byteCount = 0;
@@ -153,7 +173,11 @@ namespace ImGuiNET
             p_open = native_p_open_val != 0;
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Begin(ReadOnlySpan<char> name, ref bool p_open, ImGuiWindowFlags flags)
+#else
         public static bool Begin(string name, ref bool p_open, ImGuiWindowFlags flags)
+#endif
         {
             byte* native_name;
             int name_byteCount = 0;
@@ -183,7 +207,11 @@ namespace ImGuiNET
             p_open = native_p_open_val != 0;
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginChild(ReadOnlySpan<char> str_id)
+#else
         public static bool BeginChild(string str_id)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -213,7 +241,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginChild(ReadOnlySpan<char> str_id, Vector2 size)
+#else
         public static bool BeginChild(string str_id, Vector2 size)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -242,7 +274,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginChild(ReadOnlySpan<char> str_id, Vector2 size, bool border)
+#else
         public static bool BeginChild(string str_id, Vector2 size, bool border)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -271,7 +307,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginChild(ReadOnlySpan<char> str_id, Vector2 size, bool border, ImGuiWindowFlags flags)
+#else
         public static bool BeginChild(string str_id, Vector2 size, bool border, ImGuiWindowFlags flags)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -338,7 +378,11 @@ namespace ImGuiNET
             byte ret = ImGuiNative.igBeginChildFrame(id, size, flags);
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginCombo(ReadOnlySpan<char> label, ReadOnlySpan<char> preview_value)
+#else
         public static bool BeginCombo(string label, string preview_value)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -388,7 +432,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginCombo(ReadOnlySpan<char> label, ReadOnlySpan<char> preview_value, ImGuiComboFlags flags)
+#else
         public static bool BeginCombo(string label, string preview_value, ImGuiComboFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -467,7 +515,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igBeginGroup();
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginListBox(ReadOnlySpan<char> label)
+#else
         public static bool BeginListBox(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -495,7 +547,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginListBox(ReadOnlySpan<char> label, Vector2 size)
+#else
         public static bool BeginListBox(string label, Vector2 size)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -527,7 +583,11 @@ namespace ImGuiNET
             byte ret = ImGuiNative.igBeginMainMenuBar();
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginMenu(ReadOnlySpan<char> label)
+#else
         public static bool BeginMenu(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -555,7 +615,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginMenu(ReadOnlySpan<char> label, bool enabled)
+#else
         public static bool BeginMenu(string label, bool enabled)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -588,7 +652,11 @@ namespace ImGuiNET
             byte ret = ImGuiNative.igBeginMenuBar();
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginPopup(ReadOnlySpan<char> str_id)
+#else
         public static bool BeginPopup(string str_id)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -616,7 +684,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginPopup(ReadOnlySpan<char> str_id, ImGuiWindowFlags flags)
+#else
         public static bool BeginPopup(string str_id, ImGuiWindowFlags flags)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -650,7 +722,11 @@ namespace ImGuiNET
             byte ret = ImGuiNative.igBeginPopupContextItem(native_str_id, popup_flags);
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginPopupContextItem(ReadOnlySpan<char> str_id)
+#else
         public static bool BeginPopupContextItem(string str_id)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -678,7 +754,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginPopupContextItem(ReadOnlySpan<char> str_id, ImGuiPopupFlags popup_flags)
+#else
         public static bool BeginPopupContextItem(string str_id, ImGuiPopupFlags popup_flags)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -712,7 +792,11 @@ namespace ImGuiNET
             byte ret = ImGuiNative.igBeginPopupContextVoid(native_str_id, popup_flags);
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginPopupContextVoid(ReadOnlySpan<char> str_id)
+#else
         public static bool BeginPopupContextVoid(string str_id)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -740,7 +824,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginPopupContextVoid(ReadOnlySpan<char> str_id, ImGuiPopupFlags popup_flags)
+#else
         public static bool BeginPopupContextVoid(string str_id, ImGuiPopupFlags popup_flags)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -774,7 +862,11 @@ namespace ImGuiNET
             byte ret = ImGuiNative.igBeginPopupContextWindow(native_str_id, popup_flags);
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginPopupContextWindow(ReadOnlySpan<char> str_id)
+#else
         public static bool BeginPopupContextWindow(string str_id)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -802,7 +894,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginPopupContextWindow(ReadOnlySpan<char> str_id, ImGuiPopupFlags popup_flags)
+#else
         public static bool BeginPopupContextWindow(string str_id, ImGuiPopupFlags popup_flags)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -829,7 +925,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginPopupModal(ReadOnlySpan<char> name)
+#else
         public static bool BeginPopupModal(string name)
+#endif
         {
             byte* native_name;
             int name_byteCount = 0;
@@ -858,7 +958,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginPopupModal(ReadOnlySpan<char> name, ref bool p_open)
+#else
         public static bool BeginPopupModal(string name, ref bool p_open)
+#endif
         {
             byte* native_name;
             int name_byteCount = 0;
@@ -889,7 +993,11 @@ namespace ImGuiNET
             p_open = native_p_open_val != 0;
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginPopupModal(ReadOnlySpan<char> name, ref bool p_open, ImGuiWindowFlags flags)
+#else
         public static bool BeginPopupModal(string name, ref bool p_open, ImGuiWindowFlags flags)
+#endif
         {
             byte* native_name;
             int name_byteCount = 0;
@@ -919,7 +1027,11 @@ namespace ImGuiNET
             p_open = native_p_open_val != 0;
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginTabBar(ReadOnlySpan<char> str_id)
+#else
         public static bool BeginTabBar(string str_id)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -947,7 +1059,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginTabBar(ReadOnlySpan<char> str_id, ImGuiTabBarFlags flags)
+#else
         public static bool BeginTabBar(string str_id, ImGuiTabBarFlags flags)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -974,7 +1090,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginTabItem(ReadOnlySpan<char> label)
+#else
         public static bool BeginTabItem(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1003,7 +1123,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginTabItem(ReadOnlySpan<char> label, ref bool p_open)
+#else
         public static bool BeginTabItem(string label, ref bool p_open)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1034,7 +1158,11 @@ namespace ImGuiNET
             p_open = native_p_open_val != 0;
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginTabItem(ReadOnlySpan<char> label, ref bool p_open, ImGuiTabItemFlags flags)
+#else
         public static bool BeginTabItem(string label, ref bool p_open, ImGuiTabItemFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1064,7 +1192,11 @@ namespace ImGuiNET
             p_open = native_p_open_val != 0;
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginTable(ReadOnlySpan<char> str_id, int column)
+#else
         public static bool BeginTable(string str_id, int column)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -1094,7 +1226,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginTable(ReadOnlySpan<char> str_id, int column, ImGuiTableFlags flags)
+#else
         public static bool BeginTable(string str_id, int column, ImGuiTableFlags flags)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -1123,7 +1259,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginTable(ReadOnlySpan<char> str_id, int column, ImGuiTableFlags flags, Vector2 outer_size)
+#else
         public static bool BeginTable(string str_id, int column, ImGuiTableFlags flags, Vector2 outer_size)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -1151,7 +1291,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool BeginTable(ReadOnlySpan<char> str_id, int column, ImGuiTableFlags flags, Vector2 outer_size, float inner_width)
+#else
         public static bool BeginTable(string str_id, int column, ImGuiTableFlags flags, Vector2 outer_size, float inner_width)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -1187,7 +1331,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igBullet();
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void BulletText(ReadOnlySpan<char> fmt)
+#else
         public static void BulletText(string fmt)
+#endif
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
@@ -1213,7 +1361,11 @@ namespace ImGuiNET
                 Util.Free(native_fmt);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Button(ReadOnlySpan<char> label)
+#else
         public static bool Button(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1241,7 +1393,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Button(ReadOnlySpan<char> label, Vector2 size)
+#else
         public static bool Button(string label, Vector2 size)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1273,7 +1429,11 @@ namespace ImGuiNET
             float ret = ImGuiNative.igCalcItemWidth();
             return ret;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Checkbox(ReadOnlySpan<char> label, ref bool v)
+#else
         public static bool Checkbox(string label, ref bool v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1303,7 +1463,11 @@ namespace ImGuiNET
             v = native_v_val != 0;
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool CheckboxFlags(ReadOnlySpan<char> label, ref int flags, int flags_value)
+#else
         public static bool CheckboxFlags(string label, ref int flags, int flags_value)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1333,7 +1497,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool CheckboxFlags(ReadOnlySpan<char> label, ref uint flags, uint flags_value)
+#else
         public static bool CheckboxFlags(string label, ref uint flags, uint flags_value)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1367,7 +1535,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igCloseCurrentPopup();
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool CollapsingHeader(ReadOnlySpan<char> label)
+#else
         public static bool CollapsingHeader(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1395,7 +1567,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool CollapsingHeader(ReadOnlySpan<char> label, ImGuiTreeNodeFlags flags)
+#else
         public static bool CollapsingHeader(string label, ImGuiTreeNodeFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1422,7 +1598,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool CollapsingHeader(ReadOnlySpan<char> label, ref bool p_visible)
+#else
         public static bool CollapsingHeader(string label, ref bool p_visible)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1453,7 +1633,11 @@ namespace ImGuiNET
             p_visible = native_p_visible_val != 0;
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool CollapsingHeader(ReadOnlySpan<char> label, ref bool p_visible, ImGuiTreeNodeFlags flags)
+#else
         public static bool CollapsingHeader(string label, ref bool p_visible, ImGuiTreeNodeFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1483,7 +1667,11 @@ namespace ImGuiNET
             p_visible = native_p_visible_val != 0;
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ColorButton(ReadOnlySpan<char> desc_id, Vector4 col)
+#else
         public static bool ColorButton(string desc_id, Vector4 col)
+#endif
         {
             byte* native_desc_id;
             int desc_id_byteCount = 0;
@@ -1512,7 +1700,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ColorButton(ReadOnlySpan<char> desc_id, Vector4 col, ImGuiColorEditFlags flags)
+#else
         public static bool ColorButton(string desc_id, Vector4 col, ImGuiColorEditFlags flags)
+#endif
         {
             byte* native_desc_id;
             int desc_id_byteCount = 0;
@@ -1540,7 +1732,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ColorButton(ReadOnlySpan<char> desc_id, Vector4 col, ImGuiColorEditFlags flags, Vector2 size)
+#else
         public static bool ColorButton(string desc_id, Vector4 col, ImGuiColorEditFlags flags, Vector2 size)
+#endif
         {
             byte* native_desc_id;
             int desc_id_byteCount = 0;
@@ -1604,7 +1800,11 @@ namespace ImGuiNET
             ImGuiNative.igColorConvertU32ToFloat4(&__retval, @in);
             return __retval;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ColorEdit3(ReadOnlySpan<char> label, ref Vector3 col)
+#else
         public static bool ColorEdit3(string label, ref Vector3 col)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1635,7 +1835,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ColorEdit3(ReadOnlySpan<char> label, ref Vector3 col, ImGuiColorEditFlags flags)
+#else
         public static bool ColorEdit3(string label, ref Vector3 col, ImGuiColorEditFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1665,7 +1869,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ColorEdit4(ReadOnlySpan<char> label, ref Vector4 col)
+#else
         public static bool ColorEdit4(string label, ref Vector4 col)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1696,7 +1904,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ColorEdit4(ReadOnlySpan<char> label, ref Vector4 col, ImGuiColorEditFlags flags)
+#else
         public static bool ColorEdit4(string label, ref Vector4 col, ImGuiColorEditFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1726,7 +1938,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ColorPicker3(ReadOnlySpan<char> label, ref Vector3 col)
+#else
         public static bool ColorPicker3(string label, ref Vector3 col)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1757,7 +1973,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ColorPicker3(ReadOnlySpan<char> label, ref Vector3 col, ImGuiColorEditFlags flags)
+#else
         public static bool ColorPicker3(string label, ref Vector3 col, ImGuiColorEditFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1787,7 +2007,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ColorPicker4(ReadOnlySpan<char> label, ref Vector4 col)
+#else
         public static bool ColorPicker4(string label, ref Vector4 col)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1819,7 +2043,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ColorPicker4(ReadOnlySpan<char> label, ref Vector4 col, ImGuiColorEditFlags flags)
+#else
         public static bool ColorPicker4(string label, ref Vector4 col, ImGuiColorEditFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1850,7 +2078,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ColorPicker4(ReadOnlySpan<char> label, ref Vector4 col, ImGuiColorEditFlags flags, ref float ref_col)
+#else
         public static bool ColorPicker4(string label, ref Vector4 col, ImGuiColorEditFlags flags, ref float ref_col)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -1896,7 +2128,11 @@ namespace ImGuiNET
             byte border = 1;
             ImGuiNative.igColumns(count, native_id, border);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void Columns(int count, ReadOnlySpan<char> id)
+#else
         public static void Columns(int count, string id)
+#endif
         {
             byte* native_id;
             int id_byteCount = 0;
@@ -1923,7 +2159,11 @@ namespace ImGuiNET
                 Util.Free(native_id);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void Columns(int count, ReadOnlySpan<char> id, bool border)
+#else
         public static void Columns(int count, string id, bool border)
+#endif
         {
             byte* native_id;
             int id_byteCount = 0;
@@ -1950,7 +2190,11 @@ namespace ImGuiNET
                 Util.Free(native_id);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Combo(ReadOnlySpan<char> label, ref int current_item, string[] items, int items_count)
+#else
         public static bool Combo(string label, ref int current_item, string[] items, int items_count)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2008,7 +2252,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Combo(ReadOnlySpan<char> label, ref int current_item, string[] items, int items_count, int popup_max_height_in_items)
+#else
         public static bool Combo(string label, ref int current_item, string[] items, int items_count, int popup_max_height_in_items)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2065,7 +2313,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Combo(ReadOnlySpan<char> label, ref int current_item, ReadOnlySpan<char> items_separated_by_zeros)
+#else
         public static bool Combo(string label, ref int current_item, string items_separated_by_zeros)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2118,7 +2370,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Combo(ReadOnlySpan<char> label, ref int current_item, ReadOnlySpan<char> items_separated_by_zeros, int popup_max_height_in_items)
+#else
         public static bool Combo(string label, ref int current_item, string items_separated_by_zeros, int popup_max_height_in_items)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2182,7 +2438,11 @@ namespace ImGuiNET
             IntPtr ret = ImGuiNative.igCreateContext(native_shared_font_atlas);
             return ret;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DebugCheckVersionAndDataLayout(ReadOnlySpan<char> version_str, uint sz_io, uint sz_style, uint sz_vec2, uint sz_vec4, uint sz_drawvert, uint sz_drawidx)
+#else
         public static bool DebugCheckVersionAndDataLayout(string version_str, uint sz_io, uint sz_style, uint sz_vec2, uint sz_vec4, uint sz_drawvert, uint sz_drawidx)
+#endif
         {
             byte* native_version_str;
             int version_str_byteCount = 0;
@@ -2209,7 +2469,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void DebugTextEncoding(ReadOnlySpan<char> text)
+#else
         public static void DebugTextEncoding(string text)
+#endif
         {
             byte* native_text;
             int text_byteCount = 0;
@@ -2305,7 +2569,11 @@ namespace ImGuiNET
             uint ret = ImGuiNative.igDockSpaceOverViewport(native_viewport, flags, native_window_class);
             return ret;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat(ReadOnlySpan<char> label, ref float v)
+#else
         public static bool DragFloat(string label, ref float v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2357,7 +2625,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat(ReadOnlySpan<char> label, ref float v, float v_speed)
+#else
         public static bool DragFloat(string label, ref float v, float v_speed)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2408,7 +2680,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat(ReadOnlySpan<char> label, ref float v, float v_speed, float v_min)
+#else
         public static bool DragFloat(string label, ref float v, float v_speed, float v_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2458,7 +2734,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat(ReadOnlySpan<char> label, ref float v, float v_speed, float v_min, float v_max)
+#else
         public static bool DragFloat(string label, ref float v, float v_speed, float v_min, float v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2507,7 +2787,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat(ReadOnlySpan<char> label, ref float v, float v_speed, float v_min, float v_max, ReadOnlySpan<char> format)
+#else
         public static bool DragFloat(string label, ref float v, float v_speed, float v_min, float v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2560,7 +2844,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat(ReadOnlySpan<char> label, ref float v, float v_speed, float v_min, float v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool DragFloat(string label, ref float v, float v_speed, float v_min, float v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2612,7 +2900,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat2(ReadOnlySpan<char> label, ref Vector2 v)
+#else
         public static bool DragFloat2(string label, ref Vector2 v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2664,7 +2956,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat2(ReadOnlySpan<char> label, ref Vector2 v, float v_speed)
+#else
         public static bool DragFloat2(string label, ref Vector2 v, float v_speed)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2715,7 +3011,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat2(ReadOnlySpan<char> label, ref Vector2 v, float v_speed, float v_min)
+#else
         public static bool DragFloat2(string label, ref Vector2 v, float v_speed, float v_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2765,7 +3065,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat2(ReadOnlySpan<char> label, ref Vector2 v, float v_speed, float v_min, float v_max)
+#else
         public static bool DragFloat2(string label, ref Vector2 v, float v_speed, float v_min, float v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2814,7 +3118,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat2(ReadOnlySpan<char> label, ref Vector2 v, float v_speed, float v_min, float v_max, ReadOnlySpan<char> format)
+#else
         public static bool DragFloat2(string label, ref Vector2 v, float v_speed, float v_min, float v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2867,7 +3175,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat2(ReadOnlySpan<char> label, ref Vector2 v, float v_speed, float v_min, float v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool DragFloat2(string label, ref Vector2 v, float v_speed, float v_min, float v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2919,7 +3231,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat3(ReadOnlySpan<char> label, ref Vector3 v)
+#else
         public static bool DragFloat3(string label, ref Vector3 v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -2971,7 +3287,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat3(ReadOnlySpan<char> label, ref Vector3 v, float v_speed)
+#else
         public static bool DragFloat3(string label, ref Vector3 v, float v_speed)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3022,7 +3342,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat3(ReadOnlySpan<char> label, ref Vector3 v, float v_speed, float v_min)
+#else
         public static bool DragFloat3(string label, ref Vector3 v, float v_speed, float v_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3072,7 +3396,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat3(ReadOnlySpan<char> label, ref Vector3 v, float v_speed, float v_min, float v_max)
+#else
         public static bool DragFloat3(string label, ref Vector3 v, float v_speed, float v_min, float v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3121,7 +3449,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat3(ReadOnlySpan<char> label, ref Vector3 v, float v_speed, float v_min, float v_max, ReadOnlySpan<char> format)
+#else
         public static bool DragFloat3(string label, ref Vector3 v, float v_speed, float v_min, float v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3174,7 +3506,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat3(ReadOnlySpan<char> label, ref Vector3 v, float v_speed, float v_min, float v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool DragFloat3(string label, ref Vector3 v, float v_speed, float v_min, float v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3226,7 +3562,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat4(ReadOnlySpan<char> label, ref Vector4 v)
+#else
         public static bool DragFloat4(string label, ref Vector4 v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3278,7 +3618,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat4(ReadOnlySpan<char> label, ref Vector4 v, float v_speed)
+#else
         public static bool DragFloat4(string label, ref Vector4 v, float v_speed)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3329,7 +3673,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat4(ReadOnlySpan<char> label, ref Vector4 v, float v_speed, float v_min)
+#else
         public static bool DragFloat4(string label, ref Vector4 v, float v_speed, float v_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3379,7 +3727,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat4(ReadOnlySpan<char> label, ref Vector4 v, float v_speed, float v_min, float v_max)
+#else
         public static bool DragFloat4(string label, ref Vector4 v, float v_speed, float v_min, float v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3428,7 +3780,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat4(ReadOnlySpan<char> label, ref Vector4 v, float v_speed, float v_min, float v_max, ReadOnlySpan<char> format)
+#else
         public static bool DragFloat4(string label, ref Vector4 v, float v_speed, float v_min, float v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3481,7 +3837,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloat4(ReadOnlySpan<char> label, ref Vector4 v, float v_speed, float v_min, float v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool DragFloat4(string label, ref Vector4 v, float v_speed, float v_min, float v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3533,7 +3893,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloatRange2(ReadOnlySpan<char> label, ref float v_current_min, ref float v_current_max)
+#else
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3589,7 +3953,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloatRange2(ReadOnlySpan<char> label, ref float v_current_min, ref float v_current_max, float v_speed)
+#else
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max, float v_speed)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3644,7 +4012,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloatRange2(ReadOnlySpan<char> label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min)
+#else
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3698,7 +4070,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloatRange2(ReadOnlySpan<char> label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min, float v_max)
+#else
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min, float v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3751,7 +4127,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloatRange2(ReadOnlySpan<char> label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min, float v_max, ReadOnlySpan<char> format)
+#else
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min, float v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3808,7 +4188,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloatRange2(ReadOnlySpan<char> label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min, float v_max, ReadOnlySpan<char> format, ReadOnlySpan<char> format_max)
+#else
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min, float v_max, string format, string format_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3886,7 +4270,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragFloatRange2(ReadOnlySpan<char> label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min, float v_max, ReadOnlySpan<char> format, ReadOnlySpan<char> format_max, ImGuiSliderFlags flags)
+#else
         public static bool DragFloatRange2(string label, ref float v_current_min, ref float v_current_max, float v_speed, float v_min, float v_max, string format, string format_max, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -3963,7 +4351,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt(ReadOnlySpan<char> label, ref int v)
+#else
         public static bool DragInt(string label, ref int v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4015,7 +4407,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt(ReadOnlySpan<char> label, ref int v, float v_speed)
+#else
         public static bool DragInt(string label, ref int v, float v_speed)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4066,7 +4462,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min)
+#else
         public static bool DragInt(string label, ref int v, float v_speed, int v_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4116,7 +4516,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min, int v_max)
+#else
         public static bool DragInt(string label, ref int v, float v_speed, int v_min, int v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4165,7 +4569,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min, int v_max, ReadOnlySpan<char> format)
+#else
         public static bool DragInt(string label, ref int v, float v_speed, int v_min, int v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4218,7 +4626,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min, int v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool DragInt(string label, ref int v, float v_speed, int v_min, int v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4270,7 +4682,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt2(ReadOnlySpan<char> label, ref int v)
+#else
         public static bool DragInt2(string label, ref int v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4322,7 +4738,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt2(ReadOnlySpan<char> label, ref int v, float v_speed)
+#else
         public static bool DragInt2(string label, ref int v, float v_speed)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4373,7 +4793,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt2(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min)
+#else
         public static bool DragInt2(string label, ref int v, float v_speed, int v_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4423,7 +4847,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt2(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min, int v_max)
+#else
         public static bool DragInt2(string label, ref int v, float v_speed, int v_min, int v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4472,7 +4900,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt2(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min, int v_max, ReadOnlySpan<char> format)
+#else
         public static bool DragInt2(string label, ref int v, float v_speed, int v_min, int v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4525,7 +4957,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt2(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min, int v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool DragInt2(string label, ref int v, float v_speed, int v_min, int v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4577,7 +5013,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt3(ReadOnlySpan<char> label, ref int v)
+#else
         public static bool DragInt3(string label, ref int v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4629,7 +5069,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt3(ReadOnlySpan<char> label, ref int v, float v_speed)
+#else
         public static bool DragInt3(string label, ref int v, float v_speed)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4680,7 +5124,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt3(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min)
+#else
         public static bool DragInt3(string label, ref int v, float v_speed, int v_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4730,7 +5178,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt3(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min, int v_max)
+#else
         public static bool DragInt3(string label, ref int v, float v_speed, int v_min, int v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4779,7 +5231,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt3(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min, int v_max, ReadOnlySpan<char> format)
+#else
         public static bool DragInt3(string label, ref int v, float v_speed, int v_min, int v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4832,7 +5288,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt3(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min, int v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool DragInt3(string label, ref int v, float v_speed, int v_min, int v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4884,7 +5344,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt4(ReadOnlySpan<char> label, ref int v)
+#else
         public static bool DragInt4(string label, ref int v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4936,7 +5400,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt4(ReadOnlySpan<char> label, ref int v, float v_speed)
+#else
         public static bool DragInt4(string label, ref int v, float v_speed)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -4987,7 +5455,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt4(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min)
+#else
         public static bool DragInt4(string label, ref int v, float v_speed, int v_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5037,7 +5509,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt4(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min, int v_max)
+#else
         public static bool DragInt4(string label, ref int v, float v_speed, int v_min, int v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5086,7 +5562,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt4(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min, int v_max, ReadOnlySpan<char> format)
+#else
         public static bool DragInt4(string label, ref int v, float v_speed, int v_min, int v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5139,7 +5619,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragInt4(ReadOnlySpan<char> label, ref int v, float v_speed, int v_min, int v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool DragInt4(string label, ref int v, float v_speed, int v_min, int v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5191,7 +5675,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragIntRange2(ReadOnlySpan<char> label, ref int v_current_min, ref int v_current_max)
+#else
         public static bool DragIntRange2(string label, ref int v_current_min, ref int v_current_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5247,7 +5735,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragIntRange2(ReadOnlySpan<char> label, ref int v_current_min, ref int v_current_max, float v_speed)
+#else
         public static bool DragIntRange2(string label, ref int v_current_min, ref int v_current_max, float v_speed)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5302,7 +5794,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragIntRange2(ReadOnlySpan<char> label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min)
+#else
         public static bool DragIntRange2(string label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5356,7 +5852,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragIntRange2(ReadOnlySpan<char> label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min, int v_max)
+#else
         public static bool DragIntRange2(string label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min, int v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5409,7 +5909,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragIntRange2(ReadOnlySpan<char> label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min, int v_max, ReadOnlySpan<char> format)
+#else
         public static bool DragIntRange2(string label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min, int v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5466,7 +5970,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragIntRange2(ReadOnlySpan<char> label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min, int v_max, ReadOnlySpan<char> format, ReadOnlySpan<char> format_max)
+#else
         public static bool DragIntRange2(string label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min, int v_max, string format, string format_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5544,7 +6052,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragIntRange2(ReadOnlySpan<char> label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min, int v_max, ReadOnlySpan<char> format, ReadOnlySpan<char> format_max, ImGuiSliderFlags flags)
+#else
         public static bool DragIntRange2(string label, ref int v_current_min, ref int v_current_max, float v_speed, int v_min, int v_max, string format, string format_max, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5621,7 +6133,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data)
+#else
         public static bool DragScalar(string label, ImGuiDataType data_type, IntPtr p_data)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5654,7 +6170,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, float v_speed)
+#else
         public static bool DragScalar(string label, ImGuiDataType data_type, IntPtr p_data, float v_speed)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5686,7 +6206,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, float v_speed, IntPtr p_min)
+#else
         public static bool DragScalar(string label, ImGuiDataType data_type, IntPtr p_data, float v_speed, IntPtr p_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5718,7 +6242,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, float v_speed, IntPtr p_min, IntPtr p_max)
+#else
         public static bool DragScalar(string label, ImGuiDataType data_type, IntPtr p_data, float v_speed, IntPtr p_min, IntPtr p_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5750,7 +6278,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, float v_speed, IntPtr p_min, IntPtr p_max, ReadOnlySpan<char> format)
+#else
         public static bool DragScalar(string label, ImGuiDataType data_type, IntPtr p_data, float v_speed, IntPtr p_min, IntPtr p_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5803,7 +6335,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, float v_speed, IntPtr p_min, IntPtr p_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool DragScalar(string label, ImGuiDataType data_type, IntPtr p_data, float v_speed, IntPtr p_min, IntPtr p_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5855,7 +6391,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components)
+#else
         public static bool DragScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5888,7 +6428,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components, float v_speed)
+#else
         public static bool DragScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components, float v_speed)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5920,7 +6464,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components, float v_speed, IntPtr p_min)
+#else
         public static bool DragScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components, float v_speed, IntPtr p_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5952,7 +6500,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components, float v_speed, IntPtr p_min, IntPtr p_max)
+#else
         public static bool DragScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components, float v_speed, IntPtr p_min, IntPtr p_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -5984,7 +6536,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components, float v_speed, IntPtr p_min, IntPtr p_max, ReadOnlySpan<char> format)
+#else
         public static bool DragScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components, float v_speed, IntPtr p_min, IntPtr p_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -6037,7 +6593,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool DragScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components, float v_speed, IntPtr p_min, IntPtr p_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool DragScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components, float v_speed, IntPtr p_min, IntPtr p_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -6360,7 +6920,11 @@ namespace ImGuiNET
             float ret = ImGuiNative.igGetFrameHeightWithSpacing();
             return ret;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static uint GetID(ReadOnlySpan<char> str_id)
+#else
         public static uint GetID(string str_id)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -6638,7 +7202,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igImage(user_texture_id, size, uv0, uv1, tint_col, border_col);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ImageButton(ReadOnlySpan<char> str_id, IntPtr user_texture_id, Vector2 size)
+#else
         public static bool ImageButton(string str_id, IntPtr user_texture_id, Vector2 size)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -6669,7 +7237,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ImageButton(ReadOnlySpan<char> str_id, IntPtr user_texture_id, Vector2 size, Vector2 uv0)
+#else
         public static bool ImageButton(string str_id, IntPtr user_texture_id, Vector2 size, Vector2 uv0)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -6699,7 +7271,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ImageButton(ReadOnlySpan<char> str_id, IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1)
+#else
         public static bool ImageButton(string str_id, IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -6728,7 +7304,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ImageButton(ReadOnlySpan<char> str_id, IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1, Vector4 bg_col)
+#else
         public static bool ImageButton(string str_id, IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1, Vector4 bg_col)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -6756,7 +7336,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ImageButton(ReadOnlySpan<char> str_id, IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1, Vector4 bg_col, Vector4 tint_col)
+#else
         public static bool ImageButton(string str_id, IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1, Vector4 bg_col, Vector4 tint_col)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -6792,7 +7376,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igIndent(indent_w);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputDouble(ReadOnlySpan<char> label, ref double v)
+#else
         public static bool InputDouble(string label, ref double v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -6843,7 +7431,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputDouble(ReadOnlySpan<char> label, ref double v, double step)
+#else
         public static bool InputDouble(string label, ref double v, double step)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -6893,7 +7485,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputDouble(ReadOnlySpan<char> label, ref double v, double step, double step_fast)
+#else
         public static bool InputDouble(string label, ref double v, double step, double step_fast)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -6942,7 +7538,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputDouble(ReadOnlySpan<char> label, ref double v, double step, double step_fast, ReadOnlySpan<char> format)
+#else
         public static bool InputDouble(string label, ref double v, double step, double step_fast, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -6995,7 +7595,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputDouble(ReadOnlySpan<char> label, ref double v, double step, double step_fast, ReadOnlySpan<char> format, ImGuiInputTextFlags flags)
+#else
         public static bool InputDouble(string label, ref double v, double step, double step_fast, string format, ImGuiInputTextFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7047,7 +7651,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat(ReadOnlySpan<char> label, ref float v)
+#else
         public static bool InputFloat(string label, ref float v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7098,7 +7706,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat(ReadOnlySpan<char> label, ref float v, float step)
+#else
         public static bool InputFloat(string label, ref float v, float step)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7148,7 +7760,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat(ReadOnlySpan<char> label, ref float v, float step, float step_fast)
+#else
         public static bool InputFloat(string label, ref float v, float step, float step_fast)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7197,7 +7813,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat(ReadOnlySpan<char> label, ref float v, float step, float step_fast, ReadOnlySpan<char> format)
+#else
         public static bool InputFloat(string label, ref float v, float step, float step_fast, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7250,7 +7870,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat(ReadOnlySpan<char> label, ref float v, float step, float step_fast, ReadOnlySpan<char> format, ImGuiInputTextFlags flags)
+#else
         public static bool InputFloat(string label, ref float v, float step, float step_fast, string format, ImGuiInputTextFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7302,7 +7926,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat2(ReadOnlySpan<char> label, ref Vector2 v)
+#else
         public static bool InputFloat2(string label, ref Vector2 v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7351,7 +7979,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat2(ReadOnlySpan<char> label, ref Vector2 v, ReadOnlySpan<char> format)
+#else
         public static bool InputFloat2(string label, ref Vector2 v, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7404,7 +8036,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat2(ReadOnlySpan<char> label, ref Vector2 v, ReadOnlySpan<char> format, ImGuiInputTextFlags flags)
+#else
         public static bool InputFloat2(string label, ref Vector2 v, string format, ImGuiInputTextFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7456,7 +8092,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat3(ReadOnlySpan<char> label, ref Vector3 v)
+#else
         public static bool InputFloat3(string label, ref Vector3 v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7505,7 +8145,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat3(ReadOnlySpan<char> label, ref Vector3 v, ReadOnlySpan<char> format)
+#else
         public static bool InputFloat3(string label, ref Vector3 v, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7558,7 +8202,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat3(ReadOnlySpan<char> label, ref Vector3 v, ReadOnlySpan<char> format, ImGuiInputTextFlags flags)
+#else
         public static bool InputFloat3(string label, ref Vector3 v, string format, ImGuiInputTextFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7610,7 +8258,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat4(ReadOnlySpan<char> label, ref Vector4 v)
+#else
         public static bool InputFloat4(string label, ref Vector4 v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7659,7 +8311,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat4(ReadOnlySpan<char> label, ref Vector4 v, ReadOnlySpan<char> format)
+#else
         public static bool InputFloat4(string label, ref Vector4 v, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7712,7 +8368,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputFloat4(ReadOnlySpan<char> label, ref Vector4 v, ReadOnlySpan<char> format, ImGuiInputTextFlags flags)
+#else
         public static bool InputFloat4(string label, ref Vector4 v, string format, ImGuiInputTextFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7764,7 +8424,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputInt(ReadOnlySpan<char> label, ref int v)
+#else
         public static bool InputInt(string label, ref int v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7797,7 +8461,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputInt(ReadOnlySpan<char> label, ref int v, int step)
+#else
         public static bool InputInt(string label, ref int v, int step)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7829,7 +8497,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputInt(ReadOnlySpan<char> label, ref int v, int step, int step_fast)
+#else
         public static bool InputInt(string label, ref int v, int step, int step_fast)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7860,7 +8532,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputInt(ReadOnlySpan<char> label, ref int v, int step, int step_fast, ImGuiInputTextFlags flags)
+#else
         public static bool InputInt(string label, ref int v, int step, int step_fast, ImGuiInputTextFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7890,7 +8566,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputInt2(ReadOnlySpan<char> label, ref int v)
+#else
         public static bool InputInt2(string label, ref int v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7921,7 +8601,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputInt2(ReadOnlySpan<char> label, ref int v, ImGuiInputTextFlags flags)
+#else
         public static bool InputInt2(string label, ref int v, ImGuiInputTextFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7951,7 +8635,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputInt3(ReadOnlySpan<char> label, ref int v)
+#else
         public static bool InputInt3(string label, ref int v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -7982,7 +8670,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputInt3(ReadOnlySpan<char> label, ref int v, ImGuiInputTextFlags flags)
+#else
         public static bool InputInt3(string label, ref int v, ImGuiInputTextFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8012,7 +8704,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputInt4(ReadOnlySpan<char> label, ref int v)
+#else
         public static bool InputInt4(string label, ref int v)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8043,7 +8739,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputInt4(ReadOnlySpan<char> label, ref int v, ImGuiInputTextFlags flags)
+#else
         public static bool InputInt4(string label, ref int v, ImGuiInputTextFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8073,7 +8773,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data)
+#else
         public static bool InputScalar(string label, ImGuiDataType data_type, IntPtr p_data)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8105,7 +8809,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_step)
+#else
         public static bool InputScalar(string label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_step)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8137,7 +8845,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_step, IntPtr p_step_fast)
+#else
         public static bool InputScalar(string label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_step, IntPtr p_step_fast)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8169,7 +8881,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_step, IntPtr p_step_fast, ReadOnlySpan<char> format)
+#else
         public static bool InputScalar(string label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_step, IntPtr p_step_fast, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8222,7 +8938,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_step, IntPtr p_step_fast, ReadOnlySpan<char> format, ImGuiInputTextFlags flags)
+#else
         public static bool InputScalar(string label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_step, IntPtr p_step_fast, string format, ImGuiInputTextFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8274,7 +8994,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components)
+#else
         public static bool InputScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8306,7 +9030,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_step)
+#else
         public static bool InputScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_step)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8338,7 +9066,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_step, IntPtr p_step_fast)
+#else
         public static bool InputScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_step, IntPtr p_step_fast)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8370,7 +9102,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_step, IntPtr p_step_fast, ReadOnlySpan<char> format)
+#else
         public static bool InputScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_step, IntPtr p_step_fast, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8423,7 +9159,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InputScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_step, IntPtr p_step_fast, ReadOnlySpan<char> format, ImGuiInputTextFlags flags)
+#else
         public static bool InputScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_step, IntPtr p_step_fast, string format, ImGuiInputTextFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8475,7 +9215,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InvisibleButton(ReadOnlySpan<char> str_id, Vector2 size)
+#else
         public static bool InvisibleButton(string str_id, Vector2 size)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -8503,7 +9247,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool InvisibleButton(ReadOnlySpan<char> str_id, Vector2 size, ImGuiButtonFlags flags)
+#else
         public static bool InvisibleButton(string str_id, Vector2 size, ImGuiButtonFlags flags)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -8698,7 +9446,11 @@ namespace ImGuiNET
             byte ret = ImGuiNative.igIsMouseReleased_Nil(button);
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool IsPopupOpen(ReadOnlySpan<char> str_id)
+#else
         public static bool IsPopupOpen(string str_id)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -8726,7 +9478,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool IsPopupOpen(ReadOnlySpan<char> str_id, ImGuiPopupFlags flags)
+#else
         public static bool IsPopupOpen(string str_id, ImGuiPopupFlags flags)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -8800,7 +9556,11 @@ namespace ImGuiNET
             byte ret = ImGuiNative.igIsWindowHovered(flags);
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void LabelText(ReadOnlySpan<char> label, ReadOnlySpan<char> fmt)
+#else
         public static void LabelText(string label, string fmt)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8848,7 +9608,11 @@ namespace ImGuiNET
                 Util.Free(native_fmt);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ListBox(ReadOnlySpan<char> label, ref int current_item, string[] items, int items_count)
+#else
         public static bool ListBox(string label, ref int current_item, string[] items, int items_count)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8906,7 +9670,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ListBox(ReadOnlySpan<char> label, ref int current_item, string[] items, int items_count, int height_in_items)
+#else
         public static bool ListBox(string label, ref int current_item, string[] items, int items_count, int height_in_items)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -8963,7 +9731,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void LoadIniSettingsFromDisk(ReadOnlySpan<char> ini_filename)
+#else
         public static void LoadIniSettingsFromDisk(string ini_filename)
+#endif
         {
             byte* native_ini_filename;
             int ini_filename_byteCount = 0;
@@ -8989,7 +9761,11 @@ namespace ImGuiNET
                 Util.Free(native_ini_filename);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void LoadIniSettingsFromMemory(ReadOnlySpan<char> ini_data)
+#else
         public static void LoadIniSettingsFromMemory(string ini_data)
+#endif
         {
             byte* native_ini_data;
             int ini_data_byteCount = 0;
@@ -9016,7 +9792,11 @@ namespace ImGuiNET
                 Util.Free(native_ini_data);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void LoadIniSettingsFromMemory(ReadOnlySpan<char> ini_data, uint ini_size)
+#else
         public static void LoadIniSettingsFromMemory(string ini_data, uint ini_size)
+#endif
         {
             byte* native_ini_data;
             int ini_data_byteCount = 0;
@@ -9050,7 +9830,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igLogFinish();
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void LogText(ReadOnlySpan<char> fmt)
+#else
         public static void LogText(string fmt)
+#endif
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
@@ -9096,7 +9880,11 @@ namespace ImGuiNET
             byte* native_filename = null;
             ImGuiNative.igLogToFile(auto_open_depth, native_filename);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void LogToFile(int auto_open_depth, ReadOnlySpan<char> filename)
+#else
         public static void LogToFile(int auto_open_depth, string filename)
+#endif
         {
             byte* native_filename;
             int filename_byteCount = 0;
@@ -9141,7 +9929,11 @@ namespace ImGuiNET
             void* native_ptr = (void*)ptr.ToPointer();
             ImGuiNative.igMemFree(native_ptr);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool MenuItem(ReadOnlySpan<char> label)
+#else
         public static bool MenuItem(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9171,7 +9963,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool MenuItem(ReadOnlySpan<char> label, ReadOnlySpan<char> shortcut)
+#else
         public static bool MenuItem(string label, string shortcut)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9222,7 +10018,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool MenuItem(ReadOnlySpan<char> label, ReadOnlySpan<char> shortcut, bool selected)
+#else
         public static bool MenuItem(string label, string shortcut, bool selected)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9273,7 +10073,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool MenuItem(ReadOnlySpan<char> label, ReadOnlySpan<char> shortcut, bool selected, bool enabled)
+#else
         public static bool MenuItem(string label, string shortcut, bool selected, bool enabled)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9324,7 +10128,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool MenuItem(ReadOnlySpan<char> label, ReadOnlySpan<char> shortcut, ref bool p_selected)
+#else
         public static bool MenuItem(string label, string shortcut, ref bool p_selected)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9377,7 +10185,11 @@ namespace ImGuiNET
             p_selected = native_p_selected_val != 0;
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool MenuItem(ReadOnlySpan<char> label, ReadOnlySpan<char> shortcut, ref bool p_selected, bool enabled)
+#else
         public static bool MenuItem(string label, string shortcut, ref bool p_selected, bool enabled)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9442,7 +10254,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igNextColumn();
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void OpenPopup(ReadOnlySpan<char> str_id)
+#else
         public static void OpenPopup(string str_id)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -9469,7 +10285,11 @@ namespace ImGuiNET
                 Util.Free(native_str_id);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void OpenPopup(ReadOnlySpan<char> str_id, ImGuiPopupFlags popup_flags)
+#else
         public static void OpenPopup(string str_id, ImGuiPopupFlags popup_flags)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -9510,7 +10330,11 @@ namespace ImGuiNET
             ImGuiPopupFlags popup_flags = (ImGuiPopupFlags)1;
             ImGuiNative.igOpenPopupOnItemClick(native_str_id, popup_flags);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void OpenPopupOnItemClick(ReadOnlySpan<char> str_id)
+#else
         public static void OpenPopupOnItemClick(string str_id)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -9537,7 +10361,11 @@ namespace ImGuiNET
                 Util.Free(native_str_id);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void OpenPopupOnItemClick(ReadOnlySpan<char> str_id, ImGuiPopupFlags popup_flags)
+#else
         public static void OpenPopupOnItemClick(string str_id, ImGuiPopupFlags popup_flags)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -9563,7 +10391,11 @@ namespace ImGuiNET
                 Util.Free(native_str_id);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotHistogram(ReadOnlySpan<char> label, ref float values, int values_count)
+#else
         public static void PlotHistogram(string label, ref float values, int values_count)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9598,7 +10430,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotHistogram(ReadOnlySpan<char> label, ref float values, int values_count, int values_offset)
+#else
         public static void PlotHistogram(string label, ref float values, int values_count, int values_offset)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9632,7 +10468,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotHistogram(ReadOnlySpan<char> label, ref float values, int values_count, int values_offset, ReadOnlySpan<char> overlay_text)
+#else
         public static void PlotHistogram(string label, ref float values, int values_count, int values_offset, string overlay_text)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9687,7 +10527,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotHistogram(ReadOnlySpan<char> label, ref float values, int values_count, int values_offset, ReadOnlySpan<char> overlay_text, float scale_min)
+#else
         public static void PlotHistogram(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9741,7 +10585,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotHistogram(ReadOnlySpan<char> label, ref float values, int values_count, int values_offset, ReadOnlySpan<char> overlay_text, float scale_min, float scale_max)
+#else
         public static void PlotHistogram(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9794,7 +10642,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotHistogram(ReadOnlySpan<char> label, ref float values, int values_count, int values_offset, ReadOnlySpan<char> overlay_text, float scale_min, float scale_max, Vector2 graph_size)
+#else
         public static void PlotHistogram(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9846,7 +10698,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotHistogram(ReadOnlySpan<char> label, ref float values, int values_count, int values_offset, ReadOnlySpan<char> overlay_text, float scale_min, float scale_max, Vector2 graph_size, int stride)
+#else
         public static void PlotHistogram(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size, int stride)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9897,7 +10753,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotLines(ReadOnlySpan<char> label, ref float values, int values_count)
+#else
         public static void PlotLines(string label, ref float values, int values_count)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9932,7 +10792,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotLines(ReadOnlySpan<char> label, ref float values, int values_count, int values_offset)
+#else
         public static void PlotLines(string label, ref float values, int values_count, int values_offset)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -9966,7 +10830,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotLines(ReadOnlySpan<char> label, ref float values, int values_count, int values_offset, ReadOnlySpan<char> overlay_text)
+#else
         public static void PlotLines(string label, ref float values, int values_count, int values_offset, string overlay_text)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10021,7 +10889,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotLines(ReadOnlySpan<char> label, ref float values, int values_count, int values_offset, ReadOnlySpan<char> overlay_text, float scale_min)
+#else
         public static void PlotLines(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10075,7 +10947,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotLines(ReadOnlySpan<char> label, ref float values, int values_count, int values_offset, ReadOnlySpan<char> overlay_text, float scale_min, float scale_max)
+#else
         public static void PlotLines(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10128,7 +11004,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotLines(ReadOnlySpan<char> label, ref float values, int values_count, int values_offset, ReadOnlySpan<char> overlay_text, float scale_min, float scale_max, Vector2 graph_size)
+#else
         public static void PlotLines(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10180,7 +11060,11 @@ namespace ImGuiNET
                 }
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PlotLines(ReadOnlySpan<char> label, ref float values, int values_count, int values_offset, ReadOnlySpan<char> overlay_text, float scale_min, float scale_max, Vector2 graph_size, int stride)
+#else
         public static void PlotLines(string label, ref float values, int values_count, int values_offset, string overlay_text, float scale_min, float scale_max, Vector2 graph_size, int stride)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10288,7 +11172,11 @@ namespace ImGuiNET
             byte* native_overlay = null;
             ImGuiNative.igProgressBar(fraction, size_arg, native_overlay);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void ProgressBar(float fraction, Vector2 size_arg, ReadOnlySpan<char> overlay)
+#else
         public static void ProgressBar(float fraction, Vector2 size_arg, string overlay)
+#endif
         {
             byte* native_overlay;
             int overlay_byteCount = 0;
@@ -10329,7 +11217,11 @@ namespace ImGuiNET
             ImFont* native_font = font.NativePtr;
             ImGuiNative.igPushFont(native_font);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void PushID(ReadOnlySpan<char> str_id)
+#else
         public static void PushID(string str_id)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -10398,7 +11290,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igPushTextWrapPos(wrap_local_pos_x);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool RadioButton(ReadOnlySpan<char> label, bool active)
+#else
         public static bool RadioButton(string label, bool active)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10426,7 +11322,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool RadioButton(ReadOnlySpan<char> label, ref int v, int v_button)
+#else
         public static bool RadioButton(string label, ref int v, int v_button)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10502,7 +11402,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igSameLine(offset_from_start_x, spacing);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SaveIniSettingsToDisk(ReadOnlySpan<char> ini_filename)
+#else
         public static void SaveIniSettingsToDisk(string ini_filename)
+#endif
         {
             byte* native_ini_filename;
             int ini_filename_byteCount = 0;
@@ -10542,7 +11446,11 @@ namespace ImGuiNET
                 return Util.StringFromPtr(ret);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Selectable(ReadOnlySpan<char> label)
+#else
         public static bool Selectable(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10572,7 +11480,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Selectable(ReadOnlySpan<char> label, bool selected)
+#else
         public static bool Selectable(string label, bool selected)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10602,7 +11514,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Selectable(ReadOnlySpan<char> label, bool selected, ImGuiSelectableFlags flags)
+#else
         public static bool Selectable(string label, bool selected, ImGuiSelectableFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10631,7 +11547,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Selectable(ReadOnlySpan<char> label, bool selected, ImGuiSelectableFlags flags, Vector2 size)
+#else
         public static bool Selectable(string label, bool selected, ImGuiSelectableFlags flags, Vector2 size)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10659,7 +11579,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Selectable(ReadOnlySpan<char> label, ref bool p_selected)
+#else
         public static bool Selectable(string label, ref bool p_selected)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10691,7 +11615,11 @@ namespace ImGuiNET
             p_selected = native_p_selected_val != 0;
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Selectable(ReadOnlySpan<char> label, ref bool p_selected, ImGuiSelectableFlags flags)
+#else
         public static bool Selectable(string label, ref bool p_selected, ImGuiSelectableFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10722,7 +11650,11 @@ namespace ImGuiNET
             p_selected = native_p_selected_val != 0;
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool Selectable(ReadOnlySpan<char> label, ref bool p_selected, ImGuiSelectableFlags flags, Vector2 size)
+#else
         public static bool Selectable(string label, ref bool p_selected, ImGuiSelectableFlags flags, Vector2 size)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10756,7 +11688,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igSeparator();
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SeparatorText(ReadOnlySpan<char> label)
+#else
         public static void SeparatorText(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -10792,7 +11728,11 @@ namespace ImGuiNET
             void* native_user_data = (void*)user_data.ToPointer();
             ImGuiNative.igSetAllocatorFunctions(alloc_func, free_func, native_user_data);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SetClipboardText(ReadOnlySpan<char> text)
+#else
         public static void SetClipboardText(string text)
+#endif
         {
             byte* native_text;
             int text_byteCount = 0;
@@ -10850,7 +11790,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igSetCursorScreenPos(pos);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SetDragDropPayload(ReadOnlySpan<char> type, IntPtr data, uint sz)
+#else
         public static bool SetDragDropPayload(string type, IntPtr data, uint sz)
+#endif
         {
             byte* native_type;
             int type_byteCount = 0;
@@ -10879,7 +11823,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SetDragDropPayload(ReadOnlySpan<char> type, IntPtr data, uint sz, ImGuiCond cond)
+#else
         public static bool SetDragDropPayload(string type, IntPtr data, uint sz, ImGuiCond cond)
+#endif
         {
             byte* native_type;
             int type_byteCount = 0;
@@ -11087,7 +12035,11 @@ namespace ImGuiNET
             ImGuiStorage* native_storage = storage.NativePtr;
             ImGuiNative.igSetStateStorage(native_storage);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SetTabItemClosed(ReadOnlySpan<char> tab_or_docked_window_label)
+#else
         public static void SetTabItemClosed(string tab_or_docked_window_label)
+#endif
         {
             byte* native_tab_or_docked_window_label;
             int tab_or_docked_window_label_byteCount = 0;
@@ -11113,7 +12065,11 @@ namespace ImGuiNET
                 Util.Free(native_tab_or_docked_window_label);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SetTooltip(ReadOnlySpan<char> fmt)
+#else
         public static void SetTooltip(string fmt)
+#endif
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
@@ -11150,7 +12106,11 @@ namespace ImGuiNET
             byte native_collapsed = collapsed ? (byte)1 : (byte)0;
             ImGuiNative.igSetWindowCollapsed_Bool(native_collapsed, cond);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SetWindowCollapsed(ReadOnlySpan<char> name, bool collapsed)
+#else
         public static void SetWindowCollapsed(string name, bool collapsed)
+#endif
         {
             byte* native_name;
             int name_byteCount = 0;
@@ -11178,7 +12138,11 @@ namespace ImGuiNET
                 Util.Free(native_name);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SetWindowCollapsed(ReadOnlySpan<char> name, bool collapsed, ImGuiCond cond)
+#else
         public static void SetWindowCollapsed(string name, bool collapsed, ImGuiCond cond)
+#endif
         {
             byte* native_name;
             int name_byteCount = 0;
@@ -11209,7 +12173,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igSetWindowFocus_Nil();
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SetWindowFocus(ReadOnlySpan<char> name)
+#else
         public static void SetWindowFocus(string name)
+#endif
         {
             byte* native_name;
             int name_byteCount = 0;
@@ -11248,7 +12216,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igSetWindowPos_Vec2(pos, cond);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SetWindowPos(ReadOnlySpan<char> name, Vector2 pos)
+#else
         public static void SetWindowPos(string name, Vector2 pos)
+#endif
         {
             byte* native_name;
             int name_byteCount = 0;
@@ -11275,7 +12247,11 @@ namespace ImGuiNET
                 Util.Free(native_name);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SetWindowPos(ReadOnlySpan<char> name, Vector2 pos, ImGuiCond cond)
+#else
         public static void SetWindowPos(string name, Vector2 pos, ImGuiCond cond)
+#endif
         {
             byte* native_name;
             int name_byteCount = 0;
@@ -11310,7 +12286,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igSetWindowSize_Vec2(size, cond);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SetWindowSize(ReadOnlySpan<char> name, Vector2 size)
+#else
         public static void SetWindowSize(string name, Vector2 size)
+#endif
         {
             byte* native_name;
             int name_byteCount = 0;
@@ -11337,7 +12317,11 @@ namespace ImGuiNET
                 Util.Free(native_name);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SetWindowSize(ReadOnlySpan<char> name, Vector2 size, ImGuiCond cond)
+#else
         public static void SetWindowSize(string name, Vector2 size, ImGuiCond cond)
+#endif
         {
             byte* native_name;
             int name_byteCount = 0;
@@ -11399,7 +12383,11 @@ namespace ImGuiNET
             ImGuiNative.igShowDemoWindow(native_p_open);
             p_open = native_p_open_val != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void ShowFontSelector(ReadOnlySpan<char> label)
+#else
         public static void ShowFontSelector(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -11459,7 +12447,11 @@ namespace ImGuiNET
             ImGuiStyle* native_ref = @ref.NativePtr;
             ImGuiNative.igShowStyleEditor(native_ref);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool ShowStyleSelector(ReadOnlySpan<char> label)
+#else
         public static bool ShowStyleSelector(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -11490,7 +12482,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igShowUserGuide();
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderAngle(ReadOnlySpan<char> label, ref float v_rad)
+#else
         public static bool SliderAngle(string label, ref float v_rad)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -11541,7 +12537,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderAngle(ReadOnlySpan<char> label, ref float v_rad, float v_degrees_min)
+#else
         public static bool SliderAngle(string label, ref float v_rad, float v_degrees_min)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -11591,7 +12591,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderAngle(ReadOnlySpan<char> label, ref float v_rad, float v_degrees_min, float v_degrees_max)
+#else
         public static bool SliderAngle(string label, ref float v_rad, float v_degrees_min, float v_degrees_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -11640,7 +12644,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderAngle(ReadOnlySpan<char> label, ref float v_rad, float v_degrees_min, float v_degrees_max, ReadOnlySpan<char> format)
+#else
         public static bool SliderAngle(string label, ref float v_rad, float v_degrees_min, float v_degrees_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -11693,7 +12701,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderAngle(ReadOnlySpan<char> label, ref float v_rad, float v_degrees_min, float v_degrees_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool SliderAngle(string label, ref float v_rad, float v_degrees_min, float v_degrees_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -11745,7 +12757,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderFloat(ReadOnlySpan<char> label, ref float v, float v_min, float v_max)
+#else
         public static bool SliderFloat(string label, ref float v, float v_min, float v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -11794,7 +12810,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderFloat(ReadOnlySpan<char> label, ref float v, float v_min, float v_max, ReadOnlySpan<char> format)
+#else
         public static bool SliderFloat(string label, ref float v, float v_min, float v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -11847,7 +12867,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderFloat(ReadOnlySpan<char> label, ref float v, float v_min, float v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool SliderFloat(string label, ref float v, float v_min, float v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -11899,7 +12923,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderFloat2(ReadOnlySpan<char> label, ref Vector2 v, float v_min, float v_max)
+#else
         public static bool SliderFloat2(string label, ref Vector2 v, float v_min, float v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -11948,7 +12976,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderFloat2(ReadOnlySpan<char> label, ref Vector2 v, float v_min, float v_max, ReadOnlySpan<char> format)
+#else
         public static bool SliderFloat2(string label, ref Vector2 v, float v_min, float v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12001,7 +13033,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderFloat2(ReadOnlySpan<char> label, ref Vector2 v, float v_min, float v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool SliderFloat2(string label, ref Vector2 v, float v_min, float v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12053,7 +13089,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderFloat3(ReadOnlySpan<char> label, ref Vector3 v, float v_min, float v_max)
+#else
         public static bool SliderFloat3(string label, ref Vector3 v, float v_min, float v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12102,7 +13142,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderFloat3(ReadOnlySpan<char> label, ref Vector3 v, float v_min, float v_max, ReadOnlySpan<char> format)
+#else
         public static bool SliderFloat3(string label, ref Vector3 v, float v_min, float v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12155,7 +13199,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderFloat3(ReadOnlySpan<char> label, ref Vector3 v, float v_min, float v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool SliderFloat3(string label, ref Vector3 v, float v_min, float v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12207,7 +13255,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderFloat4(ReadOnlySpan<char> label, ref Vector4 v, float v_min, float v_max)
+#else
         public static bool SliderFloat4(string label, ref Vector4 v, float v_min, float v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12256,7 +13308,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderFloat4(ReadOnlySpan<char> label, ref Vector4 v, float v_min, float v_max, ReadOnlySpan<char> format)
+#else
         public static bool SliderFloat4(string label, ref Vector4 v, float v_min, float v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12309,7 +13365,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderFloat4(ReadOnlySpan<char> label, ref Vector4 v, float v_min, float v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool SliderFloat4(string label, ref Vector4 v, float v_min, float v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12361,7 +13421,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderInt(ReadOnlySpan<char> label, ref int v, int v_min, int v_max)
+#else
         public static bool SliderInt(string label, ref int v, int v_min, int v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12410,7 +13474,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderInt(ReadOnlySpan<char> label, ref int v, int v_min, int v_max, ReadOnlySpan<char> format)
+#else
         public static bool SliderInt(string label, ref int v, int v_min, int v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12463,7 +13531,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderInt(ReadOnlySpan<char> label, ref int v, int v_min, int v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool SliderInt(string label, ref int v, int v_min, int v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12515,7 +13587,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderInt2(ReadOnlySpan<char> label, ref int v, int v_min, int v_max)
+#else
         public static bool SliderInt2(string label, ref int v, int v_min, int v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12564,7 +13640,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderInt2(ReadOnlySpan<char> label, ref int v, int v_min, int v_max, ReadOnlySpan<char> format)
+#else
         public static bool SliderInt2(string label, ref int v, int v_min, int v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12617,7 +13697,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderInt2(ReadOnlySpan<char> label, ref int v, int v_min, int v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool SliderInt2(string label, ref int v, int v_min, int v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12669,7 +13753,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderInt3(ReadOnlySpan<char> label, ref int v, int v_min, int v_max)
+#else
         public static bool SliderInt3(string label, ref int v, int v_min, int v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12718,7 +13806,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderInt3(ReadOnlySpan<char> label, ref int v, int v_min, int v_max, ReadOnlySpan<char> format)
+#else
         public static bool SliderInt3(string label, ref int v, int v_min, int v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12771,7 +13863,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderInt3(ReadOnlySpan<char> label, ref int v, int v_min, int v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool SliderInt3(string label, ref int v, int v_min, int v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12823,7 +13919,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderInt4(ReadOnlySpan<char> label, ref int v, int v_min, int v_max)
+#else
         public static bool SliderInt4(string label, ref int v, int v_min, int v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12872,7 +13972,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderInt4(ReadOnlySpan<char> label, ref int v, int v_min, int v_max, ReadOnlySpan<char> format)
+#else
         public static bool SliderInt4(string label, ref int v, int v_min, int v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12925,7 +14029,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderInt4(ReadOnlySpan<char> label, ref int v, int v_min, int v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool SliderInt4(string label, ref int v, int v_min, int v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -12977,7 +14085,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_min, IntPtr p_max)
+#else
         public static bool SliderScalar(string label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_min, IntPtr p_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13009,7 +14121,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_min, IntPtr p_max, ReadOnlySpan<char> format)
+#else
         public static bool SliderScalar(string label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_min, IntPtr p_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13062,7 +14178,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderScalar(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_min, IntPtr p_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool SliderScalar(string label, ImGuiDataType data_type, IntPtr p_data, IntPtr p_min, IntPtr p_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13114,7 +14234,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_min, IntPtr p_max)
+#else
         public static bool SliderScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_min, IntPtr p_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13146,7 +14270,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_min, IntPtr p_max, ReadOnlySpan<char> format)
+#else
         public static bool SliderScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_min, IntPtr p_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13199,7 +14327,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SliderScalarN(ReadOnlySpan<char> label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_min, IntPtr p_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool SliderScalarN(string label, ImGuiDataType data_type, IntPtr p_data, int components, IntPtr p_min, IntPtr p_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13251,7 +14383,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool SmallButton(ReadOnlySpan<char> label)
+#else
         public static bool SmallButton(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13312,7 +14448,11 @@ namespace ImGuiNET
             ImGuiStyle* native_dst = dst.NativePtr;
             ImGuiNative.igStyleColorsLight(native_dst);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool TabItemButton(ReadOnlySpan<char> label)
+#else
         public static bool TabItemButton(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13340,7 +14480,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool TabItemButton(ReadOnlySpan<char> label, ImGuiTabItemFlags flags)
+#else
         public static bool TabItemButton(string label, ImGuiTabItemFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13409,7 +14553,11 @@ namespace ImGuiNET
             ImGuiTableSortSpecs* ret = ImGuiNative.igTableGetSortSpecs();
             return new ImGuiTableSortSpecsPtr(ret);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void TableHeader(ReadOnlySpan<char> label)
+#else
         public static void TableHeader(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13478,7 +14626,11 @@ namespace ImGuiNET
             byte ret = ImGuiNative.igTableSetColumnIndex(column_n);
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void TableSetupColumn(ReadOnlySpan<char> label)
+#else
         public static void TableSetupColumn(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13507,7 +14659,11 @@ namespace ImGuiNET
                 Util.Free(native_label);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void TableSetupColumn(ReadOnlySpan<char> label, ImGuiTableColumnFlags flags)
+#else
         public static void TableSetupColumn(string label, ImGuiTableColumnFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13535,7 +14691,11 @@ namespace ImGuiNET
                 Util.Free(native_label);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void TableSetupColumn(ReadOnlySpan<char> label, ImGuiTableColumnFlags flags, float init_width_or_weight)
+#else
         public static void TableSetupColumn(string label, ImGuiTableColumnFlags flags, float init_width_or_weight)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13562,7 +14722,11 @@ namespace ImGuiNET
                 Util.Free(native_label);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void TableSetupColumn(ReadOnlySpan<char> label, ImGuiTableColumnFlags flags, float init_width_or_weight, uint user_id)
+#else
         public static void TableSetupColumn(string label, ImGuiTableColumnFlags flags, float init_width_or_weight, uint user_id)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13592,7 +14756,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igTableSetupScrollFreeze(cols, rows);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void Text(ReadOnlySpan<char> fmt)
+#else
         public static void Text(string fmt)
+#endif
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
@@ -13618,7 +14786,11 @@ namespace ImGuiNET
                 Util.Free(native_fmt);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void TextColored(Vector4 col, ReadOnlySpan<char> fmt)
+#else
         public static void TextColored(Vector4 col, string fmt)
+#endif
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
@@ -13644,7 +14816,11 @@ namespace ImGuiNET
                 Util.Free(native_fmt);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void TextDisabled(ReadOnlySpan<char> fmt)
+#else
         public static void TextDisabled(string fmt)
+#endif
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
@@ -13670,7 +14846,11 @@ namespace ImGuiNET
                 Util.Free(native_fmt);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void TextUnformatted(ReadOnlySpan<char> text)
+#else
         public static void TextUnformatted(string text)
+#endif
         {
             byte* native_text;
             int text_byteCount = 0;
@@ -13697,7 +14877,11 @@ namespace ImGuiNET
                 Util.Free(native_text);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void TextWrapped(ReadOnlySpan<char> fmt)
+#else
         public static void TextWrapped(string fmt)
+#endif
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
@@ -13723,7 +14907,11 @@ namespace ImGuiNET
                 Util.Free(native_fmt);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool TreeNode(ReadOnlySpan<char> label)
+#else
         public static bool TreeNode(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13750,7 +14938,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool TreeNode(ReadOnlySpan<char> str_id, ReadOnlySpan<char> fmt)
+#else
         public static bool TreeNode(string str_id, string fmt)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -13799,7 +14991,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool TreeNode(IntPtr ptr_id, ReadOnlySpan<char> fmt)
+#else
         public static bool TreeNode(IntPtr ptr_id, string fmt)
+#endif
         {
             void* native_ptr_id = (void*)ptr_id.ToPointer();
             byte* native_fmt;
@@ -13827,7 +15023,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool TreeNodeEx(ReadOnlySpan<char> label)
+#else
         public static bool TreeNodeEx(string label)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13855,7 +15055,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool TreeNodeEx(ReadOnlySpan<char> label, ImGuiTreeNodeFlags flags)
+#else
         public static bool TreeNodeEx(string label, ImGuiTreeNodeFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -13882,7 +15086,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool TreeNodeEx(ReadOnlySpan<char> str_id, ImGuiTreeNodeFlags flags, ReadOnlySpan<char> fmt)
+#else
         public static bool TreeNodeEx(string str_id, ImGuiTreeNodeFlags flags, string fmt)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -13931,7 +15139,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool TreeNodeEx(IntPtr ptr_id, ImGuiTreeNodeFlags flags, ReadOnlySpan<char> fmt)
+#else
         public static bool TreeNodeEx(IntPtr ptr_id, ImGuiTreeNodeFlags flags, string fmt)
+#endif
         {
             void* native_ptr_id = (void*)ptr_id.ToPointer();
             byte* native_fmt;
@@ -13963,7 +15175,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igTreePop();
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void TreePush(ReadOnlySpan<char> str_id)
+#else
         public static void TreePush(string str_id)
+#endif
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -14007,7 +15223,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igUpdatePlatformWindows();
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void Value(ReadOnlySpan<char> prefix, bool b)
+#else
         public static void Value(string prefix, bool b)
+#endif
         {
             byte* native_prefix;
             int prefix_byteCount = 0;
@@ -14034,7 +15254,11 @@ namespace ImGuiNET
                 Util.Free(native_prefix);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void Value(ReadOnlySpan<char> prefix, int v)
+#else
         public static void Value(string prefix, int v)
+#endif
         {
             byte* native_prefix;
             int prefix_byteCount = 0;
@@ -14060,7 +15284,11 @@ namespace ImGuiNET
                 Util.Free(native_prefix);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void Value(ReadOnlySpan<char> prefix, uint v)
+#else
         public static void Value(string prefix, uint v)
+#endif
         {
             byte* native_prefix;
             int prefix_byteCount = 0;
@@ -14086,7 +15314,11 @@ namespace ImGuiNET
                 Util.Free(native_prefix);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void Value(ReadOnlySpan<char> prefix, float v)
+#else
         public static void Value(string prefix, float v)
+#endif
         {
             byte* native_prefix;
             int prefix_byteCount = 0;
@@ -14113,7 +15345,11 @@ namespace ImGuiNET
                 Util.Free(native_prefix);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void Value(ReadOnlySpan<char> prefix, float v, ReadOnlySpan<char> float_format)
+#else
         public static void Value(string prefix, float v, string float_format)
+#endif
         {
             byte* native_prefix;
             int prefix_byteCount = 0;
@@ -14161,7 +15397,11 @@ namespace ImGuiNET
                 Util.Free(native_float_format);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool VSliderFloat(ReadOnlySpan<char> label, Vector2 size, ref float v, float v_min, float v_max)
+#else
         public static bool VSliderFloat(string label, Vector2 size, ref float v, float v_min, float v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -14210,7 +15450,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool VSliderFloat(ReadOnlySpan<char> label, Vector2 size, ref float v, float v_min, float v_max, ReadOnlySpan<char> format)
+#else
         public static bool VSliderFloat(string label, Vector2 size, ref float v, float v_min, float v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -14263,7 +15507,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool VSliderFloat(ReadOnlySpan<char> label, Vector2 size, ref float v, float v_min, float v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool VSliderFloat(string label, Vector2 size, ref float v, float v_min, float v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -14315,7 +15563,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool VSliderInt(ReadOnlySpan<char> label, Vector2 size, ref int v, int v_min, int v_max)
+#else
         public static bool VSliderInt(string label, Vector2 size, ref int v, int v_min, int v_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -14364,7 +15616,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool VSliderInt(ReadOnlySpan<char> label, Vector2 size, ref int v, int v_min, int v_max, ReadOnlySpan<char> format)
+#else
         public static bool VSliderInt(string label, Vector2 size, ref int v, int v_min, int v_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -14417,7 +15673,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool VSliderInt(ReadOnlySpan<char> label, Vector2 size, ref int v, int v_min, int v_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool VSliderInt(string label, Vector2 size, ref int v, int v_min, int v_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -14469,7 +15729,11 @@ namespace ImGuiNET
                 return ret != 0;
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool VSliderScalar(ReadOnlySpan<char> label, Vector2 size, ImGuiDataType data_type, IntPtr p_data, IntPtr p_min, IntPtr p_max)
+#else
         public static bool VSliderScalar(string label, Vector2 size, ImGuiDataType data_type, IntPtr p_data, IntPtr p_min, IntPtr p_max)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -14501,7 +15765,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool VSliderScalar(ReadOnlySpan<char> label, Vector2 size, ImGuiDataType data_type, IntPtr p_data, IntPtr p_min, IntPtr p_max, ReadOnlySpan<char> format)
+#else
         public static bool VSliderScalar(string label, Vector2 size, ImGuiDataType data_type, IntPtr p_data, IntPtr p_min, IntPtr p_max, string format)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;
@@ -14554,7 +15822,11 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static bool VSliderScalar(ReadOnlySpan<char> label, Vector2 size, ImGuiDataType data_type, IntPtr p_data, IntPtr p_min, IntPtr p_max, ReadOnlySpan<char> format, ImGuiSliderFlags flags)
+#else
         public static bool VSliderScalar(string label, Vector2 size, ImGuiDataType data_type, IntPtr p_data, IntPtr p_min, IntPtr p_max, string format, ImGuiSliderFlags flags)
+#endif
         {
             byte* native_label;
             int label_byteCount = 0;

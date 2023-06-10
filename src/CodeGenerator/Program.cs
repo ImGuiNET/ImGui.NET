@@ -463,7 +463,7 @@ namespace CodeGenerator
                 safeRet = GetSafeType(overload.ReturnType);
             }
 
-            List<string> invocationArgs = new List<string>();
+            List<(string MarshalledType, string CorrectedIdentifier)> invocationArgs = new();
             MarshalledParameter[] marshalledParameters = new MarshalledParameter[overload.Parameters.Length];
             List<string> preCallLines = new List<string>();
             List<string> postCallLines = new List<string>();
@@ -647,15 +647,33 @@ namespace CodeGenerator
 
                 if (!marshalledParameters[i].HasDefaultValue)
                 {
-                    invocationArgs.Add($"{marshalledParameters[i].MarshalledType} {correctedIdentifier}");
+                    invocationArgs.Add((marshalledParameters[i].MarshalledType, correctedIdentifier));
                 }
             }
 
-            string invocationList = string.Join(", ", invocationArgs);
+            string invocationList = string.Join(", ", invocationArgs.Select(a => $"{a.MarshalledType} {a.CorrectedIdentifier}"));
             string friendlyName = overload.FriendlyName;
 
             string staticPortion = selfName == null ? "static " : string.Empty;
-            writer.PushBlock($"public {staticPortion}{overrideRet ?? safeRet} {friendlyName}({invocationList})");
+            
+            if (invocationArgs.Count > 0 && invocationArgs.Any(a => a is { MarshalledType: "string" }))
+            {
+                string readOnlySpanInvocationList = string.Join(", ", invocationArgs.Select(a => $"{(a.MarshalledType == "string" ? "ReadOnlySpan<char>" : a.MarshalledType)} {a.CorrectedIdentifier}"));
+                writer.WriteRaw($$"""
+                    #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+                            public {{staticPortion}}{{overrideRet ?? safeRet}} {{friendlyName}}({{readOnlySpanInvocationList}})
+                    #else
+                            public {{staticPortion}}{{overrideRet ?? safeRet}} {{friendlyName}}({{invocationList}})
+                    #endif
+                            {
+                    """);
+                writer.IndentManually();
+            }
+            else
+            {
+                writer.PushBlock($"public {staticPortion}{overrideRet ?? safeRet} {friendlyName}({invocationList})");
+            }
+            
             foreach (string line in preCallLines)
             {
                 writer.WriteLine(line);
