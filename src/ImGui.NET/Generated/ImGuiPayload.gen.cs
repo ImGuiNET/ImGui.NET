@@ -40,17 +40,13 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiPayload_destroy((ImGuiPayload*)(NativePtr));
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public bool IsDataType(ReadOnlySpan<char> type)
-#else
-        public bool IsDataType(string type)
-#endif
         {
             byte* native_type;
             int type_byteCount = 0;
             if (type != null)
             {
-                type_byteCount = Encoding.UTF8.GetByteCount(type);
+                type_byteCount = Util.GetUtf8ByteCount(type);
                 if (type_byteCount > Util.StackAllocationSizeLimit)
                 {
                     native_type = Util.Allocate(type_byteCount + 1);

@@ -59,17 +59,13 @@ namespace ImGuiNET
             byte ret = ImGuiNative.ImGuiInputTextCallbackData_HasSelection((ImGuiInputTextCallbackData*)(NativePtr));
             return ret != 0;
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public void InsertChars(int pos, ReadOnlySpan<char> text)
-#else
-        public void InsertChars(int pos, string text)
-#endif
         {
             byte* native_text;
             int text_byteCount = 0;
             if (text != null)
             {
-                text_byteCount = Encoding.UTF8.GetByteCount(text);
+                text_byteCount = Util.GetUtf8ByteCount(text);
                 if (text_byteCount > Util.StackAllocationSizeLimit)
                 {
                     native_text = Util.Allocate(text_byteCount + 1);

@@ -38,7 +38,7 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
-                label_byteCount = Encoding.UTF8.GetByteCount("Filter(inc,-exc)");
+                label_byteCount = Util.GetUtf8ByteCount("Filter(inc,-exc)");
                 if (label_byteCount > Util.StackAllocationSizeLimit)
                 {
                     native_label = Util.Allocate(label_byteCount + 1);
@@ -58,17 +58,13 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public bool Draw(ReadOnlySpan<char> label)
-#else
-        public bool Draw(string label)
-#endif
         {
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
             {
-                label_byteCount = Encoding.UTF8.GetByteCount(label);
+                label_byteCount = Util.GetUtf8ByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
                 {
                     native_label = Util.Allocate(label_byteCount + 1);
@@ -90,17 +86,13 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public bool Draw(ReadOnlySpan<char> label, float width)
-#else
-        public bool Draw(string label, float width)
-#endif
         {
             byte* native_label;
             int label_byteCount = 0;
             if (label != null)
             {
-                label_byteCount = Encoding.UTF8.GetByteCount(label);
+                label_byteCount = Util.GetUtf8ByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
                 {
                     native_label = Util.Allocate(label_byteCount + 1);
@@ -126,17 +118,13 @@ namespace ImGuiNET
             byte ret = ImGuiNative.ImGuiTextFilter_IsActive((ImGuiTextFilter*)(NativePtr));
             return ret != 0;
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public bool PassFilter(ReadOnlySpan<char> text)
-#else
-        public bool PassFilter(string text)
-#endif
         {
             byte* native_text;
             int text_byteCount = 0;
             if (text != null)
             {
-                text_byteCount = Encoding.UTF8.GetByteCount(text);
+                text_byteCount = Util.GetUtf8ByteCount(text);
                 if (text_byteCount > Util.StackAllocationSizeLimit)
                 {
                     native_text = Util.Allocate(text_byteCount + 1);

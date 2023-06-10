@@ -18,17 +18,13 @@ namespace ImGuiNET
         public static implicit operator ImGuiTextBuffer* (ImGuiTextBufferPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImGuiTextBufferPtr(IntPtr nativePtr) => new ImGuiTextBufferPtr(nativePtr);
         public ImVector<byte> Buf => new ImVector<byte>(NativePtr->Buf);
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public void append(ReadOnlySpan<char> str)
-#else
-        public void append(string str)
-#endif
         {
             byte* native_str;
             int str_byteCount = 0;
             if (str != null)
             {
-                str_byteCount = Encoding.UTF8.GetByteCount(str);
+                str_byteCount = Util.GetUtf8ByteCount(str);
                 if (str_byteCount > Util.StackAllocationSizeLimit)
                 {
                     native_str = Util.Allocate(str_byteCount + 1);
@@ -49,17 +45,13 @@ namespace ImGuiNET
                 Util.Free(native_str);
             }
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public void appendf(ReadOnlySpan<char> fmt)
-#else
-        public void appendf(string fmt)
-#endif
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
             if (fmt != null)
             {
-                fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                fmt_byteCount = Util.GetUtf8ByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)
                 {
                     native_fmt = Util.Allocate(fmt_byteCount + 1);

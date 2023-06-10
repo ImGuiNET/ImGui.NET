@@ -521,7 +521,7 @@ namespace CodeGenerator
                             preCallLines.Add($"if ({textToEncode} != null)");
                             preCallLines.Add("{");
                         }
-                        preCallLines.Add($"    {correctedIdentifier}_byteCount = Encoding.UTF8.GetByteCount({textToEncode});");
+                        preCallLines.Add($"    {correctedIdentifier}_byteCount = Util.GetUtf8ByteCount({textToEncode});");
                         preCallLines.Add($"    if ({correctedIdentifier}_byteCount > Util.StackAllocationSizeLimit)");
                         preCallLines.Add($"    {{");
                         preCallLines.Add($"        {nativeArgName} = Util.Allocate({correctedIdentifier}_byteCount + 1);");
@@ -566,7 +566,7 @@ namespace CodeGenerator
                     preCallLines.Add($"for (int i = 0; i < {correctedIdentifier}.Length; i++)");
                     preCallLines.Add("{");
                     preCallLines.Add($"    string s = {correctedIdentifier}[i];");
-                    preCallLines.Add($"    {correctedIdentifier}_byteCounts[i] = Encoding.UTF8.GetByteCount(s);");
+                    preCallLines.Add($"    {correctedIdentifier}_byteCounts[i] = Util.GetUtf8ByteCount(s);");
                     preCallLines.Add($"    {correctedIdentifier}_byteCount += {correctedIdentifier}_byteCounts[i] + 1;");
                     preCallLines.Add("}");
 
@@ -659,15 +659,7 @@ namespace CodeGenerator
             if (invocationArgs.Count > 0 && invocationArgs.Any(a => a is { MarshalledType: "string" }))
             {
                 string readOnlySpanInvocationList = string.Join(", ", invocationArgs.Select(a => $"{(a.MarshalledType == "string" ? "ReadOnlySpan<char>" : a.MarshalledType)} {a.CorrectedIdentifier}"));
-                writer.WriteRaw($$"""
-                    #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-                            public {{staticPortion}}{{overrideRet ?? safeRet}} {{friendlyName}}({{readOnlySpanInvocationList}})
-                    #else
-                            public {{staticPortion}}{{overrideRet ?? safeRet}} {{friendlyName}}({{invocationList}})
-                    #endif
-                            {
-                    """);
-                writer.IndentManually();
+                writer.PushBlock($"public {staticPortion}{overrideRet ?? safeRet} {friendlyName}({readOnlySpanInvocationList})");
             }
             else
             {

@@ -47,16 +47,6 @@ namespace CodeGenerator
             _sw.WriteLine(text);
         }
 
-        public void WriteRaw(string text)
-        {
-            _sw.WriteLine(text);
-        }
-
-        public void IndentManually()
-        {
-            _indentLevel += 4;
-        }
-
         public void Dispose()
         {
             _sw.Dispose();

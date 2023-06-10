@@ -9,7 +9,7 @@ namespace ImGuiNET
     public static unsafe partial class ImGui
     {
         public static bool InputText(
-            string label,
+            ReadOnlySpan<char> label,
             byte[] buf,
             uint buf_size)
         {
@@ -17,7 +17,7 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-            string label,
+            ReadOnlySpan<char> label,
             byte[] buf,
             uint buf_size,
             ImGuiInputTextFlags flags)
@@ -26,7 +26,7 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-            string label,
+            ReadOnlySpan<char> label,
             byte[] buf,
             uint buf_size,
             ImGuiInputTextFlags flags,
@@ -36,14 +36,14 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-            string label,
+            ReadOnlySpan<char> label,
             byte[] buf,
             uint buf_size,
             ImGuiInputTextFlags flags,
             ImGuiInputTextCallback callback,
             IntPtr user_data)
         {
-            int utf8LabelByteCount = Encoding.UTF8.GetByteCount(label);
+            int utf8LabelByteCount = Util.GetUtf8ByteCount(label);
             byte* utf8LabelBytes;
             if (utf8LabelByteCount > Util.StackAllocationSizeLimit)
             {
@@ -71,32 +71,32 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-            string label,
+            ReadOnlySpan<char> label,
             ref string input,
             uint maxLength) => InputText(label, ref input, maxLength, 0, null, IntPtr.Zero);
 
         public static bool InputText(
-            string label,
+            ReadOnlySpan<char> label,
             ref string input,
             uint maxLength,
             ImGuiInputTextFlags flags) => InputText(label, ref input, maxLength, flags, null, IntPtr.Zero);
 
         public static bool InputText(
-            string label,
+            ReadOnlySpan<char> label,
             ref string input,
             uint maxLength,
             ImGuiInputTextFlags flags,
             ImGuiInputTextCallback callback) => InputText(label, ref input, maxLength, flags, callback, IntPtr.Zero);
 
         public static bool InputText(
-            string label,
+            ReadOnlySpan<char> label,
             ref string input,
             uint maxLength,
             ImGuiInputTextFlags flags,
             ImGuiInputTextCallback callback,
             IntPtr user_data)
         {
-            int utf8LabelByteCount = Encoding.UTF8.GetByteCount(label);
+            int utf8LabelByteCount = Util.GetUtf8ByteCount(label);
             byte* utf8LabelBytes;
             if (utf8LabelByteCount > Util.StackAllocationSizeLimit)
             {
@@ -109,7 +109,7 @@ namespace ImGuiNET
             }
             Util.GetUtf8(label, utf8LabelBytes, utf8LabelByteCount);
 
-            int utf8InputByteCount = Encoding.UTF8.GetByteCount(input);
+            int utf8InputByteCount = Util.GetUtf8ByteCount(input);
             int inputBufSize = Math.Max((int)maxLength + 1, utf8InputByteCount + 1);
 
             byte* utf8InputBytes;
@@ -157,20 +157,20 @@ namespace ImGuiNET
         }
 
         public static bool InputTextMultiline(
-            string label,
+            ReadOnlySpan<char> label,
             ref string input,
             uint maxLength,
             Vector2 size) => InputTextMultiline(label, ref input, maxLength, size, 0, null, IntPtr.Zero);
 
         public static bool InputTextMultiline(
-            string label,
+            ReadOnlySpan<char> label,
             ref string input,
             uint maxLength,
             Vector2 size,
             ImGuiInputTextFlags flags) => InputTextMultiline(label, ref input, maxLength, size, flags, null, IntPtr.Zero);
 
         public static bool InputTextMultiline(
-            string label,
+            ReadOnlySpan<char> label,
             ref string input,
             uint maxLength,
             Vector2 size,
@@ -178,7 +178,7 @@ namespace ImGuiNET
             ImGuiInputTextCallback callback) => InputTextMultiline(label, ref input, maxLength, size, flags, callback, IntPtr.Zero);
 
         public static bool InputTextMultiline(
-            string label,
+            ReadOnlySpan<char> label,
             ref string input,
             uint maxLength,
             Vector2 size,
@@ -186,7 +186,7 @@ namespace ImGuiNET
             ImGuiInputTextCallback callback,
             IntPtr user_data)
         {
-            int utf8LabelByteCount = Encoding.UTF8.GetByteCount(label);
+            int utf8LabelByteCount = Util.GetUtf8ByteCount(label);
             byte* utf8LabelBytes;
             if (utf8LabelByteCount > Util.StackAllocationSizeLimit)
             {
@@ -199,7 +199,7 @@ namespace ImGuiNET
             }
             Util.GetUtf8(label, utf8LabelBytes, utf8LabelByteCount);
 
-            int utf8InputByteCount = Encoding.UTF8.GetByteCount(input);
+            int utf8InputByteCount = Util.GetUtf8ByteCount(input);
             int inputBufSize = Math.Max((int)maxLength + 1, utf8InputByteCount + 1);
 
             byte* utf8InputBytes;
@@ -248,36 +248,36 @@ namespace ImGuiNET
         }
 
         public static bool InputTextWithHint(
-            string label,
-            string hint,
+            ReadOnlySpan<char> label,
+            ReadOnlySpan<char> hint,
             ref string input,
             uint maxLength) => InputTextWithHint(label, hint, ref input, maxLength, 0, null, IntPtr.Zero);
 
         public static bool InputTextWithHint(
-            string label,
-            string hint,
+            ReadOnlySpan<char> label,
+            ReadOnlySpan<char> hint,
             ref string input,
             uint maxLength,
             ImGuiInputTextFlags flags) => InputTextWithHint(label, hint, ref input, maxLength, flags, null, IntPtr.Zero);
 
         public static bool InputTextWithHint(
-            string label,
-            string hint,
+            ReadOnlySpan<char> label,
+            ReadOnlySpan<char> hint,
             ref string input,
             uint maxLength,
             ImGuiInputTextFlags flags,
             ImGuiInputTextCallback callback) => InputTextWithHint(label, hint, ref input, maxLength, flags, callback, IntPtr.Zero);
 
         public static bool InputTextWithHint(
-            string label,
-            string hint,
+            ReadOnlySpan<char> label,
+            ReadOnlySpan<char> hint,
             ref string input,
             uint maxLength,
             ImGuiInputTextFlags flags,
             ImGuiInputTextCallback callback,
             IntPtr user_data)
         {
-            int utf8LabelByteCount = Encoding.UTF8.GetByteCount(label);
+            int utf8LabelByteCount = Util.GetUtf8ByteCount(label);
             byte* utf8LabelBytes;
             if (utf8LabelByteCount > Util.StackAllocationSizeLimit)
             {
@@ -290,7 +290,7 @@ namespace ImGuiNET
             }
             Util.GetUtf8(label, utf8LabelBytes, utf8LabelByteCount);
 
-            int utf8HintByteCount = Encoding.UTF8.GetByteCount(hint);
+            int utf8HintByteCount = Util.GetUtf8ByteCount(hint);
             byte* utf8HintBytes;
             if (utf8HintByteCount > Util.StackAllocationSizeLimit)
             {
@@ -355,41 +355,41 @@ namespace ImGuiNET
             return result != 0;
         }
 
-        public static Vector2 CalcTextSize(string text)
+        public static Vector2 CalcTextSize(ReadOnlySpan<char> text)
             => CalcTextSizeImpl(text);
 
-        public static Vector2 CalcTextSize(string text, int start)
+        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start)
             => CalcTextSizeImpl(text, start);
 
-        public static Vector2 CalcTextSize(string text, float wrapWidth)
+        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, float wrapWidth)
             => CalcTextSizeImpl(text, wrapWidth: wrapWidth);
 
-        public static Vector2 CalcTextSize(string text, bool hideTextAfterDoubleHash)
+        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, bool hideTextAfterDoubleHash)
             => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
 
-        public static Vector2 CalcTextSize(string text, int start, int length)
+        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, int length)
             => CalcTextSizeImpl(text, start, length);
 
-        public static Vector2 CalcTextSize(string text, int start, bool hideTextAfterDoubleHash)
+        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, bool hideTextAfterDoubleHash)
             => CalcTextSizeImpl(text, start, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
 
-        public static Vector2 CalcTextSize(string text, int start, float wrapWidth)
+        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, float wrapWidth)
             => CalcTextSizeImpl(text, start, wrapWidth: wrapWidth);
 
-        public static Vector2 CalcTextSize(string text, bool hideTextAfterDoubleHash, float wrapWidth)
+        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, bool hideTextAfterDoubleHash, float wrapWidth)
             => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash, wrapWidth: wrapWidth);
 
-        public static Vector2 CalcTextSize(string text, int start, int length, bool hideTextAfterDoubleHash)
+        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, int length, bool hideTextAfterDoubleHash)
             => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash);
 
-        public static Vector2 CalcTextSize(string text, int start, int length, float wrapWidth)
+        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, int length, float wrapWidth)
             => CalcTextSizeImpl(text, start, length, wrapWidth: wrapWidth);
 
-        public static Vector2 CalcTextSize(string text, int start, int length, bool hideTextAfterDoubleHash, float wrapWidth)
+        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, int length, bool hideTextAfterDoubleHash, float wrapWidth)
             => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash, wrapWidth);
 
         private static Vector2 CalcTextSizeImpl(
-            string text,
+            ReadOnlySpan<char> text,
             int start = 0,
             int? length = null,
             bool hideTextAfterDoubleHash = false,
@@ -429,7 +429,7 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-            string label,
+            ReadOnlySpan<char> label,
             IntPtr buf,
             uint buf_size)
         {
@@ -437,7 +437,7 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-            string label,
+            ReadOnlySpan<char> label,
             IntPtr buf,
             uint buf_size,
             ImGuiInputTextFlags flags)
@@ -446,7 +446,7 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-            string label,
+            ReadOnlySpan<char> label,
             IntPtr buf,
             uint buf_size,
             ImGuiInputTextFlags flags,
@@ -456,14 +456,14 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-            string label,
+            ReadOnlySpan<char> label,
             IntPtr buf,
             uint buf_size,
             ImGuiInputTextFlags flags,
             ImGuiInputTextCallback callback,
             IntPtr user_data)
         {
-            int utf8LabelByteCount = Encoding.UTF8.GetByteCount(label);
+            int utf8LabelByteCount = Util.GetUtf8ByteCount(label);
             byte* utf8LabelBytes;
             if (utf8LabelByteCount > Util.StackAllocationSizeLimit)
             {
@@ -486,9 +486,9 @@ namespace ImGuiNET
             return ret;
         }
 
-        public static bool Begin(string name, ImGuiWindowFlags flags)
+        public static bool Begin(ReadOnlySpan<char> name, ImGuiWindowFlags flags)
         {
-            int utf8NameByteCount = Encoding.UTF8.GetByteCount(name);
+            int utf8NameByteCount = Util.GetUtf8ByteCount(name);
             byte* utf8NameBytes;
             if (utf8NameByteCount > Util.StackAllocationSizeLimit)
             {
@@ -512,9 +512,9 @@ namespace ImGuiNET
             return ret != 0;
         }
 
-        public static bool MenuItem(string label, bool enabled)
+        public static bool MenuItem(ReadOnlySpan<char> label, bool enabled)
         {
-            return MenuItem(label, string.Empty, false, enabled);
+            return MenuItem(label, ReadOnlySpan<char>.Empty, false, enabled);
         }
     }
 }

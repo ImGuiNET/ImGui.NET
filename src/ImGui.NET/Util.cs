@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -35,7 +36,7 @@ namespace ImGuiNET
 
         internal static void Free(byte* ptr) => Marshal.FreeHGlobal((IntPtr)ptr);
 
-        internal static int CalcSizeInUtf8(string s, int start, int length)
+        internal static int CalcSizeInUtf8(ReadOnlySpan<char> s, int start, int length)
         {
             if (start < 0 || length < 0 || start + length > s.Length)
             {
@@ -48,19 +49,23 @@ namespace ImGuiNET
             }
         }
 
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-        internal static int GetUtf8(ReadOnlySpan<char> s, byte* utf8Bytes, int utf8ByteCount)
-#else
-        internal static int GetUtf8(string s, byte* utf8Bytes, int utf8ByteCount)
-#endif
+        internal static int GetUtf8(string chars, byte* utf8Bytes, int utf8ByteCount)
         {
+            return GetUtf8(chars.AsSpan(), utf8Bytes, utf8ByteCount);
+        }
+
+        internal static int GetUtf8(ReadOnlySpan<char> s, byte* utf8Bytes, int utf8ByteCount)
+        {
+            if (s.IsEmpty)
+                return 0;
+            
             fixed (char* utf16Ptr = s)
             {
                 return Encoding.UTF8.GetBytes(utf16Ptr, s.Length, utf8Bytes, utf8ByteCount);
             }
         }
 
-        internal static int GetUtf8(string s, int start, int length, byte* utf8Bytes, int utf8ByteCount)
+        internal static int GetUtf8(ReadOnlySpan<char> s, int start, int length, byte* utf8Bytes, int utf8ByteCount)
         {
             if (start < 0 || length < 0 || start + length > s.Length)
             {
@@ -71,6 +76,17 @@ namespace ImGuiNET
             {
                 return Encoding.UTF8.GetBytes(utf16Ptr + start, length, utf8Bytes, utf8ByteCount);
             }
+        }
+
+        internal static int GetUtf8ByteCount(string chars)
+        {
+            return GetUtf8ByteCount(chars.AsSpan());
+        }
+
+        internal static int GetUtf8ByteCount(ReadOnlySpan<char> chars)
+        {
+            char* charsPtr = (char*)Unsafe.AsPointer(ref MemoryMarshal.GetReference(chars));
+            return Encoding.UTF8.GetByteCount(charsPtr, chars.Length);
         }
     }
 }

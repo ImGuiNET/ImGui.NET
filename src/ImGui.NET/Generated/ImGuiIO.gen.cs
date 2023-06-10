@@ -888,17 +888,13 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiIO_AddInputCharacter((ImGuiIO*)(NativePtr), c);
         }
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public void AddInputCharactersUTF8(ReadOnlySpan<char> str)
-#else
-        public void AddInputCharactersUTF8(string str)
-#endif
         {
             byte* native_str;
             int str_byteCount = 0;
             if (str != null)
             {
-                str_byteCount = Encoding.UTF8.GetByteCount(str);
+                str_byteCount = Util.GetUtf8ByteCount(str);
                 if (str_byteCount > Util.StackAllocationSizeLimit)
                 {
                     native_str = Util.Allocate(str_byteCount + 1);
