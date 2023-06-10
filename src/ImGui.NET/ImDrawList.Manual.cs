@@ -1,13 +1,14 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 using System.Text;
 
 namespace ImGuiNET
 {
     public unsafe partial struct ImDrawListPtr
     {
-        public void AddText(Vector2 pos, uint col, string text_begin)
+        public void AddText(Vector2 pos, uint col, ReadOnlySpan<char> text_begin)
         {
-            int text_begin_byteCount = Encoding.UTF8.GetByteCount(text_begin);
+            int text_begin_byteCount = Util.GetUtf8ByteCount(text_begin);
             byte* native_text_begin = stackalloc byte[text_begin_byteCount + 1];
             fixed (char* text_begin_ptr = text_begin)
             {
@@ -18,10 +19,10 @@ namespace ImGuiNET
             ImGuiNative.ImDrawList_AddText_Vec2(NativePtr, pos, col, native_text_begin, native_text_end);
         }
 
-        public void AddText(ImFontPtr font, float font_size, Vector2 pos, uint col, string text_begin)
+        public void AddText(ImFontPtr font, float font_size, Vector2 pos, uint col, ReadOnlySpan<char> text_begin)
         {
             ImFont* native_font = font.NativePtr;
-            int text_begin_byteCount = Encoding.UTF8.GetByteCount(text_begin);
+            int text_begin_byteCount = Util.GetUtf8ByteCount(text_begin);
             byte* native_text_begin = stackalloc byte[text_begin_byteCount + 1];
             fixed (char* text_begin_ptr = text_begin)
             {
