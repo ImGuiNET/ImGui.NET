@@ -15,7 +15,11 @@ namespace ImGuiNET
         {
             byte* native_type;
             int type_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (type != null && !type.IsEmpty)
+            #else
             if (type != null)
+            #endif
             {
                 type_byteCount = Encoding.UTF8.GetByteCount(type);
                 if (type_byteCount > Util.StackAllocationSizeLimit)
@@ -47,7 +51,11 @@ namespace ImGuiNET
         {
             byte* native_type;
             int type_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (type != null && !type.IsEmpty)
+            #else
             if (type != null)
+            #endif
             {
                 type_byteCount = Encoding.UTF8.GetByteCount(type);
                 if (type_byteCount > Util.StackAllocationSizeLimit)
@@ -82,7 +90,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -113,7 +125,11 @@ namespace ImGuiNET
         {
             byte* native_name;
             int name_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (name != null && !name.IsEmpty)
+            #else
             if (name != null)
+            #endif
             {
                 name_byteCount = Encoding.UTF8.GetByteCount(name);
                 if (name_byteCount > Util.StackAllocationSizeLimit)
@@ -146,7 +162,11 @@ namespace ImGuiNET
         {
             byte* native_name;
             int name_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (name != null && !name.IsEmpty)
+            #else
             if (name != null)
+            #endif
             {
                 name_byteCount = Encoding.UTF8.GetByteCount(name);
                 if (name_byteCount > Util.StackAllocationSizeLimit)
@@ -181,7 +201,11 @@ namespace ImGuiNET
         {
             byte* native_name;
             int name_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (name != null && !name.IsEmpty)
+            #else
             if (name != null)
+            #endif
             {
                 name_byteCount = Encoding.UTF8.GetByteCount(name);
                 if (name_byteCount > Util.StackAllocationSizeLimit)
@@ -215,7 +239,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -249,7 +277,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -282,7 +314,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -315,7 +351,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -386,7 +426,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -404,7 +448,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_preview_value;
             int preview_value_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (preview_value != null && !preview_value.IsEmpty)
+            #else
             if (preview_value != null)
+            #endif
             {
                 preview_value_byteCount = Encoding.UTF8.GetByteCount(preview_value);
                 if (preview_value_byteCount > Util.StackAllocationSizeLimit)
@@ -440,7 +488,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -458,7 +510,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_preview_value;
             int preview_value_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (preview_value != null && !preview_value.IsEmpty)
+            #else
             if (preview_value != null)
+            #endif
             {
                 preview_value_byteCount = Encoding.UTF8.GetByteCount(preview_value);
                 if (preview_value_byteCount > Util.StackAllocationSizeLimit)
@@ -523,7 +579,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -555,7 +615,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -591,7 +655,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -623,7 +691,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -660,7 +732,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -692,7 +768,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -730,7 +810,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -762,7 +846,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -800,7 +888,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -832,7 +924,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -870,7 +966,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -902,7 +1002,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -933,7 +1037,11 @@ namespace ImGuiNET
         {
             byte* native_name;
             int name_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (name != null && !name.IsEmpty)
+            #else
             if (name != null)
+            #endif
             {
                 name_byteCount = Encoding.UTF8.GetByteCount(name);
                 if (name_byteCount > Util.StackAllocationSizeLimit)
@@ -966,7 +1074,11 @@ namespace ImGuiNET
         {
             byte* native_name;
             int name_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (name != null && !name.IsEmpty)
+            #else
             if (name != null)
+            #endif
             {
                 name_byteCount = Encoding.UTF8.GetByteCount(name);
                 if (name_byteCount > Util.StackAllocationSizeLimit)
@@ -1001,7 +1113,11 @@ namespace ImGuiNET
         {
             byte* native_name;
             int name_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (name != null && !name.IsEmpty)
+            #else
             if (name != null)
+            #endif
             {
                 name_byteCount = Encoding.UTF8.GetByteCount(name);
                 if (name_byteCount > Util.StackAllocationSizeLimit)
@@ -1035,7 +1151,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -1067,7 +1187,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -1098,7 +1222,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1131,7 +1259,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1166,7 +1298,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1200,7 +1336,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -1234,7 +1374,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -1267,7 +1411,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -1299,7 +1447,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -1339,7 +1491,11 @@ namespace ImGuiNET
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (fmt != null && !fmt.IsEmpty)
+            #else
             if (fmt != null)
+            #endif
             {
                 fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)
@@ -1369,7 +1525,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1401,7 +1561,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1437,7 +1601,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1471,7 +1639,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1505,7 +1677,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1543,7 +1719,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1575,7 +1755,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1606,7 +1790,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1641,7 +1829,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1675,7 +1867,11 @@ namespace ImGuiNET
         {
             byte* native_desc_id;
             int desc_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (desc_id != null && !desc_id.IsEmpty)
+            #else
             if (desc_id != null)
+            #endif
             {
                 desc_id_byteCount = Encoding.UTF8.GetByteCount(desc_id);
                 if (desc_id_byteCount > Util.StackAllocationSizeLimit)
@@ -1708,7 +1904,11 @@ namespace ImGuiNET
         {
             byte* native_desc_id;
             int desc_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (desc_id != null && !desc_id.IsEmpty)
+            #else
             if (desc_id != null)
+            #endif
             {
                 desc_id_byteCount = Encoding.UTF8.GetByteCount(desc_id);
                 if (desc_id_byteCount > Util.StackAllocationSizeLimit)
@@ -1740,7 +1940,11 @@ namespace ImGuiNET
         {
             byte* native_desc_id;
             int desc_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (desc_id != null && !desc_id.IsEmpty)
+            #else
             if (desc_id != null)
+            #endif
             {
                 desc_id_byteCount = Encoding.UTF8.GetByteCount(desc_id);
                 if (desc_id_byteCount > Util.StackAllocationSizeLimit)
@@ -1808,7 +2012,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1843,7 +2051,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1877,7 +2089,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1912,7 +2128,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1946,7 +2166,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -1981,7 +2205,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2015,7 +2243,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2051,7 +2283,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2086,7 +2322,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2136,7 +2376,11 @@ namespace ImGuiNET
         {
             byte* native_id;
             int id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (id != null && !id.IsEmpty)
+            #else
             if (id != null)
+            #endif
             {
                 id_byteCount = Encoding.UTF8.GetByteCount(id);
                 if (id_byteCount > Util.StackAllocationSizeLimit)
@@ -2167,7 +2411,11 @@ namespace ImGuiNET
         {
             byte* native_id;
             int id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (id != null && !id.IsEmpty)
+            #else
             if (id != null)
+            #endif
             {
                 id_byteCount = Encoding.UTF8.GetByteCount(id);
                 if (id_byteCount > Util.StackAllocationSizeLimit)
@@ -2198,7 +2446,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2260,7 +2512,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2321,7 +2577,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2339,7 +2599,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_items_separated_by_zeros;
             int items_separated_by_zeros_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (items_separated_by_zeros != null && !items_separated_by_zeros.IsEmpty)
+            #else
             if (items_separated_by_zeros != null)
+            #endif
             {
                 items_separated_by_zeros_byteCount = Encoding.UTF8.GetByteCount(items_separated_by_zeros);
                 if (items_separated_by_zeros_byteCount > Util.StackAllocationSizeLimit)
@@ -2378,7 +2642,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2396,7 +2664,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_items_separated_by_zeros;
             int items_separated_by_zeros_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (items_separated_by_zeros != null && !items_separated_by_zeros.IsEmpty)
+            #else
             if (items_separated_by_zeros != null)
+            #endif
             {
                 items_separated_by_zeros_byteCount = Encoding.UTF8.GetByteCount(items_separated_by_zeros);
                 if (items_separated_by_zeros_byteCount > Util.StackAllocationSizeLimit)
@@ -2446,7 +2718,11 @@ namespace ImGuiNET
         {
             byte* native_version_str;
             int version_str_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (version_str != null && !version_str.IsEmpty)
+            #else
             if (version_str != null)
+            #endif
             {
                 version_str_byteCount = Encoding.UTF8.GetByteCount(version_str);
                 if (version_str_byteCount > Util.StackAllocationSizeLimit)
@@ -2477,7 +2753,11 @@ namespace ImGuiNET
         {
             byte* native_text;
             int text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (text != null && !text.IsEmpty)
+            #else
             if (text != null)
+            #endif
             {
                 text_byteCount = Encoding.UTF8.GetByteCount(text);
                 if (text_byteCount > Util.StackAllocationSizeLimit)
@@ -2577,7 +2857,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2633,7 +2917,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2688,7 +2976,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2742,7 +3034,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2795,7 +3091,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2813,7 +3113,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -2852,7 +3156,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2870,7 +3178,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -2908,7 +3220,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -2964,7 +3280,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3019,7 +3339,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3073,7 +3397,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3126,7 +3454,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3144,7 +3476,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -3183,7 +3519,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3201,7 +3541,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -3239,7 +3583,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3295,7 +3643,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3350,7 +3702,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3404,7 +3760,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3457,7 +3817,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3475,7 +3839,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -3514,7 +3882,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3532,7 +3904,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -3570,7 +3946,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3626,7 +4006,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3681,7 +4065,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3735,7 +4123,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3788,7 +4180,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3806,7 +4202,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -3845,7 +4245,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3863,7 +4267,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -3901,7 +4309,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -3961,7 +4373,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4020,7 +4436,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4078,7 +4498,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4135,7 +4559,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4153,7 +4581,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -4196,7 +4628,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4214,7 +4650,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -4232,7 +4672,11 @@ namespace ImGuiNET
             else { native_format = null; }
             byte* native_format_max;
             int format_max_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format_max != null && !format_max.IsEmpty)
+            #else
             if (format_max != null)
+            #endif
             {
                 format_max_byteCount = Encoding.UTF8.GetByteCount(format_max);
                 if (format_max_byteCount > Util.StackAllocationSizeLimit)
@@ -4278,7 +4722,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4296,7 +4744,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -4314,7 +4766,11 @@ namespace ImGuiNET
             else { native_format = null; }
             byte* native_format_max;
             int format_max_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format_max != null && !format_max.IsEmpty)
+            #else
             if (format_max != null)
+            #endif
             {
                 format_max_byteCount = Encoding.UTF8.GetByteCount(format_max);
                 if (format_max_byteCount > Util.StackAllocationSizeLimit)
@@ -4359,7 +4815,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4415,7 +4875,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4470,7 +4934,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4524,7 +4992,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4577,7 +5049,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4595,7 +5071,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -4634,7 +5114,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4652,7 +5136,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -4690,7 +5178,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4746,7 +5238,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4801,7 +5297,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4855,7 +5355,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4908,7 +5412,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4926,7 +5434,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -4965,7 +5477,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -4983,7 +5499,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -5021,7 +5541,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5077,7 +5601,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5132,7 +5660,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5186,7 +5718,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5239,7 +5775,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5257,7 +5797,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -5296,7 +5840,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5314,7 +5862,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -5352,7 +5904,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5408,7 +5964,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5463,7 +6023,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5517,7 +6081,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5570,7 +6138,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5588,7 +6160,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -5627,7 +6203,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5645,7 +6225,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -5683,7 +6267,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5743,7 +6331,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5802,7 +6394,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5860,7 +6456,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5917,7 +6517,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5935,7 +6539,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -5978,7 +6586,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -5996,7 +6608,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -6014,7 +6630,11 @@ namespace ImGuiNET
             else { native_format = null; }
             byte* native_format_max;
             int format_max_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format_max != null && !format_max.IsEmpty)
+            #else
             if (format_max != null)
+            #endif
             {
                 format_max_byteCount = Encoding.UTF8.GetByteCount(format_max);
                 if (format_max_byteCount > Util.StackAllocationSizeLimit)
@@ -6060,7 +6680,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -6078,7 +6702,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -6096,7 +6724,11 @@ namespace ImGuiNET
             else { native_format = null; }
             byte* native_format_max;
             int format_max_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format_max != null && !format_max.IsEmpty)
+            #else
             if (format_max != null)
+            #endif
             {
                 format_max_byteCount = Encoding.UTF8.GetByteCount(format_max);
                 if (format_max_byteCount > Util.StackAllocationSizeLimit)
@@ -6141,7 +6773,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -6178,7 +6814,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -6214,7 +6854,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -6250,7 +6894,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -6286,7 +6934,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -6307,7 +6959,11 @@ namespace ImGuiNET
             void* native_p_max = (void*)p_max.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -6343,7 +6999,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -6364,7 +7024,11 @@ namespace ImGuiNET
             void* native_p_max = (void*)p_max.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -6399,7 +7063,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -6436,7 +7104,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -6472,7 +7144,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -6508,7 +7184,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -6544,7 +7224,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -6565,7 +7249,11 @@ namespace ImGuiNET
             void* native_p_max = (void*)p_max.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -6601,7 +7289,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -6622,7 +7314,11 @@ namespace ImGuiNET
             void* native_p_max = (void*)p_max.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -6928,7 +7624,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -7210,7 +7910,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -7245,7 +7949,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -7279,7 +7987,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -7312,7 +8024,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -7344,7 +8060,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -7384,7 +8104,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7439,7 +8163,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7493,7 +8221,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7546,7 +8278,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7564,7 +8300,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -7603,7 +8343,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7621,7 +8365,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -7659,7 +8407,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7714,7 +8466,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7768,7 +8524,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7821,7 +8581,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7839,7 +8603,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -7878,7 +8646,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7896,7 +8668,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -7934,7 +8710,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -7987,7 +8767,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8005,7 +8789,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -8044,7 +8832,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8062,7 +8854,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -8100,7 +8896,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8153,7 +8953,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8171,7 +8975,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -8210,7 +9018,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8228,7 +9040,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -8266,7 +9082,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8319,7 +9139,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8337,7 +9161,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -8376,7 +9204,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8394,7 +9226,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -8432,7 +9268,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8469,7 +9309,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8505,7 +9349,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8540,7 +9388,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8574,7 +9426,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8609,7 +9465,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8643,7 +9503,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8678,7 +9542,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8712,7 +9580,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8747,7 +9619,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8781,7 +9657,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8817,7 +9697,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8853,7 +9737,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8889,7 +9777,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8910,7 +9802,11 @@ namespace ImGuiNET
             void* native_p_step_fast = (void*)p_step_fast.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -8946,7 +9842,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -8967,7 +9867,11 @@ namespace ImGuiNET
             void* native_p_step_fast = (void*)p_step_fast.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -9002,7 +9906,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -9038,7 +9946,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -9074,7 +9986,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -9110,7 +10026,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -9131,7 +10051,11 @@ namespace ImGuiNET
             void* native_p_step_fast = (void*)p_step_fast.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -9167,7 +10091,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -9188,7 +10116,11 @@ namespace ImGuiNET
             void* native_p_step_fast = (void*)p_step_fast.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -9223,7 +10155,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -9255,7 +10191,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -9454,7 +10394,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -9486,7 +10430,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -9564,7 +10512,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -9582,7 +10534,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_fmt;
             int fmt_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (fmt != null && !fmt.IsEmpty)
+            #else
             if (fmt != null)
+            #endif
             {
                 fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)
@@ -9616,7 +10572,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -9678,7 +10638,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -9739,7 +10703,11 @@ namespace ImGuiNET
         {
             byte* native_ini_filename;
             int ini_filename_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (ini_filename != null && !ini_filename.IsEmpty)
+            #else
             if (ini_filename != null)
+            #endif
             {
                 ini_filename_byteCount = Encoding.UTF8.GetByteCount(ini_filename);
                 if (ini_filename_byteCount > Util.StackAllocationSizeLimit)
@@ -9769,7 +10737,11 @@ namespace ImGuiNET
         {
             byte* native_ini_data;
             int ini_data_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (ini_data != null && !ini_data.IsEmpty)
+            #else
             if (ini_data != null)
+            #endif
             {
                 ini_data_byteCount = Encoding.UTF8.GetByteCount(ini_data);
                 if (ini_data_byteCount > Util.StackAllocationSizeLimit)
@@ -9800,7 +10772,11 @@ namespace ImGuiNET
         {
             byte* native_ini_data;
             int ini_data_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (ini_data != null && !ini_data.IsEmpty)
+            #else
             if (ini_data != null)
+            #endif
             {
                 ini_data_byteCount = Encoding.UTF8.GetByteCount(ini_data);
                 if (ini_data_byteCount > Util.StackAllocationSizeLimit)
@@ -9838,7 +10814,11 @@ namespace ImGuiNET
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (fmt != null && !fmt.IsEmpty)
+            #else
             if (fmt != null)
+            #endif
             {
                 fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)
@@ -9888,7 +10868,11 @@ namespace ImGuiNET
         {
             byte* native_filename;
             int filename_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (filename != null && !filename.IsEmpty)
+            #else
             if (filename != null)
+            #endif
             {
                 filename_byteCount = Encoding.UTF8.GetByteCount(filename);
                 if (filename_byteCount > Util.StackAllocationSizeLimit)
@@ -9937,7 +10921,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -9971,7 +10959,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -9989,7 +10981,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_shortcut;
             int shortcut_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (shortcut != null && !shortcut.IsEmpty)
+            #else
             if (shortcut != null)
+            #endif
             {
                 shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
                 if (shortcut_byteCount > Util.StackAllocationSizeLimit)
@@ -10026,7 +11022,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10044,7 +11044,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_shortcut;
             int shortcut_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (shortcut != null && !shortcut.IsEmpty)
+            #else
             if (shortcut != null)
+            #endif
             {
                 shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
                 if (shortcut_byteCount > Util.StackAllocationSizeLimit)
@@ -10081,7 +11085,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10099,7 +11107,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_shortcut;
             int shortcut_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (shortcut != null && !shortcut.IsEmpty)
+            #else
             if (shortcut != null)
+            #endif
             {
                 shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
                 if (shortcut_byteCount > Util.StackAllocationSizeLimit)
@@ -10136,7 +11148,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10154,7 +11170,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_shortcut;
             int shortcut_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (shortcut != null && !shortcut.IsEmpty)
+            #else
             if (shortcut != null)
+            #endif
             {
                 shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
                 if (shortcut_byteCount > Util.StackAllocationSizeLimit)
@@ -10193,7 +11213,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10211,7 +11235,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_shortcut;
             int shortcut_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (shortcut != null && !shortcut.IsEmpty)
+            #else
             if (shortcut != null)
+            #endif
             {
                 shortcut_byteCount = Encoding.UTF8.GetByteCount(shortcut);
                 if (shortcut_byteCount > Util.StackAllocationSizeLimit)
@@ -10262,7 +11290,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -10293,7 +11325,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -10338,7 +11374,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -10369,7 +11409,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -10399,7 +11443,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10438,7 +11486,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10476,7 +11528,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10494,7 +11550,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_overlay_text;
             int overlay_text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (overlay_text != null && !overlay_text.IsEmpty)
+            #else
             if (overlay_text != null)
+            #endif
             {
                 overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
                 if (overlay_text_byteCount > Util.StackAllocationSizeLimit)
@@ -10535,7 +11595,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10553,7 +11617,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_overlay_text;
             int overlay_text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (overlay_text != null && !overlay_text.IsEmpty)
+            #else
             if (overlay_text != null)
+            #endif
             {
                 overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
                 if (overlay_text_byteCount > Util.StackAllocationSizeLimit)
@@ -10593,7 +11661,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10611,7 +11683,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_overlay_text;
             int overlay_text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (overlay_text != null && !overlay_text.IsEmpty)
+            #else
             if (overlay_text != null)
+            #endif
             {
                 overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
                 if (overlay_text_byteCount > Util.StackAllocationSizeLimit)
@@ -10650,7 +11726,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10668,7 +11748,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_overlay_text;
             int overlay_text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (overlay_text != null && !overlay_text.IsEmpty)
+            #else
             if (overlay_text != null)
+            #endif
             {
                 overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
                 if (overlay_text_byteCount > Util.StackAllocationSizeLimit)
@@ -10706,7 +11790,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10724,7 +11812,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_overlay_text;
             int overlay_text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (overlay_text != null && !overlay_text.IsEmpty)
+            #else
             if (overlay_text != null)
+            #endif
             {
                 overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
                 if (overlay_text_byteCount > Util.StackAllocationSizeLimit)
@@ -10761,7 +11853,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10800,7 +11896,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10838,7 +11938,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10856,7 +11960,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_overlay_text;
             int overlay_text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (overlay_text != null && !overlay_text.IsEmpty)
+            #else
             if (overlay_text != null)
+            #endif
             {
                 overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
                 if (overlay_text_byteCount > Util.StackAllocationSizeLimit)
@@ -10897,7 +12005,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10915,7 +12027,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_overlay_text;
             int overlay_text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (overlay_text != null && !overlay_text.IsEmpty)
+            #else
             if (overlay_text != null)
+            #endif
             {
                 overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
                 if (overlay_text_byteCount > Util.StackAllocationSizeLimit)
@@ -10955,7 +12071,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -10973,7 +12093,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_overlay_text;
             int overlay_text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (overlay_text != null && !overlay_text.IsEmpty)
+            #else
             if (overlay_text != null)
+            #endif
             {
                 overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
                 if (overlay_text_byteCount > Util.StackAllocationSizeLimit)
@@ -11012,7 +12136,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -11030,7 +12158,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_overlay_text;
             int overlay_text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (overlay_text != null && !overlay_text.IsEmpty)
+            #else
             if (overlay_text != null)
+            #endif
             {
                 overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
                 if (overlay_text_byteCount > Util.StackAllocationSizeLimit)
@@ -11068,7 +12200,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -11086,7 +12222,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_overlay_text;
             int overlay_text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (overlay_text != null && !overlay_text.IsEmpty)
+            #else
             if (overlay_text != null)
+            #endif
             {
                 overlay_text_byteCount = Encoding.UTF8.GetByteCount(overlay_text);
                 if (overlay_text_byteCount > Util.StackAllocationSizeLimit)
@@ -11180,7 +12320,11 @@ namespace ImGuiNET
         {
             byte* native_overlay;
             int overlay_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (overlay != null && !overlay.IsEmpty)
+            #else
             if (overlay != null)
+            #endif
             {
                 overlay_byteCount = Encoding.UTF8.GetByteCount(overlay);
                 if (overlay_byteCount > Util.StackAllocationSizeLimit)
@@ -11225,7 +12369,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -11298,7 +12446,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -11330,7 +12482,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -11410,7 +12566,11 @@ namespace ImGuiNET
         {
             byte* native_ini_filename;
             int ini_filename_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (ini_filename != null && !ini_filename.IsEmpty)
+            #else
             if (ini_filename != null)
+            #endif
             {
                 ini_filename_byteCount = Encoding.UTF8.GetByteCount(ini_filename);
                 if (ini_filename_byteCount > Util.StackAllocationSizeLimit)
@@ -11454,7 +12614,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -11488,7 +12652,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -11522,7 +12690,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -11555,7 +12727,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -11587,7 +12763,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -11623,7 +12803,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -11658,7 +12842,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -11696,7 +12884,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -11736,7 +12928,11 @@ namespace ImGuiNET
         {
             byte* native_text;
             int text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (text != null && !text.IsEmpty)
+            #else
             if (text != null)
+            #endif
             {
                 text_byteCount = Encoding.UTF8.GetByteCount(text);
                 if (text_byteCount > Util.StackAllocationSizeLimit)
@@ -11798,7 +12994,11 @@ namespace ImGuiNET
         {
             byte* native_type;
             int type_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (type != null && !type.IsEmpty)
+            #else
             if (type != null)
+            #endif
             {
                 type_byteCount = Encoding.UTF8.GetByteCount(type);
                 if (type_byteCount > Util.StackAllocationSizeLimit)
@@ -11831,7 +13031,11 @@ namespace ImGuiNET
         {
             byte* native_type;
             int type_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (type != null && !type.IsEmpty)
+            #else
             if (type != null)
+            #endif
             {
                 type_byteCount = Encoding.UTF8.GetByteCount(type);
                 if (type_byteCount > Util.StackAllocationSizeLimit)
@@ -12043,7 +13247,11 @@ namespace ImGuiNET
         {
             byte* native_tab_or_docked_window_label;
             int tab_or_docked_window_label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (tab_or_docked_window_label != null && !tab_or_docked_window_label.IsEmpty)
+            #else
             if (tab_or_docked_window_label != null)
+            #endif
             {
                 tab_or_docked_window_label_byteCount = Encoding.UTF8.GetByteCount(tab_or_docked_window_label);
                 if (tab_or_docked_window_label_byteCount > Util.StackAllocationSizeLimit)
@@ -12073,7 +13281,11 @@ namespace ImGuiNET
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (fmt != null && !fmt.IsEmpty)
+            #else
             if (fmt != null)
+            #endif
             {
                 fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)
@@ -12114,7 +13326,11 @@ namespace ImGuiNET
         {
             byte* native_name;
             int name_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (name != null && !name.IsEmpty)
+            #else
             if (name != null)
+            #endif
             {
                 name_byteCount = Encoding.UTF8.GetByteCount(name);
                 if (name_byteCount > Util.StackAllocationSizeLimit)
@@ -12146,7 +13362,11 @@ namespace ImGuiNET
         {
             byte* native_name;
             int name_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (name != null && !name.IsEmpty)
+            #else
             if (name != null)
+            #endif
             {
                 name_byteCount = Encoding.UTF8.GetByteCount(name);
                 if (name_byteCount > Util.StackAllocationSizeLimit)
@@ -12181,7 +13401,11 @@ namespace ImGuiNET
         {
             byte* native_name;
             int name_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (name != null && !name.IsEmpty)
+            #else
             if (name != null)
+            #endif
             {
                 name_byteCount = Encoding.UTF8.GetByteCount(name);
                 if (name_byteCount > Util.StackAllocationSizeLimit)
@@ -12224,7 +13448,11 @@ namespace ImGuiNET
         {
             byte* native_name;
             int name_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (name != null && !name.IsEmpty)
+            #else
             if (name != null)
+            #endif
             {
                 name_byteCount = Encoding.UTF8.GetByteCount(name);
                 if (name_byteCount > Util.StackAllocationSizeLimit)
@@ -12255,7 +13483,11 @@ namespace ImGuiNET
         {
             byte* native_name;
             int name_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (name != null && !name.IsEmpty)
+            #else
             if (name != null)
+            #endif
             {
                 name_byteCount = Encoding.UTF8.GetByteCount(name);
                 if (name_byteCount > Util.StackAllocationSizeLimit)
@@ -12294,7 +13526,11 @@ namespace ImGuiNET
         {
             byte* native_name;
             int name_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (name != null && !name.IsEmpty)
+            #else
             if (name != null)
+            #endif
             {
                 name_byteCount = Encoding.UTF8.GetByteCount(name);
                 if (name_byteCount > Util.StackAllocationSizeLimit)
@@ -12325,7 +13561,11 @@ namespace ImGuiNET
         {
             byte* native_name;
             int name_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (name != null && !name.IsEmpty)
+            #else
             if (name != null)
+            #endif
             {
                 name_byteCount = Encoding.UTF8.GetByteCount(name);
                 if (name_byteCount > Util.StackAllocationSizeLimit)
@@ -12391,7 +13631,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -12455,7 +13699,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -12490,7 +13738,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -12545,7 +13797,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -12599,7 +13855,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -12652,7 +13912,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -12670,7 +13934,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -12709,7 +13977,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -12727,7 +13999,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -12765,7 +14041,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -12818,7 +14098,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -12836,7 +14120,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -12875,7 +14163,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -12893,7 +14185,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -12931,7 +14227,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -12984,7 +14284,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13002,7 +14306,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -13041,7 +14349,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13059,7 +14371,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -13097,7 +14413,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13150,7 +14470,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13168,7 +14492,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -13207,7 +14535,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13225,7 +14557,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -13263,7 +14599,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13316,7 +14656,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13334,7 +14678,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -13373,7 +14721,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13391,7 +14743,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -13429,7 +14785,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13482,7 +14842,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13500,7 +14864,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -13539,7 +14907,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13557,7 +14929,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -13595,7 +14971,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13648,7 +15028,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13666,7 +15050,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -13705,7 +15093,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13723,7 +15115,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -13761,7 +15157,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13814,7 +15214,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13832,7 +15236,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -13871,7 +15279,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13889,7 +15301,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -13927,7 +15343,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13980,7 +15400,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -13998,7 +15422,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -14037,7 +15465,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14055,7 +15487,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -14093,7 +15529,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14129,7 +15569,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14150,7 +15594,11 @@ namespace ImGuiNET
             void* native_p_max = (void*)p_max.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -14186,7 +15634,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14207,7 +15659,11 @@ namespace ImGuiNET
             void* native_p_max = (void*)p_max.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -14242,7 +15698,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14278,7 +15738,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14299,7 +15763,11 @@ namespace ImGuiNET
             void* native_p_max = (void*)p_max.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -14335,7 +15803,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14356,7 +15828,11 @@ namespace ImGuiNET
             void* native_p_max = (void*)p_max.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -14391,7 +15867,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14456,7 +15936,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14488,7 +15972,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14561,7 +16049,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14634,7 +16126,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14667,7 +16163,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14699,7 +16199,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14730,7 +16234,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14764,7 +16272,11 @@ namespace ImGuiNET
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (fmt != null && !fmt.IsEmpty)
+            #else
             if (fmt != null)
+            #endif
             {
                 fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)
@@ -14794,7 +16306,11 @@ namespace ImGuiNET
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (fmt != null && !fmt.IsEmpty)
+            #else
             if (fmt != null)
+            #endif
             {
                 fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)
@@ -14824,7 +16340,11 @@ namespace ImGuiNET
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (fmt != null && !fmt.IsEmpty)
+            #else
             if (fmt != null)
+            #endif
             {
                 fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)
@@ -14854,7 +16374,11 @@ namespace ImGuiNET
         {
             byte* native_text;
             int text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (text != null && !text.IsEmpty)
+            #else
             if (text != null)
+            #endif
             {
                 text_byteCount = Encoding.UTF8.GetByteCount(text);
                 if (text_byteCount > Util.StackAllocationSizeLimit)
@@ -14885,7 +16409,11 @@ namespace ImGuiNET
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (fmt != null && !fmt.IsEmpty)
+            #else
             if (fmt != null)
+            #endif
             {
                 fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)
@@ -14915,7 +16443,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -14946,7 +16478,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -14964,7 +16500,11 @@ namespace ImGuiNET
             else { native_str_id = null; }
             byte* native_fmt;
             int fmt_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (fmt != null && !fmt.IsEmpty)
+            #else
             if (fmt != null)
+            #endif
             {
                 fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)
@@ -15000,7 +16540,11 @@ namespace ImGuiNET
             void* native_ptr_id = (void*)ptr_id.ToPointer();
             byte* native_fmt;
             int fmt_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (fmt != null && !fmt.IsEmpty)
+            #else
             if (fmt != null)
+            #endif
             {
                 fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)
@@ -15031,7 +16575,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -15063,7 +16611,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -15094,7 +16646,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -15112,7 +16668,11 @@ namespace ImGuiNET
             else { native_str_id = null; }
             byte* native_fmt;
             int fmt_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (fmt != null && !fmt.IsEmpty)
+            #else
             if (fmt != null)
+            #endif
             {
                 fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)
@@ -15148,7 +16708,11 @@ namespace ImGuiNET
             void* native_ptr_id = (void*)ptr_id.ToPointer();
             byte* native_fmt;
             int fmt_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (fmt != null && !fmt.IsEmpty)
+            #else
             if (fmt != null)
+            #endif
             {
                 fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)
@@ -15183,7 +16747,11 @@ namespace ImGuiNET
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str_id != null && !str_id.IsEmpty)
+            #else
             if (str_id != null)
+            #endif
             {
                 str_id_byteCount = Encoding.UTF8.GetByteCount(str_id);
                 if (str_id_byteCount > Util.StackAllocationSizeLimit)
@@ -15231,7 +16799,11 @@ namespace ImGuiNET
         {
             byte* native_prefix;
             int prefix_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (prefix != null && !prefix.IsEmpty)
+            #else
             if (prefix != null)
+            #endif
             {
                 prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
                 if (prefix_byteCount > Util.StackAllocationSizeLimit)
@@ -15262,7 +16834,11 @@ namespace ImGuiNET
         {
             byte* native_prefix;
             int prefix_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (prefix != null && !prefix.IsEmpty)
+            #else
             if (prefix != null)
+            #endif
             {
                 prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
                 if (prefix_byteCount > Util.StackAllocationSizeLimit)
@@ -15292,7 +16868,11 @@ namespace ImGuiNET
         {
             byte* native_prefix;
             int prefix_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (prefix != null && !prefix.IsEmpty)
+            #else
             if (prefix != null)
+            #endif
             {
                 prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
                 if (prefix_byteCount > Util.StackAllocationSizeLimit)
@@ -15322,7 +16902,11 @@ namespace ImGuiNET
         {
             byte* native_prefix;
             int prefix_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (prefix != null && !prefix.IsEmpty)
+            #else
             if (prefix != null)
+            #endif
             {
                 prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
                 if (prefix_byteCount > Util.StackAllocationSizeLimit)
@@ -15353,7 +16937,11 @@ namespace ImGuiNET
         {
             byte* native_prefix;
             int prefix_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (prefix != null && !prefix.IsEmpty)
+            #else
             if (prefix != null)
+            #endif
             {
                 prefix_byteCount = Encoding.UTF8.GetByteCount(prefix);
                 if (prefix_byteCount > Util.StackAllocationSizeLimit)
@@ -15371,7 +16959,11 @@ namespace ImGuiNET
             else { native_prefix = null; }
             byte* native_float_format;
             int float_format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (float_format != null && !float_format.IsEmpty)
+            #else
             if (float_format != null)
+            #endif
             {
                 float_format_byteCount = Encoding.UTF8.GetByteCount(float_format);
                 if (float_format_byteCount > Util.StackAllocationSizeLimit)
@@ -15405,7 +16997,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -15458,7 +17054,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -15476,7 +17076,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -15515,7 +17119,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -15533,7 +17141,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -15571,7 +17183,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -15624,7 +17240,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -15642,7 +17262,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -15681,7 +17305,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -15699,7 +17327,11 @@ namespace ImGuiNET
             else { native_label = null; }
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -15737,7 +17369,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -15773,7 +17409,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -15794,7 +17434,11 @@ namespace ImGuiNET
             void* native_p_max = (void*)p_max.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)
@@ -15830,7 +17474,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -15851,7 +17499,11 @@ namespace ImGuiNET
             void* native_p_max = (void*)p_max.ToPointer();
             byte* native_format;
             int format_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (format != null && !format.IsEmpty)
+            #else
             if (format != null)
+            #endif
             {
                 format_byteCount = Encoding.UTF8.GetByteCount(format);
                 if (format_byteCount > Util.StackAllocationSizeLimit)

@@ -67,7 +67,11 @@ namespace ImGuiNET
         {
             byte* native_text;
             int text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (text != null && !text.IsEmpty)
+            #else
             if (text != null)
+            #endif
             {
                 text_byteCount = Encoding.UTF8.GetByteCount(text);
                 if (text_byteCount > Util.StackAllocationSizeLimit)

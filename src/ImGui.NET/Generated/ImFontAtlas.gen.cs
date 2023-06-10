@@ -167,7 +167,11 @@ namespace ImGuiNET
         {
             byte* native_filename;
             int filename_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (filename != null && !filename.IsEmpty)
+            #else
             if (filename != null)
+            #endif
             {
                 filename_byteCount = Encoding.UTF8.GetByteCount(filename);
                 if (filename_byteCount > Util.StackAllocationSizeLimit)
@@ -200,7 +204,11 @@ namespace ImGuiNET
         {
             byte* native_filename;
             int filename_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (filename != null && !filename.IsEmpty)
+            #else
             if (filename != null)
+            #endif
             {
                 filename_byteCount = Encoding.UTF8.GetByteCount(filename);
                 if (filename_byteCount > Util.StackAllocationSizeLimit)
@@ -233,7 +241,11 @@ namespace ImGuiNET
         {
             byte* native_filename;
             int filename_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (filename != null && !filename.IsEmpty)
+            #else
             if (filename != null)
+            #endif
             {
                 filename_byteCount = Encoding.UTF8.GetByteCount(filename);
                 if (filename_byteCount > Util.StackAllocationSizeLimit)
@@ -266,7 +278,11 @@ namespace ImGuiNET
         {
             byte* native_compressed_font_data_base85;
             int compressed_font_data_base85_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (compressed_font_data_base85 != null && !compressed_font_data_base85.IsEmpty)
+            #else
             if (compressed_font_data_base85 != null)
+            #endif
             {
                 compressed_font_data_base85_byteCount = Encoding.UTF8.GetByteCount(compressed_font_data_base85);
                 if (compressed_font_data_base85_byteCount > Util.StackAllocationSizeLimit)
@@ -299,7 +315,11 @@ namespace ImGuiNET
         {
             byte* native_compressed_font_data_base85;
             int compressed_font_data_base85_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (compressed_font_data_base85 != null && !compressed_font_data_base85.IsEmpty)
+            #else
             if (compressed_font_data_base85 != null)
+            #endif
             {
                 compressed_font_data_base85_byteCount = Encoding.UTF8.GetByteCount(compressed_font_data_base85);
                 if (compressed_font_data_base85_byteCount > Util.StackAllocationSizeLimit)
@@ -332,7 +352,11 @@ namespace ImGuiNET
         {
             byte* native_compressed_font_data_base85;
             int compressed_font_data_base85_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (compressed_font_data_base85 != null && !compressed_font_data_base85.IsEmpty)
+            #else
             if (compressed_font_data_base85 != null)
+            #endif
             {
                 compressed_font_data_base85_byteCount = Encoding.UTF8.GetByteCount(compressed_font_data_base85);
                 if (compressed_font_data_base85_byteCount > Util.StackAllocationSizeLimit)

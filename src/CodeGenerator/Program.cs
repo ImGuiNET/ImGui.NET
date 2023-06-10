@@ -518,7 +518,11 @@ namespace CodeGenerator
                         preCallLines.Add($"int {correctedIdentifier}_byteCount = 0;");
                         if (!hasDefault)
                         {
+                            preCallLines.Add($"#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER");
+                            preCallLines.Add($"if ({textToEncode} != null && !{textToEncode}.IsEmpty)");
+                            preCallLines.Add($"#else");
                             preCallLines.Add($"if ({textToEncode} != null)");
+                            preCallLines.Add($"#endif");
                             preCallLines.Add("{");
                         }
                         preCallLines.Add($"    {correctedIdentifier}_byteCount = Encoding.UTF8.GetByteCount({textToEncode});");

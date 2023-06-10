@@ -26,7 +26,11 @@ namespace ImGuiNET
         {
             byte* native_str;
             int str_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (str != null && !str.IsEmpty)
+            #else
             if (str != null)
+            #endif
             {
                 str_byteCount = Encoding.UTF8.GetByteCount(str);
                 if (str_byteCount > Util.StackAllocationSizeLimit)
@@ -57,7 +61,11 @@ namespace ImGuiNET
         {
             byte* native_fmt;
             int fmt_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (fmt != null && !fmt.IsEmpty)
+            #else
             if (fmt != null)
+            #endif
             {
                 fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
                 if (fmt_byteCount > Util.StackAllocationSizeLimit)

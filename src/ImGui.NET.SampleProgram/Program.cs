@@ -83,6 +83,12 @@ namespace ImGuiNET
 
         private static unsafe void SubmitUI()
         {
+            ImGui.Text("String!");
+            ImGui.Text("String!\0");
+            ImGui.Text("temp".AsSpan());
+            ImGui.Text(null);
+            ImGui.Text(string.Empty);
+        
             // Demo code adapted from the official Dear ImGui demo program:
             // https://github.com/ocornut/imgui/blob/master/examples/example_win32_directx11/main.cpp#L172
 

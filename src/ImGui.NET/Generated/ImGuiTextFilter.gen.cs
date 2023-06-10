@@ -66,7 +66,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -98,7 +102,11 @@ namespace ImGuiNET
         {
             byte* native_label;
             int label_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (label != null && !label.IsEmpty)
+            #else
             if (label != null)
+            #endif
             {
                 label_byteCount = Encoding.UTF8.GetByteCount(label);
                 if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -134,7 +142,11 @@ namespace ImGuiNET
         {
             byte* native_text;
             int text_byteCount = 0;
+            #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+            if (text != null && !text.IsEmpty)
+            #else
             if (text != null)
+            #endif
             {
                 text_byteCount = Encoding.UTF8.GetByteCount(text);
                 if (text_byteCount > Util.StackAllocationSizeLimit)
