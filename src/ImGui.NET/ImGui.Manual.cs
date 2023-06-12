@@ -423,39 +423,6 @@ namespace ImGuiNET
             return result != 0;
         }
 
-        public static Vector2 CalcTextSize(string text)
-            => CalcTextSizeImpl(text);
-
-        public static Vector2 CalcTextSize(string text, int start)
-            => CalcTextSizeImpl(text, start);
-
-        public static Vector2 CalcTextSize(string text, float wrapWidth)
-            => CalcTextSizeImpl(text, wrapWidth: wrapWidth);
-
-        public static Vector2 CalcTextSize(string text, bool hideTextAfterDoubleHash)
-            => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
-
-        public static Vector2 CalcTextSize(string text, int start, int length)
-            => CalcTextSizeImpl(text, start, length);
-
-        public static Vector2 CalcTextSize(string text, int start, bool hideTextAfterDoubleHash)
-            => CalcTextSizeImpl(text, start, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
-
-        public static Vector2 CalcTextSize(string text, int start, float wrapWidth)
-            => CalcTextSizeImpl(text, start, wrapWidth: wrapWidth);
-
-        public static Vector2 CalcTextSize(string text, bool hideTextAfterDoubleHash, float wrapWidth)
-            => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash, wrapWidth: wrapWidth);
-
-        public static Vector2 CalcTextSize(string text, int start, int length, bool hideTextAfterDoubleHash)
-            => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash);
-
-        public static Vector2 CalcTextSize(string text, int start, int length, float wrapWidth)
-            => CalcTextSizeImpl(text, start, length, wrapWidth: wrapWidth);
-
-        public static Vector2 CalcTextSize(string text, int start, int length, bool hideTextAfterDoubleHash, float wrapWidth)
-            => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash, wrapWidth);
-
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static Vector2 CalcTextSize(ReadOnlySpan<char> text)
             => CalcTextSizeImpl(text);
@@ -489,6 +456,39 @@ namespace ImGuiNET
 
         public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, int length, bool hideTextAfterDoubleHash, float wrapWidth)
             => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash, wrapWidth);
+#else
+	    public static Vector2 CalcTextSize(string text)
+		    => CalcTextSizeImpl(text);
+
+	    public static Vector2 CalcTextSize(string text, int start)
+		    => CalcTextSizeImpl(text, start);
+
+	    public static Vector2 CalcTextSize(string text, float wrapWidth)
+		    => CalcTextSizeImpl(text, wrapWidth: wrapWidth);
+
+	    public static Vector2 CalcTextSize(string text, bool hideTextAfterDoubleHash)
+		    => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
+
+	    public static Vector2 CalcTextSize(string text, int start, int length)
+		    => CalcTextSizeImpl(text, start, length);
+
+	    public static Vector2 CalcTextSize(string text, int start, bool hideTextAfterDoubleHash)
+		    => CalcTextSizeImpl(text, start, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
+
+	    public static Vector2 CalcTextSize(string text, int start, float wrapWidth)
+		    => CalcTextSizeImpl(text, start, wrapWidth: wrapWidth);
+
+	    public static Vector2 CalcTextSize(string text, bool hideTextAfterDoubleHash, float wrapWidth)
+		    => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash, wrapWidth: wrapWidth);
+
+	    public static Vector2 CalcTextSize(string text, int start, int length, bool hideTextAfterDoubleHash)
+		    => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash);
+
+	    public static Vector2 CalcTextSize(string text, int start, int length, float wrapWidth)
+		    => CalcTextSizeImpl(text, start, length, wrapWidth: wrapWidth);
+
+	    public static Vector2 CalcTextSize(string text, int start, int length, bool hideTextAfterDoubleHash, float wrapWidth)
+		    => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash, wrapWidth);
 #endif
 
         private static Vector2 CalcTextSizeImpl(
