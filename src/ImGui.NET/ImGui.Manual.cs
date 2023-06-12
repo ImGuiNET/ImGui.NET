@@ -457,38 +457,38 @@ namespace ImGuiNET
         public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, int length, bool hideTextAfterDoubleHash, float wrapWidth)
             => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash, wrapWidth);
 #else
-	    public static Vector2 CalcTextSize(string text)
-		    => CalcTextSizeImpl(text);
+        public static Vector2 CalcTextSize(string text)
+            => CalcTextSizeImpl(text);
 
-	    public static Vector2 CalcTextSize(string text, int start)
-		    => CalcTextSizeImpl(text, start);
+        public static Vector2 CalcTextSize(string text, int start)
+            => CalcTextSizeImpl(text, start);
 
-	    public static Vector2 CalcTextSize(string text, float wrapWidth)
-		    => CalcTextSizeImpl(text, wrapWidth: wrapWidth);
+        public static Vector2 CalcTextSize(string text, float wrapWidth)
+            => CalcTextSizeImpl(text, wrapWidth: wrapWidth);
 
-	    public static Vector2 CalcTextSize(string text, bool hideTextAfterDoubleHash)
-		    => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
+        public static Vector2 CalcTextSize(string text, bool hideTextAfterDoubleHash)
+            => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
 
-	    public static Vector2 CalcTextSize(string text, int start, int length)
-		    => CalcTextSizeImpl(text, start, length);
+        public static Vector2 CalcTextSize(string text, int start, int length)
+            => CalcTextSizeImpl(text, start, length);
 
-	    public static Vector2 CalcTextSize(string text, int start, bool hideTextAfterDoubleHash)
-		    => CalcTextSizeImpl(text, start, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
+        public static Vector2 CalcTextSize(string text, int start, bool hideTextAfterDoubleHash)
+            => CalcTextSizeImpl(text, start, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
 
-	    public static Vector2 CalcTextSize(string text, int start, float wrapWidth)
-		    => CalcTextSizeImpl(text, start, wrapWidth: wrapWidth);
+        public static Vector2 CalcTextSize(string text, int start, float wrapWidth)
+            => CalcTextSizeImpl(text, start, wrapWidth: wrapWidth);
 
-	    public static Vector2 CalcTextSize(string text, bool hideTextAfterDoubleHash, float wrapWidth)
-		    => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash, wrapWidth: wrapWidth);
+        public static Vector2 CalcTextSize(string text, bool hideTextAfterDoubleHash, float wrapWidth)
+            => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash, wrapWidth: wrapWidth);
 
-	    public static Vector2 CalcTextSize(string text, int start, int length, bool hideTextAfterDoubleHash)
-		    => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash);
+        public static Vector2 CalcTextSize(string text, int start, int length, bool hideTextAfterDoubleHash)
+            => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash);
 
-	    public static Vector2 CalcTextSize(string text, int start, int length, float wrapWidth)
-		    => CalcTextSizeImpl(text, start, length, wrapWidth: wrapWidth);
+        public static Vector2 CalcTextSize(string text, int start, int length, float wrapWidth)
+            => CalcTextSizeImpl(text, start, length, wrapWidth: wrapWidth);
 
-	    public static Vector2 CalcTextSize(string text, int start, int length, bool hideTextAfterDoubleHash, float wrapWidth)
-		    => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash, wrapWidth);
+        public static Vector2 CalcTextSize(string text, int start, int length, bool hideTextAfterDoubleHash, float wrapWidth)
+            => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash, wrapWidth);
 #endif
 
         private static Vector2 CalcTextSizeImpl(
@@ -609,13 +609,11 @@ namespace ImGuiNET
             return ret;
         }
 
-        public static bool Begin(
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> name,
+        public static bool Begin(ReadOnlySpan<char> name, ImGuiWindowFlags flags)
 #else
-            string name,
+        public static bool Begin(string name, ImGuiWindowFlags flags)
 #endif
-            ImGuiWindowFlags flags)
         {
             int utf8NameByteCount = Encoding.UTF8.GetByteCount(name);
             byte* utf8NameBytes;
@@ -641,13 +639,11 @@ namespace ImGuiNET
             return ret != 0;
         }
 
-        public static bool MenuItem(
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
+        public static bool MenuItem(ReadOnlySpan<char> label, bool enabled)
 #else
-            string label,
+        public static bool MenuItem(string label, bool enabled)
 #endif
-            bool enabled)
         {
             return MenuItem(label, string.Empty, false, enabled);
         }
