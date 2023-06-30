@@ -46,6 +46,7 @@ namespace ImGuiNET
         public float ConfigMemoryCompactTimer;
         public byte ConfigDebugBeginReturnValueOnce;
         public byte ConfigDebugBeginReturnValueLoop;
+        public byte ConfigDebugIgnoreFocusLoss;
         public byte* BackendPlatformName;
         public byte* BackendRendererName;
         public void* BackendPlatformUserData;
@@ -816,6 +817,7 @@ namespace ImGuiNET
         public ref float ConfigMemoryCompactTimer => ref Unsafe.AsRef<float>(&NativePtr->ConfigMemoryCompactTimer);
         public ref bool ConfigDebugBeginReturnValueOnce => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugBeginReturnValueOnce);
         public ref bool ConfigDebugBeginReturnValueLoop => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugBeginReturnValueLoop);
+        public ref bool ConfigDebugIgnoreFocusLoss => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugIgnoreFocusLoss);
         public NullTerminatedString BackendPlatformName => new NullTerminatedString(NativePtr->BackendPlatformName);
         public NullTerminatedString BackendRendererName => new NullTerminatedString(NativePtr->BackendRendererName);
         public IntPtr BackendPlatformUserData { get => (IntPtr)NativePtr->BackendPlatformUserData; set => NativePtr->BackendPlatformUserData = (void*)value; }
