@@ -47,10 +47,6 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiListClipper_End((ImGuiListClipper*)(NativePtr));
         }
-        public void ForceDisplayRangeByIndices(int item_min, int item_max)
-        {
-            ImGuiNative.ImGuiListClipper_ForceDisplayRangeByIndices((ImGuiListClipper*)(NativePtr), item_min, item_max);
-        }
         public bool Step()
         {
             byte ret = ImGuiNative.ImGuiListClipper_Step((ImGuiListClipper*)(NativePtr));
