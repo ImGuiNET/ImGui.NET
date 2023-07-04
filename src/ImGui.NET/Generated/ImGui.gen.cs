@@ -515,6 +515,11 @@ namespace ImGuiNET
         {
             ImGuiNative.igBeginGroup();
         }
+        public static bool BeginItemTooltip()
+        {
+            byte ret = ImGuiNative.igBeginItemTooltip();
+            return ret != 0;
+        }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static bool BeginListBox(ReadOnlySpan<char> label)
 #else
@@ -11855,13 +11860,39 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
-        public static void SetItemAllowOverlap()
-        {
-            ImGuiNative.igSetItemAllowOverlap();
-        }
         public static void SetItemDefaultFocus()
         {
             ImGuiNative.igSetItemDefaultFocus();
+        }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SetItemTooltip(ReadOnlySpan<char> fmt)
+#else
+        public static void SetItemTooltip(string fmt)
+#endif
+        {
+            byte* native_fmt;
+            int fmt_byteCount = 0;
+            if (fmt != null)
+            {
+                fmt_byteCount = Encoding.UTF8.GetByteCount(fmt);
+                if (fmt_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_fmt = Util.Allocate(fmt_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_fmt_stackBytes = stackalloc byte[fmt_byteCount + 1];
+                    native_fmt = native_fmt_stackBytes;
+                }
+                int native_fmt_offset = Util.GetUtf8(fmt, native_fmt, fmt_byteCount);
+                native_fmt[native_fmt_offset] = 0;
+            }
+            else { native_fmt = null; }
+            ImGuiNative.igSetItemTooltip(native_fmt);
+            if (fmt_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_fmt);
+            }
         }
         public static void SetKeyboardFocusHere()
         {
@@ -11885,6 +11916,10 @@ namespace ImGuiNET
         {
             byte native_want_capture_mouse = want_capture_mouse ? (byte)1 : (byte)0;
             ImGuiNative.igSetNextFrameWantCaptureMouse(native_want_capture_mouse);
+        }
+        public static void SetNextItemAllowOverlap()
+        {
+            ImGuiNative.igSetNextItemAllowOverlap();
         }
         public static void SetNextItemOpen(bool is_open)
         {

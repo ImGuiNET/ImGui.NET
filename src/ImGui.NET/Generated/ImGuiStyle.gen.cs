@@ -105,6 +105,11 @@ namespace ImGuiNET
         public Vector4 Colors_52;
         public Vector4 Colors_53;
         public Vector4 Colors_54;
+        public float HoverStationaryDelay;
+        public float HoverDelayShort;
+        public float HoverDelayNormal;
+        public ImGuiHoveredFlags HoverFlagsForTooltipMouse;
+        public ImGuiHoveredFlags HoverFlagsForTooltipNav;
     }
     public unsafe partial struct ImGuiStylePtr
     {
@@ -158,6 +163,11 @@ namespace ImGuiNET
         public ref float CurveTessellationTol => ref Unsafe.AsRef<float>(&NativePtr->CurveTessellationTol);
         public ref float CircleTessellationMaxError => ref Unsafe.AsRef<float>(&NativePtr->CircleTessellationMaxError);
         public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 55);
+        public ref float HoverStationaryDelay => ref Unsafe.AsRef<float>(&NativePtr->HoverStationaryDelay);
+        public ref float HoverDelayShort => ref Unsafe.AsRef<float>(&NativePtr->HoverDelayShort);
+        public ref float HoverDelayNormal => ref Unsafe.AsRef<float>(&NativePtr->HoverDelayNormal);
+        public ref ImGuiHoveredFlags HoverFlagsForTooltipMouse => ref Unsafe.AsRef<ImGuiHoveredFlags>(&NativePtr->HoverFlagsForTooltipMouse);
+        public ref ImGuiHoveredFlags HoverFlagsForTooltipNav => ref Unsafe.AsRef<ImGuiHoveredFlags>(&NativePtr->HoverFlagsForTooltipNav);
         public void Destroy()
         {
             ImGuiNative.ImGuiStyle_destroy((ImGuiStyle*)(NativePtr));

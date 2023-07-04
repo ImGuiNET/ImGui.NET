@@ -6,7 +6,7 @@ namespace ImGuiNET
         None = 0,
         Selected = 1,
         Framed = 2,
-        AllowItemOverlap = 4,
+        AllowOverlap = 4,
         NoTreePushOnOpen = 8,
         NoAutoOpenOnLog = 16,
         DefaultOpen = 32,
