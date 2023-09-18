@@ -44,6 +44,7 @@ namespace ImGuiNET
         public Vector2 SeparatorTextPadding;
         public Vector2 DisplayWindowPadding;
         public Vector2 DisplaySafeAreaPadding;
+        public float DockingSeparatorSize;
         public float MouseCursorScale;
         public byte AntiAliasedLines;
         public byte AntiAliasedLinesUseTex;
@@ -156,6 +157,7 @@ namespace ImGuiNET
         public ref Vector2 SeparatorTextPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->SeparatorTextPadding);
         public ref Vector2 DisplayWindowPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayWindowPadding);
         public ref Vector2 DisplaySafeAreaPadding => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplaySafeAreaPadding);
+        public ref float DockingSeparatorSize => ref Unsafe.AsRef<float>(&NativePtr->DockingSeparatorSize);
         public ref float MouseCursorScale => ref Unsafe.AsRef<float>(&NativePtr->MouseCursorScale);
         public ref bool AntiAliasedLines => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedLines);
         public ref bool AntiAliasedLinesUseTex => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedLinesUseTex);

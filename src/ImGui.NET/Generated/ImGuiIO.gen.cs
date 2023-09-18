@@ -56,6 +56,7 @@ namespace ImGuiNET
         public void* ClipboardUserData;
         public IntPtr SetPlatformImeDataFn;
         public void* _UnusedPadding;
+        public ushort PlatformLocaleDecimalPoint;
         public byte WantCaptureMouse;
         public byte WantCaptureKeyboard;
         public byte WantTextInput;
@@ -826,6 +827,7 @@ namespace ImGuiNET
         public IntPtr ClipboardUserData { get => (IntPtr)NativePtr->ClipboardUserData; set => NativePtr->ClipboardUserData = (void*)value; }
         public ref IntPtr SetPlatformImeDataFn => ref Unsafe.AsRef<IntPtr>(&NativePtr->SetPlatformImeDataFn);
         public IntPtr _UnusedPadding { get => (IntPtr)NativePtr->_UnusedPadding; set => NativePtr->_UnusedPadding = (void*)value; }
+        public ref ushort PlatformLocaleDecimalPoint => ref Unsafe.AsRef<ushort>(&NativePtr->PlatformLocaleDecimalPoint);
         public ref bool WantCaptureMouse => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureMouse);
         public ref bool WantCaptureKeyboard => ref Unsafe.AsRef<bool>(&NativePtr->WantCaptureKeyboard);
         public ref bool WantTextInput => ref Unsafe.AsRef<bool>(&NativePtr->WantTextInput);
@@ -953,9 +955,9 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiIO_AddMouseWheelEvent((ImGuiIO*)(NativePtr), wheel_x, wheel_y);
         }
-        public void ClearInputCharacters()
+        public void ClearEventsQueue()
         {
-            ImGuiNative.ImGuiIO_ClearInputCharacters((ImGuiIO*)(NativePtr));
+            ImGuiNative.ImGuiIO_ClearEventsQueue((ImGuiIO*)(NativePtr));
         }
         public void ClearInputKeys()
         {
