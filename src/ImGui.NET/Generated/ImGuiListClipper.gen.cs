@@ -47,6 +47,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiListClipper_End((ImGuiListClipper*)(NativePtr));
         }
+        public void IncludeItemByIndex(int item_index)
+        {
+            ImGuiNative.ImGuiListClipper_IncludeItemByIndex((ImGuiListClipper*)(NativePtr), item_index);
+        }
         public bool Step()
         {
             byte ret = ImGuiNative.ImGuiListClipper_Step((ImGuiListClipper*)(NativePtr));

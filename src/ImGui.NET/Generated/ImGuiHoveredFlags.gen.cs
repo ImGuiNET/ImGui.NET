@@ -18,11 +18,11 @@ namespace ImGuiNET
         AllowWhenOverlapped = 768,
         RectOnly = 928,
         RootAndChildWindows = 3,
-        ForTooltip = 2048,
-        Stationary = 4096,
-        DelayNone = 8192,
-        DelayShort = 16384,
-        DelayNormal = 32768,
-        NoSharedDelay = 65536,
+        ForTooltip = 4096,
+        Stationary = 8192,
+        DelayNone = 16384,
+        DelayShort = 32768,
+        DelayNormal = 65536,
+        NoSharedDelay = 131072,
     }
 }
