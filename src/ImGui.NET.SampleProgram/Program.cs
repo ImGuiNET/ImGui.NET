@@ -87,7 +87,7 @@ namespace ImGuiNET
             // https://github.com/ocornut/imgui/blob/master/examples/example_win32_directx11/main.cpp#L172
 
             // 1. Show a simple window.
-            // Tip: if we don't call ImGui.BeginWindow()/ImGui.EndWindow() the widgets automatically appears in a window called "Debug".
+            // Tip: if we don't call ImGui.Begin(string) / ImGui.End() the widgets automatically appears in a window called "Debug".
             {
                 ImGui.Text("");
                 ImGui.Text(string.Empty);
