@@ -94,7 +94,6 @@ namespace ImGuiNET
                 ImGui.Text("");
                 ImGui.Text(string.Empty);
                 ImGui.Text("Hello, world!");                                        // Display some text (you can use a format string too)
-                
                 ImGui.SliderFloat("float", ref _f, 0, 1, _f.ToString("0.000"));  // Edit 1 float using a slider from 0.0f to 1.0f    
                 //ImGui.ColorEdit3("clear color", ref _clearColor);                   // Edit 3 floats representing a color
 
