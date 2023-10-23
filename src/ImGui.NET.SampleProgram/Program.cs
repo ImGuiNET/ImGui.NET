@@ -220,7 +220,7 @@ namespace ImGuiNET
             Console.WriteLine("GC (string): " + allocBytesStringEnd);
                 
             long allocBytesSpanStart = GC.GetAllocatedBytesForCurrentThread();
-            ImGui.Text($"Hello, world {Random.Shared.Next(100)}!"); // Note that this call will STILL allocate memory due to string interpolation, but you can prevent that from happening by using an InterpolatedStringHandler.
+            ImGui.Text($"Hello, world {Random.Shared.Next(100)}!".AsSpan()); // Note that this call will STILL allocate memory due to string interpolation, but you can prevent that from happening by using an InterpolatedStringHandler.
             long allocBytesSpanEnd = GC.GetAllocatedBytesForCurrentThread() - allocBytesSpanStart;
             Console.WriteLine("GC (span): " + allocBytesSpanEnd);
         }
