@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using ImPlotNET;
+using TestDotNetStandardLib;
 using Veldrid;
 using Veldrid.Sdl2;
 using Veldrid.StartupUtilities;
@@ -89,9 +90,19 @@ namespace ImGuiNET
             // 1. Show a simple window.
             // Tip: if we don't call ImGui.Begin(string) / ImGui.End() the widgets automatically appears in a window called "Debug".
             {
+                TestStringParameterOnDotNetStandard.Text();
                 ImGui.Text("");
                 ImGui.Text(string.Empty);
-                ImGui.Text("Hello, world!");                                        // Display some text (you can use a format string too)
+                long allocBytesStringStart = GC.GetAllocatedBytesForCurrentThread();
+                ImGui.Text("Hello, world!"); // Display some text (you can use a format string too)
+                long allocBytesStringEnd = GC.GetAllocatedBytesForCurrentThread() - allocBytesStringStart;
+                Console.WriteLine("GC (string): " + allocBytesStringEnd);
+                
+                long allocBytesSpanStart = GC.GetAllocatedBytesForCurrentThread();
+                ImGui.Text("Hello, world!".AsSpan()); // Display some text (you can use a format string too)
+                long allocBytesSpanEnd = GC.GetAllocatedBytesForCurrentThread() - allocBytesSpanStart;
+                Console.WriteLine("GC (span): " + allocBytesSpanEnd);
+                
                 ImGui.SliderFloat("float", ref _f, 0, 1, _f.ToString("0.000"));  // Edit 1 float using a slider from 0.0f to 1.0f    
                 //ImGui.ColorEdit3("clear color", ref _clearColor);                   // Edit 3 floats representing a color
 
@@ -167,9 +178,9 @@ namespace ImGuiNET
                     if ((s_tab_bar_flags & (uint)ImGuiTabBarFlags.FittingPolicyMask) == 0)
                         s_tab_bar_flags |= (uint)ImGuiTabBarFlags.FittingPolicyDefault;
                     if (ImGui.CheckboxFlags("ImGuiTabBarFlags_FittingPolicyResizeDown", ref s_tab_bar_flags, (uint)ImGuiTabBarFlags.FittingPolicyResizeDown))
-                s_tab_bar_flags &= ~((uint)ImGuiTabBarFlags.FittingPolicyMask ^ (uint)ImGuiTabBarFlags.FittingPolicyResizeDown);
+                        s_tab_bar_flags &= ~((uint)ImGuiTabBarFlags.FittingPolicyMask ^ (uint)ImGuiTabBarFlags.FittingPolicyResizeDown);
                     if (ImGui.CheckboxFlags("ImGuiTabBarFlags_FittingPolicyScroll", ref s_tab_bar_flags, (uint)ImGuiTabBarFlags.FittingPolicyScroll))
-                s_tab_bar_flags &= ~((uint)ImGuiTabBarFlags.FittingPolicyMask ^ (uint)ImGuiTabBarFlags.FittingPolicyScroll);
+                        s_tab_bar_flags &= ~((uint)ImGuiTabBarFlags.FittingPolicyMask ^ (uint)ImGuiTabBarFlags.FittingPolicyScroll);
 
                     // Tab Bar
                     string[] names = { "Artichoke", "Beetroot", "Celery", "Daikon" };
