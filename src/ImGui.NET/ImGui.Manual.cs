@@ -9,11 +9,7 @@ namespace ImGuiNET
     public static unsafe partial class ImGui
     {
         public static bool InputText(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             byte[] buf,
             uint buf_size)
         {
@@ -21,11 +17,7 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             byte[] buf,
             uint buf_size,
             ImGuiInputTextFlags flags)
@@ -34,11 +26,7 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             byte[] buf,
             uint buf_size,
             ImGuiInputTextFlags flags,
@@ -48,11 +36,7 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             byte[] buf,
             uint buf_size,
             ImGuiInputTextFlags flags,
@@ -87,41 +71,25 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             ref string input,
             uint maxLength) => InputText(label, ref input, maxLength, 0, null, IntPtr.Zero);
 
         public static bool InputText(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             ref string input,
             uint maxLength,
             ImGuiInputTextFlags flags) => InputText(label, ref input, maxLength, flags, null, IntPtr.Zero);
 
         public static bool InputText(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             ref string input,
             uint maxLength,
             ImGuiInputTextFlags flags,
             ImGuiInputTextCallback callback) => InputText(label, ref input, maxLength, flags, callback, IntPtr.Zero);
 
         public static bool InputText(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             ref string input,
             uint maxLength,
             ImGuiInputTextFlags flags,
@@ -189,32 +157,20 @@ namespace ImGuiNET
         }
 
         public static bool InputTextMultiline(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             ref string input,
             uint maxLength,
             Vector2 size) => InputTextMultiline(label, ref input, maxLength, size, 0, null, IntPtr.Zero);
 
         public static bool InputTextMultiline(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             ref string input,
             uint maxLength,
             Vector2 size,
             ImGuiInputTextFlags flags) => InputTextMultiline(label, ref input, maxLength, size, flags, null, IntPtr.Zero);
 
         public static bool InputTextMultiline(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             ref string input,
             uint maxLength,
             Vector2 size,
@@ -222,11 +178,7 @@ namespace ImGuiNET
             ImGuiInputTextCallback callback) => InputTextMultiline(label, ref input, maxLength, size, flags, callback, IntPtr.Zero);
 
         public static bool InputTextMultiline(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             ref string input,
             uint maxLength,
             Vector2 size,
@@ -296,49 +248,29 @@ namespace ImGuiNET
         }
 
         public static bool InputTextWithHint(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-            ReadOnlySpan<char> hint,
-#else
             string label,
             string hint,
-#endif
             ref string input,
             uint maxLength) => InputTextWithHint(label, hint, ref input, maxLength, 0, null, IntPtr.Zero);
 
         public static bool InputTextWithHint(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-            ReadOnlySpan<char> hint,
-#else
             string label,
             string hint,
-#endif
             ref string input,
             uint maxLength,
             ImGuiInputTextFlags flags) => InputTextWithHint(label, hint, ref input, maxLength, flags, null, IntPtr.Zero);
 
         public static bool InputTextWithHint(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-            ReadOnlySpan<char> hint,
-#else
             string label,
             string hint,
-#endif
             ref string input,
             uint maxLength,
             ImGuiInputTextFlags flags,
             ImGuiInputTextCallback callback) => InputTextWithHint(label, hint, ref input, maxLength, flags, callback, IntPtr.Zero);
 
         public static bool InputTextWithHint(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-            ReadOnlySpan<char> hint,
-#else
             string label,
             string hint,
-#endif
             ref string input,
             uint maxLength,
             ImGuiInputTextFlags flags,
@@ -423,40 +355,6 @@ namespace ImGuiNET
             return result != 0;
         }
 
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-        public static Vector2 CalcTextSize(ReadOnlySpan<char> text)
-            => CalcTextSizeImpl(text);
-
-        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start)
-            => CalcTextSizeImpl(text, start);
-
-        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, float wrapWidth)
-            => CalcTextSizeImpl(text, wrapWidth: wrapWidth);
-
-        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, bool hideTextAfterDoubleHash)
-            => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
-
-        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, int length)
-            => CalcTextSizeImpl(text, start, length);
-
-        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, bool hideTextAfterDoubleHash)
-            => CalcTextSizeImpl(text, start, hideTextAfterDoubleHash: hideTextAfterDoubleHash);
-
-        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, float wrapWidth)
-            => CalcTextSizeImpl(text, start, wrapWidth: wrapWidth);
-
-        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, bool hideTextAfterDoubleHash, float wrapWidth)
-            => CalcTextSizeImpl(text, hideTextAfterDoubleHash: hideTextAfterDoubleHash, wrapWidth: wrapWidth);
-
-        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, int length, bool hideTextAfterDoubleHash)
-            => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash);
-
-        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, int length, float wrapWidth)
-            => CalcTextSizeImpl(text, start, length, wrapWidth: wrapWidth);
-
-        public static Vector2 CalcTextSize(ReadOnlySpan<char> text, int start, int length, bool hideTextAfterDoubleHash, float wrapWidth)
-            => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash, wrapWidth);
-#else
         public static Vector2 CalcTextSize(string text)
             => CalcTextSizeImpl(text);
 
@@ -489,14 +387,9 @@ namespace ImGuiNET
 
         public static Vector2 CalcTextSize(string text, int start, int length, bool hideTextAfterDoubleHash, float wrapWidth)
             => CalcTextSizeImpl(text, start, length, hideTextAfterDoubleHash, wrapWidth);
-#endif
 
         private static Vector2 CalcTextSizeImpl(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> text,
-#else
             string text,
-#endif
             int start = 0,
             int? length = null,
             bool hideTextAfterDoubleHash = false,
@@ -536,11 +429,7 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             IntPtr buf,
             uint buf_size)
         {
@@ -548,11 +437,7 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             IntPtr buf,
             uint buf_size,
             ImGuiInputTextFlags flags)
@@ -561,11 +446,7 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             IntPtr buf,
             uint buf_size,
             ImGuiInputTextFlags flags,
@@ -575,11 +456,7 @@ namespace ImGuiNET
         }
 
         public static bool InputText(
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-            ReadOnlySpan<char> label,
-#else
             string label,
-#endif
             IntPtr buf,
             uint buf_size,
             ImGuiInputTextFlags flags,
@@ -609,11 +486,7 @@ namespace ImGuiNET
             return ret;
         }
 
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-        public static bool Begin(ReadOnlySpan<char> name, ImGuiWindowFlags flags)
-#else
         public static bool Begin(string name, ImGuiWindowFlags flags)
-#endif
         {
             int utf8NameByteCount = Encoding.UTF8.GetByteCount(name);
             byte* utf8NameBytes;
@@ -639,11 +512,7 @@ namespace ImGuiNET
             return ret != 0;
         }
 
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-        public static bool MenuItem(ReadOnlySpan<char> label, bool enabled)
-#else
         public static bool MenuItem(string label, bool enabled)
-#endif
         {
             return MenuItem(label, string.Empty, false, enabled);
         }
