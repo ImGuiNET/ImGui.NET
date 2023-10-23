@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using ImPlotNET;
+using System.Runtime.CompilerServices;
 using TestDotNetStandardLib;
 using Veldrid;
 using Veldrid.Sdl2;
@@ -90,18 +91,9 @@ namespace ImGuiNET
             // 1. Show a simple window.
             // Tip: if we don't call ImGui.Begin(string) / ImGui.End() the widgets automatically appears in a window called "Debug".
             {
-                TestStringParameterOnDotNetStandard.Text();
                 ImGui.Text("");
                 ImGui.Text(string.Empty);
-                long allocBytesStringStart = GC.GetAllocatedBytesForCurrentThread();
-                ImGui.Text("Hello, world!"); // Display some text (you can use a format string too)
-                long allocBytesStringEnd = GC.GetAllocatedBytesForCurrentThread() - allocBytesStringStart;
-                Console.WriteLine("GC (string): " + allocBytesStringEnd);
-                
-                long allocBytesSpanStart = GC.GetAllocatedBytesForCurrentThread();
-                ImGui.Text("Hello, world!".AsSpan()); // Display some text (you can use a format string too)
-                long allocBytesSpanEnd = GC.GetAllocatedBytesForCurrentThread() - allocBytesSpanStart;
-                Console.WriteLine("GC (span): " + allocBytesSpanEnd);
+                ImGui.Text("Hello, world!");                                        // Display some text (you can use a format string too)
                 
                 ImGui.SliderFloat("float", ref _f, 0, 1, _f.ToString("0.000"));  // Edit 1 float using a slider from 0.0f to 1.0f    
                 //ImGui.ColorEdit3("clear color", ref _clearColor);                   // Edit 3 floats representing a color
@@ -218,6 +210,20 @@ namespace ImGuiNET
                 ImGui.Text("Memory editor currently supported.");
                 // _memoryEditor.Draw("Memory Editor", _memoryEditorData, _memoryEditorData.Length);
             }
+            
+            // ReadOnlySpan<char> and .NET Standard 2.0 tests
+            TestStringParameterOnDotNetStandard.Text(); // String overloads should always be available.
+            
+            // On .NET Standard 2.1 or greater, you can use ReadOnlySpan<char> instead of string to prevent allocations.
+            long allocBytesStringStart = GC.GetAllocatedBytesForCurrentThread();
+            ImGui.Text($"Hello, world {Random.Shared.Next(100)}!");
+            long allocBytesStringEnd = GC.GetAllocatedBytesForCurrentThread() - allocBytesStringStart;
+            Console.WriteLine("GC (string): " + allocBytesStringEnd);
+                
+            long allocBytesSpanStart = GC.GetAllocatedBytesForCurrentThread();
+            ImGui.Text($"Hello, world {Random.Shared.Next(100)}!"); // Note that this call will STILL allocate memory due to string interpolation, but you can prevent that from happening by using an InterpolatedStringHandler.
+            long allocBytesSpanEnd = GC.GetAllocatedBytesForCurrentThread() - allocBytesSpanStart;
+            Console.WriteLine("GC (span): " + allocBytesSpanEnd);
         }
     }
 }

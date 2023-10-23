@@ -892,9 +892,33 @@ namespace ImGuiNET
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public void AddInputCharactersUTF8(ReadOnlySpan<char> str)
-#else
-        public void AddInputCharactersUTF8(string str)
+        {
+            byte* native_str;
+            int str_byteCount = 0;
+            if (str != null)
+            {
+                str_byteCount = Encoding.UTF8.GetByteCount(str);
+                if (str_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_str = Util.Allocate(str_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_str_stackBytes = stackalloc byte[str_byteCount + 1];
+                    native_str = native_str_stackBytes;
+                }
+                int native_str_offset = Util.GetUtf8(str, native_str, str_byteCount);
+                native_str[native_str_offset] = 0;
+            }
+            else { native_str = null; }
+            ImGuiNative.ImGuiIO_AddInputCharactersUTF8((ImGuiIO*)(NativePtr), native_str);
+            if (str_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_str);
+            }
+        }
 #endif
+        public void AddInputCharactersUTF8(string str)
         {
             byte* native_str;
             int str_byteCount = 0;
