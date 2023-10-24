@@ -656,30 +656,45 @@ namespace CodeGenerator
 
             string staticPortion = selfName == null ? "static " : string.Empty;
             
+            // When .NET Standard 2.1 is available, we can use ReadOnlySpan<char> instead of string, so generate additional overloads for methods containing string parameters.
             if (invocationArgs.Count > 0 && invocationArgs.Any(a => a is { MarshalledType: "string" }))
             {
                 string readOnlySpanInvocationList = string.Join(", ", invocationArgs.Select(a => $"{(a.MarshalledType == "string" ? "ReadOnlySpan<char>" : a.MarshalledType)} {a.CorrectedIdentifier}"));
-                writer.WriteRaw($$"""
-                    #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-                            public {{staticPortion}}{{overrideRet ?? safeRet}} {{friendlyName}}({{readOnlySpanInvocationList}})
-                    #else
-                            public {{staticPortion}}{{overrideRet ?? safeRet}} {{friendlyName}}({{invocationList}})
-                    #endif
-                            {
-                    """);
-                writer.IndentManually();
+
+                writer.WriteRaw("#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER");
+                WriteMethod(writer, overload, selfName, classPrefix, staticPortion, overrideRet, safeRet, friendlyName, readOnlySpanInvocationList, preCallLines, marshalledParameters, selfIndex, pOutIndex, nativeRet, postCallLines, isWrappedType);
+                writer.WriteRaw("#endif");
             }
-            else
-            {
-                writer.PushBlock($"public {staticPortion}{overrideRet ?? safeRet} {friendlyName}({invocationList})");
-            }
-            
+
+            WriteMethod(writer, overload, selfName, classPrefix, staticPortion, overrideRet, safeRet, friendlyName, invocationList, preCallLines, marshalledParameters, selfIndex, pOutIndex, nativeRet, postCallLines, isWrappedType);
+        }
+
+        private static void WriteMethod(
+            CSharpCodeWriter writer,
+            OverloadDefinition overload,
+            string selfName,
+            string classPrefix,
+            string staticPortion,
+            string overrideRet,
+            string safeRet,
+            string friendlyName,
+            string invocationList,
+            List<string> preCallLines,
+            MarshalledParameter[] marshalledParameters,
+            int selfIndex,
+            int pOutIndex,
+            string nativeRet,
+            List<string> postCallLines,
+            bool isWrappedType)
+        {
+            writer.PushBlock($"public {staticPortion}{overrideRet ?? safeRet} {friendlyName}({invocationList})");
+
             foreach (string line in preCallLines)
             {
                 writer.WriteLine(line);
             }
 
-            List<string> nativeInvocationArgs = new List<string>();
+            List<string> nativeInvocationArgs = new();
 
             for (int i = 0; i < marshalledParameters.Length; i++)
             {
@@ -751,7 +766,7 @@ namespace CodeGenerator
 
             if (overrideRet != null)
                 writer.WriteLine("return __retval;");
-            
+
             for (int i = 0; i < marshalledParameters.Length; i++)
             {
                 MarshalledParameter mp = marshalledParameters[i];
