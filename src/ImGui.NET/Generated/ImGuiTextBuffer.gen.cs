@@ -39,8 +39,7 @@ namespace ImGuiNET
                 native_str[native_str_offset] = 0;
             }
             else { native_str = null; }
-            byte* native_str_end = null;
-            ImGuiNative.ImGuiTextBuffer_append((ImGuiTextBuffer*)(NativePtr), native_str, native_str_end);
+            ImGuiNative.ImGuiTextBuffer_append((ImGuiTextBuffer*)(NativePtr), native_str, native_str+str_byteCount);
             if (str_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_str);
@@ -67,8 +66,7 @@ namespace ImGuiNET
                 native_str[native_str_offset] = 0;
             }
             else { native_str = null; }
-            byte* native_str_end = null;
-            ImGuiNative.ImGuiTextBuffer_append((ImGuiTextBuffer*)(NativePtr), native_str, native_str_end);
+            ImGuiNative.ImGuiTextBuffer_append((ImGuiTextBuffer*)(NativePtr), native_str, native_str+str_byteCount);
             if (str_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_str);

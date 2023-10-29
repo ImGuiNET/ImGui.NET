@@ -228,6 +228,9 @@ namespace ImGuiNET
             ImGui.SameLine();
             ImGui.GetWindowDrawList().AddText(ImGui.GetCursorScreenPos(), uint.MaxValue, ReadOnlySpan<char>.Empty);
             ImGui.NewLine();
+            ImGui.GetWindowDrawList().AddText(ImGui.GetCursorScreenPos(), uint.MaxValue, $"{ImGui.CalcTextSize("h")}");
+            ImGui.NewLine();
+            ImGui.TextUnformatted("TextUnformatted now passes end ptr but isn't cut off");
         }
     }
 }

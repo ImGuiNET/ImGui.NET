@@ -373,6 +373,12 @@ namespace CodeGenerator
                         }
                         if (exportedName.Contains("~")) { continue; }
                         if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
+                        
+                        if ((overload.FriendlyName == "GetID" || overload.FriendlyName == "PushID") && overload.Parameters.Length > 1)
+                        {
+                            // skip ImGui.Get/PushID(start, end) overloads as they would overlap with existing
+                            continue;
+                        }
 
                         bool hasVaList = false;
                         for (int i = 0; i < overload.Parameters.Length; i++)
@@ -456,9 +462,14 @@ namespace CodeGenerator
                 // only string supported for start/end. ImFont.IsGlyphRangeUnused is uint
                 return; 
             }
-            if (rangeParams.Any(tr => tr.Name.EndsWith("_end") && !defaultValues.ContainsKey(tr.Name)))
+            if (rangeParams.Any(tr => tr.Name.EndsWith("_end") && defaultValues.ContainsKey(tr.Name)))
             {
-                // there will be an overload where end is `null`. the non-null overload doesnt matter
+                // we want overloads:
+                // (something, text_start, text_end (deleted), after=default)
+                // (something, text_start, text_end (deleted), after)
+                
+                // we dont need (as it would be duplicate)
+                // (something, text_start, text_end=default (deleted))
                 return;
             }
 
@@ -522,6 +533,14 @@ namespace CodeGenerator
                     }
                     else
                     {
+                        if (tr.Name.EndsWith("_end"))
+                        {
+                            var startParamName = overload.Parameters[i-1].Name;
+                            var startNativeParamName = $"native_{startParamName}";
+                            marshalledParameters[i] = new MarshalledParameter(nativeTypeName, false, $"{startNativeParamName}+{startParamName}_byteCount", false);
+                            continue;
+                        }
+                        
                         var checkForNull = !hasDefault && !tr.Name.EndsWith("_begin");
                         // for string _begin the pointer passed must be non-null, so we'll set up an empty string if needed
                         
