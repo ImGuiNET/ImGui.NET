@@ -448,9 +448,17 @@ namespace CodeGenerator
             string selfName,
             string classPrefix)
         {
-            if (overload.Parameters.Where(tr => tr.Name.EndsWith("_begin") || tr.Name.EndsWith("_end"))
-                .Any(tr => !defaultValues.ContainsKey(tr.Name)))
+            var rangeParams = overload.Parameters.Where(tr => 
+                tr.Name.EndsWith("_begin") || 
+                tr.Name.EndsWith("_end")).ToArray();
+            if (rangeParams.Any(tr => tr.Type != "char*"))
             {
+                // only string supported for start/end. ImFont.IsGlyphRangeUnused is uint
+                return; 
+            }
+            if (rangeParams.Any(tr => tr.Name.EndsWith("_end") && !defaultValues.ContainsKey(tr.Name)))
+            {
+                // there will be an overload where end is `null`. the non-null overload doesnt matter
                 return;
             }
 
@@ -514,9 +522,12 @@ namespace CodeGenerator
                     }
                     else
                     {
+                        var checkForNull = !hasDefault && !tr.Name.EndsWith("_begin");
+                        // for string _begin the pointer passed must be non-null, so we'll set up an empty string if needed
+                        
                         preCallLines.Add($"byte* {nativeArgName};");
                         preCallLines.Add($"int {correctedIdentifier}_byteCount = 0;");
-                        if (!hasDefault)
+                        if (checkForNull)
                         {
                             preCallLines.Add($"if ({textToEncode} != null)");
                             preCallLines.Add("{");
@@ -534,7 +545,7 @@ namespace CodeGenerator
                         preCallLines.Add($"    int {nativeArgName}_offset = Util.GetUtf8({textToEncode}, {nativeArgName}, {correctedIdentifier}_byteCount);");
                         preCallLines.Add($"    {nativeArgName}[{nativeArgName}_offset] = 0;");
 
-                        if (!hasDefault)
+                        if (checkForNull)
                         {
                             preCallLines.Add("}");
                             preCallLines.Add($"else {{ {nativeArgName} = null; }}");
