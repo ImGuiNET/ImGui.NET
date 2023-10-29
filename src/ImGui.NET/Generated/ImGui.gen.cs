@@ -3880,12 +3880,8 @@ namespace ImGuiNET
             for (int i = 0; i < items.Length; i++)
             {
                 string s = items[i];
-                fixed (char* sPtr = s)
-                {
-                    offset += Encoding.UTF8.GetBytes(sPtr, s.Length, native_items_data + offset, items_byteCounts[i]);
-                    native_items_data[offset] = 0;
-                    offset += 1;
-                }
+                offset += Util.GetUtf8(s, native_items_data + offset, items_byteCounts[i]);
+                native_items_data[offset++] = 0;
             }
             byte** native_items = stackalloc byte*[items.Length];
             offset = 0;
@@ -3939,12 +3935,8 @@ namespace ImGuiNET
             for (int i = 0; i < items.Length; i++)
             {
                 string s = items[i];
-                fixed (char* sPtr = s)
-                {
-                    offset += Encoding.UTF8.GetBytes(sPtr, s.Length, native_items_data + offset, items_byteCounts[i]);
-                    native_items_data[offset] = 0;
-                    offset += 1;
-                }
+                offset += Util.GetUtf8(s, native_items_data + offset, items_byteCounts[i]);
+                native_items_data[offset++] = 0;
             }
             byte** native_items = stackalloc byte*[items.Length];
             offset = 0;
@@ -3998,12 +3990,8 @@ namespace ImGuiNET
             for (int i = 0; i < items.Length; i++)
             {
                 string s = items[i];
-                fixed (char* sPtr = s)
-                {
-                    offset += Encoding.UTF8.GetBytes(sPtr, s.Length, native_items_data + offset, items_byteCounts[i]);
-                    native_items_data[offset] = 0;
-                    offset += 1;
-                }
+                offset += Util.GetUtf8(s, native_items_data + offset, items_byteCounts[i]);
+                native_items_data[offset++] = 0;
             }
             byte** native_items = stackalloc byte*[items.Length];
             offset = 0;
@@ -4056,12 +4044,8 @@ namespace ImGuiNET
             for (int i = 0; i < items.Length; i++)
             {
                 string s = items[i];
-                fixed (char* sPtr = s)
-                {
-                    offset += Encoding.UTF8.GetBytes(sPtr, s.Length, native_items_data + offset, items_byteCounts[i]);
-                    native_items_data[offset] = 0;
-                    offset += 1;
-                }
+                offset += Util.GetUtf8(s, native_items_data + offset, items_byteCounts[i]);
+                native_items_data[offset++] = 0;
             }
             byte** native_items = stackalloc byte*[items.Length];
             offset = 0;
@@ -17108,12 +17092,8 @@ namespace ImGuiNET
             for (int i = 0; i < items.Length; i++)
             {
                 string s = items[i];
-                fixed (char* sPtr = s)
-                {
-                    offset += Encoding.UTF8.GetBytes(sPtr, s.Length, native_items_data + offset, items_byteCounts[i]);
-                    native_items_data[offset] = 0;
-                    offset += 1;
-                }
+                offset += Util.GetUtf8(s, native_items_data + offset, items_byteCounts[i]);
+                native_items_data[offset++] = 0;
             }
             byte** native_items = stackalloc byte*[items.Length];
             offset = 0;
@@ -17167,12 +17147,8 @@ namespace ImGuiNET
             for (int i = 0; i < items.Length; i++)
             {
                 string s = items[i];
-                fixed (char* sPtr = s)
-                {
-                    offset += Encoding.UTF8.GetBytes(sPtr, s.Length, native_items_data + offset, items_byteCounts[i]);
-                    native_items_data[offset] = 0;
-                    offset += 1;
-                }
+                offset += Util.GetUtf8(s, native_items_data + offset, items_byteCounts[i]);
+                native_items_data[offset++] = 0;
             }
             byte** native_items = stackalloc byte*[items.Length];
             offset = 0;
@@ -17226,12 +17202,8 @@ namespace ImGuiNET
             for (int i = 0; i < items.Length; i++)
             {
                 string s = items[i];
-                fixed (char* sPtr = s)
-                {
-                    offset += Encoding.UTF8.GetBytes(sPtr, s.Length, native_items_data + offset, items_byteCounts[i]);
-                    native_items_data[offset] = 0;
-                    offset += 1;
-                }
+                offset += Util.GetUtf8(s, native_items_data + offset, items_byteCounts[i]);
+                native_items_data[offset++] = 0;
             }
             byte** native_items = stackalloc byte*[items.Length];
             offset = 0;
@@ -17284,12 +17256,8 @@ namespace ImGuiNET
             for (int i = 0; i < items.Length; i++)
             {
                 string s = items[i];
-                fixed (char* sPtr = s)
-                {
-                    offset += Encoding.UTF8.GetBytes(sPtr, s.Length, native_items_data + offset, items_byteCounts[i]);
-                    native_items_data[offset] = 0;
-                    offset += 1;
-                }
+                offset += Util.GetUtf8(s, native_items_data + offset, items_byteCounts[i]);
+                native_items_data[offset++] = 0;
             }
             byte** native_items = stackalloc byte*[items.Length];
             offset = 0;

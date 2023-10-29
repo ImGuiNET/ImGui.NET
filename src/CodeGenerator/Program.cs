@@ -576,12 +576,8 @@ namespace CodeGenerator
                     preCallLines.Add($"for (int i = 0; i < {correctedIdentifier}.Length; i++)");
                     preCallLines.Add("{");
                     preCallLines.Add($"    string s = {correctedIdentifier}[i];");
-                    preCallLines.Add($"    fixed (char* sPtr = s)");
-                    preCallLines.Add("    {");
-                    preCallLines.Add($"        offset += Encoding.UTF8.GetBytes(sPtr, s.Length, {nativeArgName}_data + offset, {correctedIdentifier}_byteCounts[i]);");
-                    preCallLines.Add($"        {nativeArgName}_data[offset] = 0;");
-                    preCallLines.Add($"        offset += 1;");
-                    preCallLines.Add("    }");
+                    preCallLines.Add($"    offset += Util.GetUtf8(s, {nativeArgName}_data + offset, {correctedIdentifier}_byteCounts[i]);");
+                    preCallLines.Add($"    {nativeArgName}_data[offset++] = 0;");
                     preCallLines.Add("}");
 
                     preCallLines.Add($"byte** {nativeArgName} = stackalloc byte*[{correctedIdentifier}.Length];");
