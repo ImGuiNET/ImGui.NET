@@ -310,6 +310,34 @@ namespace imnodesNET
         {
             imnodesNative.imnodes_Link(id, start_attribute_id, end_attribute_id);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void LoadCurrentEditorStateFromIniFile(ReadOnlySpan<char> file_name)
+        {
+            byte* native_file_name;
+            int file_name_byteCount = 0;
+            if (file_name != null)
+            {
+                file_name_byteCount = Encoding.UTF8.GetByteCount(file_name);
+                if (file_name_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_file_name = Util.Allocate(file_name_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_file_name_stackBytes = stackalloc byte[file_name_byteCount + 1];
+                    native_file_name = native_file_name_stackBytes;
+                }
+                int native_file_name_offset = Util.GetUtf8(file_name, native_file_name, file_name_byteCount);
+                native_file_name[native_file_name_offset] = 0;
+            }
+            else { native_file_name = null; }
+            imnodesNative.imnodes_LoadCurrentEditorStateFromIniFile(native_file_name);
+            if (file_name_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_file_name);
+            }
+        }
+#endif
         public static void LoadCurrentEditorStateFromIniFile(string file_name)
         {
             byte* native_file_name;
@@ -336,6 +364,34 @@ namespace imnodesNET
                 Util.Free(native_file_name);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void LoadCurrentEditorStateFromIniString(ReadOnlySpan<char> data, uint data_size)
+        {
+            byte* native_data;
+            int data_byteCount = 0;
+            if (data != null)
+            {
+                data_byteCount = Encoding.UTF8.GetByteCount(data);
+                if (data_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_data = Util.Allocate(data_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_data_stackBytes = stackalloc byte[data_byteCount + 1];
+                    native_data = native_data_stackBytes;
+                }
+                int native_data_offset = Util.GetUtf8(data, native_data, data_byteCount);
+                native_data[native_data_offset] = 0;
+            }
+            else { native_data = null; }
+            imnodesNative.imnodes_LoadCurrentEditorStateFromIniString(native_data, data_size);
+            if (data_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_data);
+            }
+        }
+#endif
         public static void LoadCurrentEditorStateFromIniString(string data, uint data_size)
         {
             byte* native_data;
@@ -362,6 +418,34 @@ namespace imnodesNET
                 Util.Free(native_data);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void LoadEditorStateFromIniFile(IntPtr editor, ReadOnlySpan<char> file_name)
+        {
+            byte* native_file_name;
+            int file_name_byteCount = 0;
+            if (file_name != null)
+            {
+                file_name_byteCount = Encoding.UTF8.GetByteCount(file_name);
+                if (file_name_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_file_name = Util.Allocate(file_name_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_file_name_stackBytes = stackalloc byte[file_name_byteCount + 1];
+                    native_file_name = native_file_name_stackBytes;
+                }
+                int native_file_name_offset = Util.GetUtf8(file_name, native_file_name, file_name_byteCount);
+                native_file_name[native_file_name_offset] = 0;
+            }
+            else { native_file_name = null; }
+            imnodesNative.imnodes_LoadEditorStateFromIniFile(editor, native_file_name);
+            if (file_name_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_file_name);
+            }
+        }
+#endif
         public static void LoadEditorStateFromIniFile(IntPtr editor, string file_name)
         {
             byte* native_file_name;
@@ -388,6 +472,34 @@ namespace imnodesNET
                 Util.Free(native_file_name);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void LoadEditorStateFromIniString(IntPtr editor, ReadOnlySpan<char> data, uint data_size)
+        {
+            byte* native_data;
+            int data_byteCount = 0;
+            if (data != null)
+            {
+                data_byteCount = Encoding.UTF8.GetByteCount(data);
+                if (data_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_data = Util.Allocate(data_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_data_stackBytes = stackalloc byte[data_byteCount + 1];
+                    native_data = native_data_stackBytes;
+                }
+                int native_data_offset = Util.GetUtf8(data, native_data, data_byteCount);
+                native_data[native_data_offset] = 0;
+            }
+            else { native_data = null; }
+            imnodesNative.imnodes_LoadEditorStateFromIniString(editor, native_data, data_size);
+            if (data_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_data);
+            }
+        }
+#endif
         public static void LoadEditorStateFromIniString(IntPtr editor, string data, uint data_size)
         {
             byte* native_data;
@@ -448,6 +560,34 @@ namespace imnodesNET
         {
             imnodesNative.imnodes_PushStyleVar(style_item, value);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SaveCurrentEditorStateToIniFile(ReadOnlySpan<char> file_name)
+        {
+            byte* native_file_name;
+            int file_name_byteCount = 0;
+            if (file_name != null)
+            {
+                file_name_byteCount = Encoding.UTF8.GetByteCount(file_name);
+                if (file_name_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_file_name = Util.Allocate(file_name_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_file_name_stackBytes = stackalloc byte[file_name_byteCount + 1];
+                    native_file_name = native_file_name_stackBytes;
+                }
+                int native_file_name_offset = Util.GetUtf8(file_name, native_file_name, file_name_byteCount);
+                native_file_name[native_file_name_offset] = 0;
+            }
+            else { native_file_name = null; }
+            imnodesNative.imnodes_SaveCurrentEditorStateToIniFile(native_file_name);
+            if (file_name_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_file_name);
+            }
+        }
+#endif
         public static void SaveCurrentEditorStateToIniFile(string file_name)
         {
             byte* native_file_name;
@@ -488,6 +628,34 @@ namespace imnodesNET
                 return Util.StringFromPtr(ret);
             }
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public static void SaveEditorStateToIniFile(IntPtr editor, ReadOnlySpan<char> file_name)
+        {
+            byte* native_file_name;
+            int file_name_byteCount = 0;
+            if (file_name != null)
+            {
+                file_name_byteCount = Encoding.UTF8.GetByteCount(file_name);
+                if (file_name_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_file_name = Util.Allocate(file_name_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_file_name_stackBytes = stackalloc byte[file_name_byteCount + 1];
+                    native_file_name = native_file_name_stackBytes;
+                }
+                int native_file_name_offset = Util.GetUtf8(file_name, native_file_name, file_name_byteCount);
+                native_file_name[native_file_name_offset] = 0;
+            }
+            else { native_file_name = null; }
+            imnodesNative.imnodes_SaveEditorStateToIniFile(editor, native_file_name);
+            if (file_name_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_file_name);
+            }
+        }
+#endif
         public static void SaveEditorStateToIniFile(IntPtr editor, string file_name)
         {
             byte* native_file_name;
