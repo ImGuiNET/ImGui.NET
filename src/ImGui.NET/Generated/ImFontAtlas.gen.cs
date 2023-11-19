@@ -519,52 +519,52 @@ namespace ImGuiNET
             }
             return new ImFontPtr(ret);
         }
-        public ImFontPtr AddFontFromMemoryCompressedTTF(IntPtr compressed_font_data, int compressed_font_size, float size_pixels)
+        public ImFontPtr AddFontFromMemoryCompressedTTF(IntPtr compressed_font_data, int compressed_font_data_size, float size_pixels)
         {
             void* native_compressed_font_data = (void*)compressed_font_data.ToPointer();
             ImFontConfig* font_cfg = null;
             ushort* glyph_ranges = null;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedTTF((ImFontAtlas*)(NativePtr), native_compressed_font_data, compressed_font_size, size_pixels, font_cfg, glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedTTF((ImFontAtlas*)(NativePtr), native_compressed_font_data, compressed_font_data_size, size_pixels, font_cfg, glyph_ranges);
             return new ImFontPtr(ret);
         }
-        public ImFontPtr AddFontFromMemoryCompressedTTF(IntPtr compressed_font_data, int compressed_font_size, float size_pixels, ImFontConfigPtr font_cfg)
+        public ImFontPtr AddFontFromMemoryCompressedTTF(IntPtr compressed_font_data, int compressed_font_data_size, float size_pixels, ImFontConfigPtr font_cfg)
         {
             void* native_compressed_font_data = (void*)compressed_font_data.ToPointer();
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* glyph_ranges = null;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedTTF((ImFontAtlas*)(NativePtr), native_compressed_font_data, compressed_font_size, size_pixels, native_font_cfg, glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedTTF((ImFontAtlas*)(NativePtr), native_compressed_font_data, compressed_font_data_size, size_pixels, native_font_cfg, glyph_ranges);
             return new ImFontPtr(ret);
         }
-        public ImFontPtr AddFontFromMemoryCompressedTTF(IntPtr compressed_font_data, int compressed_font_size, float size_pixels, ImFontConfigPtr font_cfg, IntPtr glyph_ranges)
+        public ImFontPtr AddFontFromMemoryCompressedTTF(IntPtr compressed_font_data, int compressed_font_data_size, float size_pixels, ImFontConfigPtr font_cfg, IntPtr glyph_ranges)
         {
             void* native_compressed_font_data = (void*)compressed_font_data.ToPointer();
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* native_glyph_ranges = (ushort*)glyph_ranges.ToPointer();
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedTTF((ImFontAtlas*)(NativePtr), native_compressed_font_data, compressed_font_size, size_pixels, native_font_cfg, native_glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryCompressedTTF((ImFontAtlas*)(NativePtr), native_compressed_font_data, compressed_font_data_size, size_pixels, native_font_cfg, native_glyph_ranges);
             return new ImFontPtr(ret);
         }
-        public ImFontPtr AddFontFromMemoryTTF(IntPtr font_data, int font_size, float size_pixels)
+        public ImFontPtr AddFontFromMemoryTTF(IntPtr font_data, int font_data_size, float size_pixels)
         {
             void* native_font_data = (void*)font_data.ToPointer();
             ImFontConfig* font_cfg = null;
             ushort* glyph_ranges = null;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF((ImFontAtlas*)(NativePtr), native_font_data, font_size, size_pixels, font_cfg, glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF((ImFontAtlas*)(NativePtr), native_font_data, font_data_size, size_pixels, font_cfg, glyph_ranges);
             return new ImFontPtr(ret);
         }
-        public ImFontPtr AddFontFromMemoryTTF(IntPtr font_data, int font_size, float size_pixels, ImFontConfigPtr font_cfg)
+        public ImFontPtr AddFontFromMemoryTTF(IntPtr font_data, int font_data_size, float size_pixels, ImFontConfigPtr font_cfg)
         {
             void* native_font_data = (void*)font_data.ToPointer();
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* glyph_ranges = null;
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF((ImFontAtlas*)(NativePtr), native_font_data, font_size, size_pixels, native_font_cfg, glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF((ImFontAtlas*)(NativePtr), native_font_data, font_data_size, size_pixels, native_font_cfg, glyph_ranges);
             return new ImFontPtr(ret);
         }
-        public ImFontPtr AddFontFromMemoryTTF(IntPtr font_data, int font_size, float size_pixels, ImFontConfigPtr font_cfg, IntPtr glyph_ranges)
+        public ImFontPtr AddFontFromMemoryTTF(IntPtr font_data, int font_data_size, float size_pixels, ImFontConfigPtr font_cfg, IntPtr glyph_ranges)
         {
             void* native_font_data = (void*)font_data.ToPointer();
             ImFontConfig* native_font_cfg = font_cfg.NativePtr;
             ushort* native_glyph_ranges = (ushort*)glyph_ranges.ToPointer();
-            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF((ImFontAtlas*)(NativePtr), native_font_data, font_size, size_pixels, native_font_cfg, native_glyph_ranges);
+            ImFont* ret = ImGuiNative.ImFontAtlas_AddFontFromMemoryTTF((ImFontAtlas*)(NativePtr), native_font_data, font_data_size, size_pixels, native_font_cfg, native_glyph_ranges);
             return new ImFontPtr(ret);
         }
         public bool Build()

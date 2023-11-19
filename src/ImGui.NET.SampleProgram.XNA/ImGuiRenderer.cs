@@ -258,7 +258,7 @@ namespace ImGuiNET.SampleProgram.XNA
                 Keys.Subtract => ImGuiKey.KeypadSubtract,
                 Keys.Decimal => ImGuiKey.KeypadDecimal,
                 Keys.Divide => ImGuiKey.KeypadDivide,
-                >= Keys.F1 and <= Keys.F12 => ImGuiKey.F1 + (key - Keys.F1),
+                >= Keys.F1 and <= Keys.F24 => ImGuiKey.F1 + (key - Keys.F1),
                 Keys.NumLock => ImGuiKey.NumLock,
                 Keys.Scroll => ImGuiKey.ScrollLock,
                 Keys.LeftShift => ImGuiKey.ModShift,
@@ -275,6 +275,8 @@ namespace ImGuiNET.SampleProgram.XNA
                 Keys.OemCloseBrackets => ImGuiKey.RightBracket,
                 Keys.OemPipe => ImGuiKey.Backslash,
                 Keys.OemQuotes => ImGuiKey.Apostrophe,
+                Keys.BrowserBack => ImGuiKey.AppBack,
+                Keys.BrowserForward => ImGuiKey.AppForward,
                 _ => ImGuiKey.None,
             };
 

@@ -5,10 +5,11 @@ namespace ImGuiNET
     {
         None = 0,
         KeepAliveOnly = 1,
-        NoDockingInCentralNode = 4,
+        NoDockingOverCentralNode = 4,
         PassthruCentralNode = 8,
-        NoSplit = 16,
+        NoDockingSplit = 16,
         NoResize = 32,
         AutoHideTabBar = 64,
+        NoUndocking = 128,
     }
 }

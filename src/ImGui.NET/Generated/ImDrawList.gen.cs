@@ -145,6 +145,43 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawList_AddDrawCmd((ImDrawList*)(NativePtr));
         }
+        public void AddEllipse(Vector2 center, float radius_x, float radius_y, uint col)
+        {
+            float rot = 0.0f;
+            int num_segments = 0;
+            float thickness = 1.0f;
+            ImGuiNative.ImDrawList_AddEllipse((ImDrawList*)(NativePtr), center, radius_x, radius_y, col, rot, num_segments, thickness);
+        }
+        public void AddEllipse(Vector2 center, float radius_x, float radius_y, uint col, float rot)
+        {
+            int num_segments = 0;
+            float thickness = 1.0f;
+            ImGuiNative.ImDrawList_AddEllipse((ImDrawList*)(NativePtr), center, radius_x, radius_y, col, rot, num_segments, thickness);
+        }
+        public void AddEllipse(Vector2 center, float radius_x, float radius_y, uint col, float rot, int num_segments)
+        {
+            float thickness = 1.0f;
+            ImGuiNative.ImDrawList_AddEllipse((ImDrawList*)(NativePtr), center, radius_x, radius_y, col, rot, num_segments, thickness);
+        }
+        public void AddEllipse(Vector2 center, float radius_x, float radius_y, uint col, float rot, int num_segments, float thickness)
+        {
+            ImGuiNative.ImDrawList_AddEllipse((ImDrawList*)(NativePtr), center, radius_x, radius_y, col, rot, num_segments, thickness);
+        }
+        public void AddEllipseFilled(Vector2 center, float radius_x, float radius_y, uint col)
+        {
+            float rot = 0.0f;
+            int num_segments = 0;
+            ImGuiNative.ImDrawList_AddEllipseFilled((ImDrawList*)(NativePtr), center, radius_x, radius_y, col, rot, num_segments);
+        }
+        public void AddEllipseFilled(Vector2 center, float radius_x, float radius_y, uint col, float rot)
+        {
+            int num_segments = 0;
+            ImGuiNative.ImDrawList_AddEllipseFilled((ImDrawList*)(NativePtr), center, radius_x, radius_y, col, rot, num_segments);
+        }
+        public void AddEllipseFilled(Vector2 center, float radius_x, float radius_y, uint col, float rot, int num_segments)
+        {
+            ImGuiNative.ImDrawList_AddEllipseFilled((ImDrawList*)(NativePtr), center, radius_x, radius_y, col, rot, num_segments);
+        }
         public void AddImage(IntPtr user_texture_id, Vector2 p_min, Vector2 p_max)
         {
             Vector2 uv_min = new Vector2();
@@ -580,6 +617,15 @@ namespace ImGuiNET
         public void PathClear()
         {
             ImGuiNative.ImDrawList_PathClear((ImDrawList*)(NativePtr));
+        }
+        public void PathEllipticalArcTo(Vector2 center, float radius_x, float radius_y, float rot, float a_min, float a_max)
+        {
+            int num_segments = 0;
+            ImGuiNative.ImDrawList_PathEllipticalArcTo((ImDrawList*)(NativePtr), center, radius_x, radius_y, rot, a_min, a_max, num_segments);
+        }
+        public void PathEllipticalArcTo(Vector2 center, float radius_x, float radius_y, float rot, float a_min, float a_max, int num_segments)
+        {
+            ImGuiNative.ImDrawList_PathEllipticalArcTo((ImDrawList*)(NativePtr), center, radius_x, radius_y, rot, a_min, a_max, num_segments);
         }
         public void PathFillConvex(uint col)
         {

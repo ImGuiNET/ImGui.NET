@@ -22,6 +22,7 @@ namespace ImGuiNET
         PreferSortDescending = 32768,
         IndentEnable = 65536,
         IndentDisable = 131072,
+        AngledHeader = 262144,
         IsEnabled = 16777216,
         IsVisible = 33554432,
         IsSorted = 67108864,
