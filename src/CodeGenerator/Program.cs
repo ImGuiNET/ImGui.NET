@@ -373,6 +373,12 @@ namespace CodeGenerator
                         }
                         if (exportedName.Contains("~")) { continue; }
                         if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
+                        
+                        if ((overload.FriendlyName == "GetID" || overload.FriendlyName == "PushID") && overload.Parameters.Length > 1)
+                        {
+                            // skip ImGui.Get/PushID(start, end) overloads as they would overlap with existing
+                            continue;
+                        }
 
                         bool hasVaList = false;
                         for (int i = 0; i < overload.Parameters.Length; i++)
@@ -448,9 +454,22 @@ namespace CodeGenerator
             string selfName,
             string classPrefix)
         {
-            if (overload.Parameters.Where(tr => tr.Name.EndsWith("_begin") || tr.Name.EndsWith("_end"))
-                .Any(tr => !defaultValues.ContainsKey(tr.Name)))
+            var rangeParams = overload.Parameters.Where(tr => 
+                tr.Name.EndsWith("_begin") || 
+                tr.Name.EndsWith("_end")).ToArray();
+            if (rangeParams.Any(tr => tr.Type != "char*"))
             {
+                // only string supported for start/end. ImFont.IsGlyphRangeUnused is uint
+                return; 
+            }
+            if (rangeParams.Any(tr => tr.Name.EndsWith("_end") && defaultValues.ContainsKey(tr.Name)))
+            {
+                // we want overloads:
+                // (something, text_start, text_end (deleted), after=default)
+                // (something, text_start, text_end (deleted), after)
+                
+                // we dont need (as it would be duplicate)
+                // (something, text_start, text_end=default (deleted))
                 return;
             }
 
@@ -514,9 +533,20 @@ namespace CodeGenerator
                     }
                     else
                     {
+                        if (tr.Name.EndsWith("_end"))
+                        {
+                            var startParamName = overload.Parameters[i-1].Name;
+                            var startNativeParamName = $"native_{startParamName}";
+                            marshalledParameters[i] = new MarshalledParameter(nativeTypeName, false, $"{startNativeParamName}+{startParamName}_byteCount", false);
+                            continue;
+                        }
+                        
+                        var checkForNull = !hasDefault && !tr.Name.EndsWith("_begin");
+                        // for string _begin the pointer passed must be non-null, so we'll set up an empty string if needed
+                        
                         preCallLines.Add($"byte* {nativeArgName};");
                         preCallLines.Add($"int {correctedIdentifier}_byteCount = 0;");
-                        if (!hasDefault)
+                        if (checkForNull)
                         {
                             preCallLines.Add($"if ({textToEncode} != null)");
                             preCallLines.Add("{");
@@ -534,7 +564,7 @@ namespace CodeGenerator
                         preCallLines.Add($"    int {nativeArgName}_offset = Util.GetUtf8({textToEncode}, {nativeArgName}, {correctedIdentifier}_byteCount);");
                         preCallLines.Add($"    {nativeArgName}[{nativeArgName}_offset] = 0;");
 
-                        if (!hasDefault)
+                        if (checkForNull)
                         {
                             preCallLines.Add("}");
                             preCallLines.Add($"else {{ {nativeArgName} = null; }}");
@@ -576,12 +606,8 @@ namespace CodeGenerator
                     preCallLines.Add($"for (int i = 0; i < {correctedIdentifier}.Length; i++)");
                     preCallLines.Add("{");
                     preCallLines.Add($"    string s = {correctedIdentifier}[i];");
-                    preCallLines.Add($"    fixed (char* sPtr = s)");
-                    preCallLines.Add("    {");
-                    preCallLines.Add($"        offset += Encoding.UTF8.GetBytes(sPtr, s.Length, {nativeArgName}_data + offset, {correctedIdentifier}_byteCounts[i]);");
-                    preCallLines.Add($"        {nativeArgName}_data[offset] = 0;");
-                    preCallLines.Add($"        offset += 1;");
-                    preCallLines.Add("    }");
+                    preCallLines.Add($"    offset += Util.GetUtf8(s, {nativeArgName}_data + offset, {correctedIdentifier}_byteCounts[i]);");
+                    preCallLines.Add($"    {nativeArgName}_data[offset++] = 0;");
                     preCallLines.Add("}");
 
                     preCallLines.Add($"byte** {nativeArgName} = stackalloc byte*[{correctedIdentifier}.Length];");

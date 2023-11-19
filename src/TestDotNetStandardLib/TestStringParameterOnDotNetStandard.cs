@@ -7,6 +7,8 @@ namespace TestDotNetStandardLib
 		public static void Text()
 		{
 			ImGui.Text(".NET Standard 2.0 test!");
+			ImGui.GetWindowDrawList().AddText(ImGui.GetCursorScreenPos(), uint.MaxValue, "DrawList works on .NET Standard too");
+			ImGui.NewLine();
 		}
 	}
 }

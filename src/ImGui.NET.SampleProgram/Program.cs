@@ -223,6 +223,14 @@ namespace ImGuiNET
             ImGui.Text($"Hello, world {Random.Shared.Next(100)}!".AsSpan()); // Note that this call will STILL allocate memory due to string interpolation, but you can prevent that from happening by using an InterpolatedStringHandler.
             long allocBytesSpanEnd = GC.GetAllocatedBytesForCurrentThread() - allocBytesSpanStart;
             Console.WriteLine("GC (span): " + allocBytesSpanEnd);
+            
+            ImGui.Text("Empty span:");
+            ImGui.SameLine();
+            ImGui.GetWindowDrawList().AddText(ImGui.GetCursorScreenPos(), uint.MaxValue, ReadOnlySpan<char>.Empty);
+            ImGui.NewLine();
+            ImGui.GetWindowDrawList().AddText(ImGui.GetCursorScreenPos(), uint.MaxValue, $"{ImGui.CalcTextSize("h")}");
+            ImGui.NewLine();
+            ImGui.TextUnformatted("TextUnformatted now passes end ptr but isn't cut off");
         }
     }
 }

@@ -198,8 +198,7 @@ namespace ImGuiNET
                 native_text[native_text_offset] = 0;
             }
             else { native_text = null; }
-            byte* native_text_end = null;
-            byte ret = ImGuiNative.ImGuiTextFilter_PassFilter((ImGuiTextFilter*)(NativePtr), native_text, native_text_end);
+            byte ret = ImGuiNative.ImGuiTextFilter_PassFilter((ImGuiTextFilter*)(NativePtr), native_text, native_text+text_byteCount);
             if (text_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_text);
@@ -227,8 +226,7 @@ namespace ImGuiNET
                 native_text[native_text_offset] = 0;
             }
             else { native_text = null; }
-            byte* native_text_end = null;
-            byte ret = ImGuiNative.ImGuiTextFilter_PassFilter((ImGuiTextFilter*)(NativePtr), native_text, native_text_end);
+            byte ret = ImGuiNative.ImGuiTextFilter_PassFilter((ImGuiTextFilter*)(NativePtr), native_text, native_text+text_byteCount);
             if (text_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_text);

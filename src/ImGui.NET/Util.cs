@@ -45,6 +45,7 @@ namespace ImGuiNET
             {
                 throw new ArgumentOutOfRangeException();
             }
+            if(s.Length == 0) return 0;
 
             fixed (char* utf16Ptr = s)
             {
@@ -85,6 +86,7 @@ namespace ImGuiNET
             {
                 throw new ArgumentOutOfRangeException();
             }
+            if (s.Length == 0) return 0;
 
             fixed (char* utf16Ptr = s)
             {
