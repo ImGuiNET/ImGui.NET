@@ -107,6 +107,8 @@ namespace ImGuiNET
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte igDebugCheckVersionAndDataLayout(byte* version_str, uint sz_io, uint sz_style, uint sz_vec2, uint sz_vec4, uint sz_drawvert, uint sz_drawidx);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void igDebugFlashStyleColor(ImGuiCol idx);
+        [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igDebugTextEncoding(byte* text);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern void igDestroyContext(IntPtr ctx);
@@ -323,7 +325,7 @@ namespace ImGuiNET
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern float igGetWindowWidth();
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void igImage(IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1, Vector4 tint_col, Vector4 border_col);
+        public static extern void igImage(IntPtr user_texture_id, Vector2 image_size, Vector2 uv0, Vector2 uv1, Vector4 tint_col, Vector4 border_col);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]
         public static extern byte igImageButton(byte* str_id, IntPtr user_texture_id, Vector2 image_size, Vector2 uv0, Vector2 uv1, Vector4 bg_col, Vector4 tint_col);
         [DllImport("cimgui", CallingConvention = CallingConvention.Cdecl)]

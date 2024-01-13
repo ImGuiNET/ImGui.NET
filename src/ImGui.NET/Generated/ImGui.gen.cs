@@ -4513,6 +4513,10 @@ namespace ImGuiNET
             }
             return ret != 0;
         }
+        public static void DebugFlashStyleColor(ImGuiCol idx)
+        {
+            ImGuiNative.igDebugFlashStyleColor(idx);
+        }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static void DebugTextEncoding(ReadOnlySpan<char> text)
         {
@@ -12897,35 +12901,35 @@ namespace ImGuiNET
             float ret = ImGuiNative.igGetWindowWidth();
             return ret;
         }
-        public static void Image(IntPtr user_texture_id, Vector2 size)
+        public static void Image(IntPtr user_texture_id, Vector2 image_size)
         {
             Vector2 uv0 = new Vector2();
             Vector2 uv1 = new Vector2(1, 1);
             Vector4 tint_col = new Vector4(1, 1, 1, 1);
             Vector4 border_col = new Vector4();
-            ImGuiNative.igImage(user_texture_id, size, uv0, uv1, tint_col, border_col);
+            ImGuiNative.igImage(user_texture_id, image_size, uv0, uv1, tint_col, border_col);
         }
-        public static void Image(IntPtr user_texture_id, Vector2 size, Vector2 uv0)
+        public static void Image(IntPtr user_texture_id, Vector2 image_size, Vector2 uv0)
         {
             Vector2 uv1 = new Vector2(1, 1);
             Vector4 tint_col = new Vector4(1, 1, 1, 1);
             Vector4 border_col = new Vector4();
-            ImGuiNative.igImage(user_texture_id, size, uv0, uv1, tint_col, border_col);
+            ImGuiNative.igImage(user_texture_id, image_size, uv0, uv1, tint_col, border_col);
         }
-        public static void Image(IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1)
+        public static void Image(IntPtr user_texture_id, Vector2 image_size, Vector2 uv0, Vector2 uv1)
         {
             Vector4 tint_col = new Vector4(1, 1, 1, 1);
             Vector4 border_col = new Vector4();
-            ImGuiNative.igImage(user_texture_id, size, uv0, uv1, tint_col, border_col);
+            ImGuiNative.igImage(user_texture_id, image_size, uv0, uv1, tint_col, border_col);
         }
-        public static void Image(IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1, Vector4 tint_col)
+        public static void Image(IntPtr user_texture_id, Vector2 image_size, Vector2 uv0, Vector2 uv1, Vector4 tint_col)
         {
             Vector4 border_col = new Vector4();
-            ImGuiNative.igImage(user_texture_id, size, uv0, uv1, tint_col, border_col);
+            ImGuiNative.igImage(user_texture_id, image_size, uv0, uv1, tint_col, border_col);
         }
-        public static void Image(IntPtr user_texture_id, Vector2 size, Vector2 uv0, Vector2 uv1, Vector4 tint_col, Vector4 border_col)
+        public static void Image(IntPtr user_texture_id, Vector2 image_size, Vector2 uv0, Vector2 uv1, Vector4 tint_col, Vector4 border_col)
         {
-            ImGuiNative.igImage(user_texture_id, size, uv0, uv1, tint_col, border_col);
+            ImGuiNative.igImage(user_texture_id, image_size, uv0, uv1, tint_col, border_col);
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static bool ImageButton(ReadOnlySpan<char> str_id, IntPtr user_texture_id, Vector2 image_size)
