@@ -42,6 +42,7 @@ namespace ImGuiNET
         public float MouseDragThreshold;
         public float KeyRepeatDelay;
         public float KeyRepeatRate;
+        public byte ConfigDebugIsDebuggerPresent;
         public byte ConfigDebugBeginReturnValueOnce;
         public byte ConfigDebugBeginReturnValueLoop;
         public byte ConfigDebugIgnoreFocusLoss;
@@ -311,6 +312,7 @@ namespace ImGuiNET
         public ref float MouseDragThreshold => ref Unsafe.AsRef<float>(&NativePtr->MouseDragThreshold);
         public ref float KeyRepeatDelay => ref Unsafe.AsRef<float>(&NativePtr->KeyRepeatDelay);
         public ref float KeyRepeatRate => ref Unsafe.AsRef<float>(&NativePtr->KeyRepeatRate);
+        public ref bool ConfigDebugIsDebuggerPresent => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugIsDebuggerPresent);
         public ref bool ConfigDebugBeginReturnValueOnce => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugBeginReturnValueOnce);
         public ref bool ConfigDebugBeginReturnValueLoop => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugBeginReturnValueLoop);
         public ref bool ConfigDebugIgnoreFocusLoss => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDebugIgnoreFocusLoss);

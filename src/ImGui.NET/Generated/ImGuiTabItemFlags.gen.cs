@@ -12,5 +12,6 @@ namespace ImGuiNET
         NoReorder = 32,
         Leading = 64,
         Trailing = 128,
+        NoAssumedClosure = 256,
     }
 }
