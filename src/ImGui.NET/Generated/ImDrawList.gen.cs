@@ -134,9 +134,9 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawList_AddCircleFilled((ImDrawList*)(NativePtr), center, radius, col, num_segments);
         }
-        public void AddConvexPolyFilled(ref Vector2 points, int num_points, uint col)
+        public void AddConvexPolyFilled(Vector2[] points, int num_points, uint col)
         {
-            fixed (Vector2* native_points = &points)
+            fixed (Vector2* native_points = points)
             {
                 ImGuiNative.ImDrawList_AddConvexPolyFilled((ImDrawList*)(NativePtr), native_points, num_points, col);
             }
@@ -274,9 +274,9 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawList_AddNgonFilled((ImDrawList*)(NativePtr), center, radius, col, num_segments);
         }
-        public void AddPolyline(ref Vector2 points, int num_points, uint col, ImDrawFlags flags, float thickness)
+        public void AddPolyline(Vector2[] points, int num_points, uint col, ImDrawFlags flags, float thickness)
         {
-            fixed (Vector2* native_points = &points)
+            fixed (Vector2* native_points = points)
             {
                 ImGuiNative.ImDrawList_AddPolyline((ImDrawList*)(NativePtr), native_points, num_points, col, flags, thickness);
             }
