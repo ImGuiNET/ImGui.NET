@@ -13,9 +13,10 @@ namespace ImGuiNET
         NoFocusOnClick = 64,
         NoInputs = 128,
         NoRendererClear = 256,
-        TopMost = 512,
-        Minimized = 1024,
-        NoAutoMerge = 2048,
-        CanHostOtherWindows = 4096,
+        NoAutoMerge = 512,
+        TopMost = 1024,
+        CanHostOtherWindows = 2048,
+        IsMinimized = 4096,
+        IsFocused = 8192,
     }
 }

@@ -18,6 +18,7 @@ New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\linux-x64 | 
 New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\osx | Out-Null
 New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\win-x86 | Out-Null
 New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\win-x64 | Out-Null
+New-Item -ItemType Directory -Force -Path $PSScriptRoot\deps\cimgui\win-arm64 | Out-Null
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -45,6 +46,18 @@ if( -not $? )
 }
 
 Write-Host "- cimgui.dll (x64)"
+
+$client.DownloadFile(
+    "$repository/releases/download/$tag/cimgui.win-arm64.dll",
+    "$PSScriptRoot/deps/cimgui/win-arm64/$configuration/cimgui.dll")
+if( -not $? )
+{
+    $msg = $Error[0].Exception.Message
+    Write-Error "Couldn't download arm64 cimgui.dll. This most likely indicates the Windows native build failed."
+    exit
+}
+
+Write-Host "- cimgui.dll (arm64)"
 
 $client.DownloadFile(
     "$repository/releases/download/$tag/cimgui.so",
