@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Xml.Linq;
 
 namespace CodeGenerator
 {
@@ -228,21 +229,35 @@ namespace CodeGenerator
     {
         private readonly Dictionary<string, string> _sanitizedNames;
 
-        public string Name { get; }
-        public string FriendlyName { get; }
+        public string[] Names { get; }
+        public string[] FriendlyNames { get; }
         public EnumMember[] Members { get; }
 
         public EnumDefinition(string name, EnumMember[] elements)
         {
-            Name = name;
-            if (Name.EndsWith('_'))
+            if (TypeInfo.AlternateEnumPrefixes.TryGetValue(name, out string altName))
             {
-                FriendlyName = Name.Substring(0, Name.Length - 1);
+                Names = new[] { name, altName };
             }
             else
             {
-                FriendlyName = Name;
+                Names = new[] { name };
             }
+            FriendlyNames = new string[Names.Length];
+            for (int i = 0; i < Names.Length; i++)
+            {
+                string n = Names[i];
+                if (n.EndsWith('_'))
+                {
+                    FriendlyNames[i] = n.Substring(0, n.Length - 1);
+                }
+                else
+                {
+                    FriendlyNames[i] = n;
+                }
+
+            }
+
             Members = elements;
 
             _sanitizedNames = new Dictionary<string, string>();
@@ -265,12 +280,31 @@ namespace CodeGenerator
         private string SanitizeMemberName(string memberName)
         {
             string ret = memberName;
-            if (memberName.StartsWith(Name))
+            bool altSubstitution = false;
+
+            // Try alternate substitution first
+            foreach (KeyValuePair<string, string> substitutionPair in TypeInfo.AlternateEnumPrefixSubstitutions)
             {
-                ret = memberName.Substring(Name.Length);
-                if (ret.StartsWith("_"))
+                if (memberName.StartsWith(substitutionPair.Key))
                 {
-                    ret = ret.Substring(1);
+                    ret = ret.Replace(substitutionPair.Key, substitutionPair.Value);
+                    altSubstitution = true;
+                    break;
+                }
+            }
+
+            if (!altSubstitution)
+            {
+                foreach (string name in Names)
+                {
+                    if (memberName.StartsWith(name))
+                    {
+                        ret = memberName.Substring(name.Length);
+                        if (ret.StartsWith("_"))
+                        {
+                            ret = ret.Substring(1);
+                        }
+                    }
                 }
             }
 
@@ -279,7 +313,7 @@ namespace CodeGenerator
                 ret = ret.Substring(0, ret.Length - 1);
             }
 
-            if (Char.IsDigit(ret.First()))
+            if (char.IsDigit(ret.First()))
                 ret = "_" + ret;
 
             return ret;
@@ -375,7 +409,7 @@ namespace CodeGenerator
             
             TypeVariants = typeVariants;
 
-            IsEnum = enums.Any(t => t.Name == type || t.FriendlyName == type || TypeInfo.WellKnownEnums.Contains(type));
+            IsEnum = enums.Any(t => t.Names.Contains(type) || t.FriendlyNames.Contains(type) || TypeInfo.WellKnownEnums.Contains(type));
         }
         
         private int ParseSizeString(string sizePart, EnumDefinition[] enums)
@@ -394,7 +428,7 @@ namespace CodeGenerator
             {
                 foreach (EnumDefinition ed in enums)
                 {
-                    if (sizePart.StartsWith(ed.Name))
+                    if (ed.Names.Any(n => sizePart.StartsWith(n)))
                     {
                         foreach (EnumMember member in ed.Members)
                         {

@@ -25,8 +25,13 @@ namespace ImGuiNET
         GrabMinSize = 20,
         GrabRounding = 21,
         TabRounding = 22,
-        ButtonTextAlign = 23,
-        SelectableTextAlign = 24,
-        COUNT = 25,
+        TabBarBorderSize = 23,
+        ButtonTextAlign = 24,
+        SelectableTextAlign = 25,
+        SeparatorTextBorderSize = 26,
+        SeparatorTextAlign = 27,
+        SeparatorTextPadding = 28,
+        DockingSeparatorSize = 29,
+        COUNT = 30,
     }
 }

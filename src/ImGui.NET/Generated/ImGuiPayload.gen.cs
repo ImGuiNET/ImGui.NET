@@ -40,6 +40,35 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiPayload_destroy((ImGuiPayload*)(NativePtr));
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public bool IsDataType(ReadOnlySpan<char> type)
+        {
+            byte* native_type;
+            int type_byteCount = 0;
+            if (type != null)
+            {
+                type_byteCount = Encoding.UTF8.GetByteCount(type);
+                if (type_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_type = Util.Allocate(type_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_type_stackBytes = stackalloc byte[type_byteCount + 1];
+                    native_type = native_type_stackBytes;
+                }
+                int native_type_offset = Util.GetUtf8(type, native_type, type_byteCount);
+                native_type[native_type_offset] = 0;
+            }
+            else { native_type = null; }
+            byte ret = ImGuiNative.ImGuiPayload_IsDataType((ImGuiPayload*)(NativePtr), native_type);
+            if (type_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_type);
+            }
+            return ret != 0;
+        }
+#endif
         public bool IsDataType(string type)
         {
             byte* native_type;

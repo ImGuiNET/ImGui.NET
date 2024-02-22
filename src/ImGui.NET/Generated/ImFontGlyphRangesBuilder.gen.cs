@@ -27,6 +27,34 @@ namespace ImGuiNET
             ushort* native_ranges = (ushort*)ranges.ToPointer();
             ImGuiNative.ImFontGlyphRangesBuilder_AddRanges((ImFontGlyphRangesBuilder*)(NativePtr), native_ranges);
         }
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        public void AddText(ReadOnlySpan<char> text)
+        {
+            byte* native_text;
+            int text_byteCount = 0;
+            if (text != null)
+            {
+                text_byteCount = Encoding.UTF8.GetByteCount(text);
+                if (text_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_text = Util.Allocate(text_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_text_stackBytes = stackalloc byte[text_byteCount + 1];
+                    native_text = native_text_stackBytes;
+                }
+                int native_text_offset = Util.GetUtf8(text, native_text, text_byteCount);
+                native_text[native_text_offset] = 0;
+            }
+            else { native_text = null; }
+            ImGuiNative.ImFontGlyphRangesBuilder_AddText((ImFontGlyphRangesBuilder*)(NativePtr), native_text, native_text+text_byteCount);
+            if (text_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_text);
+            }
+        }
+#endif
         public void AddText(string text)
         {
             byte* native_text;
@@ -47,8 +75,7 @@ namespace ImGuiNET
                 native_text[native_text_offset] = 0;
             }
             else { native_text = null; }
-            byte* native_text_end = null;
-            ImGuiNative.ImFontGlyphRangesBuilder_AddText((ImFontGlyphRangesBuilder*)(NativePtr), native_text, native_text_end);
+            ImGuiNative.ImFontGlyphRangesBuilder_AddText((ImFontGlyphRangesBuilder*)(NativePtr), native_text, native_text+text_byteCount);
             if (text_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_text);
