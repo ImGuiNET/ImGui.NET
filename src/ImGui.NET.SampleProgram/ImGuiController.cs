@@ -1,4 +1,4 @@
-﻿using imnodesNET;
+using imnodesNET;
 using ImPlotNET;
 using System;
 using System.Collections.Generic;
@@ -67,6 +67,13 @@ namespace ImGuiNET
 			ImGui.SetCurrentContext(context);
 
 			imnodes.CreateContext();
+            /*IntPtr context = ImGui.CreateContext();
+            ImGui.SetCurrentContext(context);
+            ImGui.GetIO().BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
+            var fonts = ImGui.GetIO().Fonts;
+            ImGui.GetIO().Fonts.AddFontDefault();
+            
+            imnodes.CreateContext();*/
 			imnodes.SetImGuiContext(context);
 
 			ImPlot.CreateContext();
@@ -537,6 +544,13 @@ namespace ImGuiNET
 				vtx_offset += cmd_list.VtxBuffer.Size;
 			}
 		}
+                        /*cl.DrawIndexed(pcmd.ElemCount, 1, pcmd.IdxOffset + (uint)idx_offset, (int)pcmd.VtxOffset + vtx_offset, 0);
+                    }
+                }
+                vtx_offset += cmd_list.VtxBuffer.Size;
+                idx_offset += cmd_list.IdxBuffer.Size;
+            }
+        }*/
 
 		/// <summary>
 		/// Frees all graphics resources used by the renderer.
