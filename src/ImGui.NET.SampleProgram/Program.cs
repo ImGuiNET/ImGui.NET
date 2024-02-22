@@ -1,13 +1,16 @@
-﻿#define UIMGUI_USE_UNITY_MATHEMATICS
-
+﻿#if USE_IMNODES
 using imnodesNET;
+#endif
+
+#if USE_IMNODES
 using ImPlotNET;
-using System;
+#endif
+
 using System.Linq;
+using UnityEngine;
 using Veldrid;
 using Veldrid.Sdl2;
 using Veldrid.StartupUtilities;
-using UnityEngine;
 
 namespace ImGuiNET
 {
@@ -204,6 +207,7 @@ namespace ImGuiNET
 				//_memoryEditor.Draw("Memory Editor", _memoryEditorData, _memoryEditorData.Length);
 			}
 
+#if USE_IMPLOT
 			if (ImGui.Begin("Plot Test"))
 			{
 				ImGui.ColorEdit3("clear color", ref clear_color);
@@ -212,7 +216,9 @@ namespace ImGuiNET
 
 				ImGui.End();
 			}
+#endif
 
+#if USE_IMNODES
 			if (ImGui.Begin("Nodes Test"))
 			{
 				imnodes.BeginNodeEditor();
@@ -235,6 +241,7 @@ namespace ImGuiNET
 				imnodes.EndNodeEditor();
 				ImGui.End();
 			}
+#endif
 		}
 	}
 }

@@ -1,5 +1,11 @@
+#if USE_IMNODES
 using imnodesNET;
+#endif
+
+#if USE_IMPLOT
 using ImPlotNET;
+#endif
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -63,28 +69,34 @@ namespace ImGuiNET
 			_windowWidth = width;
 			_windowHeight = height;
 
-			ImGui.CreateContext();
+			IntPtr context = ImGui.CreateContext();
 			var io = ImGui.GetIO();
+			ImGui.SetCurrentContext(context);
+
 			io.BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
 			io.ConfigFlags |= ImGuiConfigFlags.NavEnableKeyboard |
 				ImGuiConfigFlags.DockingEnable;
 			io.Fonts.Flags |= ImFontAtlasFlags.NoBakedLines;
 
-			//imnodes.CreateContext();
-            /*IntPtr context = ImGui.CreateContext();
+			/*IntPtr context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
             ImGui.GetIO().BackendFlags |= ImGuiBackendFlags.RendererHasVtxOffset;
             var fonts = ImGui.GetIO().Fonts;
             ImGui.GetIO().Fonts.AddFontDefault();
             
-            imnodes.CreateContext();
-			imnodes.SetImGuiContext(context);
+			var fonts = ImGui.GetIO().Fonts;
+			ImGui.GetIO().Fonts.AddFontDefault();
+			*/
 
+#if USE_IMNODES
+			imnodes.CreateContext();
+			imnodes.SetImGuiContext(context);
+#endif
+
+#if USE_IMPLOT
 			ImPlot.CreateContext();
 			ImPlot.SetImGuiContext(context);
-
-			var fonts = ImGui.GetIO().Fonts;
-			ImGui.GetIO().Fonts.AddFontDefault();*/
+#endif
 			CreateDeviceResources(gd, outputDescription);
 			SetPerFrameImGuiData(1f / 60f);
 			ImGui.NewFrame();
