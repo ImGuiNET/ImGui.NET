@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
@@ -12,6 +12,7 @@
     <PackageReference Include="Veldrid.StartupUtilities" Version="4.8.0" />
     <ProjectReference Include="..\imnodes.NET\imnodes.NET.csproj" />
     <ProjectReference Include="..\ImPlot.NET\ImPlot.NET.csproj" />
+    <ProjectReference Include="..\TestDotNetStandardLib\TestDotNetStandardLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,24 +27,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="$(RepositoryRootDirectory)/deps/brotlicommon.dll" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="$(RepositoryRootDirectory)/deps/brotlidec.dll" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="$(RepositoryRootDirectory)/deps/bz2.dll" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="$(RepositoryRootDirectory)/deps/cimgui.dll" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="$(RepositoryRootDirectory)/deps/cimguizmo.dll" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="$(RepositoryRootDirectory)/deps/cimnodes.dll" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="$(RepositoryRootDirectory)/deps/cimplot.dll" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="$(RepositoryRootDirectory)/deps/freetype.dll" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="$(RepositoryRootDirectory)/deps/libpng16.dll" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="$(RepositoryRootDirectory)/deps/zlib1.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/cimgui/win-x64/cimgui.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/cimgui/osx/cimgui.dylib" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/cimgui/linux-x64/cimgui.so" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="UnityEngine" Condition=" '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' ">
-        <HintPath>/Applications/Unity/Hub/Editor/2020.3.29f1/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
+      <HintPath>/Applications/Unity/Hub/Editor/2022.3.15f1/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine" Condition=" '$(OS)' == 'Windows_NT' ">
-        <HintPath>..\..\..\..\Program Files\Unity\Hub\Editor\2020.3.29f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.15f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
 

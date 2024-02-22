@@ -1,33 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <AssemblyName>ImGuiNET.SampleProgram.XNA</AssemblyName>
-        <RootNamespace>ImGuiNET.SampleProgram.XNA</RootNamespace>
-        <TargetFramework>net472</TargetFramework>
-        <OutputType>Exe</OutputType>
-    </PropertyGroup>
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AssemblyName>ImGuiNET.SampleProgram.XNA</AssemblyName>
+    <RootNamespace>ImGuiNET.SampleProgram.XNA</RootNamespace>
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\ImGui.NET\ImGui.NET.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImGui.NET\ImGui.NET.csproj" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <Content Include="$(RepositoryRootDirectory)/deps/cimgui.dll" CopyToOutputDirectory="PreserveNewest" />
-    </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(RepositoryRootDirectory)/deps/cimgui/win-x64/cimgui.dll" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="$(RepositoryRootDirectory)/deps/cimgui/osx/cimgui.dylib" CopyToOutputDirectory="PreserveNewest" Link="lib%(Filename)%(Extension)" />
+    <Content Include="$(RepositoryRootDirectory)/deps/cimgui/linux-x64/cimgui.so" CopyToOutputDirectory="PreserveNewest" Link="lib%(Filename)%(Extension)" />
+  </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
+  </ItemGroup>
 
-    <ItemGroup>
-      <<Reference Include="UnityEngine" Condition=" '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' ">
-        <HintPath>/Applications/Unity/Hub/Editor/2020.3.29f1/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
+  <ItemGroup>
+    <Reference Include="UnityEngine" Condition=" '$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' ">
+      <HintPath>/Applications/Unity/Hub/Editor/2022.3.15f1/Unity.app/Contents/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine" Condition=" '$(OS)' == 'Windows_NT' ">
-        <HintPath>..\..\..\..\Program Files\Unity\Hub\Editor\2020.3.29f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.15f1\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
-    </ItemGroup>
+  </ItemGroup>
 
 </Project>

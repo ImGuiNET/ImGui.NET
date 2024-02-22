@@ -24,5 +24,6 @@ namespace ImGuiNET
         CharsScientific = 131072,
         CallbackResize = 262144,
         CallbackEdit = 524288,
+        EscapeClearsAll = 1048576,
     }
 }

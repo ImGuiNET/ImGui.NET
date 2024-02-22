@@ -21,6 +21,7 @@ namespace ImGuiNET
         public ImFont* FontDefault;
         public Vector2 DisplayFramebufferScale;
         public byte ConfigDockingNoSplit;
+        public byte ConfigDockingWithShift;
         public byte ConfigDockingAlwaysTabBar;
         public byte ConfigDockingTransparentPayload;
         public byte ConfigViewportsNoAutoMerge;
@@ -290,6 +291,7 @@ namespace ImGuiNET
         public ImFontPtr FontDefault => new ImFontPtr(NativePtr->FontDefault);
         public ref Vector2 DisplayFramebufferScale => ref Unsafe.AsRef<Vector2>(&NativePtr->DisplayFramebufferScale);
         public ref bool ConfigDockingNoSplit => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingNoSplit);
+        public ref bool ConfigDockingWithShift => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingWithShift);
         public ref bool ConfigDockingAlwaysTabBar => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingAlwaysTabBar);
         public ref bool ConfigDockingTransparentPayload => ref Unsafe.AsRef<bool>(&NativePtr->ConfigDockingTransparentPayload);
         public ref bool ConfigViewportsNoAutoMerge => ref Unsafe.AsRef<bool>(&NativePtr->ConfigViewportsNoAutoMerge);
