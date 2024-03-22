@@ -32,7 +32,7 @@ namespace CodeGenerator
                                         parseArgument: result =>
                                         {
                                             if (result.Tokens.Count == 0)
-                                                return new DirectoryInfo(AppContext.BaseDirectory);
+                                                return Directory.CreateDirectory(Path.Combine(AppContext.BaseDirectory, "Generated"));
 
                                             string value = result.Tokens.Single().Value;
 
@@ -128,8 +128,9 @@ namespace CodeGenerator
             var defs = new ImguiDefinitions();
             defs.LoadFrom(definitionsPath, useInternals);
 
+            // Directory should be created by the optionOutputPath command parser
             Console.WriteLine($"Outputting generated code files to {outputPath}.");
-            Directory.CreateDirectory(outputPath);
+            
             if (useInternals)
             {
                 Console.WriteLine($"Outputting internals generated code files to {outputPathInternal}.");

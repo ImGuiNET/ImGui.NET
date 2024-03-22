@@ -1,0 +1,36 @@
+{
+  "profiles": {
+    "CodeGenerator - ImGui": {
+      "commandName": "Project",
+      "commandLineArgs": "-o ..\\..\\..\\..\\src\\ImGui.NET\\Generated -l cimgui"
+    },
+    "CodeGenerator - ImPlot": {
+      "commandName": "Project",
+      "commandLineArgs": "-o ..\\..\\..\\..\\src\\ImPlot.NET\\Generated -l cimplot"
+    },
+    "CodeGenerator - ImNodes": {
+      "commandName": "Project",
+      "commandLineArgs": "-o ..\\..\\..\\..\\src\\ImNodes.NET\\Generated -l cimnodes"
+    },
+    "CodeGenerator - ImGuizmo": {
+      "commandName": "Project",
+      "commandLineArgs": "-o ..\\..\\..\\..\\src\\ImGuizmo.NET\\Generated -l cimguizmo"
+    },
+    "CodeGenerator (internal) - ImGui": {
+      "commandName": "Project",
+      "commandLineArgs": "-o ..\\..\\..\\..\\src\\ImGui.NET\\Generated -l cimgui --internal"
+    },
+    "CodeGenerator (internal) - ImPlot": {
+      "commandName": "Project",
+      "commandLineArgs": "-o ..\\..\\..\\..\\src\\ImPlot.NET\\Generated -l cimplot --internal"
+    },
+    "CodeGenerator (internal) - ImNodes": {
+      "commandName": "Project",
+      "commandLineArgs": "-o ..\\..\\..\\..\\src\\ImNodes.NET\\Generated -l cimnodes --internal"
+    },
+    "CodeGenerator (internal) - ImGuizmo": {
+      "commandName": "Project",
+      "commandLineArgs": "-o ..\\..\\..\\..\\src\\ImGuizmo.NET\\Generated -l cimguizmo --internal"
+    }
+  }
+}
