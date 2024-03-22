@@ -160,7 +160,6 @@ namespace CodeGenerator
             foreach (TypeDefinition td in defs.Types)
             {
                 if (TypeInfo.CustomDefinedTypes.Contains(td.Name)) { continue; }
-                if (TypeInfo.ScratchedTypes.Contains(td.Name)) { continue; }
 
                 using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(GetOutputPath(td.IsInternal), td.Name + ".gen.cs")))
                 {
@@ -179,9 +178,6 @@ namespace CodeGenerator
                     foreach (TypeReference field in td.Fields)
                     {
                         string typeStr = GetTypeString(field.Type, field.IsFunctionPointer);
-
-                        if (TypeInfo.SkippedMembers.Contains($"{td.Name}.{field.Name}")) { continue; }
-                        if (TypeInfo.ScratchedTypes.Contains(field.Type)) { continue; }
 
                         if (field.ArraySize != 0)
                         {
@@ -219,7 +215,6 @@ namespace CodeGenerator
                         string rawType = typeStr;
 
                         if (TypeInfo.SkippedMembers.Contains($"{ptrTypeName}.{field.Name}")) { continue; }
-                        if (TypeInfo.ScratchedTypes.Contains(field.Type)) { continue; }
 
                         if (TypeInfo.WellKnownFieldReplacements.TryGetValue(field.Type, out string wellKnownFieldType))
                         {
@@ -292,9 +287,6 @@ namespace CodeGenerator
                                 // Also, add a "Dispose" function or similar.
                                 continue;
                             }
-
-                            if (overload.Parameters.Any(tr => TypeInfo.ScratchedTypes.Contains(tr.Type))) { continue; }
-                            if (TypeInfo.ScratchedTypes.Contains(overload.ReturnType)) { continue; }
 
                             string exportedName = overload.ExportedName;
                             if (exportedName.StartsWith("ig"))
@@ -393,9 +385,6 @@ namespace CodeGenerator
                         if (exportedName.Contains("ImChunkStream_")) { continue; }
 
                         if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
-
-                        if (overload.Parameters.Any(tr => TypeInfo.ScratchedTypes.Contains(tr.Type))) { continue; }
-                        if (TypeInfo.ScratchedTypes.Contains(overload.ReturnType)) { continue; }
 
                         string ret = GetTypeString(overload.ReturnType, false);
 
@@ -501,8 +490,6 @@ namespace CodeGenerator
                         }
                         if (exportedName.Contains("~")) { continue; }
                         if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
-                        if (overload.Parameters.Any(tr => TypeInfo.ScratchedTypes.Contains(tr.Type))) { continue; }
-                        if (TypeInfo.ScratchedTypes.Contains(overload.ReturnType)) { continue; }
 
                         if ((overload.FriendlyName == "GetID" || overload.FriendlyName == "PushID") && overload.Parameters.Length > 1)
                         {

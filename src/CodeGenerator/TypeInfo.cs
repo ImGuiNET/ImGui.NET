@@ -172,58 +172,20 @@ namespace CodeGenerator
             "double",
         };
 
-        public static readonly HashSet<string> ScratchedTypes = new HashSet<string>()
-        {
-            "ImGuiStyleMod",
-            "ImGuiStyleMod*",
-            "ImGuiInputEvent",
-            "ImGuiInputEvent*",
-            "ImGuiDockNode",
-            "ImGuiDockNode*",
-            "ImDrawDataBuilder",
-            "ImDrawDataBuilder*",
-            "ImGuiTable",
-            "ImGuiTable*",
-            "ImGuiInputEvent",
-            "ImGuiInputEvent*",
-        };
-
         public static readonly HashSet<string> SkippedFunctions = new HashSet<string>()
         {
             "igInputText",
             "igInputTextMultiline",
             "igInputTextWithHint",
-            "igFindBestWindowPosForPopupEx",
-            
-            // Table related
-            "igDebugNodeTable",
-            "igGetCurrentTable"
         };
 
         public static readonly HashSet<string> SkippedMembers = new HashSet<string>()
         {
-            "ImGuiContextPtr.StyleVarStack",
-            "ImGuiContextPtr.SettingsWindows",
-            "ImGuiContextPtr.SettingsTables",
-            "ImGuiContextPtr.ItemFlagsStack",
-            "ImGuiContextPtr.Tables",
-            "ImGuiContextPtr.TabBars",
-            "ImGuiContextPtr.LocalizationTable",
-            "ImGuiContextPtr.InputEventsQueue",
-            "ImGuiContextPtr.InputEventsTrail",
-            "ImGuiContextPtr.DrawChannelsTempMergeBuffer",
-
-            "ImGuiContext.StyleVarStack",
-            "ImGuiContext.SettingsWindows",
-            "ImGuiContext.SettingsTables",
-            "ImGuiContext.ItemFlagsStack",
-            "ImGuiContext.Tables",
-            "ImGuiContext.TabBars",
-            "ImGuiContext.InputEventsQueue",
-            "ImGuiContext.InputEventsTrail",
-            "ImGuiContext.DrawChannelsTempMergeBuffer",
-
-            "ImGuiViewportPPtr.BgFgDrawLists",
+            // This can be used to rip members out of internal when you simply want to exclude them.
+            // You must be careful when using this to not mess with data structures that are used
+            // by ImGui
+            // Add an entry for the type.name, such as:
+            // "ImGuiContextPtr.StyleVarStack"
         };
     }
 }
