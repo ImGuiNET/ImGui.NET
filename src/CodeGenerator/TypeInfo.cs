@@ -22,6 +22,7 @@ namespace CodeGenerator
             { "ImS64", "long" },
             { "unsigned short", "ushort" },
             { "unsigned int", "uint" },
+            { "ImVec1", "float" },
             { "ImVec2", "Vector2" },
             { "ImVec2_Simple", "Vector2" },
             { "ImVec3", "Vector3" },
@@ -66,12 +67,15 @@ namespace CodeGenerator
             { "ImGuiTableDrawChannelIdx", "byte"},
             { "ImGuiContextHookCallback", "IntPtr" },
             { "ImGuiErrorLogCallback", "IntPtr" },
+            { "ImGuiSelectionUserData", "ulong" },      //ImU64
+            { "ImGuiKeyRoutingIndex", "short" }         //ImS16
             //{ "ImGuiSizeCallback", "IntPtr"}
         };
         
         public static readonly List<string> WellKnownEnums = new List<string>()
         {
-            "ImGuiMouseButton"
+            "ImGuiMouseButton",
+            "ImGuiDir"
         };
 
         public static readonly Dictionary<string, string> AlternateEnumPrefixes = new Dictionary<string, string>()
@@ -81,7 +85,7 @@ namespace CodeGenerator
 
         public static readonly Dictionary<string, string> AlternateEnumPrefixSubstitutions = new Dictionary<string, string>()
         {
-            { "ImGuiMod_", "Mod" },
+            { "ImGuiMod_", "Mod" }
         };
 
         public static readonly Dictionary<string, string> WellKnownFieldReplacements = new Dictionary<string, string>()
@@ -92,10 +96,10 @@ namespace CodeGenerator
         public static readonly HashSet<string> CustomDefinedTypes = new HashSet<string>()
         {
             "ImVector",
+            "ImVec1",
             "ImVec2",
             "ImVec4",
             "ImGuiStoragePair",
-            "ImGuiStyleMod",
         };
 
         public static readonly Dictionary<string, string> WellKnownDefaultValues = new Dictionary<string, string>()
@@ -117,10 +121,11 @@ namespace CodeGenerator
             { "ImPlotPoint(0,0)", "new ImPlotPoint { x = 0, y = 0 }" },
             { "ImPlotPoint(1,1)", "new ImPlotPoint { x = 1, y = 1 }" },
             { "ImDrawCornerFlags_All", "ImDrawCornerFlags.All" },
+            { "ImGuiCond_Once", "ImGuiCond.Once"},
+            { "ImGuiTypingSelectFlags_None", "ImGuiTypingSelectFlags.None" },
             { "ImPlotFlags_None", "ImPlotFlags.None"},
             { "ImPlotAxisFlags_None", "ImPlotAxisFlags.None"},
             { "ImPlotAxisFlags_NoGridLines", "ImPlotAxisFlags.NoGridLines"},
-            { "ImGuiCond_Once", "ImGuiCond.Once"},
             { "ImPlotOrientation_Vertical", "ImPlotOrientation.Vertical"},
             { "PinShape_CircleFilled", "PinShape.CircleFilled"},
             { "ImGuiPopupFlags_None", "ImGuiPopupFlags.None"},
@@ -149,6 +154,7 @@ namespace CodeGenerator
             { "in", "@in" },
             { "out", "@out" },
             { "ref", "@ref" },
+            { "base", "@base" }
         };
 
         public static readonly HashSet<string> LegalFixedTypes = new HashSet<string>()
@@ -166,11 +172,58 @@ namespace CodeGenerator
             "double",
         };
 
+        public static readonly HashSet<string> ScratchedTypes = new HashSet<string>()
+        {
+            "ImGuiStyleMod",
+            "ImGuiStyleMod*",
+            "ImGuiInputEvent",
+            "ImGuiInputEvent*",
+            "ImGuiDockNode",
+            "ImGuiDockNode*",
+            "ImDrawDataBuilder",
+            "ImDrawDataBuilder*",
+            "ImGuiTable",
+            "ImGuiTable*",
+            "ImGuiInputEvent",
+            "ImGuiInputEvent*",
+        };
+
         public static readonly HashSet<string> SkippedFunctions = new HashSet<string>()
         {
             "igInputText",
             "igInputTextMultiline",
-            "igInputTextWithHint"
+            "igInputTextWithHint",
+            "igFindBestWindowPosForPopupEx",
+            
+            // Table related
+            "igDebugNodeTable",
+            "igGetCurrentTable"
+        };
+
+        public static readonly HashSet<string> SkippedMembers = new HashSet<string>()
+        {
+            "ImGuiContextPtr.StyleVarStack",
+            "ImGuiContextPtr.SettingsWindows",
+            "ImGuiContextPtr.SettingsTables",
+            "ImGuiContextPtr.ItemFlagsStack",
+            "ImGuiContextPtr.Tables",
+            "ImGuiContextPtr.TabBars",
+            "ImGuiContextPtr.LocalizationTable",
+            "ImGuiContextPtr.InputEventsQueue",
+            "ImGuiContextPtr.InputEventsTrail",
+            "ImGuiContextPtr.DrawChannelsTempMergeBuffer",
+
+            "ImGuiContext.StyleVarStack",
+            "ImGuiContext.SettingsWindows",
+            "ImGuiContext.SettingsTables",
+            "ImGuiContext.ItemFlagsStack",
+            "ImGuiContext.Tables",
+            "ImGuiContext.TabBars",
+            "ImGuiContext.InputEventsQueue",
+            "ImGuiContext.InputEventsTrail",
+            "ImGuiContext.DrawChannelsTempMergeBuffer",
+
+            "ImGuiViewportPPtr.BgFgDrawLists",
         };
     }
 }

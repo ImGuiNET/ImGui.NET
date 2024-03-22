@@ -116,16 +116,20 @@ namespace CodeGenerator
                     {
                         friendlyName = "Destroy";
                     }
-                    //skip internal functions
+                    // Hunt for internal and react
+                    bool isInternal = val["location"]?.ToString().Contains("internal") ?? false;
                     var typename = val["stname"]?.ToString();
                     if (!string.IsNullOrEmpty(typename))
                     {
-                        if (!Types.Any(x => x.Name == val["stname"]?.ToString())) {
+                        TypeDefinition foundType = Types.FirstOrDefault(x => !x.IsInternal && x.Name == val["stname"]?.ToString());
+
+                        if (foundType != null)
+                            isInternal = foundType.IsInternal;
+                        else
                             return null;
-                        }
                     }
                     if (friendlyName == null) { return null; }
-                    bool isInternal = val["location"]?.ToString().Contains("internal") ?? false;
+
                     if (!useInternals && isInternal)
                         return null;
 

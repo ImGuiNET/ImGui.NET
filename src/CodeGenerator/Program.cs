@@ -21,6 +21,7 @@ namespace CodeGenerator
             // internal vars for command line results used by the rest of the program.
             bool runApp = false;
             string outputPath = string.Empty;
+            string outputPathInternal = string.Empty;
             string libraryName = string.Empty;
             bool useInternals = false;
 
@@ -72,6 +73,7 @@ namespace CodeGenerator
             rootCommand.SetHandler((outputPathValue, libNameValue, useInternalValue) =>
             {
                 outputPath = outputPathValue.FullName;
+                outputPathInternal = Path.Combine(outputPath, "Internal");
                 libraryName = libNameValue;
                 useInternals = useInternalValue;
 
@@ -127,12 +129,18 @@ namespace CodeGenerator
             defs.LoadFrom(definitionsPath, useInternals);
 
             Console.WriteLine($"Outputting generated code files to {outputPath}.");
+            Directory.CreateDirectory(outputPath);
+            if (useInternals)
+            {
+                Console.WriteLine($"Outputting internals generated code files to {outputPathInternal}.");
+                Directory.CreateDirectory(outputPathInternal);
+            }
 
             foreach (EnumDefinition ed in defs.Enums)
             {
-                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, ed.FriendlyNames[0] + ".gen.cs")))
+                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(GetOutputPath(ed.IsInternal), ed.FriendlyNames[0] + ".gen.cs")))
                 {
-                    writer.PushBlock($"namespace {projectNamespace}");
+                    writer.PushBlock($"namespace {projectNamespace}{(ed.IsInternal ? InternalNamespace : string.Empty)}");
                     if (ed.FriendlyNames[0].Contains("Flags"))
                     {
                         writer.WriteLine("[System.Flags]");
@@ -152,8 +160,9 @@ namespace CodeGenerator
             foreach (TypeDefinition td in defs.Types)
             {
                 if (TypeInfo.CustomDefinedTypes.Contains(td.Name)) { continue; }
+                if (TypeInfo.ScratchedTypes.Contains(td.Name)) { continue; }
 
-                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, td.Name + ".gen.cs")))
+                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(GetOutputPath(td.IsInternal), td.Name + ".gen.cs")))
                 {
                     writer.Using("System");
                     writer.Using("System.Numerics");
@@ -170,6 +179,9 @@ namespace CodeGenerator
                     foreach (TypeReference field in td.Fields)
                     {
                         string typeStr = GetTypeString(field.Type, field.IsFunctionPointer);
+
+                        if (TypeInfo.SkippedMembers.Contains($"{td.Name}.{field.Name}")) { continue; }
+                        if (TypeInfo.ScratchedTypes.Contains(field.Type)) { continue; }
 
                         if (field.ArraySize != 0)
                         {
@@ -205,6 +217,9 @@ namespace CodeGenerator
                     {
                         string typeStr = GetTypeString(field.Type, field.IsFunctionPointer);
                         string rawType = typeStr;
+
+                        if (TypeInfo.SkippedMembers.Contains($"{ptrTypeName}.{field.Name}")) { continue; }
+                        if (TypeInfo.ScratchedTypes.Contains(field.Type)) { continue; }
 
                         if (TypeInfo.WellKnownFieldReplacements.TryGetValue(field.Type, out string wellKnownFieldType))
                         {
@@ -278,6 +293,9 @@ namespace CodeGenerator
                                 continue;
                             }
 
+                            if (overload.Parameters.Any(tr => TypeInfo.ScratchedTypes.Contains(tr.Type))) { continue; }
+                            if (TypeInfo.ScratchedTypes.Contains(overload.ReturnType)) { continue; }
+
                             string exportedName = overload.ExportedName;
                             if (exportedName.StartsWith("ig"))
                             {
@@ -321,6 +339,7 @@ namespace CodeGenerator
                 }
             }
 
+            // Root ImGuiNative declarations - NonInternal
             using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, $"{classPrefix}Native.gen.cs")))
             {
                 writer.Using("System");
@@ -330,23 +349,53 @@ namespace CodeGenerator
                 {
                     writer.Using("ImGuiNET");
                 }
-                if (useInternals)
-                {
-                    writer.Using($"{projectNamespace}{InternalNamespace}");
-                }
                 writer.WriteLine(string.Empty);
                 writer.PushBlock($"namespace {projectNamespace}");
                 writer.PushBlock($"public static unsafe partial class {classPrefix}Native");
+                EmitImGuiNativeFunctions(writer, false);
+                writer.PopBlock();
+                writer.PopBlock();
+            }
+
+            // Root ImGuiNative declarations - Internal
+            if (useInternals)
+            {
+                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPathInternal, $"{classPrefix}Native.gen.cs")))
+                {
+                    writer.Using("System");
+                    writer.Using("System.Numerics");
+                    writer.Using("System.Runtime.InteropServices");
+                    if (referencesImGui)
+                    {
+                        writer.Using("ImGuiNET");
+                    }
+                    writer.Using($"{projectNamespace}{InternalNamespace}");
+                    writer.WriteLine(string.Empty);
+                    writer.PushBlock($"namespace {projectNamespace}");
+                    writer.PushBlock($"public static unsafe partial class {classPrefix}Native");
+                    EmitImGuiNativeFunctions(writer, true);
+                    writer.PopBlock();
+                    writer.PopBlock();
+                }
+            }
+
+            // Function referenced by the non-internals and internals when building the appropriate ImGuiNative declarations
+            void EmitImGuiNativeFunctions(CSharpCodeWriter writer, bool isInternal)
+            {
                 foreach (FunctionDefinition fd in defs.Functions)
                 {
                     foreach (OverloadDefinition overload in fd.Overloads)
                     {
+                        if (overload.IsInternal != isInternal) { continue; }
                         string exportedName = overload.ExportedName;
                         if (exportedName.Contains("~")) { continue; }
                         if (exportedName.Contains("ImVector_")) { continue; }
                         if (exportedName.Contains("ImChunkStream_")) { continue; }
 
                         if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
+
+                        if (overload.Parameters.Any(tr => TypeInfo.ScratchedTypes.Contains(tr.Type))) { continue; }
+                        if (TypeInfo.ScratchedTypes.Contains(overload.ReturnType)) { continue; }
 
                         string ret = GetTypeString(overload.ReturnType, false);
 
@@ -393,8 +442,6 @@ namespace CodeGenerator
                         writer.WriteLine($"public static extern {ret} {methodName}({parameters});");
                     }
                 }
-                writer.PopBlock();
-                writer.PopBlock();
             }
 
             // Root ImGui* class items - Noninternal
@@ -411,68 +458,85 @@ namespace CodeGenerator
                 writer.WriteLine(string.Empty);
                 writer.PushBlock($"namespace {projectNamespace}");
                 writer.PushBlock($"public static unsafe partial class {classPrefix}");
-                EmitFunctions(false);
+                EmitImGuiFunctions(writer, false);
                 writer.PopBlock();
                 writer.PopBlock();
+            }
 
-                if (useInternals)
+            // Root ImGui* class items - Internal
+            if (useInternals)
+            {
+                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPathInternal, $"{classPrefix}.gen.cs")))
                 {
+                    writer.Using("System");
+                    writer.Using("System.Numerics");
+                    writer.Using("System.Runtime.InteropServices");
+                    writer.Using("System.Text");
+                    if (referencesImGui)
+                    {
+                        writer.Using("ImGuiNET");
+                    }
+                    writer.WriteLine(string.Empty);
                     writer.PushBlock($"namespace {projectNamespace}{InternalNamespace}");
                     writer.PushBlock($"public static unsafe partial class {classPrefix}");
-                    EmitFunctions(true);
+                    EmitImGuiFunctions(writer, true);
                     writer.PopBlock();
                     writer.PopBlock();
                 }
+            }
 
-                void EmitFunctions(bool isInternal)
+            // Function referenced by the non-internals and internals when building the appropriate ImGui class
+            void EmitImGuiFunctions(CSharpCodeWriter writer, bool isInternal)
+            {
+                foreach (FunctionDefinition fd in defs.Functions)
                 {
-                    foreach (FunctionDefinition fd in defs.Functions)
+                    if (TypeInfo.SkippedFunctions.Contains(fd.Name)) { continue; }
+
+                    foreach (OverloadDefinition overload in fd.Overloads.Where(o => !o.IsMemberFunction && o.IsInternal == isInternal))
                     {
-                        if (TypeInfo.SkippedFunctions.Contains(fd.Name)) { continue; }
-
-                        foreach (OverloadDefinition overload in fd.Overloads.Where(o => !o.IsMemberFunction && o.IsInternal == isInternal))
+                        string exportedName = overload.ExportedName;
+                        if (exportedName.StartsWith("ig"))
                         {
-                            string exportedName = overload.ExportedName;
-                            if (exportedName.StartsWith("ig"))
-                            {
-                                exportedName = exportedName.Substring(2, exportedName.Length - 2);
-                            }
-                            if (exportedName.Contains("~")) { continue; }
-                            if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
+                            exportedName = exportedName.Substring(2, exportedName.Length - 2);
+                        }
+                        if (exportedName.Contains("~")) { continue; }
+                        if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
+                        if (overload.Parameters.Any(tr => TypeInfo.ScratchedTypes.Contains(tr.Type))) { continue; }
+                        if (TypeInfo.ScratchedTypes.Contains(overload.ReturnType)) { continue; }
 
-                            if ((overload.FriendlyName == "GetID" || overload.FriendlyName == "PushID") && overload.Parameters.Length > 1)
-                            {
-                                // skip ImGui.Get/PushID(start, end) overloads as they would overlap with existing
-                                continue;
-                            }
-                          
-                            bool hasVaList = false;
-                            for (int i = 0; i < overload.Parameters.Length; i++)
-                            {
-                                TypeReference p = overload.Parameters[i];
-                                string paramType = GetTypeString(p.Type, p.IsFunctionPointer);
-                                if (p.Name == "...") { continue; }
+                        if ((overload.FriendlyName == "GetID" || overload.FriendlyName == "PushID") && overload.Parameters.Length > 1)
+                        {
+                            // skip ImGui.Get/PushID(start, end) overloads as they would overlap with existing
+                            continue;
+                        }
 
-                                if (paramType == "va_list")
-                                {
-                                    hasVaList = true;
-                                    break;
-                                }
-                            }
-                            if (hasVaList) { continue; }
 
-                            KeyValuePair<string, string>[] orderedDefaults = overload.DefaultValues.OrderByDescending(
-                                kvp => GetIndex(overload.Parameters, kvp.Key)).ToArray();
+                        bool hasVaList = false;
+                        for (int i = 0; i < overload.Parameters.Length; i++)
+                        {
+                            TypeReference p = overload.Parameters[i];
+                            string paramType = GetTypeString(p.Type, p.IsFunctionPointer);
+                            if (p.Name == "...") { continue; }
 
-                            for (int i = overload.DefaultValues.Count; i >= 0; i--)
+                            if (paramType == "va_list")
                             {
-                                Dictionary<string, string> defaults = new Dictionary<string, string>();
-                                for (int j = 0; j < i; j++)
-                                {
-                                    defaults.Add(orderedDefaults[j].Key, orderedDefaults[j].Value);
-                                }
-                                EmitOverload(writer, overload, defaults, null, classPrefix);
+                                hasVaList = true;
+                                break;
                             }
+                        }
+                        if (hasVaList) { continue; }
+
+                        KeyValuePair<string, string>[] orderedDefaults = overload.DefaultValues.OrderByDescending(
+                            kvp => GetIndex(overload.Parameters, kvp.Key)).ToArray();
+
+                        for (int i = overload.DefaultValues.Count; i >= 0; i--)
+                        {
+                            Dictionary<string, string> defaults = new Dictionary<string, string>();
+                            for (int j = 0; j < i; j++)
+                            {
+                                defaults.Add(orderedDefaults[j].Key, orderedDefaults[j].Value);
+                            }
+                            EmitOverload(writer, overload, defaults, null, classPrefix);
                         }
                     }
                 }
@@ -487,6 +551,12 @@ namespace CodeGenerator
             }
 
             return 0;
+
+            // Helper to determine the path
+            string GetOutputPath(bool isInternal)
+            {
+                return isInternal ? outputPathInternal : outputPath;
+            }
         }
 
         private static bool IsStringFieldName(string name)
