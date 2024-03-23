@@ -121,7 +121,7 @@ namespace CodeGenerator
                     var typename = val["stname"]?.ToString();
                     if (!string.IsNullOrEmpty(typename))
                     {
-                        TypeDefinition foundType = Types.FirstOrDefault(x => !x.IsInternal && x.Name == val["stname"]?.ToString());
+                        TypeDefinition foundType = Types.FirstOrDefault(x => x.Name == val["stname"]?.ToString());
 
                         if (foundType != null)
                             isInternal = foundType.IsInternal;
