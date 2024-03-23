@@ -231,6 +231,11 @@ namespace CodeGenerator
                                 {
                                     writer.WriteLine($"public RangeAccessor<{wrappedTypeName}> {field.Name} => new RangeAccessor<{wrappedTypeName}>({addrTarget}, {field.ArraySize});");
                                 }
+                                
+                                // Try best to hit the primitive pointers
+                                else if (TypeInfo.LegalFixedTypes.Contains(typeStr[0..^1]))
+                                    writer.WriteLine($"public RangeAccessor<{typeStr[0..^1]}> {field.Name} => new RangeAccessor<{typeStr[0..^1]}>({addrTarget}, {field.ArraySize});");
+                                
                                 else
                                     throw new Exception("Expected to wrap type, but wrapped type not found");
                             }
