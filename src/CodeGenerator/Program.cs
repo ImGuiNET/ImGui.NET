@@ -225,7 +225,17 @@ namespace CodeGenerator
                         if (field.ArraySize != 0)
                         {
                             string addrTarget = TypeInfo.LegalFixedTypes.Contains(rawType) ? $"NativePtr->{field.Name}" : $"&NativePtr->{field.Name}_0";
-                            writer.WriteLine($"public RangeAccessor<{typeStr}> {field.Name} => new RangeAccessor<{typeStr}>({addrTarget}, {field.ArraySize});");
+                            if (typeStr.Contains("*"))
+                            {
+                                if (GetWrappedType(typeStr, out string wrappedTypeName))
+                                {
+                                    writer.WriteLine($"public RangeAccessor<{wrappedTypeName}> {field.Name} => new RangeAccessor<{wrappedTypeName}>({addrTarget}, {field.ArraySize});");
+                                }
+                                else
+                                    throw new Exception("Expected to wrap type, but wrapped type not found");
+                            }
+                            else
+                                writer.WriteLine($"public RangeAccessor<{typeStr}> {field.Name} => new RangeAccessor<{typeStr}>({addrTarget}, {field.ArraySize});");
                         }
                         else if (typeStr.Contains("ImVector"))
                         {
