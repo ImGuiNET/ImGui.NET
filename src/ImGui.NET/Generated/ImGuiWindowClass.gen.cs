@@ -9,6 +9,7 @@ namespace ImGuiNET
     {
         public uint ClassId;
         public uint ParentViewportId;
+        public uint FocusRouteParentWindowId;
         public ImGuiViewportFlags ViewportFlagsOverrideSet;
         public ImGuiViewportFlags ViewportFlagsOverrideClear;
         public ImGuiTabItemFlags TabItemFlagsOverrideSet;
@@ -26,6 +27,7 @@ namespace ImGuiNET
         public static implicit operator ImGuiWindowClassPtr(IntPtr nativePtr) => new ImGuiWindowClassPtr(nativePtr);
         public ref uint ClassId => ref Unsafe.AsRef<uint>(&NativePtr->ClassId);
         public ref uint ParentViewportId => ref Unsafe.AsRef<uint>(&NativePtr->ParentViewportId);
+        public ref uint FocusRouteParentWindowId => ref Unsafe.AsRef<uint>(&NativePtr->FocusRouteParentWindowId);
         public ref ImGuiViewportFlags ViewportFlagsOverrideSet => ref Unsafe.AsRef<ImGuiViewportFlags>(&NativePtr->ViewportFlagsOverrideSet);
         public ref ImGuiViewportFlags ViewportFlagsOverrideClear => ref Unsafe.AsRef<ImGuiViewportFlags>(&NativePtr->ViewportFlagsOverrideClear);
         public ref ImGuiTabItemFlags TabItemFlagsOverrideSet => ref Unsafe.AsRef<ImGuiTabItemFlags>(&NativePtr->TabItemFlagsOverrideSet);

@@ -70,7 +70,6 @@ namespace ImGuiNET
         public int MetricsRenderWindows;
         public int MetricsActiveWindows;
         public Vector2 MouseDelta;
-        public void* _UnusedPadding;
         public IntPtr Ctx;
         public Vector2 MousePos;
         public fixed byte MouseDown[5];
@@ -340,7 +339,6 @@ namespace ImGuiNET
         public ref int MetricsRenderWindows => ref Unsafe.AsRef<int>(&NativePtr->MetricsRenderWindows);
         public ref int MetricsActiveWindows => ref Unsafe.AsRef<int>(&NativePtr->MetricsActiveWindows);
         public ref Vector2 MouseDelta => ref Unsafe.AsRef<Vector2>(&NativePtr->MouseDelta);
-        public IntPtr _UnusedPadding { get => (IntPtr)NativePtr->_UnusedPadding; set => NativePtr->_UnusedPadding = (void*)value; }
         public ref IntPtr Ctx => ref Unsafe.AsRef<IntPtr>(&NativePtr->Ctx);
         public ref Vector2 MousePos => ref Unsafe.AsRef<Vector2>(&NativePtr->MousePos);
         public RangeAccessor<bool> MouseDown => new RangeAccessor<bool>(NativePtr->MouseDown, 5);

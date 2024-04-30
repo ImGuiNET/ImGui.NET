@@ -4517,6 +4517,10 @@ namespace ImGuiNET
         {
             ImGuiNative.igDebugFlashStyleColor(idx);
         }
+        public static void DebugStartItemPicker()
+        {
+            ImGuiNative.igDebugStartItemPicker();
+        }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static void DebugTextEncoding(ReadOnlySpan<char> text)
         {
@@ -12487,7 +12491,13 @@ namespace ImGuiNET
         }
         public static uint GetColorU32(uint col)
         {
-            uint ret = ImGuiNative.igGetColorU32_U32(col);
+            float alpha_mul = 1.0f;
+            uint ret = ImGuiNative.igGetColorU32_U32(col, alpha_mul);
+            return ret;
+        }
+        public static uint GetColorU32(uint col, float alpha_mul)
+        {
+            uint ret = ImGuiNative.igGetColorU32_U32(col, alpha_mul);
             return ret;
         }
         public static int GetColumnIndex()
@@ -12713,11 +12723,6 @@ namespace ImGuiNET
             Vector2 __retval;
             ImGuiNative.igGetItemRectSize(&__retval);
             return __retval;
-        }
-        public static ImGuiKey GetKeyIndex(ImGuiKey key)
-        {
-            ImGuiKey ret = ImGuiNative.igGetKeyIndex(key);
-            return ret;
         }
         public static string GetKeyName(ImGuiKey key)
         {
