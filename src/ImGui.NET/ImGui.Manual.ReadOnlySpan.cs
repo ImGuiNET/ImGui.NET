@@ -480,6 +480,36 @@ namespace ImGuiNET
         {
             return MenuItem(label, string.Empty, false, enabled);
         }
+
+        public static bool BeginPopupModal(ReadOnlySpan<char> name, ImGuiWindowFlags flags)
+        {
+            byte* native_name;
+            int name_byteCount = 0;
+            if (name != null)
+            {
+                name_byteCount = Encoding.UTF8.GetByteCount(name);
+                if (name_byteCount > Util.StackAllocationSizeLimit)
+                {
+                    native_name = Util.Allocate(name_byteCount + 1);
+                }
+                else
+                {
+                    byte* native_name_stackBytes = stackalloc byte[name_byteCount + 1];
+                    native_name = native_name_stackBytes;
+                }
+                int native_name_offset = Util.GetUtf8(name, native_name, name_byteCount);
+                native_name[native_name_offset] = 0;
+            }
+            else { native_name = null; }
+            byte* native_p_open = null;
+            byte ret = ImGuiNative.igBeginPopupModal(native_name, native_p_open, flags);
+            if (name_byteCount > Util.StackAllocationSizeLimit)
+            {
+                Util.Free(native_name);
+            }
+
+            return ret != 0;
+        }
     }
 }
 #endif
