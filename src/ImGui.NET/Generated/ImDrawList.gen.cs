@@ -13,15 +13,15 @@ namespace ImGuiNET
         public ImDrawListFlags Flags;
         public uint _VtxCurrentIdx;
         public IntPtr _Data;
-        public byte* _OwnerName;
         public ImDrawVert* _VtxWritePtr;
         public ushort* _IdxWritePtr;
-        public ImVector _ClipRectStack;
-        public ImVector _TextureIdStack;
         public ImVector _Path;
         public ImDrawCmdHeader _CmdHeader;
         public ImDrawListSplitter _Splitter;
+        public ImVector _ClipRectStack;
+        public ImVector _TextureIdStack;
         public float _FringeScale;
+        public byte* _OwnerName;
     }
     public unsafe partial struct ImDrawListPtr
     {
@@ -37,15 +37,15 @@ namespace ImGuiNET
         public ref ImDrawListFlags Flags => ref Unsafe.AsRef<ImDrawListFlags>(&NativePtr->Flags);
         public ref uint _VtxCurrentIdx => ref Unsafe.AsRef<uint>(&NativePtr->_VtxCurrentIdx);
         public ref IntPtr _Data => ref Unsafe.AsRef<IntPtr>(&NativePtr->_Data);
-        public NullTerminatedString _OwnerName => new NullTerminatedString(NativePtr->_OwnerName);
         public ImDrawVertPtr _VtxWritePtr => new ImDrawVertPtr(NativePtr->_VtxWritePtr);
         public IntPtr _IdxWritePtr { get => (IntPtr)NativePtr->_IdxWritePtr; set => NativePtr->_IdxWritePtr = (ushort*)value; }
-        public ImVector<Vector4> _ClipRectStack => new ImVector<Vector4>(NativePtr->_ClipRectStack);
-        public ImVector<IntPtr> _TextureIdStack => new ImVector<IntPtr>(NativePtr->_TextureIdStack);
         public ImVector<Vector2> _Path => new ImVector<Vector2>(NativePtr->_Path);
         public ref ImDrawCmdHeader _CmdHeader => ref Unsafe.AsRef<ImDrawCmdHeader>(&NativePtr->_CmdHeader);
         public ref ImDrawListSplitter _Splitter => ref Unsafe.AsRef<ImDrawListSplitter>(&NativePtr->_Splitter);
+        public ImVector<Vector4> _ClipRectStack => new ImVector<Vector4>(NativePtr->_ClipRectStack);
+        public ImVector<IntPtr> _TextureIdStack => new ImVector<IntPtr>(NativePtr->_TextureIdStack);
         public ref float _FringeScale => ref Unsafe.AsRef<float>(&NativePtr->_FringeScale);
+        public NullTerminatedString _OwnerName => new NullTerminatedString(NativePtr->_OwnerName);
         public int _CalcCircleAutoSegmentCount(float radius)
         {
             int ret = ImGuiNative.ImDrawList__CalcCircleAutoSegmentCount((ImDrawList*)(NativePtr), radius);
