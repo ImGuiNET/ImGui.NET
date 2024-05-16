@@ -38,6 +38,7 @@ namespace ImGuiNET
         public float TabMinWidthForCloseButton;
         public float TabBarBorderSize;
         public float TableAngledHeadersAngle;
+        public Vector2 TableAngledHeadersTextAlign;
         public ImGuiDir ColorButtonPosition;
         public Vector2 ButtonTextAlign;
         public Vector2 SelectableTextAlign;
@@ -153,6 +154,7 @@ namespace ImGuiNET
         public ref float TabMinWidthForCloseButton => ref Unsafe.AsRef<float>(&NativePtr->TabMinWidthForCloseButton);
         public ref float TabBarBorderSize => ref Unsafe.AsRef<float>(&NativePtr->TabBarBorderSize);
         public ref float TableAngledHeadersAngle => ref Unsafe.AsRef<float>(&NativePtr->TableAngledHeadersAngle);
+        public ref Vector2 TableAngledHeadersTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->TableAngledHeadersTextAlign);
         public ref ImGuiDir ColorButtonPosition => ref Unsafe.AsRef<ImGuiDir>(&NativePtr->ColorButtonPosition);
         public ref Vector2 ButtonTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->ButtonTextAlign);
         public ref Vector2 SelectableTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->SelectableTextAlign);
