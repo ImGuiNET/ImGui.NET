@@ -4588,61 +4588,70 @@ namespace ImGuiNET
         {
             ImGuiNative.igDestroyPlatformWindows();
         }
-        public static uint DockSpace(uint id)
+        public static uint DockSpace(uint dockspace_id)
         {
             Vector2 size = new Vector2();
             ImGuiDockNodeFlags flags = (ImGuiDockNodeFlags)0;
             ImGuiWindowClass* window_class = null;
-            uint ret = ImGuiNative.igDockSpace(id, size, flags, window_class);
+            uint ret = ImGuiNative.igDockSpace(dockspace_id, size, flags, window_class);
             return ret;
         }
-        public static uint DockSpace(uint id, Vector2 size)
+        public static uint DockSpace(uint dockspace_id, Vector2 size)
         {
             ImGuiDockNodeFlags flags = (ImGuiDockNodeFlags)0;
             ImGuiWindowClass* window_class = null;
-            uint ret = ImGuiNative.igDockSpace(id, size, flags, window_class);
+            uint ret = ImGuiNative.igDockSpace(dockspace_id, size, flags, window_class);
             return ret;
         }
-        public static uint DockSpace(uint id, Vector2 size, ImGuiDockNodeFlags flags)
+        public static uint DockSpace(uint dockspace_id, Vector2 size, ImGuiDockNodeFlags flags)
         {
             ImGuiWindowClass* window_class = null;
-            uint ret = ImGuiNative.igDockSpace(id, size, flags, window_class);
+            uint ret = ImGuiNative.igDockSpace(dockspace_id, size, flags, window_class);
             return ret;
         }
-        public static uint DockSpace(uint id, Vector2 size, ImGuiDockNodeFlags flags, ImGuiWindowClassPtr window_class)
+        public static uint DockSpace(uint dockspace_id, Vector2 size, ImGuiDockNodeFlags flags, ImGuiWindowClassPtr window_class)
         {
             ImGuiWindowClass* native_window_class = window_class.NativePtr;
-            uint ret = ImGuiNative.igDockSpace(id, size, flags, native_window_class);
+            uint ret = ImGuiNative.igDockSpace(dockspace_id, size, flags, native_window_class);
             return ret;
         }
         public static uint DockSpaceOverViewport()
         {
+            uint dockspace_id = 0;
             ImGuiViewport* viewport = null;
             ImGuiDockNodeFlags flags = (ImGuiDockNodeFlags)0;
             ImGuiWindowClass* window_class = null;
-            uint ret = ImGuiNative.igDockSpaceOverViewport(viewport, flags, window_class);
+            uint ret = ImGuiNative.igDockSpaceOverViewport(dockspace_id, viewport, flags, window_class);
             return ret;
         }
-        public static uint DockSpaceOverViewport(ImGuiViewportPtr viewport)
+        public static uint DockSpaceOverViewport(uint dockspace_id)
+        {
+            ImGuiViewport* viewport = null;
+            ImGuiDockNodeFlags flags = (ImGuiDockNodeFlags)0;
+            ImGuiWindowClass* window_class = null;
+            uint ret = ImGuiNative.igDockSpaceOverViewport(dockspace_id, viewport, flags, window_class);
+            return ret;
+        }
+        public static uint DockSpaceOverViewport(uint dockspace_id, ImGuiViewportPtr viewport)
         {
             ImGuiViewport* native_viewport = viewport.NativePtr;
             ImGuiDockNodeFlags flags = (ImGuiDockNodeFlags)0;
             ImGuiWindowClass* window_class = null;
-            uint ret = ImGuiNative.igDockSpaceOverViewport(native_viewport, flags, window_class);
+            uint ret = ImGuiNative.igDockSpaceOverViewport(dockspace_id, native_viewport, flags, window_class);
             return ret;
         }
-        public static uint DockSpaceOverViewport(ImGuiViewportPtr viewport, ImGuiDockNodeFlags flags)
+        public static uint DockSpaceOverViewport(uint dockspace_id, ImGuiViewportPtr viewport, ImGuiDockNodeFlags flags)
         {
             ImGuiViewport* native_viewport = viewport.NativePtr;
             ImGuiWindowClass* window_class = null;
-            uint ret = ImGuiNative.igDockSpaceOverViewport(native_viewport, flags, window_class);
+            uint ret = ImGuiNative.igDockSpaceOverViewport(dockspace_id, native_viewport, flags, window_class);
             return ret;
         }
-        public static uint DockSpaceOverViewport(ImGuiViewportPtr viewport, ImGuiDockNodeFlags flags, ImGuiWindowClassPtr window_class)
+        public static uint DockSpaceOverViewport(uint dockspace_id, ImGuiViewportPtr viewport, ImGuiDockNodeFlags flags, ImGuiWindowClassPtr window_class)
         {
             ImGuiViewport* native_viewport = viewport.NativePtr;
             ImGuiWindowClass* native_window_class = window_class.NativePtr;
-            uint ret = ImGuiNative.igDockSpaceOverViewport(native_viewport, flags, native_window_class);
+            uint ret = ImGuiNative.igDockSpaceOverViewport(dockspace_id, native_viewport, flags, native_window_class);
             return ret;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
@@ -21232,6 +21241,15 @@ namespace ImGuiNET
             byte native_is_open = is_open ? (byte)1 : (byte)0;
             ImGuiNative.igSetNextItemOpen(native_is_open, cond);
         }
+        public static void SetNextItemShortcut(ImGuiKey key_chord)
+        {
+            ImGuiInputFlags flags = (ImGuiInputFlags)0;
+            ImGuiNative.igSetNextItemShortcut(key_chord, flags);
+        }
+        public static void SetNextItemShortcut(ImGuiKey key_chord, ImGuiInputFlags flags)
+        {
+            ImGuiNative.igSetNextItemShortcut(key_chord, flags);
+        }
         public static void SetNextItemWidth(float item_width)
         {
             ImGuiNative.igSetNextItemWidth(item_width);
@@ -21902,6 +21920,17 @@ namespace ImGuiNET
             {
                 Util.Free(native_name);
             }
+        }
+        public static bool Shortcut(ImGuiKey key_chord)
+        {
+            ImGuiInputFlags flags = (ImGuiInputFlags)0;
+            byte ret = ImGuiNative.igShortcut_Nil(key_chord, flags);
+            return ret != 0;
+        }
+        public static bool Shortcut(ImGuiKey key_chord, ImGuiInputFlags flags)
+        {
+            byte ret = ImGuiNative.igShortcut_Nil(key_chord, flags);
+            return ret != 0;
         }
         public static void ShowAboutWindow()
         {

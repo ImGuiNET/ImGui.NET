@@ -252,6 +252,7 @@ namespace ImGuiNET
         public fixed byte MouseDownOwned[5];
         public fixed byte MouseDownOwnedUnlessPopupClose[5];
         public byte MouseWheelRequestAxisSwap;
+        public byte MouseCtrlLeftAsRightClick;
         public fixed float MouseDownDuration[5];
         public fixed float MouseDownDurationPrev[5];
         public Vector2 MouseDragMaxDistanceAbs_0;
@@ -364,6 +365,7 @@ namespace ImGuiNET
         public RangeAccessor<bool> MouseDownOwned => new RangeAccessor<bool>(NativePtr->MouseDownOwned, 5);
         public RangeAccessor<bool> MouseDownOwnedUnlessPopupClose => new RangeAccessor<bool>(NativePtr->MouseDownOwnedUnlessPopupClose, 5);
         public ref bool MouseWheelRequestAxisSwap => ref Unsafe.AsRef<bool>(&NativePtr->MouseWheelRequestAxisSwap);
+        public ref bool MouseCtrlLeftAsRightClick => ref Unsafe.AsRef<bool>(&NativePtr->MouseCtrlLeftAsRightClick);
         public RangeAccessor<float> MouseDownDuration => new RangeAccessor<float>(NativePtr->MouseDownDuration, 5);
         public RangeAccessor<float> MouseDownDurationPrev => new RangeAccessor<float>(NativePtr->MouseDownDurationPrev, 5);
         public RangeAccessor<Vector2> MouseDragMaxDistanceAbs => new RangeAccessor<Vector2>(&NativePtr->MouseDragMaxDistanceAbs_0, 5);
