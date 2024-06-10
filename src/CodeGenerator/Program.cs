@@ -8,37 +8,85 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.CommandLine;
 
 namespace CodeGenerator
 {
     internal static class Program
     {
-        static void Main(string[] args)
+        private const string InternalNamespace = ".Internal";
+
+        static async Task<int> Main(string[] args)
         {
-            string outputPath;
-            if (args.Length > 0)
-            {
-                outputPath = args[0];
-            }
-            else
-            {
-                outputPath = AppContext.BaseDirectory;
-            }
+            // internal vars for command line results used by the rest of the program.
+            bool runApp = false;
+            string outputPath = string.Empty;
+            string outputPathInternal = string.Empty;
+            string libraryName = string.Empty;
+            bool useInternals = false;
 
-            if (!Directory.Exists(outputPath))
-            {
-                Directory.CreateDirectory(outputPath);
-            }
+            #region Command line handler
+            var optionOutputPath = new Option<DirectoryInfo>(
+                                        aliases: new[] { "--outputDir", "-o" },
+                                        description: "The directory to place generated code files.",
+                                        parseArgument: result =>
+                                        {
+                                            if (result.Tokens.Count == 0)
+                                                return Directory.CreateDirectory(Path.Combine(AppContext.BaseDirectory, "Generated"));
 
-            string libraryName;
-            if (args.Length > 1)
+                                            string value = result.Tokens.Single().Value;
+
+                                            try { return Directory.CreateDirectory(value); }
+                                            catch (Exception) { result.ErrorMessage = $"Unable to create directory: {value}"; return null; }
+                                        },
+                                        isDefault: true);
+
+            var optionLibraryname = new Option<string>(
+                                        aliases: new[] { "--library", "-l" },
+                                        description: "The library to read parse.",
+                                        getDefaultValue: () => "cimgui")
+                                            .FromAmong("cimgui", "cimplot", "cimnodes", "cimguizmo");
+
+            var optionInternal = new Option<bool>(
+                                        name: "--internal",
+                                        description: "When set to true, includes the internal header file.",
+                                        parseArgument: result =>
+                                        {
+                                            // Using parse with isDefault: false, instead of the normal validation, allows us to use "--internal" without specifying true to mean true.
+                                            if (result.Tokens.Count == 0)
+                                                return true;
+
+                                            if (bool.TryParse(result.Tokens.Single().Value, out var value))
+                                                return value;
+
+                                            result.ErrorMessage = "Invalid option for --internal. Value must be true or false.";
+                                            return false; // ignored because of error message.
+                                        },
+                                        isDefault: false);
+
+            var rootCommand = new RootCommand("Generates code for the ImGui.NET libraries based on the cimgui definition files.");
+
+            rootCommand.AddOption(optionInternal);
+            rootCommand.AddOption(optionOutputPath);
+            rootCommand.AddOption(optionLibraryname);
+
+            rootCommand.SetHandler((outputPathValue, libNameValue, useInternalValue) =>
             {
-                libraryName = args[1];
-            }
-            else
-            {
-                libraryName = "cimgui";
-            }
+                outputPath = outputPathValue.FullName;
+                outputPathInternal = Path.Combine(outputPath, "Internal");
+                libraryName = libNameValue;
+                useInternals = useInternalValue;
+
+                runApp = true;
+
+            }, optionOutputPath, optionLibraryname, optionInternal);
+
+            var commandResult = await rootCommand.InvokeAsync(args);
+
+            if (!runApp)
+                return commandResult;
+
+            #endregion
 
             string projectNamespace = libraryName switch
             {
@@ -78,15 +126,22 @@ namespace CodeGenerator
             
             string definitionsPath = Path.Combine(AppContext.BaseDirectory, "definitions", libraryName);
             var defs = new ImguiDefinitions();
-            defs.LoadFrom(definitionsPath);
+            defs.LoadFrom(definitionsPath, useInternals);
 
+            // Directory should be created by the optionOutputPath command parser
             Console.WriteLine($"Outputting generated code files to {outputPath}.");
+            
+            if (useInternals)
+            {
+                Console.WriteLine($"Outputting internals generated code files to {outputPathInternal}.");
+                Directory.CreateDirectory(outputPathInternal);
+            }
 
             foreach (EnumDefinition ed in defs.Enums)
             {
-                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, ed.FriendlyNames[0] + ".gen.cs")))
+                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(GetOutputPath(ed.IsInternal), ed.FriendlyNames[0] + ".gen.cs")))
                 {
-                    writer.PushBlock($"namespace {projectNamespace}");
+                    writer.PushBlock($"namespace {projectNamespace}{(ed.IsInternal ? InternalNamespace : string.Empty)}");
                     if (ed.FriendlyNames[0].Contains("Flags"))
                     {
                         writer.WriteLine("[System.Flags]");
@@ -107,7 +162,7 @@ namespace CodeGenerator
             {
                 if (TypeInfo.CustomDefinedTypes.Contains(td.Name)) { continue; }
 
-                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, td.Name + ".gen.cs")))
+                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(GetOutputPath(td.IsInternal), td.Name + ".gen.cs")))
                 {
                     writer.Using("System");
                     writer.Using("System.Numerics");
@@ -118,7 +173,7 @@ namespace CodeGenerator
                         writer.Using("ImGuiNET");
                     }
                     writer.WriteLine(string.Empty);
-                    writer.PushBlock($"namespace {projectNamespace}");
+                    writer.PushBlock($"namespace {projectNamespace}{(td.IsInternal ? InternalNamespace : string.Empty)}");
 
                     writer.PushBlock($"public unsafe partial struct {td.Name}");
                     foreach (TypeReference field in td.Fields)
@@ -160,6 +215,8 @@ namespace CodeGenerator
                         string typeStr = GetTypeString(field.Type, field.IsFunctionPointer);
                         string rawType = typeStr;
 
+                        if (TypeInfo.SkippedMembers.Contains($"{ptrTypeName}.{field.Name}")) { continue; }
+
                         if (TypeInfo.WellKnownFieldReplacements.TryGetValue(field.Type, out string wellKnownFieldType))
                         {
                             typeStr = wellKnownFieldType;
@@ -168,7 +225,22 @@ namespace CodeGenerator
                         if (field.ArraySize != 0)
                         {
                             string addrTarget = TypeInfo.LegalFixedTypes.Contains(rawType) ? $"NativePtr->{field.Name}" : $"&NativePtr->{field.Name}_0";
-                            writer.WriteLine($"public RangeAccessor<{typeStr}> {field.Name} => new RangeAccessor<{typeStr}>({addrTarget}, {field.ArraySize});");
+                            if (typeStr.Contains("*"))
+                            {
+                                if (GetWrappedType(typeStr, out string wrappedTypeName))
+                                {
+                                    writer.WriteLine($"public RangeAccessor<{wrappedTypeName}> {field.Name} => new RangeAccessor<{wrappedTypeName}>({addrTarget}, {field.ArraySize});");
+                                }
+                                
+                                // Try best to hit the primitive pointers
+                                else if (TypeInfo.LegalFixedTypes.Contains(typeStr[0..^1]))
+                                    writer.WriteLine($"public RangeAccessor<{typeStr[0..^1]}> {field.Name} => new RangeAccessor<{typeStr[0..^1]}>({addrTarget}, {field.ArraySize});");
+                                
+                                else
+                                    throw new Exception("Expected to wrap type, but wrapped type not found");
+                            }
+                            else
+                                writer.WriteLine($"public RangeAccessor<{typeStr}> {field.Name} => new RangeAccessor<{typeStr}>({addrTarget}, {field.ArraySize});");
                         }
                         else if (typeStr.Contains("ImVector"))
                         {
@@ -275,6 +347,7 @@ namespace CodeGenerator
                 }
             }
 
+            // Root ImGuiNative declarations - NonInternal
             using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, $"{classPrefix}Native.gen.cs")))
             {
                 writer.Using("System");
@@ -287,10 +360,41 @@ namespace CodeGenerator
                 writer.WriteLine(string.Empty);
                 writer.PushBlock($"namespace {projectNamespace}");
                 writer.PushBlock($"public static unsafe partial class {classPrefix}Native");
+                EmitImGuiNativeFunctions(writer, false);
+                writer.PopBlock();
+                writer.PopBlock();
+            }
+
+            // Root ImGuiNative declarations - Internal
+            if (useInternals)
+            {
+                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPathInternal, $"{classPrefix}Native.gen.cs")))
+                {
+                    writer.Using("System");
+                    writer.Using("System.Numerics");
+                    writer.Using("System.Runtime.InteropServices");
+                    if (referencesImGui)
+                    {
+                        writer.Using("ImGuiNET");
+                    }
+                    writer.Using($"{projectNamespace}{InternalNamespace}");
+                    writer.WriteLine(string.Empty);
+                    writer.PushBlock($"namespace {projectNamespace}");
+                    writer.PushBlock($"public static unsafe partial class {classPrefix}Native");
+                    EmitImGuiNativeFunctions(writer, true);
+                    writer.PopBlock();
+                    writer.PopBlock();
+                }
+            }
+
+            // Function referenced by the non-internals and internals when building the appropriate ImGuiNative declarations
+            void EmitImGuiNativeFunctions(CSharpCodeWriter writer, bool isInternal)
+            {
                 foreach (FunctionDefinition fd in defs.Functions)
                 {
                     foreach (OverloadDefinition overload in fd.Overloads)
                     {
+                        if (overload.IsInternal != isInternal) { continue; }
                         string exportedName = overload.ExportedName;
                         if (exportedName.Contains("~")) { continue; }
                         if (exportedName.Contains("ImVector_")) { continue; }
@@ -343,10 +447,9 @@ namespace CodeGenerator
                         writer.WriteLine($"public static extern {ret} {methodName}({parameters});");
                     }
                 }
-                writer.PopBlock();
-                writer.PopBlock();
             }
 
+            // Root ImGui* class items - Noninternal
             using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPath, $"{classPrefix}.gen.cs")))
             {
                 writer.Using("System");
@@ -360,11 +463,41 @@ namespace CodeGenerator
                 writer.WriteLine(string.Empty);
                 writer.PushBlock($"namespace {projectNamespace}");
                 writer.PushBlock($"public static unsafe partial class {classPrefix}");
+                EmitImGuiFunctions(writer, false);
+                writer.PopBlock();
+                writer.PopBlock();
+            }
+
+            // Root ImGui* class items - Internal
+            if (useInternals)
+            {
+                using (CSharpCodeWriter writer = new CSharpCodeWriter(Path.Combine(outputPathInternal, $"{classPrefix}.gen.cs")))
+                {
+                    writer.Using("System");
+                    writer.Using("System.Numerics");
+                    writer.Using("System.Runtime.InteropServices");
+                    writer.Using("System.Text");
+                    if (referencesImGui)
+                    {
+                        writer.Using("ImGuiNET");
+                    }
+                    writer.WriteLine(string.Empty);
+                    writer.PushBlock($"namespace {projectNamespace}{InternalNamespace}");
+                    writer.PushBlock($"public static unsafe partial class {classPrefix}");
+                    EmitImGuiFunctions(writer, true);
+                    writer.PopBlock();
+                    writer.PopBlock();
+                }
+            }
+
+            // Function referenced by the non-internals and internals when building the appropriate ImGui class
+            void EmitImGuiFunctions(CSharpCodeWriter writer, bool isInternal)
+            {
                 foreach (FunctionDefinition fd in defs.Functions)
                 {
                     if (TypeInfo.SkippedFunctions.Contains(fd.Name)) { continue; }
 
-                    foreach (OverloadDefinition overload in fd.Overloads)
+                    foreach (OverloadDefinition overload in fd.Overloads.Where(o => !o.IsMemberFunction && o.IsInternal == isInternal))
                     {
                         string exportedName = overload.ExportedName;
                         if (exportedName.StartsWith("ig"))
@@ -373,12 +506,13 @@ namespace CodeGenerator
                         }
                         if (exportedName.Contains("~")) { continue; }
                         if (overload.Parameters.Any(tr => tr.Type.Contains('('))) { continue; } // TODO: Parse function pointer parameters.
-                        
+
                         if ((overload.FriendlyName == "GetID" || overload.FriendlyName == "PushID") && overload.Parameters.Length > 1)
                         {
                             // skip ImGui.Get/PushID(start, end) overloads as they would overlap with existing
                             continue;
                         }
+
 
                         bool hasVaList = false;
                         for (int i = 0; i < overload.Parameters.Length; i++)
@@ -400,7 +534,6 @@ namespace CodeGenerator
 
                         for (int i = overload.DefaultValues.Count; i >= 0; i--)
                         {
-                            if (overload.IsMemberFunction) { continue; }
                             Dictionary<string, string> defaults = new Dictionary<string, string>();
                             for (int j = 0; j < i; j++)
                             {
@@ -410,8 +543,6 @@ namespace CodeGenerator
                         }
                     }
                 }
-                writer.PopBlock();
-                writer.PopBlock();
             }
 
             foreach (var method in defs.Variants)
@@ -420,6 +551,14 @@ namespace CodeGenerator
                 {
                     if (!variant.Used) Console.WriteLine($"Error: Variants targetting parameter {variant.Name} with type {variant.OriginalType} could not be applied to method {method.Key}.");
                 }
+            }
+
+            return 0;
+
+            // Helper to determine the path
+            string GetOutputPath(bool isInternal)
+            {
+                return isInternal ? outputPathInternal : outputPath;
             }
         }
 
