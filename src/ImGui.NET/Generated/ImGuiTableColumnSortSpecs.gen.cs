@@ -10,7 +10,7 @@ namespace ImGuiNET
         public uint ColumnUserID;
         public short ColumnIndex;
         public short SortOrder;
-        public ImGuiSortDirection SortDirection;
+        public byte _bitField_0;
     }
     public unsafe partial struct ImGuiTableColumnSortSpecsPtr
     {
@@ -23,7 +23,11 @@ namespace ImGuiNET
         public ref uint ColumnUserID => ref Unsafe.AsRef<uint>(&NativePtr->ColumnUserID);
         public ref short ColumnIndex => ref Unsafe.AsRef<short>(&NativePtr->ColumnIndex);
         public ref short SortOrder => ref Unsafe.AsRef<short>(&NativePtr->SortOrder);
-        public ref ImGuiSortDirection SortDirection => ref Unsafe.AsRef<ImGuiSortDirection>(&NativePtr->SortDirection);
+        public ImGuiSortDirection SortDirection
+        {
+            get => (ImGuiSortDirection)Util.GetBits(NativePtr->_bitField_0, 0, 8);
+            set => NativePtr->_bitField_0 = Util.SetBits(NativePtr->_bitField_0, 0, 8, (byte)value);
+        }
         public void Destroy()
         {
             ImGuiNative.ImGuiTableColumnSortSpecs_destroy((ImGuiTableColumnSortSpecs*)(NativePtr));

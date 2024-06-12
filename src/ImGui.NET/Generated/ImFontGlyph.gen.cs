@@ -7,9 +7,7 @@ namespace ImGuiNET
 {
     public unsafe partial struct ImFontGlyph
     {
-        public uint Colored;
-        public uint Visible;
-        public uint Codepoint;
+        public uint _bitField_0;
         public float AdvanceX;
         public float X0;
         public float Y0;
@@ -28,9 +26,21 @@ namespace ImGuiNET
         public static implicit operator ImFontGlyphPtr(ImFontGlyph* nativePtr) => new ImFontGlyphPtr(nativePtr);
         public static implicit operator ImFontGlyph* (ImFontGlyphPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImFontGlyphPtr(IntPtr nativePtr) => new ImFontGlyphPtr(nativePtr);
-        public ref uint Colored => ref Unsafe.AsRef<uint>(&NativePtr->Colored);
-        public ref uint Visible => ref Unsafe.AsRef<uint>(&NativePtr->Visible);
-        public ref uint Codepoint => ref Unsafe.AsRef<uint>(&NativePtr->Codepoint);
+        public uint Colored
+        {
+            get => (uint)Util.GetBits(NativePtr->_bitField_0, 0, 1);
+            set => NativePtr->_bitField_0 = Util.SetBits(NativePtr->_bitField_0, 0, 1, (uint)value);
+        }
+        public uint Visible
+        {
+            get => (uint)Util.GetBits(NativePtr->_bitField_0, 1, 1);
+            set => NativePtr->_bitField_0 = Util.SetBits(NativePtr->_bitField_0, 1, 1, (uint)value);
+        }
+        public uint Codepoint
+        {
+            get => (uint)Util.GetBits(NativePtr->_bitField_0, 2, 30);
+            set => NativePtr->_bitField_0 = Util.SetBits(NativePtr->_bitField_0, 2, 30, (uint)value);
+        }
         public ref float AdvanceX => ref Unsafe.AsRef<float>(&NativePtr->AdvanceX);
         public ref float X0 => ref Unsafe.AsRef<float>(&NativePtr->X0);
         public ref float Y0 => ref Unsafe.AsRef<float>(&NativePtr->Y0);
