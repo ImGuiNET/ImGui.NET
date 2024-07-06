@@ -2070,7 +2070,7 @@ namespace ImGuiNET
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-        public static bool BeginTable(ReadOnlySpan<char> str_id, int column)
+        public static bool BeginTable(ReadOnlySpan<char> str_id, int columns)
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -2093,7 +2093,7 @@ namespace ImGuiNET
             ImGuiTableFlags flags = (ImGuiTableFlags)0;
             Vector2 outer_size = new Vector2();
             float inner_width = 0.0f;
-            byte ret = ImGuiNative.igBeginTable(native_str_id, column, flags, outer_size, inner_width);
+            byte ret = ImGuiNative.igBeginTable(native_str_id, columns, flags, outer_size, inner_width);
             if (str_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_str_id);
@@ -2101,7 +2101,7 @@ namespace ImGuiNET
             return ret != 0;
         }
 #endif
-        public static bool BeginTable(string str_id, int column)
+        public static bool BeginTable(string str_id, int columns)
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -2124,7 +2124,7 @@ namespace ImGuiNET
             ImGuiTableFlags flags = (ImGuiTableFlags)0;
             Vector2 outer_size = new Vector2();
             float inner_width = 0.0f;
-            byte ret = ImGuiNative.igBeginTable(native_str_id, column, flags, outer_size, inner_width);
+            byte ret = ImGuiNative.igBeginTable(native_str_id, columns, flags, outer_size, inner_width);
             if (str_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_str_id);
@@ -2132,7 +2132,7 @@ namespace ImGuiNET
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-        public static bool BeginTable(ReadOnlySpan<char> str_id, int column, ImGuiTableFlags flags)
+        public static bool BeginTable(ReadOnlySpan<char> str_id, int columns, ImGuiTableFlags flags)
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -2154,7 +2154,7 @@ namespace ImGuiNET
             else { native_str_id = null; }
             Vector2 outer_size = new Vector2();
             float inner_width = 0.0f;
-            byte ret = ImGuiNative.igBeginTable(native_str_id, column, flags, outer_size, inner_width);
+            byte ret = ImGuiNative.igBeginTable(native_str_id, columns, flags, outer_size, inner_width);
             if (str_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_str_id);
@@ -2162,7 +2162,7 @@ namespace ImGuiNET
             return ret != 0;
         }
 #endif
-        public static bool BeginTable(string str_id, int column, ImGuiTableFlags flags)
+        public static bool BeginTable(string str_id, int columns, ImGuiTableFlags flags)
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -2184,7 +2184,7 @@ namespace ImGuiNET
             else { native_str_id = null; }
             Vector2 outer_size = new Vector2();
             float inner_width = 0.0f;
-            byte ret = ImGuiNative.igBeginTable(native_str_id, column, flags, outer_size, inner_width);
+            byte ret = ImGuiNative.igBeginTable(native_str_id, columns, flags, outer_size, inner_width);
             if (str_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_str_id);
@@ -2192,7 +2192,7 @@ namespace ImGuiNET
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-        public static bool BeginTable(ReadOnlySpan<char> str_id, int column, ImGuiTableFlags flags, Vector2 outer_size)
+        public static bool BeginTable(ReadOnlySpan<char> str_id, int columns, ImGuiTableFlags flags, Vector2 outer_size)
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -2213,7 +2213,7 @@ namespace ImGuiNET
             }
             else { native_str_id = null; }
             float inner_width = 0.0f;
-            byte ret = ImGuiNative.igBeginTable(native_str_id, column, flags, outer_size, inner_width);
+            byte ret = ImGuiNative.igBeginTable(native_str_id, columns, flags, outer_size, inner_width);
             if (str_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_str_id);
@@ -2221,7 +2221,7 @@ namespace ImGuiNET
             return ret != 0;
         }
 #endif
-        public static bool BeginTable(string str_id, int column, ImGuiTableFlags flags, Vector2 outer_size)
+        public static bool BeginTable(string str_id, int columns, ImGuiTableFlags flags, Vector2 outer_size)
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -2242,7 +2242,7 @@ namespace ImGuiNET
             }
             else { native_str_id = null; }
             float inner_width = 0.0f;
-            byte ret = ImGuiNative.igBeginTable(native_str_id, column, flags, outer_size, inner_width);
+            byte ret = ImGuiNative.igBeginTable(native_str_id, columns, flags, outer_size, inner_width);
             if (str_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_str_id);
@@ -2250,7 +2250,7 @@ namespace ImGuiNET
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
-        public static bool BeginTable(ReadOnlySpan<char> str_id, int column, ImGuiTableFlags flags, Vector2 outer_size, float inner_width)
+        public static bool BeginTable(ReadOnlySpan<char> str_id, int columns, ImGuiTableFlags flags, Vector2 outer_size, float inner_width)
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -2270,7 +2270,7 @@ namespace ImGuiNET
                 native_str_id[native_str_id_offset] = 0;
             }
             else { native_str_id = null; }
-            byte ret = ImGuiNative.igBeginTable(native_str_id, column, flags, outer_size, inner_width);
+            byte ret = ImGuiNative.igBeginTable(native_str_id, columns, flags, outer_size, inner_width);
             if (str_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_str_id);
@@ -2278,7 +2278,7 @@ namespace ImGuiNET
             return ret != 0;
         }
 #endif
-        public static bool BeginTable(string str_id, int column, ImGuiTableFlags flags, Vector2 outer_size, float inner_width)
+        public static bool BeginTable(string str_id, int columns, ImGuiTableFlags flags, Vector2 outer_size, float inner_width)
         {
             byte* native_str_id;
             int str_id_byteCount = 0;
@@ -2298,7 +2298,7 @@ namespace ImGuiNET
                 native_str_id[native_str_id_offset] = 0;
             }
             else { native_str_id = null; }
-            byte ret = ImGuiNative.igBeginTable(native_str_id, column, flags, outer_size, inner_width);
+            byte ret = ImGuiNative.igBeginTable(native_str_id, columns, flags, outer_size, inner_width);
             if (str_id_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_str_id);
@@ -12468,13 +12468,14 @@ namespace ImGuiNET
         }
         public static ImDrawListPtr GetBackgroundDrawList()
         {
-            ImDrawList* ret = ImGuiNative.igGetBackgroundDrawList_Nil();
+            ImGuiViewport* viewport = null;
+            ImDrawList* ret = ImGuiNative.igGetBackgroundDrawList(viewport);
             return new ImDrawListPtr(ret);
         }
         public static ImDrawListPtr GetBackgroundDrawList(ImGuiViewportPtr viewport)
         {
             ImGuiViewport* native_viewport = viewport.NativePtr;
-            ImDrawList* ret = ImGuiNative.igGetBackgroundDrawList_ViewportPtr(native_viewport);
+            ImDrawList* ret = ImGuiNative.igGetBackgroundDrawList(native_viewport);
             return new ImDrawListPtr(ret);
         }
         public static string GetClipboardText()
@@ -12619,7 +12620,8 @@ namespace ImGuiNET
         }
         public static ImDrawListPtr GetForegroundDrawList()
         {
-            ImDrawList* ret = ImGuiNative.igGetForegroundDrawList_Nil();
+            ImGuiViewport* viewport = null;
+            ImDrawList* ret = ImGuiNative.igGetForegroundDrawList_ViewportPtr(viewport);
             return new ImDrawListPtr(ret);
         }
         public static ImDrawListPtr GetForegroundDrawList(ImGuiViewportPtr viewport)
@@ -25947,6 +25949,11 @@ namespace ImGuiNET
         {
             byte* ret = ImGuiNative.igTableGetColumnName_Int(column_n);
             return Util.StringFromPtr(ret);
+        }
+        public static int TableGetHoveredColumn()
+        {
+            int ret = ImGuiNative.igTableGetHoveredColumn();
+            return ret;
         }
         public static int TableGetRowIndex()
         {

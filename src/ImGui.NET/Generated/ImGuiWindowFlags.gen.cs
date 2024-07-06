@@ -27,7 +27,6 @@ namespace ImGuiNET
         NoNav = 196608,
         NoDecoration = 43,
         NoInputs = 197120,
-        NavFlattened = 8388608,
         ChildWindow = 16777216,
         Tooltip = 33554432,
         Popup = 67108864,

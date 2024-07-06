@@ -483,6 +483,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImGuiIO_ClearInputKeys((ImGuiIO*)(NativePtr));
         }
+        public void ClearInputMouse()
+        {
+            ImGuiNative.ImGuiIO_ClearInputMouse((ImGuiIO*)(NativePtr));
+        }
         public void Destroy()
         {
             ImGuiNative.ImGuiIO_destroy((ImGuiIO*)(NativePtr));
