@@ -12,5 +12,6 @@ namespace ImGuiNET
         AutoResizeY = 32,
         AlwaysAutoResize = 64,
         FrameStyle = 128,
+        NavFlattened = 256,
     }
 }

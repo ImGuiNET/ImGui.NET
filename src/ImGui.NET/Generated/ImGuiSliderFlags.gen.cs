@@ -8,6 +8,7 @@ namespace ImGuiNET
         Logarithmic = 32,
         NoRoundToFormat = 64,
         NoInput = 128,
+        WrapAround = 256,
         InvalidMask = 1879048207,
     }
 }
