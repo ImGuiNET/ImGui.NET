@@ -295,6 +295,10 @@ namespace ImGuiNET.SampleProgram.XNA
             // Setup render state: alpha-blending enabled, no face culling, no depth testing, scissor enabled, vertex/texcoord/color pointers
             var lastViewport = _graphicsDevice.Viewport;
             var lastScissorBox = _graphicsDevice.ScissorRectangle;
+            var lastRasterizer = _graphicsDevice.RasterizerState;
+            var lastDepthStencil = _graphicsDevice.DepthStencilState;
+            var lastBlendFactor = _graphicsDevice.BlendFactor;
+            var lastBlendState = _graphicsDevice.BlendState;
 
             _graphicsDevice.BlendFactor = Color.White;
             _graphicsDevice.BlendState = BlendState.NonPremultiplied;
@@ -314,6 +318,10 @@ namespace ImGuiNET.SampleProgram.XNA
             // Restore modified state
             _graphicsDevice.Viewport = lastViewport;
             _graphicsDevice.ScissorRectangle = lastScissorBox;
+            _graphicsDevice.RasterizerState = lastRasterizer;
+            _graphicsDevice.DepthStencilState = lastDepthStencil;
+            _graphicsDevice.BlendState = lastBlendState;
+            _graphicsDevice.BlendFactor = lastBlendFactor;
         }
 
         private unsafe void UpdateBuffers(ImDrawDataPtr drawData)
