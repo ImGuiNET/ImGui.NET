@@ -22,6 +22,7 @@ namespace CodeGenerator
             { "ImS64", "long" },
             { "unsigned short", "ushort" },
             { "unsigned int", "uint" },
+            { "ImVec1", "float" },
             { "ImVec2", "Vector2" },
             { "ImVec2_Simple", "Vector2" },
             { "ImVec3", "Vector3" },
@@ -56,11 +57,25 @@ namespace CodeGenerator
             { "ImPlotGetter", "IntPtr" },
             { "ImPlotTransform", "IntPtr" },
             { "ImGuiKeyChord", "ImGuiKey" },
+            // internals
+            { "char[5]", "byte*"},
+            { "ImGuiDir*", "IntPtr" },
+            //{ "ImGuiStoragePair", "IntPtr" },
+            { "ImGuiDockRequest", "IntPtr" },
+            { "ImGuiDockNodeSettings", "IntPtr" },
+            { "ImGuiTableColumnIdx", "sbyte" },
+            { "ImGuiTableDrawChannelIdx", "byte"},
+            { "ImGuiContextHookCallback", "IntPtr" },
+            { "ImGuiErrorLogCallback", "IntPtr" },
+            { "ImGuiSelectionUserData", "ulong" },      //ImU64
+            { "ImGuiKeyRoutingIndex", "short" }         //ImS16
+            //{ "ImGuiSizeCallback", "IntPtr"}
         };
         
         public static readonly List<string> WellKnownEnums = new List<string>()
         {
-            "ImGuiMouseButton"
+            "ImGuiMouseButton",
+            "ImGuiDir"
         };
 
         public static readonly Dictionary<string, string> AlternateEnumPrefixes = new Dictionary<string, string>()
@@ -70,7 +85,7 @@ namespace CodeGenerator
 
         public static readonly Dictionary<string, string> AlternateEnumPrefixSubstitutions = new Dictionary<string, string>()
         {
-            { "ImGuiMod_", "Mod" },
+            { "ImGuiMod_", "Mod" }
         };
 
         public static readonly Dictionary<string, string> WellKnownFieldReplacements = new Dictionary<string, string>()
@@ -81,6 +96,7 @@ namespace CodeGenerator
         public static readonly HashSet<string> CustomDefinedTypes = new HashSet<string>()
         {
             "ImVector",
+            "ImVec1",
             "ImVec2",
             "ImVec4",
             "ImGuiStoragePair",
@@ -105,10 +121,11 @@ namespace CodeGenerator
             { "ImPlotPoint(0,0)", "new ImPlotPoint { x = 0, y = 0 }" },
             { "ImPlotPoint(1,1)", "new ImPlotPoint { x = 1, y = 1 }" },
             { "ImDrawCornerFlags_All", "ImDrawCornerFlags.All" },
+            { "ImGuiCond_Once", "ImGuiCond.Once"},
+            { "ImGuiTypingSelectFlags_None", "ImGuiTypingSelectFlags.None" },
             { "ImPlotFlags_None", "ImPlotFlags.None"},
             { "ImPlotAxisFlags_None", "ImPlotAxisFlags.None"},
             { "ImPlotAxisFlags_NoGridLines", "ImPlotAxisFlags.NoGridLines"},
-            { "ImGuiCond_Once", "ImGuiCond.Once"},
             { "ImPlotOrientation_Vertical", "ImPlotOrientation.Vertical"},
             { "PinShape_CircleFilled", "PinShape.CircleFilled"},
             { "ImGuiPopupFlags_None", "ImGuiPopupFlags.None"},
@@ -137,6 +154,7 @@ namespace CodeGenerator
             { "in", "@in" },
             { "out", "@out" },
             { "ref", "@ref" },
+            { "base", "@base" }
         };
 
         public static readonly HashSet<string> LegalFixedTypes = new HashSet<string>()
@@ -158,7 +176,16 @@ namespace CodeGenerator
         {
             "igInputText",
             "igInputTextMultiline",
-            "igInputTextWithHint"
+            "igInputTextWithHint",
+        };
+
+        public static readonly HashSet<string> SkippedMembers = new HashSet<string>()
+        {
+            // This can be used to rip members out of internal when you simply want to exclude them.
+            // You must be careful when using this to not mess with data structures that are used
+            // by ImGui
+            // Add an entry for the type.name, such as:
+            // "ImGuiContextPtr.StyleVarStack"
         };
     }
 }
