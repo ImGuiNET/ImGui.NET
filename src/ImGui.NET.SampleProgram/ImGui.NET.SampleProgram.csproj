@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ImGui.NET\ImGui.NET.csproj" />
-    <PackageReference Include="Veldrid" Version="4.8.0" />
-    <PackageReference Include="Veldrid.StartupUtilities" Version="4.8.0" />
+    <PackageReference Include="Veldrid" Version="4.9.0" />
+    <PackageReference Include="Veldrid.StartupUtilities" Version="4.9.0" />
     <ProjectReference Include="..\ImPlot.NET\ImPlot.NET.csproj" />
     <ProjectReference Include="..\TestDotNetStandardLib\TestDotNetStandardLib.csproj" />
   </ItemGroup>
