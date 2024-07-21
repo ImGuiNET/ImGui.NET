@@ -17,7 +17,7 @@ jobs:
     - name: Install .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
 
     - name: Restore dependencies
       run: dotnet restore src
@@ -36,7 +36,7 @@ jobs:
       shell: bash
       run: |
         echo "Running CodeGenerator"
-        bin/Release/CodeGenerator/net7.0/CodeGenerator.exe "src/ImGui.NET/Generated"
+        bin/Release/CodeGenerator/net8.0/CodeGenerator.exe "src/ImGui.NET/Generated"
         git status -s | findstr . && echo "ERROR: CodeGenerator is not executed, please execute it." && exit 1 || exit 0
 
     - name: Publish to nuget.org
