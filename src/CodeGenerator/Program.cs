@@ -139,6 +139,14 @@ namespace CodeGenerator
                                 }
                             }
                         }
+                        else if (field.BitSize.HasValue)
+                        {
+                            var bitField = td.GetBitFieldContaining(field);
+                            if (bitField.OffsetOf(field) > 0)
+                                continue;
+
+                            writer.WriteLine($"public {bitField.Type} {bitField.Name};");
+                        }
                         else
                         {
                             writer.WriteLine($"public {typeStr} {field.Name};");
@@ -169,6 +177,17 @@ namespace CodeGenerator
                         {
                             string addrTarget = TypeInfo.LegalFixedTypes.Contains(rawType) ? $"NativePtr->{field.Name}" : $"&NativePtr->{field.Name}_0";
                             writer.WriteLine($"public RangeAccessor<{typeStr}> {field.Name} => new RangeAccessor<{typeStr}>({addrTarget}, {field.ArraySize});");
+                        }
+                        else if (field.BitSize.HasValue)
+                        {
+                            var bitField = td.GetBitFieldContaining(field);
+                            var offset = bitField.OffsetOf(field);
+                            var mask = (ulong)(1 << field.BitSize) - 1 << offset;
+
+                            writer.PushBlock($"public {typeStr} {field.Name}");
+                            writer.WriteLine($"get => ({typeStr})Util.GetBits(NativePtr->{bitField.Name}, {offset}, {field.BitSize});");
+                            writer.WriteLine($"set => NativePtr->{bitField.Name} = Util.SetBits(NativePtr->{bitField.Name}, {offset}, {field.BitSize}, ({bitField.Type})value);");
+                            writer.PopBlock();
                         }
                         else if (typeStr.Contains("ImVector"))
                         {
