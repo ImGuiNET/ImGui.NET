@@ -37,6 +37,7 @@ namespace ImGuiNET
         public float TabBorderSize;
         public float TabMinWidthForCloseButton;
         public float TabBarBorderSize;
+        public float TabBarOverlineSize;
         public float TableAngledHeadersAngle;
         public Vector2 TableAngledHeadersTextAlign;
         public ImGuiDir ColorButtonPosition;
@@ -111,6 +112,7 @@ namespace ImGuiNET
         public Vector4 Colors_54;
         public Vector4 Colors_55;
         public Vector4 Colors_56;
+        public Vector4 Colors_57;
         public float HoverStationaryDelay;
         public float HoverDelayShort;
         public float HoverDelayNormal;
@@ -155,6 +157,7 @@ namespace ImGuiNET
         public ref float TabBorderSize => ref Unsafe.AsRef<float>(&NativePtr->TabBorderSize);
         public ref float TabMinWidthForCloseButton => ref Unsafe.AsRef<float>(&NativePtr->TabMinWidthForCloseButton);
         public ref float TabBarBorderSize => ref Unsafe.AsRef<float>(&NativePtr->TabBarBorderSize);
+        public ref float TabBarOverlineSize => ref Unsafe.AsRef<float>(&NativePtr->TabBarOverlineSize);
         public ref float TableAngledHeadersAngle => ref Unsafe.AsRef<float>(&NativePtr->TableAngledHeadersAngle);
         public ref Vector2 TableAngledHeadersTextAlign => ref Unsafe.AsRef<Vector2>(&NativePtr->TableAngledHeadersTextAlign);
         public ref ImGuiDir ColorButtonPosition => ref Unsafe.AsRef<ImGuiDir>(&NativePtr->ColorButtonPosition);
@@ -172,7 +175,7 @@ namespace ImGuiNET
         public ref bool AntiAliasedFill => ref Unsafe.AsRef<bool>(&NativePtr->AntiAliasedFill);
         public ref float CurveTessellationTol => ref Unsafe.AsRef<float>(&NativePtr->CurveTessellationTol);
         public ref float CircleTessellationMaxError => ref Unsafe.AsRef<float>(&NativePtr->CircleTessellationMaxError);
-        public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 57);
+        public RangeAccessor<Vector4> Colors => new RangeAccessor<Vector4>(&NativePtr->Colors_0, 58);
         public ref float HoverStationaryDelay => ref Unsafe.AsRef<float>(&NativePtr->HoverStationaryDelay);
         public ref float HoverDelayShort => ref Unsafe.AsRef<float>(&NativePtr->HoverDelayShort);
         public ref float HoverDelayNormal => ref Unsafe.AsRef<float>(&NativePtr->HoverDelayNormal);
