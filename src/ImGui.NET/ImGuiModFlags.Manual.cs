@@ -1,4 +1,4 @@
-namespace ImGuiNET
+﻿namespace ImGuiNET
 {
     [System.Flags]
     public enum ImGuiModFlags

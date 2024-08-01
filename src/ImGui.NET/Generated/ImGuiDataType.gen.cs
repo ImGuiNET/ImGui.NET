@@ -12,6 +12,7 @@ namespace ImGuiNET
         U64 = 7,
         Float = 8,
         Double = 9,
-        COUNT = 10,
+        Bool = 10,
+        COUNT = 11,
     }
 }
