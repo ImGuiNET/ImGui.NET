@@ -6,8 +6,6 @@ namespace ImGuiNET
         None = 0,
         NavEnableKeyboard = 1,
         NavEnableGamepad = 2,
-        NavEnableSetMousePos = 4,
-        NavNoCaptureKeyboard = 8,
         NoMouse = 16,
         NoMouseCursorChange = 32,
         NoKeyboard = 64,

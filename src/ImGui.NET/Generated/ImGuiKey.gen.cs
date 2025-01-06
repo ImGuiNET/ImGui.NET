@@ -3,6 +3,7 @@ namespace ImGuiNET
     public enum ImGuiKey
     {
         None = 0,
+        NamedKey_BEGIN = 512,
         Tab = 512,
         LeftArrow = 513,
         RightArrow = 514,
@@ -157,17 +158,13 @@ namespace ImGuiNET
         ReservedForModShift = 663,
         ReservedForModAlt = 664,
         ReservedForModSuper = 665,
-        COUNT = 666,
+        NamedKey_END = 666,
         ModNone = 0,
         ModCtrl = 4096,
         ModShift = 8192,
         ModAlt = 16384,
         ModSuper = 32768,
         ModMask = 61440,
-        NamedKey_BEGIN = 512,
-        NamedKey_END = 666,
         NamedKey_COUNT = 154,
-        KeysData_SIZE = 154,
-        KeysData_OFFSET = 512,
     }
 }
