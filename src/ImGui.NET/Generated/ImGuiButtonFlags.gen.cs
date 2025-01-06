@@ -8,5 +8,6 @@ namespace ImGuiNET
         MouseButtonRight = 2,
         MouseButtonMiddle = 4,
         MouseButtonMask = 7,
+        EnableNav = 8,
     }
 }

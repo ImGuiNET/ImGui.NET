@@ -56,7 +56,7 @@ namespace ImGuiNET
         TextLink = 51,
         TextSelectedBg = 52,
         DragDropTarget = 53,
-        NavHighlight = 54,
+        NavCursor = 54,
         NavWindowingHighlight = 55,
         NavWindowingDimBg = 56,
         ModalWindowDimBg = 57,

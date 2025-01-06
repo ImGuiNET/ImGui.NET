@@ -7,11 +7,12 @@ namespace ImGuiNET
 {
     public unsafe partial struct ImFontAtlasCustomRect
     {
-        public ushort Width;
-        public ushort Height;
         public ushort X;
         public ushort Y;
+        public ushort Width;
+        public ushort Height;
         public uint GlyphID;
+        public uint GlyphColored;
         public float GlyphAdvanceX;
         public Vector2 GlyphOffset;
         public ImFont* Font;
@@ -24,11 +25,12 @@ namespace ImGuiNET
         public static implicit operator ImFontAtlasCustomRectPtr(ImFontAtlasCustomRect* nativePtr) => new ImFontAtlasCustomRectPtr(nativePtr);
         public static implicit operator ImFontAtlasCustomRect* (ImFontAtlasCustomRectPtr wrappedPtr) => wrappedPtr.NativePtr;
         public static implicit operator ImFontAtlasCustomRectPtr(IntPtr nativePtr) => new ImFontAtlasCustomRectPtr(nativePtr);
-        public ref ushort Width => ref Unsafe.AsRef<ushort>(&NativePtr->Width);
-        public ref ushort Height => ref Unsafe.AsRef<ushort>(&NativePtr->Height);
         public ref ushort X => ref Unsafe.AsRef<ushort>(&NativePtr->X);
         public ref ushort Y => ref Unsafe.AsRef<ushort>(&NativePtr->Y);
+        public ref ushort Width => ref Unsafe.AsRef<ushort>(&NativePtr->Width);
+        public ref ushort Height => ref Unsafe.AsRef<ushort>(&NativePtr->Height);
         public ref uint GlyphID => ref Unsafe.AsRef<uint>(&NativePtr->GlyphID);
+        public ref uint GlyphColored => ref Unsafe.AsRef<uint>(&NativePtr->GlyphColored);
         public ref float GlyphAdvanceX => ref Unsafe.AsRef<float>(&NativePtr->GlyphAdvanceX);
         public ref Vector2 GlyphOffset => ref Unsafe.AsRef<Vector2>(&NativePtr->GlyphOffset);
         public ImFontPtr Font => new ImFontPtr(NativePtr->Font);

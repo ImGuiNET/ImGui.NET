@@ -21,11 +21,12 @@ namespace ImGuiNET
         DisplayEmptyRefVal = 16384,
         NoHorizontalScroll = 32768,
         NoUndoRedo = 65536,
-        CallbackCompletion = 131072,
-        CallbackHistory = 262144,
-        CallbackAlways = 524288,
-        CallbackCharFilter = 1048576,
-        CallbackResize = 2097152,
-        CallbackEdit = 4194304,
+        ElideLeft = 131072,
+        CallbackCompletion = 262144,
+        CallbackHistory = 524288,
+        CallbackAlways = 1048576,
+        CallbackCharFilter = 2097152,
+        CallbackResize = 4194304,
+        CallbackEdit = 8388608,
     }
 }

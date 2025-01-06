@@ -20,6 +20,7 @@ namespace ImGuiNET
         public ImDrawListSplitter _Splitter;
         public ImVector _ClipRectStack;
         public ImVector _TextureIdStack;
+        public ImVector _CallbacksDataBuf;
         public float _FringeScale;
         public byte* _OwnerName;
     }
@@ -44,6 +45,7 @@ namespace ImGuiNET
         public ref ImDrawListSplitter _Splitter => ref Unsafe.AsRef<ImDrawListSplitter>(&NativePtr->_Splitter);
         public ImVector<Vector4> _ClipRectStack => new ImVector<Vector4>(NativePtr->_ClipRectStack);
         public ImVector<IntPtr> _TextureIdStack => new ImVector<IntPtr>(NativePtr->_TextureIdStack);
+        public ImVector<byte> _CallbacksDataBuf => new ImVector<byte>(NativePtr->_CallbacksDataBuf);
         public ref float _FringeScale => ref Unsafe.AsRef<float>(&NativePtr->_FringeScale);
         public NullTerminatedString _OwnerName => new NullTerminatedString(NativePtr->_OwnerName);
         public int _CalcCircleAutoSegmentCount(float radius)
@@ -83,6 +85,10 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawList__ResetForNewFrame((ImDrawList*)(NativePtr));
         }
+        public void _SetTextureID(IntPtr texture_id)
+        {
+            ImGuiNative.ImDrawList__SetTextureID((ImDrawList*)(NativePtr), texture_id);
+        }
         public void _TryMergeDrawCmds()
         {
             ImGuiNative.ImDrawList__TryMergeDrawCmds((ImDrawList*)(NativePtr));
@@ -105,10 +111,16 @@ namespace ImGuiNET
         {
             ImGuiNative.ImDrawList_AddBezierQuadratic((ImDrawList*)(NativePtr), p1, p2, p3, col, thickness, num_segments);
         }
-        public void AddCallback(IntPtr callback, IntPtr callback_data)
+        public void AddCallback(IntPtr callback, IntPtr userdata)
         {
-            void* native_callback_data = (void*)callback_data.ToPointer();
-            ImGuiNative.ImDrawList_AddCallback((ImDrawList*)(NativePtr), callback, native_callback_data);
+            void* native_userdata = (void*)userdata.ToPointer();
+            uint userdata_size = 0;
+            ImGuiNative.ImDrawList_AddCallback((ImDrawList*)(NativePtr), callback, native_userdata, userdata_size);
+        }
+        public void AddCallback(IntPtr callback, IntPtr userdata, uint userdata_size)
+        {
+            void* native_userdata = (void*)userdata.ToPointer();
+            ImGuiNative.ImDrawList_AddCallback((ImDrawList*)(NativePtr), callback, native_userdata, userdata_size);
         }
         public void AddCircle(Vector2 center, float radius, uint col)
         {
