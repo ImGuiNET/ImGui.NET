@@ -161,5 +161,14 @@ namespace CodeGenerator
             "igInputTextMultiline",
             "igInputTextWithHint"
         };
+
+        public static string GetTypeForBitfield(int size) => size switch
+        {
+            _ when size <= 8 => "byte",
+            _ when size <= 16 => "ushort",
+            _ when size <= 32 => "uint",
+            _ when size <= 64 => "ulong",
+            _ => throw new System.NotSupportedException("Unsupported bitfield size: " + size)
+        };
     }
 }
