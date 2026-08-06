@@ -93,5 +93,32 @@ namespace ImGuiNET
                 return Encoding.UTF8.GetBytes(utf16Ptr + start, length, utf8Bytes, utf8ByteCount);
             }
         }
+
+        internal static byte SetBits(byte oldValue, int offset, int bitCount, byte newBits)
+        {
+            var mask = (byte)((1 << bitCount) - 1 << offset);
+            return (byte)((oldValue & ~mask) | (newBits << offset & mask));
+        }
+
+        internal static ushort SetBits(ushort oldValue, int offset, int bitCount, ushort newBits)
+        {
+            var mask = (ushort)((1 << bitCount) - 1 << offset);
+            return (ushort)((oldValue & ~mask) | (newBits << offset & mask));
+        }
+
+        internal static uint SetBits(uint oldValue, int offset, int bitCount, uint newBits)
+        {
+            var mask = (uint)((1 << bitCount) - 1 << offset);
+            return (uint)((oldValue & ~mask) | (newBits << offset & mask));
+        }
+
+        internal static ulong SetBits(ulong oldValue, int offset, int bitCount, ulong newBits)
+        {
+            var mask = (ulong)((1 << bitCount) - 1 << offset);
+            return (ulong)((oldValue & ~mask) | (newBits << offset & mask));
+        }
+
+        internal static ulong GetBits(ulong value, int offset, int bitCount) =>
+            (value >> offset) & (1UL << bitCount) - 1;
     }
 }

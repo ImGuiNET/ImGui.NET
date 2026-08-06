@@ -22,6 +22,14 @@ namespace CodeGenerator
             if (v == null) return 0;
             return v.ToObject<int>();
         }
+
+        static int? GetOptionalInt(JToken token, string key)
+        {
+            var v = token[key];
+            if (v == null) return null;
+            return v.ToObject<int>();
+        }
+
         public void LoadFrom(string directory)
         {
             
@@ -93,7 +101,9 @@ namespace CodeGenerator
                         v["type"].ToString(),
                             GetInt(v, "size"),
                         v["template_type"]?.ToString(),
-                        Enums);
+                        Enums,
+                        typeVariants: null,
+                        GetOptionalInt(v, "bitfield"));
                 }).Where(tr => tr != null).ToArray();
                 return new TypeDefinition(name, fields);
             }).Where(x => x != null).ToArray();
@@ -336,12 +346,34 @@ namespace CodeGenerator
     {
         public string Name { get; }
         public TypeReference[] Fields { get; }
+        public BitField[] BitFields { get; }
 
         public TypeDefinition(string name, TypeReference[] fields)
         {
             Name = name;
             Fields = fields;
+
+            var bitFields = new List<BitField>();
+            int bitFieldStartI = -1;
+            for (int i = 0; i < fields.Length; i++)
+            {
+                if (fields[i].BitSize.HasValue && bitFieldStartI < 0)
+                    bitFieldStartI = i;
+
+                if (!fields[i].BitSize.HasValue && bitFieldStartI >= 0)
+                {
+                    bitFields.Add(new BitField(bitFields.Count, fields[bitFieldStartI..i]));
+                    bitFieldStartI = -1;
+                }
+            }
+            if (bitFieldStartI >= 0)
+                bitFields.Add(new BitField(bitFields.Count, fields[bitFieldStartI..]));
+            BitFields = bitFields.ToArray();
         }
+
+        public BitField GetBitFieldContaining(TypeReference field) =>
+            BitFields.FirstOrDefault(bitField => bitField.Fields.Contains(field))
+            ?? throw new ArgumentException("Given is not part of any bit field");
     }
 
     class TypeReference
@@ -353,17 +385,18 @@ namespace CodeGenerator
         public bool IsFunctionPointer { get; }
         public string[] TypeVariants { get; }
         public bool IsEnum { get; }
+        public int? BitSize { get; }
 
         public TypeReference(string name, string type, int asize, EnumDefinition[] enums)
-            : this(name, type, asize, null, enums, null) { }
+            : this(name, type, asize, null, enums, null, null) { }
 
         public TypeReference(string name, string type, int asize, EnumDefinition[] enums, string[] typeVariants)
-            : this(name, type, asize, null, enums, typeVariants) { }
+            : this(name, type, asize, null, enums, typeVariants, null) { }
 
         public TypeReference(string name, string type, int asize, string templateType, EnumDefinition[] enums)
-            : this(name, type, asize, templateType, enums, null) { }
+            : this(name, type, asize, templateType, enums, null, null) { }
 
-        public TypeReference(string name, string type, int asize, string templateType, EnumDefinition[] enums, string[] typeVariants)
+        public TypeReference(string name, string type, int asize, string templateType, EnumDefinition[] enums, string[] typeVariants, int? bitSize)
         {
             Name = name;
             Type = type.Replace("const", string.Empty).Trim();
@@ -410,6 +443,8 @@ namespace CodeGenerator
             TypeVariants = typeVariants;
 
             IsEnum = enums.Any(t => t.Names.Contains(type) || t.FriendlyNames.Contains(type) || TypeInfo.WellKnownEnums.Contains(type));
+
+            BitSize = bitSize;
         }
         
         private int ParseSizeString(string sizePart, EnumDefinition[] enums)
@@ -450,6 +485,28 @@ namespace CodeGenerator
         {
             if (variantIndex == 0) return this;
             else return new TypeReference(Name, TypeVariants[variantIndex - 1], ArraySize, TemplateType, enums);
+        }
+    }
+
+    class BitField
+    {
+        public string Name { get; }
+        public string Type { get; }
+        public TypeReference[] Fields { get; }
+
+        public BitField(int index, IEnumerable<TypeReference> fields)
+        {
+            Name = $"_bitField_{index}";
+            Fields = fields.ToArray();
+            Type = TypeInfo.GetTypeForBitfield(fields.Sum(f => f.BitSize.Value));
+        }
+
+        public int OffsetOf(TypeReference field)
+        {
+            var fieldIndex = Array.IndexOf(Fields, field);
+            if (fieldIndex < 0)
+                throw new ArgumentException("Given field is not part of the bit field");
+            return Fields.Take(fieldIndex).Sum(f => f.BitSize.Value);
         }
     }
 
