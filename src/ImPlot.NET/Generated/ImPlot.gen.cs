@@ -81853,10 +81853,15 @@ namespace ImPlotNET
         }
         public static void ShowDemoWindow(ref bool p_open)
         {
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             ImPlotNative.ImPlot_ShowDemoWindow(native_p_open);
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static bool ShowInputMapSelector(ReadOnlySpan<char> label)
@@ -81921,10 +81926,15 @@ namespace ImPlotNET
         }
         public static void ShowMetricsWindow(ref bool p_popen)
         {
-            byte native_p_popen_val = p_popen ? (byte)1 : (byte)0;
-            byte* native_p_popen = &native_p_popen_val;
+            byte native_p_popen_val = 0;
+            byte* native_p_popen = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_popen))
+            {
+                native_p_popen_val = p_popen ? (byte)1 : (byte)0;
+                native_p_popen = &native_p_popen_val;
+            }
             ImPlotNative.ImPlot_ShowMetricsWindow(native_p_popen);
-            p_popen = native_p_popen_val != 0;
+            if (native_p_popen != null) { p_popen = native_p_popen_val != 0; }
         }
         public static void ShowStyleEditor()
         {

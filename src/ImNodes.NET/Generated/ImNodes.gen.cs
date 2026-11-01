@@ -191,14 +191,19 @@ namespace imnodesNET
         }
         public static bool IsLinkCreated(ref int started_at_attribute_id, ref int ended_at_attribute_id, ref bool created_from_snap)
         {
-            byte native_created_from_snap_val = created_from_snap ? (byte)1 : (byte)0;
-            byte* native_created_from_snap = &native_created_from_snap_val;
+            byte native_created_from_snap_val = 0;
+            byte* native_created_from_snap = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref created_from_snap))
+            {
+                native_created_from_snap_val = created_from_snap ? (byte)1 : (byte)0;
+                native_created_from_snap = &native_created_from_snap_val;
+            }
             fixed (int* native_started_at_attribute_id = &started_at_attribute_id)
             {
                 fixed (int* native_ended_at_attribute_id = &ended_at_attribute_id)
                 {
                     byte ret = imnodesNative.imnodes_IsLinkCreatedBoolPtr(native_started_at_attribute_id, native_ended_at_attribute_id, native_created_from_snap);
-                    created_from_snap = native_created_from_snap_val != 0;
+                    if (native_created_from_snap != null) { created_from_snap = native_created_from_snap_val != 0; }
                     return ret != 0;
                 }
             }
@@ -223,8 +228,13 @@ namespace imnodesNET
         }
         public static bool IsLinkCreated(ref int started_at_node_id, ref int started_at_attribute_id, ref int ended_at_node_id, ref int ended_at_attribute_id, ref bool created_from_snap)
         {
-            byte native_created_from_snap_val = created_from_snap ? (byte)1 : (byte)0;
-            byte* native_created_from_snap = &native_created_from_snap_val;
+            byte native_created_from_snap_val = 0;
+            byte* native_created_from_snap = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref created_from_snap))
+            {
+                native_created_from_snap_val = created_from_snap ? (byte)1 : (byte)0;
+                native_created_from_snap = &native_created_from_snap_val;
+            }
             fixed (int* native_started_at_node_id = &started_at_node_id)
             {
                 fixed (int* native_started_at_attribute_id = &started_at_attribute_id)
@@ -234,7 +244,7 @@ namespace imnodesNET
                         fixed (int* native_ended_at_attribute_id = &ended_at_attribute_id)
                         {
                             byte ret = imnodesNative.imnodes_IsLinkCreatedIntPtr(native_started_at_node_id, native_started_at_attribute_id, native_ended_at_node_id, native_ended_at_attribute_id, native_created_from_snap);
-                            created_from_snap = native_created_from_snap_val != 0;
+                            if (native_created_from_snap != null) { created_from_snap = native_created_from_snap_val != 0; }
                             return ret != 0;
                         }
                     }
