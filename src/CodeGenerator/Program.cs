@@ -628,9 +628,16 @@ namespace CodeGenerator
                 {
                     string nativeArgName = "native_" + tr.Name;
                     marshalledParameters[i] = new MarshalledParameter("ref bool", false, nativeArgName, false);
-                    preCallLines.Add($"byte {nativeArgName}_val = {correctedIdentifier} ? (byte)1 : (byte)0;");
-                    preCallLines.Add($"byte* {nativeArgName} = &{nativeArgName}_val;");
-                    postCallLines.Add($"{correctedIdentifier} = {nativeArgName}_val != 0;");
+                    // Allow Unsafe.NullRef<bool>() to be passed through as a null pointer.
+                    // The ref must only be read inside the branch, otherwise the JIT may load it unconditionally.
+                    preCallLines.Add($"byte {nativeArgName}_val = 0;");
+                    preCallLines.Add($"byte* {nativeArgName} = null;");
+                    preCallLines.Add($"if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref {correctedIdentifier}))");
+                    preCallLines.Add("{");
+                    preCallLines.Add($"    {nativeArgName}_val = {correctedIdentifier} ? (byte)1 : (byte)0;");
+                    preCallLines.Add($"    {nativeArgName} = &{nativeArgName}_val;");
+                    preCallLines.Add("}");
+                    postCallLines.Add($"if ({nativeArgName} != null) {{ {correctedIdentifier} = {nativeArgName}_val != 0; }}");
                 }
                 else if (tr.Type == "void*" || tr.Type == "ImWchar*")
                 {

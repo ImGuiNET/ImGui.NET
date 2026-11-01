@@ -262,15 +262,20 @@ namespace ImGuiNET
                 native_name[native_name_offset] = 0;
             }
             else { native_name = null; }
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             ImGuiWindowFlags flags = (ImGuiWindowFlags)0;
             byte ret = ImGuiNative.igBegin(native_name, native_p_open, flags);
             if (name_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_name);
             }
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
             return ret != 0;
         }
 #endif
@@ -294,15 +299,20 @@ namespace ImGuiNET
                 native_name[native_name_offset] = 0;
             }
             else { native_name = null; }
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             ImGuiWindowFlags flags = (ImGuiWindowFlags)0;
             byte ret = ImGuiNative.igBegin(native_name, native_p_open, flags);
             if (name_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_name);
             }
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
@@ -326,14 +336,19 @@ namespace ImGuiNET
                 native_name[native_name_offset] = 0;
             }
             else { native_name = null; }
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             byte ret = ImGuiNative.igBegin(native_name, native_p_open, flags);
             if (name_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_name);
             }
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
             return ret != 0;
         }
 #endif
@@ -357,14 +372,19 @@ namespace ImGuiNET
                 native_name[native_name_offset] = 0;
             }
             else { native_name = null; }
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             byte ret = ImGuiNative.igBegin(native_name, native_p_open, flags);
             if (name_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_name);
             }
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
@@ -1682,15 +1702,20 @@ namespace ImGuiNET
                 native_name[native_name_offset] = 0;
             }
             else { native_name = null; }
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             ImGuiWindowFlags flags = (ImGuiWindowFlags)0;
             byte ret = ImGuiNative.igBeginPopupModal(native_name, native_p_open, flags);
             if (name_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_name);
             }
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
             return ret != 0;
         }
 #endif
@@ -1714,15 +1739,20 @@ namespace ImGuiNET
                 native_name[native_name_offset] = 0;
             }
             else { native_name = null; }
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             ImGuiWindowFlags flags = (ImGuiWindowFlags)0;
             byte ret = ImGuiNative.igBeginPopupModal(native_name, native_p_open, flags);
             if (name_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_name);
             }
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
@@ -1746,14 +1776,19 @@ namespace ImGuiNET
                 native_name[native_name_offset] = 0;
             }
             else { native_name = null; }
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             byte ret = ImGuiNative.igBeginPopupModal(native_name, native_p_open, flags);
             if (name_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_name);
             }
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
             return ret != 0;
         }
 #endif
@@ -1777,14 +1812,19 @@ namespace ImGuiNET
                 native_name[native_name_offset] = 0;
             }
             else { native_name = null; }
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             byte ret = ImGuiNative.igBeginPopupModal(native_name, native_p_open, flags);
             if (name_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_name);
             }
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
@@ -1982,15 +2022,20 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             ImGuiTabItemFlags flags = (ImGuiTabItemFlags)0;
             byte ret = ImGuiNative.igBeginTabItem(native_label, native_p_open, flags);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
             return ret != 0;
         }
 #endif
@@ -2014,15 +2059,20 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             ImGuiTabItemFlags flags = (ImGuiTabItemFlags)0;
             byte ret = ImGuiNative.igBeginTabItem(native_label, native_p_open, flags);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
@@ -2046,14 +2096,19 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             byte ret = ImGuiNative.igBeginTabItem(native_label, native_p_open, flags);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
             return ret != 0;
         }
 #endif
@@ -2077,14 +2132,19 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             byte ret = ImGuiNative.igBeginTabItem(native_label, native_p_open, flags);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
@@ -2710,14 +2770,19 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_v_val = v ? (byte)1 : (byte)0;
-            byte* native_v = &native_v_val;
+            byte native_v_val = 0;
+            byte* native_v = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref v))
+            {
+                native_v_val = v ? (byte)1 : (byte)0;
+                native_v = &native_v_val;
+            }
             byte ret = ImGuiNative.igCheckbox(native_label, native_v);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            v = native_v_val != 0;
+            if (native_v != null) { v = native_v_val != 0; }
             return ret != 0;
         }
 #endif
@@ -2741,14 +2806,19 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_v_val = v ? (byte)1 : (byte)0;
-            byte* native_v = &native_v_val;
+            byte native_v_val = 0;
+            byte* native_v = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref v))
+            {
+                native_v_val = v ? (byte)1 : (byte)0;
+                native_v = &native_v_val;
+            }
             byte ret = ImGuiNative.igCheckbox(native_label, native_v);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            v = native_v_val != 0;
+            if (native_v != null) { v = native_v_val != 0; }
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
@@ -3014,15 +3084,20 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_visible_val = p_visible ? (byte)1 : (byte)0;
-            byte* native_p_visible = &native_p_visible_val;
+            byte native_p_visible_val = 0;
+            byte* native_p_visible = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_visible))
+            {
+                native_p_visible_val = p_visible ? (byte)1 : (byte)0;
+                native_p_visible = &native_p_visible_val;
+            }
             ImGuiTreeNodeFlags flags = (ImGuiTreeNodeFlags)0;
             byte ret = ImGuiNative.igCollapsingHeader_BoolPtr(native_label, native_p_visible, flags);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            p_visible = native_p_visible_val != 0;
+            if (native_p_visible != null) { p_visible = native_p_visible_val != 0; }
             return ret != 0;
         }
 #endif
@@ -3046,15 +3121,20 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_visible_val = p_visible ? (byte)1 : (byte)0;
-            byte* native_p_visible = &native_p_visible_val;
+            byte native_p_visible_val = 0;
+            byte* native_p_visible = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_visible))
+            {
+                native_p_visible_val = p_visible ? (byte)1 : (byte)0;
+                native_p_visible = &native_p_visible_val;
+            }
             ImGuiTreeNodeFlags flags = (ImGuiTreeNodeFlags)0;
             byte ret = ImGuiNative.igCollapsingHeader_BoolPtr(native_label, native_p_visible, flags);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            p_visible = native_p_visible_val != 0;
+            if (native_p_visible != null) { p_visible = native_p_visible_val != 0; }
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
@@ -3078,14 +3158,19 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_visible_val = p_visible ? (byte)1 : (byte)0;
-            byte* native_p_visible = &native_p_visible_val;
+            byte native_p_visible_val = 0;
+            byte* native_p_visible = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_visible))
+            {
+                native_p_visible_val = p_visible ? (byte)1 : (byte)0;
+                native_p_visible = &native_p_visible_val;
+            }
             byte ret = ImGuiNative.igCollapsingHeader_BoolPtr(native_label, native_p_visible, flags);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            p_visible = native_p_visible_val != 0;
+            if (native_p_visible != null) { p_visible = native_p_visible_val != 0; }
             return ret != 0;
         }
 #endif
@@ -3109,14 +3194,19 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_visible_val = p_visible ? (byte)1 : (byte)0;
-            byte* native_p_visible = &native_p_visible_val;
+            byte native_p_visible_val = 0;
+            byte* native_p_visible = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_visible))
+            {
+                native_p_visible_val = p_visible ? (byte)1 : (byte)0;
+                native_p_visible = &native_p_visible_val;
+            }
             byte ret = ImGuiNative.igCollapsingHeader_BoolPtr(native_label, native_p_visible, flags);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            p_visible = native_p_visible_val != 0;
+            if (native_p_visible != null) { p_visible = native_p_visible_val != 0; }
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
@@ -18265,8 +18355,13 @@ namespace ImGuiNET
                 native_shortcut[native_shortcut_offset] = 0;
             }
             else { native_shortcut = null; }
-            byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
-            byte* native_p_selected = &native_p_selected_val;
+            byte native_p_selected_val = 0;
+            byte* native_p_selected = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_selected))
+            {
+                native_p_selected_val = p_selected ? (byte)1 : (byte)0;
+                native_p_selected = &native_p_selected_val;
+            }
             byte enabled = 1;
             byte ret = ImGuiNative.igMenuItem_BoolPtr(native_label, native_shortcut, native_p_selected, enabled);
             if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -18277,7 +18372,7 @@ namespace ImGuiNET
             {
                 Util.Free(native_shortcut);
             }
-            p_selected = native_p_selected_val != 0;
+            if (native_p_selected != null) { p_selected = native_p_selected_val != 0; }
             return ret != 0;
         }
 #endif
@@ -18319,8 +18414,13 @@ namespace ImGuiNET
                 native_shortcut[native_shortcut_offset] = 0;
             }
             else { native_shortcut = null; }
-            byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
-            byte* native_p_selected = &native_p_selected_val;
+            byte native_p_selected_val = 0;
+            byte* native_p_selected = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_selected))
+            {
+                native_p_selected_val = p_selected ? (byte)1 : (byte)0;
+                native_p_selected = &native_p_selected_val;
+            }
             byte enabled = 1;
             byte ret = ImGuiNative.igMenuItem_BoolPtr(native_label, native_shortcut, native_p_selected, enabled);
             if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -18331,7 +18431,7 @@ namespace ImGuiNET
             {
                 Util.Free(native_shortcut);
             }
-            p_selected = native_p_selected_val != 0;
+            if (native_p_selected != null) { p_selected = native_p_selected_val != 0; }
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
@@ -18373,8 +18473,13 @@ namespace ImGuiNET
                 native_shortcut[native_shortcut_offset] = 0;
             }
             else { native_shortcut = null; }
-            byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
-            byte* native_p_selected = &native_p_selected_val;
+            byte native_p_selected_val = 0;
+            byte* native_p_selected = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_selected))
+            {
+                native_p_selected_val = p_selected ? (byte)1 : (byte)0;
+                native_p_selected = &native_p_selected_val;
+            }
             byte native_enabled = enabled ? (byte)1 : (byte)0;
             byte ret = ImGuiNative.igMenuItem_BoolPtr(native_label, native_shortcut, native_p_selected, native_enabled);
             if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -18385,7 +18490,7 @@ namespace ImGuiNET
             {
                 Util.Free(native_shortcut);
             }
-            p_selected = native_p_selected_val != 0;
+            if (native_p_selected != null) { p_selected = native_p_selected_val != 0; }
             return ret != 0;
         }
 #endif
@@ -18427,8 +18532,13 @@ namespace ImGuiNET
                 native_shortcut[native_shortcut_offset] = 0;
             }
             else { native_shortcut = null; }
-            byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
-            byte* native_p_selected = &native_p_selected_val;
+            byte native_p_selected_val = 0;
+            byte* native_p_selected = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_selected))
+            {
+                native_p_selected_val = p_selected ? (byte)1 : (byte)0;
+                native_p_selected = &native_p_selected_val;
+            }
             byte native_enabled = enabled ? (byte)1 : (byte)0;
             byte ret = ImGuiNative.igMenuItem_BoolPtr(native_label, native_shortcut, native_p_selected, native_enabled);
             if (label_byteCount > Util.StackAllocationSizeLimit)
@@ -18439,7 +18549,7 @@ namespace ImGuiNET
             {
                 Util.Free(native_shortcut);
             }
-            p_selected = native_p_selected_val != 0;
+            if (native_p_selected != null) { p_selected = native_p_selected_val != 0; }
             return ret != 0;
         }
         public static void NewFrame()
@@ -20772,8 +20882,13 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
-            byte* native_p_selected = &native_p_selected_val;
+            byte native_p_selected_val = 0;
+            byte* native_p_selected = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_selected))
+            {
+                native_p_selected_val = p_selected ? (byte)1 : (byte)0;
+                native_p_selected = &native_p_selected_val;
+            }
             ImGuiSelectableFlags flags = (ImGuiSelectableFlags)0;
             Vector2 size = new Vector2();
             byte ret = ImGuiNative.igSelectable_BoolPtr(native_label, native_p_selected, flags, size);
@@ -20781,7 +20896,7 @@ namespace ImGuiNET
             {
                 Util.Free(native_label);
             }
-            p_selected = native_p_selected_val != 0;
+            if (native_p_selected != null) { p_selected = native_p_selected_val != 0; }
             return ret != 0;
         }
 #endif
@@ -20805,8 +20920,13 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
-            byte* native_p_selected = &native_p_selected_val;
+            byte native_p_selected_val = 0;
+            byte* native_p_selected = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_selected))
+            {
+                native_p_selected_val = p_selected ? (byte)1 : (byte)0;
+                native_p_selected = &native_p_selected_val;
+            }
             ImGuiSelectableFlags flags = (ImGuiSelectableFlags)0;
             Vector2 size = new Vector2();
             byte ret = ImGuiNative.igSelectable_BoolPtr(native_label, native_p_selected, flags, size);
@@ -20814,7 +20934,7 @@ namespace ImGuiNET
             {
                 Util.Free(native_label);
             }
-            p_selected = native_p_selected_val != 0;
+            if (native_p_selected != null) { p_selected = native_p_selected_val != 0; }
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
@@ -20838,15 +20958,20 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
-            byte* native_p_selected = &native_p_selected_val;
+            byte native_p_selected_val = 0;
+            byte* native_p_selected = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_selected))
+            {
+                native_p_selected_val = p_selected ? (byte)1 : (byte)0;
+                native_p_selected = &native_p_selected_val;
+            }
             Vector2 size = new Vector2();
             byte ret = ImGuiNative.igSelectable_BoolPtr(native_label, native_p_selected, flags, size);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            p_selected = native_p_selected_val != 0;
+            if (native_p_selected != null) { p_selected = native_p_selected_val != 0; }
             return ret != 0;
         }
 #endif
@@ -20870,15 +20995,20 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
-            byte* native_p_selected = &native_p_selected_val;
+            byte native_p_selected_val = 0;
+            byte* native_p_selected = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_selected))
+            {
+                native_p_selected_val = p_selected ? (byte)1 : (byte)0;
+                native_p_selected = &native_p_selected_val;
+            }
             Vector2 size = new Vector2();
             byte ret = ImGuiNative.igSelectable_BoolPtr(native_label, native_p_selected, flags, size);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            p_selected = native_p_selected_val != 0;
+            if (native_p_selected != null) { p_selected = native_p_selected_val != 0; }
             return ret != 0;
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
@@ -20902,14 +21032,19 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
-            byte* native_p_selected = &native_p_selected_val;
+            byte native_p_selected_val = 0;
+            byte* native_p_selected = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_selected))
+            {
+                native_p_selected_val = p_selected ? (byte)1 : (byte)0;
+                native_p_selected = &native_p_selected_val;
+            }
             byte ret = ImGuiNative.igSelectable_BoolPtr(native_label, native_p_selected, flags, size);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            p_selected = native_p_selected_val != 0;
+            if (native_p_selected != null) { p_selected = native_p_selected_val != 0; }
             return ret != 0;
         }
 #endif
@@ -20933,14 +21068,19 @@ namespace ImGuiNET
                 native_label[native_label_offset] = 0;
             }
             else { native_label = null; }
-            byte native_p_selected_val = p_selected ? (byte)1 : (byte)0;
-            byte* native_p_selected = &native_p_selected_val;
+            byte native_p_selected_val = 0;
+            byte* native_p_selected = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_selected))
+            {
+                native_p_selected_val = p_selected ? (byte)1 : (byte)0;
+                native_p_selected = &native_p_selected_val;
+            }
             byte ret = ImGuiNative.igSelectable_BoolPtr(native_label, native_p_selected, flags, size);
             if (label_byteCount > Util.StackAllocationSizeLimit)
             {
                 Util.Free(native_label);
             }
-            p_selected = native_p_selected_val != 0;
+            if (native_p_selected != null) { p_selected = native_p_selected_val != 0; }
             return ret != 0;
         }
         public static void Separator()
@@ -22026,10 +22166,15 @@ namespace ImGuiNET
         }
         public static void ShowAboutWindow(ref bool p_open)
         {
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             ImGuiNative.igShowAboutWindow(native_p_open);
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
         }
         public static void ShowDebugLogWindow()
         {
@@ -22038,10 +22183,15 @@ namespace ImGuiNET
         }
         public static void ShowDebugLogWindow(ref bool p_open)
         {
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             ImGuiNative.igShowDebugLogWindow(native_p_open);
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
         }
         public static void ShowDemoWindow()
         {
@@ -22050,10 +22200,15 @@ namespace ImGuiNET
         }
         public static void ShowDemoWindow(ref bool p_open)
         {
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             ImGuiNative.igShowDemoWindow(native_p_open);
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
         }
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         public static void ShowFontSelector(ReadOnlySpan<char> label)
@@ -22116,10 +22271,15 @@ namespace ImGuiNET
         }
         public static void ShowIDStackToolWindow(ref bool p_open)
         {
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             ImGuiNative.igShowIDStackToolWindow(native_p_open);
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
         }
         public static void ShowMetricsWindow()
         {
@@ -22128,10 +22288,15 @@ namespace ImGuiNET
         }
         public static void ShowMetricsWindow(ref bool p_open)
         {
-            byte native_p_open_val = p_open ? (byte)1 : (byte)0;
-            byte* native_p_open = &native_p_open_val;
+            byte native_p_open_val = 0;
+            byte* native_p_open = null;
+            if (!System.Runtime.CompilerServices.Unsafe.IsNullRef(ref p_open))
+            {
+                native_p_open_val = p_open ? (byte)1 : (byte)0;
+                native_p_open = &native_p_open_val;
+            }
             ImGuiNative.igShowMetricsWindow(native_p_open);
-            p_open = native_p_open_val != 0;
+            if (native_p_open != null) { p_open = native_p_open_val != 0; }
         }
         public static void ShowStyleEditor()
         {
