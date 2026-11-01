@@ -58,6 +58,7 @@ namespace ImGuiNET
                 utf8LabelBytes = stackPtr;
             }
             Util.GetUtf8(label, utf8LabelBytes, utf8LabelByteCount);
+            utf8LabelBytes[utf8LabelByteCount] = 0;
 
             bool ret;
             fixed (byte* bufPtr = buf)
@@ -111,6 +112,7 @@ namespace ImGuiNET
                 utf8LabelBytes = stackPtr;
             }
             Util.GetUtf8(label, utf8LabelBytes, utf8LabelByteCount);
+            utf8LabelBytes[utf8LabelByteCount] = 0;
 
             int utf8InputByteCount = Encoding.UTF8.GetByteCount(input);
             int inputBufSize = Math.Max((int)maxLength + 1, utf8InputByteCount + 1);
@@ -201,6 +203,7 @@ namespace ImGuiNET
                 utf8LabelBytes = stackPtr;
             }
             Util.GetUtf8(label, utf8LabelBytes, utf8LabelByteCount);
+            utf8LabelBytes[utf8LabelByteCount] = 0;
 
             int utf8InputByteCount = Encoding.UTF8.GetByteCount(input);
             int inputBufSize = Math.Max((int)maxLength + 1, utf8InputByteCount + 1);
@@ -292,6 +295,7 @@ namespace ImGuiNET
                 utf8LabelBytes = stackPtr;
             }
             Util.GetUtf8(label, utf8LabelBytes, utf8LabelByteCount);
+            utf8LabelBytes[utf8LabelByteCount] = 0;
 
             int utf8HintByteCount = Encoding.UTF8.GetByteCount(hint);
             byte* utf8HintBytes;
@@ -305,6 +309,7 @@ namespace ImGuiNET
                 utf8HintBytes = stackPtr;
             }
             Util.GetUtf8(hint, utf8HintBytes, utf8HintByteCount);
+            utf8HintBytes[utf8HintByteCount] = 0;
 
             int utf8InputByteCount = Encoding.UTF8.GetByteCount(input);
             int inputBufSize = Math.Max((int)maxLength + 1, utf8InputByteCount + 1);
@@ -439,6 +444,7 @@ namespace ImGuiNET
                 utf8LabelBytes = stackPtr;
             }
             Util.GetUtf8(label, utf8LabelBytes, utf8LabelByteCount);
+            utf8LabelBytes[utf8LabelByteCount] = 0;
 
             bool ret = ImGuiNative.igInputText(utf8LabelBytes, (byte*)buf.ToPointer(), buf_size, flags, callback, user_data.ToPointer()) != 0;
 
@@ -464,6 +470,7 @@ namespace ImGuiNET
                 utf8NameBytes = stackPtr;
             }
             Util.GetUtf8(name, utf8NameBytes, utf8NameByteCount);
+            utf8NameBytes[utf8NameByteCount] = 0;
 
             byte* p_open = null;
             byte ret = ImGuiNative.igBegin(utf8NameBytes, p_open, flags);
